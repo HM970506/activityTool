@@ -34,5 +34,3 @@ export const DialogMain = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-export default { Dialog, Background, Template, DialogMain };
