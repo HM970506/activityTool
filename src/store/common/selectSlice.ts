@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const categorySlice = createSlice({
+const selectSlice = createSlice({
   name: "categoryReducer",
-  initialState: { category: "TOOLS" },
+  initialState: { select: null },
 
   reducers: {
-    categoryChange: (state, action: PayloadAction<any>) => {
-      state.category = action.payload;
-      console.log("지금 카테고리: ", state.category);
+    selectChange: (state, action: PayloadAction<any>) => {
+      state.select = action.payload;
+      console.log("지금 선택: ", state.select);
     },
   },
 });
 
-export const categoryActions = categorySlice.actions;
-export default categorySlice.reducer;
+export const selectActions = selectSlice.actions;
+export default selectSlice.reducer;

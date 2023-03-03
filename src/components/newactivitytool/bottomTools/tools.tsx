@@ -1,14 +1,14 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../store/common/drawSlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import selectSlice, { selectActions } from "../../../store/common/selectSlice";
 import { Button, ToolBox } from "../style";
 
-export default function ToolsMenu({
-  selectShapeIndex,
-}: {
-  selectShapeIndex: any;
-}) {
+export default function ToolsMenu() {
   const dispatch = useDispatch();
+  const selectShapeIndex = useSelector(
+    (state: any) => state.selectReducer.select
+  );
   const toolChagne = (tool: string) => {
     dispatch(drawActions.toolChange(tool));
   };
@@ -17,9 +17,11 @@ export default function ToolsMenu({
     dispatch(drawActions.sizeChange(size));
   };
 
-  const nodeRemove = () => {
-    if (selectShapeIndex != null)
+  const nodeRemove = async () => {
+    if (selectShapeIndex != null) {
+      dispatch(selectActions.selectChange(null));
       dispatch(nodeActions.removeNodes(selectShapeIndex));
+    }
   };
 
   const colorChange = (color: string) => {

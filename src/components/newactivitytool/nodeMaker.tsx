@@ -14,25 +14,25 @@ import {
   TransformerType,
 } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
+import { selectActions } from "../../store/common/selectSlice";
 
 export default function Node({
   index,
   type,
   shapeProps,
-  isSelected,
-  onSelect,
 }: {
   index: number;
   type: NodeType;
   shapeProps: any;
-  isSelected: boolean;
-  onSelect: any;
 }) {
   const shapeRef = useRef<any>(null);
   const trRef = useRef<TransformerType>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes);
   const dispatch = useDispatch();
+
+  const nowSelect = useSelector((state: any) => state.selectReducer.select);
+  const isSelected = nowSelect === index ? true : false;
 
   const [dbclick, setDbClick] = useState<boolean>(false);
 
@@ -58,10 +58,14 @@ export default function Node({
     }
   }, [isSelected]);
 
+  const onSelect = () => {
+    dispatch(selectActions.selectChange(index));
+  };
+
   switch (type) {
     case TEXT:
-      const x = nodes[index].shapeProps.x - 5;
-      const y = nodes[index].shapeProps.y - 10;
+      const x = shapeProps.x - 5;
+      const y = shapeProps.y - 10;
       return (
         <>
           <Text

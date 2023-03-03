@@ -19,19 +19,19 @@ import { cursorMove } from "./types";
 import Node from "./nodeMaker";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
+import { selectActions } from "../../store/common/selectSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false); //우측 버튼
   const [activitytools, setActivitytools] = useState<boolean>(false); //하단 버튼과 캔버스
   const [canvas, setCanvas] = useState<any[]>([]); //노드들이 쌓이는 캔버스
-  const [selectShapeIndex, setSelectShapeIndex] = useState<number | null>(null); //현재 선택 노드
   const canvasRef = useRef(null);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
   const dispatch = useDispatch();
 
-  //노드가 생성될 때마다 캔버스가 업데이트된다
+  //노드가 생성되거나 삭제될 때마다 캔버스가 업데이트된다
   useEffect(() => {
     setCanvas(nodes);
   }, [nodes]);
@@ -62,7 +62,8 @@ export default function NewActivityTool() {
   //버튼 관련 부분 끝-----
 
   const checkDeselect = (e: cursorMove) => {
-    if (e.target == canvasRef.current) setSelectShapeIndex(null);
+    if (e.target == canvasRef.current)
+      dispatch(selectActions.selectChange(null));
   };
 
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
@@ -110,7 +111,7 @@ export default function NewActivityTool() {
   return (
     <>
       <Background ref={newActivityTool}>
-        <BottomTools selectShapeIndex={selectShapeIndex} />
+        <BottomTools />
         <SideButtons activitytoolsEnd={activitytoolsEnd} />
 
         <Stage
@@ -131,10 +132,6 @@ export default function NewActivityTool() {
                     index={key}
                     type={value.type}
                     shapeProps={value.shapeProps}
-                    isSelected={key === selectShapeIndex}
-                    onSelect={() => {
-                      setSelectShapeIndex(key);
-                    }}
                   />
                 );
               })}
