@@ -9,7 +9,12 @@ export const Button = styled.button`
 `;
 
 export const MainButton = styled(Button)`
-  z-index: 10003;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  z-index: 1001;
+  transition-property: top-layer;
 `;
 
 export const SubButton = styled(Button)`
@@ -19,6 +24,7 @@ export const SubButton = styled(Button)`
   height: 80px;
   background-color: blue;
   color: white;
+  z-index: 1000;
 `;
 
 export const NewButton = styled(SubButton)`
@@ -31,19 +37,31 @@ export const LoadButton = styled(SubButton)`
   bottom: 80px;
 `;
 
-export const Box = styled.div`
-  z-index: 10002;
-  position: absolute;
+export const Background = styled.dialog`
+  transition-property: top-layer;
 
+  width: 100vw;
+  height: 100vh;
+
+  ::backdrop {
+    display: none;
+  }
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+`;
+
+export const Box = styled.div`
+  position: absolute;
+  margin: 20px;
   right: 0;
   bottom: 0;
-  margin: 20px;
+  z-index: 1000;
 `;
 
 export const ButtonBox = styled(Box)`
-  background-color: black;
   display: flex;
   gap: 10px;
+  margin: 20px;
   flex-direction: column;
 `;
 
@@ -51,7 +69,6 @@ export const ToolBox = styled(Box)`
   width: 90%;
   height: 100px;
   background-color: blue;
-  z-index: 10001;
 `;
 
 export const Canvas = styled.div`
@@ -60,6 +77,33 @@ export const Canvas = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 10000;
   background-color: rgba(0, 0, 0, 0.2);
+`;
+
+export const SideButtonBox = styled.div`
+  position: absolute;
+  top: 0;
+  right: 100px;
+`;
+
+export const SideButton = styled.button<{ size: number }>`
+  width: 120px;
+  font-size: ${(props) => props.size + "px"};
+
+  margin: 5px;
+`;
+
+export const TextEditor = styled.textarea<{ size: number }>`
+  border: 0;
+  background-color: white;
+  font-size: ${(props) => props.size + "px"};
+  padding: 3px;
+  margin: 0;
+  resize: none;
+  overflow: hidden;
+  outline: none;
+`;
+
+export const Uploader = styled.input`
+  display: none;
 `;

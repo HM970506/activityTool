@@ -4,15 +4,15 @@ export const Dialog = styled.dialog`
   padding: 0;
 
   ::backdrop {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 
 export const Background = styled.div`
-  width: inherit;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-wrap: wrap;
-
+  justify-content: center;
   align-items: center;
 `;
 
@@ -25,6 +25,13 @@ export const Template = styled.button`
   justify-content: center;
   align-items: center;
 `;
+
+export const TemplatesContainer = styled.main`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+`;
+
 export const DialogMain = styled.div`
   width: 300px;
   height: 100px;

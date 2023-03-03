@@ -1,6 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Dialog, Background, Template, DialogMain } from "./style";
+import {
+  Dialog,
+  Background,
+  Template,
+  DialogMain,
+  TemplatesContainer,
+} from "./style";
 
 const dummy = [1, 2, 3, 4, 5, 6, 7];
 
@@ -33,12 +39,13 @@ export default function TemplatesIndex() {
           </div>
         </DialogMain>
       </Dialog>
-
-      {dummy.map((value, key) => (
-        <Template key={key} onClick={() => templateClick(value)}>
-          {value} 템플릿 목록
-        </Template>
-      ))}
+      <TemplatesContainer>
+        {dummy.map((value, key) => (
+          <Template key={key} onClick={() => templateClick(value)}>
+            {value} 템플릿 목록
+          </Template>
+        ))}
+      </TemplatesContainer>
     </Background>
   );
 }
