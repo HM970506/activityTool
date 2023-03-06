@@ -17,6 +17,7 @@ import {
   NodeType,
   PEN,
   PHOTO,
+  RECORD,
   STICKER,
   TEXT,
   TransformerType,
@@ -73,9 +74,18 @@ export default function Node({
   };
 
   switch (type) {
+    case RECORD:
+      let record_x = shapeProps.x - 5;
+      let record_y = shapeProps.y - 10;
+      console.log(shapeProps);
+      return (
+        <Html groupProps={{ record_x, record_y }}>
+          <audio src={shapeProps.audioSrc} controls={true} />
+        </Html>
+      );
     case TEXT:
-      const x = shapeProps.x - 5;
-      const y = shapeProps.y - 10;
+      let x = shapeProps.x - 5;
+      let y = shapeProps.y - 10;
       return (
         <>
           <Text
