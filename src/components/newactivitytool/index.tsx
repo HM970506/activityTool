@@ -5,6 +5,7 @@ import {
   Background,
   Button,
   ButtonBox,
+  Canvas,
   LoadButton,
   MainButton,
   NewButton,
@@ -111,32 +112,33 @@ export default function NewActivityTool() {
   return (
     <>
       <Background ref={newActivityTool}>
-        <BottomTools />
-        <SideButtons activitytoolsEnd={activitytoolsEnd} />
-
-        <Stage
-          width={window.innerWidth}
-          height={window.innerHeight}
-          onMouseDown={mouseDown}
-          onTouchStart={checkDeselect}
-          onMousemove={handleMouseMove}
-          onMouseup={handleMouseUp}
-          ref={canvasRef}
-        >
-          <Layer>
-            {Array.isArray(canvas) &&
-              canvas.map((value: any, key: number) => {
-                return (
-                  <Node
-                    key={key}
-                    index={key}
-                    type={value.type}
-                    shapeProps={value.shapeProps}
-                  />
-                );
-              })}
-          </Layer>
-        </Stage>
+        <Canvas>
+          <BottomTools />
+          <SideButtons activitytoolsEnd={activitytoolsEnd} />
+          <Stage
+            width={document.documentElement.clientWidth}
+            height={document.documentElement.clientHeight}
+            onMouseDown={mouseDown}
+            onTouchStart={checkDeselect}
+            onMousemove={handleMouseMove}
+            onMouseup={handleMouseUp}
+            ref={canvasRef}
+          >
+            <Layer>
+              {Array.isArray(canvas) &&
+                canvas.map((value: any, key: number) => {
+                  return (
+                    <Node
+                      key={key}
+                      index={key}
+                      type={value.type}
+                      shapeProps={value.shapeProps}
+                    />
+                  );
+                })}
+            </Layer>
+          </Stage>
+        </Canvas>
       </Background>
 
       {!activitytools && (

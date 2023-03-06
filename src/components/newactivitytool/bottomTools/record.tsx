@@ -19,7 +19,7 @@ export default function RecordMenu() {
       nodeActions.addNodes({
         type: "RECORD",
         shapeProps: {
-          src: audioSrc.split("blob:")[1],
+          src: audioSrc,
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
         },

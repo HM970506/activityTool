@@ -40,8 +40,8 @@ export const LoadButton = styled(SubButton)`
 export const Background = styled.dialog`
   transition-property: top-layer;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   ::backdrop {
     display: none;
@@ -61,7 +61,6 @@ export const Box = styled.div`
 export const ButtonBox = styled(Box)`
   display: flex;
   gap: 10px;
-  margin: 20px;
   flex-direction: column;
 `;
 
@@ -77,20 +76,19 @@ export const Canvas = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.2);
 `;
 
 export const SideButtonBox = styled.div`
   position: absolute;
   top: 0;
-  right: 100px;
+  right: 20px;
 `;
 
 export const SideButton = styled.button<{ size: number }>`
   width: 120px;
   font-size: ${(props) => props.size + "px"};
-
-  margin: 5px;
 `;
 
 export const TextEditor = styled.textarea<{ size: number }>`

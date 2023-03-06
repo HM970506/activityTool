@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const Dialog = styled.dialog`
   padding: 0;
-
+  margin: 0;
   ::backdrop {
     background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 
 export const Background = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
