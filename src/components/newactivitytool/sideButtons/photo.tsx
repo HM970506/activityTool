@@ -5,13 +5,6 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { Button, Uploader } from "../style";
 
-const imageMaker = (photo: string) => {
-  const image = new Image();
-  image.src =
-    "https://i.pinimg.com/564x/e2/5a/fc/e25afc5f25330d9811e669057c6ed4a8.jpg";
-  return image;
-};
-
 export default function PhotoButton() {
   const dispatch = useDispatch();
   const [photo, setPhoto] = useState<string>("");
@@ -25,7 +18,9 @@ export default function PhotoButton() {
         shapeProps: {
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
-          frame: "HEART",
+          frame: "RECT",
+          fillPatternOffsetX: 0,
+          fillPatternOffsetY: 0,
         },
       })
     );
