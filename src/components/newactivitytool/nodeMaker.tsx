@@ -24,6 +24,7 @@ import {
 } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
 import { selectActions } from "../../store/common/selectSlice";
+import { BIG, MIDIUM } from "./sideButtons/types";
 
 export default function Node({
   index,

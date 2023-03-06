@@ -83,7 +83,7 @@ export const Canvas = styled.div`
 export const SideButtonBox = styled.div`
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 100px;
 `;
 
 export const SideButton = styled.button<{ size: number }>`
@@ -95,7 +95,7 @@ export const TextEditor = styled.textarea<{ size: number }>`
   border: 0;
   background-color: white;
   font-size: ${(props) => props.size + "px"};
-  padding: 3px;
+  padding: 5px;
   margin: 0;
   resize: none;
   overflow: hidden;

@@ -3,10 +3,7 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { categoryActions } from "../../../store/common/categorySlice";
-
-const BIG = 25;
-const MIDIUM = 20;
-const SMALL = 15;
+import { BIG, MIDIUM, SMALL } from "./types";
 
 export default function TextButton() {
   const dispatch = useDispatch();
