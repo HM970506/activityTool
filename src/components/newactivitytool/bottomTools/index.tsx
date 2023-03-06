@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { ToolBox } from "../style";
+import RecordMenu from "./record";
 import ToolsMenu from "./tools";
 
 export default function BottomTools() {
@@ -10,6 +11,7 @@ export default function BottomTools() {
   return (
     <ToolBox>
       {(nowCategory === "TOOLS" || nowCategory === "TEXT") && <ToolsMenu />}
+      {nowCategory === "RECORD" && <RecordMenu />}
     </ToolBox>
   );
 }

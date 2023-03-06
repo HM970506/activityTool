@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Rect, Transformer, Text, Line } from "react-konva";
+import {
+  Rect,
+  Transformer,
+  Text,
+  Line,
+  Circle,
+  Shape,
+  Path,
+} from "react-konva";
 import { Html, useImage } from "react-konva-utils";
 import { useDispatch, useSelector } from "react-redux";
 import { TextEditor } from "./style";
@@ -35,7 +43,9 @@ export default function Node({
   const isSelected = nowSelect === index ? true : false;
 
   const [dbclick, setDbClick] = useState<boolean>(false);
-
+  const [image] = useImage(
+    "https://i.pinimg.com/564x/e2/5a/fc/e25afc5f25330d9811e669057c6ed4a8.jpg"
+  );
   const onChange = (newAttr: any) => {
     dispatch(nodeActions.modifyNodes({ index: index, modifyProps: newAttr }));
   };
@@ -112,6 +122,7 @@ export default function Node({
             ref={shapeRef}
             draggable
             {...shapeProps}
+            fill={"white"}
             onDragEnd={(e) => {
               onChange({
                 ...shapeProps,
@@ -121,13 +132,15 @@ export default function Node({
             }}
           />
           {isSelected && (
-            <Transformer
-              ref={trRef}
-              boundBoxFunc={(oldBox, newBox) => {
-                if (newBox.width < 5 || newBox.height < 5) return oldBox;
-                else return newBox;
-              }}
-            />
+            <>
+              <Transformer
+                ref={trRef}
+                boundBoxFunc={(oldBox, newBox) => {
+                  if (newBox.width < 5 || newBox.height < 5) return oldBox;
+                  else return newBox;
+                }}
+              />
+            </>
           )}
         </>
       );
@@ -161,34 +174,77 @@ export default function Node({
       );
 
     case PHOTO:
-      return (
-        <>
-          <Rect
-            onClick={onSelect}
-            onTap={onSelect}
-            onDragStart={onSelect}
-            ref={shapeRef}
-            draggable
-            {...shapeProps}
-            onDragEnd={(e) => {
-              onChange({
-                ...shapeProps,
-                x: e.target.x(),
-                y: e.target.y(),
-              });
-            }}
-          />
-          {isSelected && (
-            <Transformer
-              ref={trRef}
-              boundBoxFunc={(oldBox, newBox) => {
-                if (newBox.width < 5 || newBox.height < 5) return oldBox;
-                else return newBox;
+      if (shapeProps.frame == "RECT")
+        return (
+          <>
+            <Rect
+              onClick={onSelect}
+              onTap={onSelect}
+              onDragStart={onSelect}
+              ref={shapeRef}
+              draggable
+              {...shapeProps}
+              fillPatternImage={image}
+              onDragEnd={(e) => {
+                onChange({
+                  ...shapeProps,
+                  x: e.target.x(),
+                  y: e.target.y(),
+                });
               }}
+              width={image?.width}
+              height={image?.height}
             />
-          )}
-        </>
-      );
+            {isSelected && (
+              <Transformer
+                ref={trRef}
+                boundBoxFunc={(oldBox, newBox) => {
+                  if (newBox.width < 5 || newBox.height < 5) return oldBox;
+                  else return newBox;
+                }}
+              />
+            )}
+          </>
+        );
+      else if (shapeProps.frame == "HEART")
+        return (
+          <>
+            <Path
+              data={
+                "M213.1,6.7c-32.4-14.4-73.7,0-88.1,30.6C110.6,4.9,67.5-9.5,36.9,6.7C2.8,22.9-13.4,62.4,13.5,110.9C33.3,145.1,67.5,170.3,125,217c59.3-46.7,93.5-71.9,111.5-106.1C263.4,64.2,247.2,22.9,213.1,6.7z"
+              }
+              onClick={onSelect}
+              onTap={onSelect}
+              onDragStart={onSelect}
+              ref={shapeRef}
+              draggable
+              {...shapeProps}
+              fillPatternImage={image}
+              fillPatternOffset={{
+                x: image?.width! / 4,
+                y: image?.height! / 4,
+              }}
+              onDragEnd={(e) => {
+                onChange({
+                  ...shapeProps,
+                  x: e.target.x(),
+                  y: e.target.y(),
+                });
+              }}
+              scaleX={1}
+              scaleY={1}
+            />
+            {isSelected && (
+              <Transformer
+                ref={trRef}
+                boundBoxFunc={(oldBox, newBox) => {
+                  if (newBox.width < 5 || newBox.height < 5) return oldBox;
+                  else return newBox;
+                }}
+              />
+            )}
+          </>
+        );
   }
 
   return <></>;
