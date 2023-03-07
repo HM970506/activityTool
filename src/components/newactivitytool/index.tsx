@@ -17,7 +17,7 @@ import StickerButton from "./sideButtons/sticker";
 import { nodeActions } from "../../store/common/nodeSlice";
 import { drawActions } from "../../store/common/drawSlice";
 import { cursorMove } from "./types";
-import Node from "./nodeMaker";
+import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import { selectActions } from "../../store/common/selectSlice";
