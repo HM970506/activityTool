@@ -91,10 +91,11 @@ export const SideButton = styled.button<{ size: number }>`
   font-size: ${(props) => props.size + "px"};
 `;
 
-export const TextEditor = styled.textarea<{ size: number }>`
+export const TextEditor = styled.textarea<{ size: number; line: number }>`
   border: 0;
   background-color: white;
   font-size: ${(props) => props.size + "px"};
+  height: ${(props) => props.line * 1.2 + "em"};
   padding: 5px;
   margin: 0;
   resize: none;

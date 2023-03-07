@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Group, Text, Transformer } from "react-konva";
 import { Html } from "react-konva-utils";
 import { useDispatch } from "react-redux";
@@ -17,6 +17,8 @@ export default function TextMaker({
   isSelected,
 }: MakerType) {
   const [dbclick, setDbClick] = useState<boolean>(false);
+  const [nowText, setNowText] = useState<string>(shapeProps.text);
+
   const textRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
   const onEdit = async () => {
@@ -32,6 +34,10 @@ export default function TextMaker({
 
   let x = shapeProps.x - 5;
   let y = shapeProps.y - 10;
+
+  useEffect(() => {
+    console.log(nowText);
+  }, [nowText]);
 
   return (
     <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
@@ -70,7 +76,11 @@ export default function TextMaker({
             autoFocus
             ref={textRef}
             size={shapeProps.fontSize}
-            defaultValue={shapeProps.text}
+            line={nowText.split("\n").length}
+            onChange={(e) => {
+              setNowText(e.target.value);
+            }}
+            value={nowText}
             onBlur={onEdit}
           />
         </Html>
