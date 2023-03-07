@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { Text, Transformer } from "react-konva";
+import { Group, Text, Transformer } from "react-konva";
 import { Html } from "react-konva-utils";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { TextEditor } from "../style";
+import DeleteButton from "./common/deleteButton";
 import { MakerType } from "./types";
 
 export default function TextMaker({
@@ -33,17 +34,13 @@ export default function TextMaker({
   let y = shapeProps.y - 10;
 
   return (
-    <>
+    <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
       <Text
-        draggable
-        onClick={onSelect}
         onDblClick={() => {
           shapeRef.current.hide();
           trRef.current?.hide();
           setDbClick(true);
         }}
-        onTap={onSelect}
-        onDragStart={onSelect}
         onDragEnd={(e) => {
           onChange({
             ...shapeProps,
@@ -51,10 +48,22 @@ export default function TextMaker({
             y: e.target.y(),
           });
         }}
+        onTransform={(e) => {
+          onChange({
+            ...shapeProps,
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY(),
+          });
+        }}
         ref={shapeRef}
         {...shapeProps}
       />
-      {isSelected && <Transformer ref={trRef} />}
+      {isSelected && (
+        <>
+          <Transformer ref={trRef} />
+          <DeleteButton index={index} shapeProps={shapeProps} />
+        </>
+      )}
       {dbclick && (
         <Html groupProps={{ x, y }}>
           <TextEditor
@@ -66,6 +75,6 @@ export default function TextMaker({
           />
         </Html>
       )}
-    </>
+    </Group>
   );
 }

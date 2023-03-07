@@ -1,7 +1,8 @@
-import { Circle, Rect, Transformer } from "react-konva";
+import { Circle, Group, Rect, Transformer } from "react-konva";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
+import DeleteButton from "./common/deleteButton";
 import { MakerType } from "./types";
 
 export default function StickerMaker({
@@ -13,21 +14,23 @@ export default function StickerMaker({
   onChange,
   isSelected,
 }: MakerType) {
-  const dispatch = useDispatch();
   return (
-    <>
+    <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
       <Rect
-        onClick={onSelect}
-        onTap={onSelect}
-        onDragStart={onSelect}
         ref={shapeRef}
-        draggable
         {...shapeProps}
         onDragEnd={(e) => {
           onChange({
             ...shapeProps,
             x: e.target.x(),
             y: e.target.y(),
+          });
+        }}
+        onTransform={(e) => {
+          onChange({
+            ...shapeProps,
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY(),
           });
         }}
       />
@@ -40,18 +43,9 @@ export default function StickerMaker({
               else return newBox;
             }}
           />
-          <Circle
-            fill={"red"}
-            radius={10}
-            x={shapeProps.x + shapeProps.width + 15}
-            y={shapeProps.y - 15}
-            onClick={() => {
-              dispatch(selectActions.selectChange(null));
-              dispatch(nodeActions.removeNodes(index));
-            }}
-          />
+          <DeleteButton index={index} shapeProps={shapeProps} />
         </>
       )}
-    </>
+    </Group>
   );
 }

@@ -27,7 +27,7 @@ export const Template = styled.button`
 export const TemplatesContainer = styled.main`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+
   align-items: center;
 `;
 

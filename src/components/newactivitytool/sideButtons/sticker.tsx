@@ -16,6 +16,8 @@ export default function StickerButton() {
           width: 100,
           height: 100,
           fill: "red",
+          scaleX: 1,
+          scaleY: 1,
         },
       })
     );

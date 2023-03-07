@@ -18,9 +18,11 @@ export default function TextButton() {
 
         shapeProps: {
           fontSize: size,
+          scaleX: 1,
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
           text: "내용을 입력하세요",
+          width: 210,
         },
       })
     );
