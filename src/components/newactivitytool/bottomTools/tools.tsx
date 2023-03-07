@@ -17,13 +17,6 @@ export default function ToolsMenu() {
     dispatch(drawActions.sizeChange(size));
   };
 
-  const nodeRemove = async () => {
-    if (selectShapeIndex != null) {
-      dispatch(selectActions.selectChange(null));
-      dispatch(nodeActions.removeNodes(selectShapeIndex));
-    }
-  };
-
   const colorChange = (color: string) => {
     if (selectShapeIndex == null) dispatch(drawActions.colorChange(color));
     else {
@@ -38,7 +31,6 @@ export default function ToolsMenu() {
 
   return (
     <>
-      <Button onClick={nodeRemove}>지우기</Button>
       <button
         onClick={() => {
           toolChagne("PEN");
