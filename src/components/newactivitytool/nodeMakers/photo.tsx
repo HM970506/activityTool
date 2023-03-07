@@ -5,14 +5,14 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import { OnSelect, OnChange, IsSelected } from "./functions";
 import { FRAMES } from "./sample";
-import { PhotoType } from "./types";
+import { MakerType } from "./types";
 
 export default function PhotoMaker({
   shapeProps,
   index,
   shapeRef,
   trRef,
-}: PhotoType) {
+}: MakerType) {
   const dispatch = useDispatch();
   const [image] = useImage(
     "https://i.pinimg.com/564x/56/46/08/564608c8a6094dce93e1dcf4addb7130.jpg"

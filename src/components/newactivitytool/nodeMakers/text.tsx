@@ -4,14 +4,14 @@ import { Html } from "react-konva-utils";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { TextEditor } from "../style";
 import { IsSelected, OnChange, OnSelect } from "./functions";
-import { TextType } from "./types";
+import { MakerType } from "./types";
 
 export default function TextMaker({
   shapeProps,
   index,
   shapeRef,
   trRef,
-}: TextType) {
+}: MakerType) {
   const [dbclick, setDbClick] = useState<boolean>(false);
   const textRef = useRef<HTMLTextAreaElement>(null);
 

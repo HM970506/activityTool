@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import { IsSelected, OnChange, OnSelect } from "./functions";
-import { StickerType } from "./types";
+import { MakerType } from "./types";
 
 export default function StickerMaker({
   shapeProps,
   index,
   shapeRef,
   trRef,
-}: StickerType) {
+}: MakerType) {
   const dispatch = useDispatch();
   return (
     <>
