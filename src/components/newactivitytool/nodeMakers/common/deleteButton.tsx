@@ -14,9 +14,9 @@ export default function DeleteButton({
   return (
     <Circle
       fill={"red"}
-      radius={10}
       x={shapeProps.x + shapeProps.scaleX * shapeProps.width + 15}
       y={shapeProps.y - 15}
+      radius={10}
       onClick={() => {
         dispatch(selectActions.selectChange(null));
         dispatch(nodeActions.removeNodes(index));

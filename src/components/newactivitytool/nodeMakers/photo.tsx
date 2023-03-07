@@ -1,8 +1,9 @@
-import { Circle, Path, Rect, Transformer } from "react-konva";
+import { Circle, Group, Path, Rect, Transformer } from "react-konva";
 import { useImage } from "react-konva-utils";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
+import DeleteButton from "./common/deleteButton";
 import { FRAMES } from "./sample";
 import { MakerType } from "./types";
 
@@ -20,15 +21,11 @@ export default function PhotoMaker({
     "https://i.pinimg.com/564x/56/46/08/564608c8a6094dce93e1dcf4addb7130.jpg"
   );
 
-  if (shapeProps.frame == "RECT")
-    return (
-      <>
+  return (
+    <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
+      {shapeProps.frame === "RECT" ? (
         <Rect
-          onClick={onSelect}
-          onTap={onSelect}
-          onDragStart={onSelect}
           ref={shapeRef}
-          draggable
           {...shapeProps}
           fillPatternImage={image}
           onDragEnd={(e) => {
@@ -38,35 +35,17 @@ export default function PhotoMaker({
               y: e.target.y(),
             });
           }}
+          onTransform={(e) => {
+            onChange({
+              ...shapeProps,
+              scaleX: e.target.scaleX(),
+              scaleY: e.target.scaleY(),
+            });
+          }}
           width={image?.width}
           height={image?.height}
         />
-        {isSelected && (
-          <>
-            <Transformer
-              ref={trRef}
-              boundBoxFunc={(oldBox, newBox) => {
-                if (newBox.width < 5 || newBox.height < 5) return oldBox;
-                else return newBox;
-              }}
-            />
-            <Circle
-              fill={"red"}
-              radius={10}
-              x={shapeProps.x + shapeProps.width + 15}
-              y={shapeProps.y - 15}
-              onClick={() => {
-                dispatch(selectActions.selectChange(null));
-                dispatch(nodeActions.removeNodes(index));
-              }}
-            />
-          </>
-        )}
-      </>
-    );
-  else
-    return (
-      <>
+      ) : (
         <Path
           onClick={onSelect}
           onTap={onSelect}
@@ -82,8 +61,17 @@ export default function PhotoMaker({
               y: e.target.y(),
             });
           }}
+          onTransform={(e) => {
+            onChange({
+              ...shapeProps,
+              scaleX: e.target.scaleX(),
+              scaleY: e.target.scaleY(),
+            });
+          }}
         />
-        {isSelected && (
+      )}
+      {isSelected && (
+        <>
           <Transformer
             ref={trRef}
             boundBoxFunc={(oldBox, newBox) => {
@@ -91,7 +79,9 @@ export default function PhotoMaker({
               else return newBox;
             }}
           />
-        )}
-      </>
-    );
+          <DeleteButton index={index} shapeProps={shapeProps} />
+        </>
+      )}
+    </Group>
+  );
 }

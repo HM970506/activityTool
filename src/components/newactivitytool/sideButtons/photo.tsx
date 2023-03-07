@@ -18,6 +18,8 @@ export default function PhotoButton() {
         shapeProps: {
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
+          scaleX: 1,
+          width: 100,
           frame: "RECT",
           fillPatternOffsetX: 0,
           fillPatternOffsetY: 0,
