@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  BRUSH,
-  ERASER,
   NodeMakerType,
-  NodeType,
-  PEN,
   PHOTO,
   RECORD,
   STICKER,
@@ -13,27 +9,44 @@ import {
 } from "./types";
 import RecordMaker from "./record";
 import TextMaker from "./text";
-import { IsSelected } from "./functions";
 import StickerMaker from "./sticker";
 import PhotoMaker from "./photo";
 import ToolsMaker from "./tools";
+import { useDispatch, useSelector } from "react-redux";
+import { nodeActions } from "../../../store/common/nodeSlice";
+import { selectActions } from "../../../store/common/selectSlice";
 
 export default function Node({ index, type, shapeProps }: NodeMakerType) {
   const shapeRef = useRef<any>(null);
   const trRef = useRef<TransformerType>(null);
+  const dispatch = useDispatch();
+  const nowSelect = useSelector((state: any) => state.selectReducer.select);
+  const isSelected = nowSelect === index ? true : false;
+
+  useEffect(() => {
+    if (isSelected && trRef) {
+      trRef.current?.nodes([shapeRef.current]);
+      trRef.current?.getLayer()?.batchDraw();
+    }
+  }, [isSelected]);
+
+  const onChange = (newAttr: any) => {
+    dispatch(nodeActions.modifyNodes({ index: index, modifyProps: newAttr }));
+  };
+
+  const onSelect = () => {
+    dispatch(selectActions.selectChange(index));
+  };
+
   const props = {
     shapeProps: shapeProps,
     index: index,
     shapeRef: shapeRef,
     trRef: trRef,
+    onChange: onChange,
+    onSelect: onSelect,
+    isSelected: isSelected,
   };
-
-  useEffect(() => {
-    if (IsSelected(index) && trRef) {
-      trRef.current?.nodes([shapeRef.current]);
-      trRef.current?.getLayer()?.batchDraw();
-    }
-  }, [IsSelected(index)]);
 
   switch (type) {
     case RECORD:

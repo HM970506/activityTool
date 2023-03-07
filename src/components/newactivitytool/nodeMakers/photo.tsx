@@ -3,7 +3,6 @@ import { useImage } from "react-konva-utils";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
-import { OnSelect, OnChange, IsSelected } from "./functions";
 import { FRAMES } from "./sample";
 import { MakerType } from "./types";
 
@@ -12,6 +11,9 @@ export default function PhotoMaker({
   index,
   shapeRef,
   trRef,
+  onSelect,
+  onChange,
+  isSelected,
 }: MakerType) {
   const dispatch = useDispatch();
   const [image] = useImage(
@@ -22,21 +24,15 @@ export default function PhotoMaker({
     return (
       <>
         <Rect
-          onClick={() => {
-            OnSelect(index);
-          }}
-          onTap={() => {
-            OnSelect(index);
-          }}
-          onDragStart={() => {
-            OnSelect(index);
-          }}
+          onClick={onSelect}
+          onTap={onSelect}
+          onDragStart={onSelect}
           ref={shapeRef}
           draggable
           {...shapeProps}
           fillPatternImage={image}
           onDragEnd={(e) => {
-            OnChange(index, {
+            onChange({
               ...shapeProps,
               x: e.target.x(),
               y: e.target.y(),
@@ -45,7 +41,7 @@ export default function PhotoMaker({
           width={image?.width}
           height={image?.height}
         />
-        {IsSelected(index) && (
+        {isSelected && (
           <>
             <Transformer
               ref={trRef}
@@ -72,29 +68,22 @@ export default function PhotoMaker({
     return (
       <>
         <Path
-          data={FRAMES.get(shapeProps.frame)}
-          onClick={() => {
-            OnSelect(index);
-          }}
-          onTap={() => {
-            OnSelect(index);
-          }}
-          onDragStart={() => {
-            OnSelect(index);
-          }}
+          onClick={onSelect}
+          onTap={onSelect}
+          onDragStart={onSelect}
           ref={shapeRef}
           draggable
           {...shapeProps}
           fillPatternImage={image}
           onDragEnd={(e) => {
-            OnChange(index, {
+            onChange({
               ...shapeProps,
               x: e.target.x(),
               y: e.target.y(),
             });
           }}
         />
-        {IsSelected(index) && (
+        {isSelected && (
           <Transformer
             ref={trRef}
             boundBoxFunc={(oldBox, newBox) => {

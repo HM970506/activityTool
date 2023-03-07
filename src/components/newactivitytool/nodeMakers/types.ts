@@ -1,10 +1,14 @@
 import Konva from "konva";
+import { RefObject } from "react";
 
 export interface MakerType {
   shapeProps: any;
   index: number;
-  shapeRef: any;
-  trRef: any;
+  shapeRef: RefObject<any>;
+  trRef: RefObject<TransformerType>;
+  onChange: any;
+  onSelect: any;
+  isSelected: boolean;
 }
 
 export interface NodeMakerType {

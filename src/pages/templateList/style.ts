@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const Dialog = styled.dialog`
-  padding: 0;
-  margin: 0;
   ::backdrop {
     background-color: rgba(0, 0, 0, 0.2);
   }
@@ -29,6 +27,7 @@ export const Template = styled.button`
 export const TemplatesContainer = styled.main`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
 `;
 

@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { Text, Transformer } from "react-konva";
 import { Html } from "react-konva-utils";
+import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { TextEditor } from "../style";
-import { IsSelected, OnChange, OnSelect } from "./functions";
 import { MakerType } from "./types";
 
 export default function TextMaker({
@@ -11,10 +11,13 @@ export default function TextMaker({
   index,
   shapeRef,
   trRef,
+  onSelect,
+  onChange,
+  isSelected,
 }: MakerType) {
   const [dbclick, setDbClick] = useState<boolean>(false);
   const textRef = useRef<HTMLTextAreaElement>(null);
-
+  const dispatch = useDispatch();
   const onEdit = async () => {
     dispatch(
       nodeActions.modifyNodes({
@@ -33,22 +36,16 @@ export default function TextMaker({
     <>
       <Text
         draggable
-        onClick={() => {
-          OnSelect(index);
-        }}
+        onClick={onSelect}
         onDblClick={() => {
           shapeRef.current.hide();
           trRef.current?.hide();
           setDbClick(true);
         }}
-        onTap={() => {
-          OnSelect(index);
-        }}
-        onDragStart={() => {
-          OnSelect(index);
-        }}
+        onTap={onSelect}
+        onDragStart={onSelect}
         onDragEnd={(e) => {
-          OnChange(index, {
+          onChange({
             ...shapeProps,
             x: e.target.x(),
             y: e.target.y(),
@@ -57,7 +54,7 @@ export default function TextMaker({
         ref={shapeRef}
         {...shapeProps}
       />
-      {IsSelected(index) && <Transformer ref={trRef} />}
+      {isSelected && <Transformer ref={trRef} />}
       {dbclick && (
         <Html groupProps={{ x, y }}>
           <TextEditor
@@ -71,7 +68,4 @@ export default function TextMaker({
       )}
     </>
   );
-}
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
 }

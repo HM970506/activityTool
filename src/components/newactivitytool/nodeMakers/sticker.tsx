@@ -2,7 +2,6 @@ import { Circle, Rect, Transformer } from "react-konva";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
-import { IsSelected, OnChange, OnSelect } from "./functions";
 import { MakerType } from "./types";
 
 export default function StickerMaker({
@@ -10,33 +9,29 @@ export default function StickerMaker({
   index,
   shapeRef,
   trRef,
+  onSelect,
+  onChange,
+  isSelected,
 }: MakerType) {
   const dispatch = useDispatch();
   return (
     <>
       <Rect
-        onClick={() => {
-          OnSelect(index);
-        }}
-        onTap={() => {
-          OnSelect(index);
-        }}
-        onDragStart={() => {
-          OnSelect(index);
-        }}
+        onClick={onSelect}
+        onTap={onSelect}
+        onDragStart={onSelect}
         ref={shapeRef}
         draggable
         {...shapeProps}
-        fill={"white"}
         onDragEnd={(e) => {
-          OnChange(index, {
+          onChange({
             ...shapeProps,
             x: e.target.x(),
             y: e.target.y(),
           });
         }}
       />
-      {IsSelected(index) && (
+      {isSelected && (
         <>
           <Transformer
             ref={trRef}
