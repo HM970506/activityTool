@@ -25,10 +25,13 @@ export default function TextMaker({
     dispatch(
       nodeActions.modifyNodes({
         index: index,
-        modifyProps: { text: textRef.current?.value },
+        modifyProps: {
+          text: textRef.current?.value,
+          height: nowText.split("\n").length * 25,
+        },
       })
     );
-    await shapeRef.current.show(); //show 이후에 dispatch가 반영된다. await를 써도 안 됨.
+    await shapeRef.current.show(); //깜빡임 해결 시도: show 이후에 dispatch가 반영된다. await를 써도 안 됨.
     setDbClick(false);
   };
 
