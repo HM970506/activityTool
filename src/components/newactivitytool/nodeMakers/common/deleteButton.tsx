@@ -15,7 +15,12 @@ export default function DeleteButton({
     <Circle
       fill={"red"}
       x={shapeProps.x + shapeProps.scaleX * shapeProps.width + 15}
-      y={shapeProps.y - 15}
+      y={
+        shapeProps.y +
+        shapeProps.height -
+        shapeProps.scaleY * shapeProps.height -
+        15
+      }
       radius={10}
       onClick={() => {
         dispatch(selectActions.selectChange(null));

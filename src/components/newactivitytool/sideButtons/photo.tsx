@@ -19,7 +19,7 @@ export default function PhotoButton() {
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
           scaleX: 1,
-          width: 100,
+          scaleY: 1,
           frame: "RECT",
           fillPatternOffsetX: 0,
           fillPatternOffsetY: 0,

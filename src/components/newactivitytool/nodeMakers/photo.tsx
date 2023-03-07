@@ -79,7 +79,14 @@ export default function PhotoMaker({
               else return newBox;
             }}
           />
-          <DeleteButton index={index} shapeProps={shapeProps} />
+          <DeleteButton
+            index={index}
+            shapeProps={{
+              ...shapeProps,
+              width: image?.width,
+              height: image?.height,
+            }}
+          />
         </>
       )}
     </Group>
