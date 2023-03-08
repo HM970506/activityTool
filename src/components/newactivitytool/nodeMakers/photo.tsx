@@ -47,6 +47,7 @@ export default function PhotoMaker({
         />
       ) : (
         <Path
+          data={FRAMES.get(shapeProps.frame)}
           onClick={onSelect}
           onTap={onSelect}
           onDragStart={onSelect}

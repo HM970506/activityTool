@@ -1,7 +1,13 @@
 import { useParams } from "react-router-dom";
+import { Background, Template } from "./style";
+import { ColorExtractor } from "react-color-extractor";
 
 export default function TemplateActivity() {
   const { templateId } = useParams();
 
-  return <div>{templateId}</div>;
+  return (
+    <ColorExtractor getColors={this.getColors}>
+      <Template image={templateId!} />
+    </ColorExtractor>
+  );
 }
