@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Circle, Group, Rect, Transformer } from "react-konva";
 import { useImage } from "react-konva-utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import DeleteButton from "./common/deleteButton";
@@ -17,8 +18,27 @@ export default function StickerMaker({
 }: MakerType) {
   const [image] = useImage(shapeProps.stickerCategory);
 
+  const draw = useSelector((state: any) => state.drawReducer.tool);
+
+  const [isNotDrawing, setIsNotDrawing] = useState<boolean>(
+    draw == "" ? true : false
+  );
+
+  const onSelectCheck = () => {
+    if (isNotDrawing) onSelect();
+  };
+
+  useEffect(() => {
+    setIsNotDrawing(draw == "" ? true : false);
+  }, [draw]);
+
   return (
-    <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
+    <Group
+      draggable={isNotDrawing}
+      onClick={onSelectCheck}
+      onTap={onSelectCheck}
+      onDragStart={onSelectCheck}
+    >
       <Rect
         ref={shapeRef}
         {...shapeProps}
