@@ -13,9 +13,10 @@ export default function TextMaker({
   index,
   shapeRef,
   trRef,
-  onSelect,
   onChange,
   isSelected,
+  isNotDrawing,
+  onSelectCheck,
 }: MakerType) {
   const [dbclick, setDbClick] = useState<boolean>(false);
   const [nowText, setNowText] = useState<string>(shapeProps.text);
@@ -48,7 +49,12 @@ export default function TextMaker({
   let y = shapeProps.y - 10;
 
   return (
-    <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
+    <Group
+      draggable={isNotDrawing}
+      onClick={onSelectCheck}
+      onTap={onSelectCheck}
+      onDragStart={onSelectCheck}
+    >
       <Text
         onDblClick={() => {
           setDbClick(true);

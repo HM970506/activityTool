@@ -7,8 +7,9 @@ export interface MakerType {
   shapeRef: RefObject<any>;
   trRef: RefObject<TransformerType>;
   onChange: any;
-  onSelect: any;
   isSelected: boolean;
+  isNotDrawing: boolean;
+  onSelectCheck: any;
 }
 
 export interface NodeMakerType {

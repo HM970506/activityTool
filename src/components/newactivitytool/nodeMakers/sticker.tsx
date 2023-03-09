@@ -12,25 +12,12 @@ export default function StickerMaker({
   index,
   shapeRef,
   trRef,
-  onSelect,
   onChange,
   isSelected,
+  isNotDrawing,
+  onSelectCheck,
 }: MakerType) {
   const [image] = useImage(shapeProps.stickerCategory);
-
-  const draw = useSelector((state: any) => state.drawReducer.tool);
-
-  const [isNotDrawing, setIsNotDrawing] = useState<boolean>(
-    draw == "" ? true : false
-  );
-
-  const onSelectCheck = () => {
-    if (isNotDrawing) onSelect();
-  };
-
-  useEffect(() => {
-    setIsNotDrawing(draw == "" ? true : false);
-  }, [draw]);
 
   return (
     <Group

@@ -12,16 +12,22 @@ export default function PhotoMaker({
   index,
   shapeRef,
   trRef,
-  onSelect,
   onChange,
   isSelected,
+  isNotDrawing,
+  onSelectCheck,
 }: MakerType) {
   const [image] = useImage(
     "https://i.pinimg.com/564x/56/46/08/564608c8a6094dce93e1dcf4addb7130.jpg"
   );
 
   return (
-    <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
+    <Group
+      draggable={isNotDrawing}
+      onClick={onSelectCheck}
+      onTap={onSelectCheck}
+      onDragStart={onSelectCheck}
+    >
       {shapeProps.frame === "RECT" ? (
         <Rect
           ref={shapeRef}
@@ -47,9 +53,9 @@ export default function PhotoMaker({
       ) : (
         <Path
           data={FRAMES.get(shapeProps.frame)}
-          onClick={onSelect}
-          onTap={onSelect}
-          onDragStart={onSelect}
+          onClick={onSelectCheck}
+          onTap={onSelectCheck}
+          onDragStart={onSelectCheck}
           ref={shapeRef}
           draggable
           {...shapeProps}

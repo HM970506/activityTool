@@ -42,14 +42,29 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
     dispatch(selectActions.selectChange(index));
   };
 
+  const draw = useSelector((state: any) => state.drawReducer.tool);
+
+  const [isNotDrawing, setIsNotDrawing] = useState<boolean>(
+    draw == "" ? true : false
+  );
+
+  const onSelectCheck = () => {
+    if (isNotDrawing) onSelect();
+  };
+
+  useEffect(() => {
+    setIsNotDrawing(draw == "" ? true : false);
+  }, [draw]);
+
   const props = {
     shapeProps: shapeProps,
     index: index,
     shapeRef: shapeRef,
     trRef: trRef,
     onChange: onChange,
-    onSelect: onSelect,
+    onSelectCheck: onSelectCheck,
     isSelected: isSelected,
+    isNotDrawing: isNotDrawing,
   };
 
   switch (type) {
