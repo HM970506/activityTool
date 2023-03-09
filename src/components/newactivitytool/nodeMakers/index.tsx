@@ -18,6 +18,7 @@ import ToolsMaker from "./tools";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
+import categorySlice from "../../../store/common/categorySlice";
 
 export default function Node({ index, type, shapeProps }: NodeMakerType) {
   const shapeRef = useRef<any>(null);
@@ -25,6 +26,7 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
   const dispatch = useDispatch();
   const nowSelect = useSelector((state: any) => state.selectReducer.select);
   const isSelected = nowSelect === index ? true : false;
+  const category = useSelector((state: any) => state.categoryReducer.category);
 
   useEffect(() => {
     if (isSelected && trRef) {

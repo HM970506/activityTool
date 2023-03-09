@@ -7,9 +7,6 @@ export default function NonTemplate() {
   const { templateId } = useParams();
   const url = `./test${templateId}.PNG`;
   const [colors, setColors] = useState<any[]>([]);
-  const [backgroundColor, setBackgroundColor] = useState<string>("white");
-  const [colorsVisible, setColorsVisible] = useState<boolean>(true);
-  const [dialogOpen, setDialogOpen] = useState<boolean>(true);
 
   const getColor = async () => {
     const test1 = await extractColors(url);
@@ -22,7 +19,11 @@ export default function NonTemplate() {
 
   return (
     <>
-      <Background url={url} backgroundcolor={backgroundColor} />
+      {templateId == "3" ? (
+        <Background url={url} />
+      ) : (
+        <iframe width="100%" height="1000" src="https://velog.io/" />
+      )}
     </>
   );
 }

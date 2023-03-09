@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { drawActions } from "../../../store/common/drawSlice";
+import { selectActions } from "../../../store/common/selectSlice";
 import { Button, ButtonBox } from "../style";
 import PhotoButton from "./photo";
 import RecordButton from "./record";
@@ -10,6 +14,14 @@ export default function SideButtons({
 }: {
   activitytoolsEnd: any;
 }) {
+  const dispatch = useDispatch();
+  const category = useSelector((state: any) => state.categoryReducer.category);
+
+  useEffect(() => {
+    dispatch(selectActions.selectChange(null));
+    dispatch(drawActions.toolChange(""));
+  }, [category]);
+
   return (
     <ButtonBox>
       <TextButton />
