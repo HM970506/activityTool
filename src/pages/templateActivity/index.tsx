@@ -9,6 +9,7 @@ export default function TemplateActivity() {
   const [colors, setColors] = useState<any[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>("white");
   const [colorsVisible, setColorsVisible] = useState<boolean>(true);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(true);
 
   const getColor = async () => {
     const test1 = await extractColors(url);
@@ -22,25 +23,39 @@ export default function TemplateActivity() {
   return (
     <>
       <Template url={url} backgroundcolor={backgroundColor} />
-      <ColorBox>
-        <button
-          onClick={() => {
-            setColorsVisible((x) => !x);
-          }}
-        >
-          배경색
-        </button>
-        {colorsVisible &&
-          colors.map((value, key) => (
-            <ColorChip
-              key={key}
-              backgroundcolor={value.hex}
+      {(templateId == "1" || templateId == "2") && (
+        <>
+          <ColorBox>
+            <button
               onClick={() => {
-                setBackgroundColor(value.hex);
+                setColorsVisible((x) => !x);
               }}
-            />
-          ))}{" "}
-      </ColorBox>
+            >
+              배경색
+            </button>
+            {colorsVisible &&
+              colors.map((value, key) => (
+                <ColorChip
+                  key={key}
+                  backgroundcolor={value.hex}
+                  onClick={() => {
+                    setBackgroundColor(value.hex);
+                  }}
+                />
+              ))}
+          </ColorBox>
+          <dialog open={dialogOpen}>
+            <label>
+              <input type="radio" name="group1" value="apple" />큰 쪽에 맞추기
+            </label>
+            <label>
+              <input type="radio" name="group1" value="apple" />
+              작은 쪽에 맞추기
+            </label>
+            <button onClick={() => setDialogOpen(false)}>확인</button>
+          </dialog>
+        </>
+      )}
     </>
   );
 }
