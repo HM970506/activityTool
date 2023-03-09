@@ -21,6 +21,7 @@ import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import { selectActions } from "../../store/common/selectSlice";
+import { BRUSH, DRAWTOOLS, ERASER, PEN } from "./nodeMakers/types";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);

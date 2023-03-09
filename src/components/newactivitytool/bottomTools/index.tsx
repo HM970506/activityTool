@@ -3,7 +3,7 @@ import { ToolBox } from "../style";
 import PhotoMenu from "./photo";
 import RecordMenu from "./record";
 import StickerMenu from "./sticker";
-import ToolsMenu from "./tools";
+import DrawToolsMenu from "./drawTools";
 
 export default function BottomTools() {
   const nowCategory = useSelector(
@@ -12,7 +12,9 @@ export default function BottomTools() {
 
   return (
     <ToolBox>
-      {(nowCategory === "TOOLS" || nowCategory === "TEXT") && <ToolsMenu />}
+      {(nowCategory === "DRAWTOOLS" || nowCategory === "TEXT") && (
+        <DrawToolsMenu />
+      )}
       {nowCategory === "RECORD" && <RecordMenu />}
       {nowCategory === "PHOTO" && <PhotoMenu />}
       {nowCategory === "STICKER" && <StickerMenu />}

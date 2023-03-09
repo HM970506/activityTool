@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../store/common/drawSlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import selectSlice, { selectActions } from "../../../store/common/selectSlice";
-import { Button, ToolBox } from "../style";
 
-export default function ToolsMenu() {
+export default function DrawToolsMenu() {
   const dispatch = useDispatch();
   const selectShapeIndex = useSelector(
     (state: any) => state.selectReducer.select

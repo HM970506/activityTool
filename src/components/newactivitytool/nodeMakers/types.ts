@@ -24,6 +24,7 @@ export const ERASER = "ERASER";
 export const BRUSH = "BRUSH";
 export const PHOTO = "PHOTO";
 export const RECORD = "RECORD";
+export const DRAWTOOLS = "DRAWTOOLS";
 export type NodeType =
   | "STICKER"
   | "TEXT"
@@ -31,7 +32,8 @@ export type NodeType =
   | "ERASER"
   | "BRUSH"
   | "PHOTO"
-  | "RECORD";
+  | "RECORD"
+  | "DRAWTOOLS";
 
 export type TransformerType = Konva.Transformer;
 

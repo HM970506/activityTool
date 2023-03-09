@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   BRUSH,
+  DRAWTOOLS,
   ERASER,
   NodeMakerType,
   PEN,
@@ -14,11 +15,10 @@ import RecordMaker from "./record";
 import TextMaker from "./text";
 import StickerMaker from "./sticker";
 import PhotoMaker from "./photo";
-import ToolsMaker from "./tools";
+import DrawToolsMaker from "./drawTools";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
-import categorySlice from "../../../store/common/categorySlice";
 
 export default function Node({ index, type, shapeProps }: NodeMakerType) {
   const shapeRef = useRef<any>(null);
@@ -26,7 +26,6 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
   const dispatch = useDispatch();
   const nowSelect = useSelector((state: any) => state.selectReducer.select);
   const isSelected = nowSelect === index ? true : false;
-  const category = useSelector((state: any) => state.categoryReducer.category);
 
   useEffect(() => {
     if (isSelected && trRef) {
@@ -53,8 +52,6 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
     isSelected: isSelected,
   };
 
-  //브러쉬 선택 후 다른 노드를 넣으면 이후의 클릭이 모두 브러시가 되는 버그 있음.
-  //카테고리도 같이 확인하게 하면 될 것 같은데..
   switch (type) {
     case RECORD:
       return <RecordMaker shapeProps={shapeProps} />;
@@ -64,8 +61,12 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
       return <StickerMaker {...props} />;
     case PHOTO:
       return <PhotoMaker {...props} />;
-    case PEN || BRUSH || ERASER:
-      return <ToolsMaker type={type} shapeProps={shapeProps} />;
+    case PEN:
+      return <DrawToolsMaker type={type} shapeProps={shapeProps} />;
+    case BRUSH:
+      return <DrawToolsMaker type={type} shapeProps={shapeProps} />;
+    case ERASER:
+      return <DrawToolsMaker type={type} shapeProps={shapeProps} />;
   }
   return <></>;
 }

@@ -1,7 +1,8 @@
 import { Line } from "react-konva";
+import { useSelector } from "react-redux";
 import { BRUSH, ERASER, PEN } from "./types";
 
-export default function ToolsMaker({
+export default function DrawToolsMaker({
   type,
   shapeProps,
 }: {
