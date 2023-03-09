@@ -24,6 +24,7 @@ import { selectActions } from "../../store/common/selectSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
+  const [scale, setScale] = useState({ scaleX: 1, scaleY: 1 });
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false); //우측 버튼
   const [activitytools, setActivitytools] = useState<boolean>(false); //하단 버튼과 캔버스
   const [canvas, setCanvas] = useState<any[]>([]); //노드들이 쌓이는 캔버스
@@ -31,6 +32,28 @@ export default function NewActivityTool() {
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
   const dispatch = useDispatch();
+  const firstSize = { width: window.innerWidth, height: window.innerHeight };
+
+  const onResize = (e: any) => {
+    setScale({
+      scaleX: e.target.innerWidth / firstSize.width,
+      scaleY: e.target.innerHeight / firstSize.height,
+    });
+  };
+
+  //캔버스 동적 리사이징
+  //width나 height를 조정하는 게 아닌, scaleX로 조정한다!
+  //처음에 윈도우에 resize감지 함수를 넣어서 리사이징 감지하기.
+  //.......왜 이렇게 작지?
+  //-> 윈도우가 아니라 템플릿에 리사이즈를하려면..음....
+
+  //메모리 누수 방지를 위해 새로운 리사이즈가 생기기 전 기존 리스너를 제거해주자.
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   //노드가 생성되거나 삭제될 때마다 캔버스가 업데이트된다
   useEffect(() => {
@@ -116,8 +139,9 @@ export default function NewActivityTool() {
           <BottomTools />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
           <Stage
-            width={document.documentElement.clientWidth}
-            height={document.documentElement.clientHeight}
+            width={window.innerWidth}
+            height={window.innerHeight}
+            scaleX={scale.scaleX}
             onMouseDown={mouseDown}
             onTouchStart={checkDeselect}
             onMousemove={handleMouseMove}

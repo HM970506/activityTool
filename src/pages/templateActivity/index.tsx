@@ -8,6 +8,7 @@ export default function TemplateActivity() {
   const url = `./test${templateId}.PNG`;
   const [colors, setColors] = useState<any[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>("white");
+  const [colorsVisible, setColorsVisible] = useState<boolean>(true);
 
   const getColor = async () => {
     const test1 = await extractColors(url);
@@ -22,15 +23,23 @@ export default function TemplateActivity() {
     <>
       <Template url={url} backgroundcolor={backgroundColor} />
       <ColorBox>
-        {colors.map((value, key) => (
-          <ColorChip
-            key={key}
-            backgroundcolor={value.hex}
-            onClick={() => {
-              setBackgroundColor(value.hex);
-            }}
-          />
-        ))}
+        <button
+          onClick={() => {
+            setColorsVisible((x) => !x);
+          }}
+        >
+          배경색
+        </button>
+        {colorsVisible &&
+          colors.map((value, key) => (
+            <ColorChip
+              key={key}
+              backgroundcolor={value.hex}
+              onClick={() => {
+                setBackgroundColor(value.hex);
+              }}
+            />
+          ))}{" "}
       </ColorBox>
     </>
   );

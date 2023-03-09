@@ -9,12 +9,7 @@ export default function RecordMenu() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("audio:", audioSrc);
-  }, [audioSrc]);
-
   const addNodes = (audioSrc: string) => {
-    console.log(audioRef.current, audioSrc);
     dispatch(
       nodeActions.addNodes({
         type: "RECORD",

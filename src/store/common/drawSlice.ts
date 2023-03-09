@@ -7,15 +7,12 @@ const drawSlice = createSlice({
   reducers: {
     toolChange: (state, action: PayloadAction<any>) => {
       state.tool = action.payload;
-      console.log(JSON.stringify(state));
     },
     colorChange: (state, action: PayloadAction<any>) => {
       state.color = action.payload;
-      console.log(JSON.stringify(state));
     },
     sizeChange: (state, action: PayloadAction<any>) => {
       state.size = action.payload;
-      console.log(JSON.stringify(state));
     },
   },
 });
