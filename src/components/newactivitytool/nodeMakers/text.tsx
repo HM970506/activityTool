@@ -3,6 +3,7 @@ import { Group, Text, Transformer } from "react-konva";
 import { Html } from "react-konva-utils";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import { selectActions } from "../../../store/common/selectSlice";
 import { TextEditor } from "../style";
 import DeleteButton from "./common/deleteButton";
 import { MakerType } from "./types";
@@ -21,6 +22,14 @@ export default function TextMaker({
 
   const textRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (dbclick) {
+      trRef.current?.hide();
+      shapeRef.current.hide();
+    } else shapeRef.current.show();
+  }, [dbclick]);
+
   const onEdit = async () => {
     dispatch(
       nodeActions.modifyNodes({
@@ -31,23 +40,17 @@ export default function TextMaker({
         },
       })
     );
-    await shapeRef.current.show(); //깜빡임 해결 시도: show 이후에 dispatch가 반영된다. await를 써도 안 됨.
     setDbClick(false);
+    dispatch(selectActions.selectChange(null));
   };
 
   let x = shapeProps.x - 5;
   let y = shapeProps.y - 10;
 
-  useEffect(() => {
-    console.log(nowText);
-  }, [nowText]);
-
   return (
     <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
       <Text
         onDblClick={() => {
-          shapeRef.current.hide();
-          trRef.current?.hide();
           setDbClick(true);
         }}
         onDragEnd={(e) => {
