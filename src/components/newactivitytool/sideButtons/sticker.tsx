@@ -6,28 +6,10 @@ import { Button } from "../style";
 export default function StickerButton() {
   const dispatch = useDispatch();
 
-  const addNodes = () => {
-    dispatch(
-      nodeActions.addNodes({
-        type: "STICKER",
-        shapeProps: {
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          width: 100,
-          height: 100,
-          fill: "red",
-          scaleX: 1,
-          scaleY: 1,
-        },
-      })
-    );
-  };
-
   return (
     <Button
       onClick={() => {
         dispatch(categoryActions.categoryChange("STICKER"));
-        addNodes();
       }}
     >
       스티커

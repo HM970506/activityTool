@@ -1,4 +1,5 @@
 import { Circle, Group, Rect, Transformer } from "react-konva";
+import { useImage } from "react-konva-utils";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
@@ -14,11 +15,14 @@ export default function StickerMaker({
   onChange,
   isSelected,
 }: MakerType) {
+  const [image] = useImage(shapeProps.stickerCategory);
+
   return (
     <Group draggable onClick={onSelect} onTap={onSelect} onDragStart={onSelect}>
       <Rect
         ref={shapeRef}
         {...shapeProps}
+        fillPatternImage={image}
         onDragEnd={(e) => {
           onChange({
             ...shapeProps,
@@ -33,6 +37,8 @@ export default function StickerMaker({
             scaleY: e.target.scaleY(),
           });
         }}
+        width={image?.width}
+        height={image?.height}
       />
       {isSelected && (
         <>

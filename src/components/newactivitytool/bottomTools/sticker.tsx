@@ -1,0 +1,70 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { nodeActions } from "../../../store/common/nodeSlice";
+
+const sample = new Map([
+  ["fluffy", ["토끼", "병아리"]],
+  ["round", ["달걀프라이", "어항"]],
+]);
+
+export default function StickerMenu() {
+  const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
+  const [stickers, setStickers] = useState<string[] | undefined>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    //스티커카테고리에 따라 다른 url로 api를 호출, 데이터를 가져온다
+    setStickers(sample.get(stickerCategory));
+  }, [stickerCategory]);
+
+  const addNodes = (index: number) => {
+    dispatch(
+      nodeActions.addNodes({
+        type: "STICKER",
+        shapeProps: {
+          stickerCategory: `./${stickerCategory}_sticker_${index}.png`,
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+          width: 100,
+          height: 100,
+          scaleX: 1,
+          scaleY: 1,
+        },
+      })
+    );
+  };
+
+  return (
+    <>
+      <div>
+        <button
+          onClick={() => {
+            setStickerCategory("fluffy");
+          }}
+        >
+          인형
+        </button>
+        <button
+          onClick={() => {
+            setStickerCategory("round");
+          }}
+        >
+          인형아님
+        </button>
+      </div>
+      <div>
+        {Array.isArray(stickers) &&
+          stickers.map((value, key) => (
+            <button
+              key={key}
+              onClick={() => {
+                addNodes(key + 1);
+              }}
+            >
+              {value}
+            </button>
+          ))}
+      </div>
+    </>
+  );
+}

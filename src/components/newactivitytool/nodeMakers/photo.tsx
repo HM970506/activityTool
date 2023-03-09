@@ -16,7 +16,6 @@ export default function PhotoMaker({
   onChange,
   isSelected,
 }: MakerType) {
-  const dispatch = useDispatch();
   const [image] = useImage(
     "https://i.pinimg.com/564x/56/46/08/564608c8a6094dce93e1dcf4addb7130.jpg"
   );
