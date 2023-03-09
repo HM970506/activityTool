@@ -12,10 +12,10 @@ const dummy = [1, 2, 3, 4, 5, 6, 7];
 
 export default function TemplatesIndex() {
   const dialog = useRef<HTMLDialogElement>(null);
-  const [nowTemplate, setNowTemplate] = useState<null | number>(null);
+  const [index, setindex] = useState<null | number>(null);
 
   const templateClick = (value: number) => {
-    setNowTemplate(value);
+    setindex(value);
     dialog.current?.showModal();
   };
 
@@ -32,19 +32,29 @@ export default function TemplatesIndex() {
     <Background>
       <Dialog ref={dialog} onClick={overlayClick}>
         <DialogMain>
-          <p>{nowTemplate}</p>
+          <p>{index}</p>
           <div>
             <button onClick={closeModal}>취소</button>
-            <Link to={`/${nowTemplate}`}>확인</Link>
+            <Link
+              to={index == 1 || index == 2 ? `/template/${index}` : `/${index}`}
+            >
+              확인
+            </Link>
           </div>
         </DialogMain>
       </Dialog>
       <TemplatesContainer>
-        {dummy.map((value, key) => (
-          <Template key={key} onClick={() => templateClick(value)}>
-            {value} 템플릿 목록
-          </Template>
-        ))}
+        {dummy.map((value, key) =>
+          value == 1 || value == 2 ? (
+            <Template key={key} onClick={() => templateClick(value)}>
+              {value} 템플릿
+            </Template>
+          ) : (
+            <Template key={key} onClick={() => templateClick(value)}>
+              {value} 템플릿 아님
+            </Template>
+          )
+        )}
       </TemplatesContainer>
     </Background>
   );

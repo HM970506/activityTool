@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Template = styled.main<{ url: string; backgroundcolor: string }>`
+export const Background = styled.main<{ url: string; backgroundcolor: string }>`
   background-image: ${(props) => `url(${props.url})`};
   background-repeat: no-repeat;
   background-size: contain;
@@ -30,4 +30,17 @@ export const ColorChip = styled.div<{ backgroundcolor: string }>`
   margin: 10px;
   border-radius: 100%;
   background-color: ${(props) => props.backgroundcolor};
+`;
+export const Dialog = styled.dialog`
+  ::backdrop {
+    background-color: rgba(0, 0, 0, 1);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-item: center;
+    justify-content: center;
+  }
+
+  padding: 0;
+  margin: 0;
 `;
