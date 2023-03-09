@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import { ColorBox, ColorChip, Dialog, Template } from "./style";
+import { Background, ColorBox, ColorChip, Dialog, Template } from "./style";
 import { extractColors } from "extract-colors";
 import { useEffect, useState } from "react";
 
 export default function TemplateActivity() {
   const { templateId } = useParams();
-  const url = `./test${templateId}.PNG`;
+  const url = `/test${templateId}.PNG`;
   const [colors, setColors] = useState<any[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>("white");
   const [colorsVisible, setColorsVisible] = useState<boolean>(true);
@@ -21,8 +21,8 @@ export default function TemplateActivity() {
   }, []);
 
   return (
-    <>
-      <Template url={url} backgroundcolor={backgroundColor} />
+    <Background backgroundcolor={backgroundColor}>
+      <Template src={url} />
 
       <ColorBox>
         <button
@@ -45,14 +45,19 @@ export default function TemplateActivity() {
       </ColorBox>
       <Dialog open={dialogOpen}>
         <label>
-          <input type="radio" name="group1" value="apple" />큰 쪽에 맞추기
+          <input type="radio" name="group1" value="height" />
+          세로에 맞추기
         </label>
         <label>
-          <input type="radio" name="group1" value="apple" />
-          작은 쪽에 맞추기
+          <input type="radio" name="group1" value="width" />
+          가로에 맞추기
+        </label>
+        <label>
+          <input type="radio" name="group1" value="cover" />
+          여백 없애기
         </label>
         <button onClick={() => setDialogOpen(false)}>확인</button>
       </Dialog>
-    </>
+    </Background>
   );
 }

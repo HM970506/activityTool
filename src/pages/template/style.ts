@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
-export const Template = styled.main<{ url: string; backgroundcolor: string }>`
-  background-image: ${(props) => `url(${props.url})`};
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-color: ${(props) => props.backgroundcolor};
+export const Background = styled.main<{ backgroundcolor: string }>`
   width: 100%;
   height: 100vh;
-  overflow: hidden;
-  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.backgroundcolor};
+`;
+
+export const Template = styled.img`
+  object-fit: cover;
 `;
 
 export const ColorBox = styled.div`
