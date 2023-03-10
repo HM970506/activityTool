@@ -111,7 +111,7 @@ export default function NewActivityTool() {
   };
 
   const handleMouseUp = () => {
-    setIsDrawing(false);
+    if (isDrawing) setIsDrawing(false);
   };
 
   //그림 관련 부분 끝------------------------------------------
@@ -130,7 +130,7 @@ export default function NewActivityTool() {
             onTouchStart={handleMouseDown}
             onMousemove={handleMouseMove}
             onMouseup={handleMouseUp}
-            onMouseout={handleMouseUp}
+            onMouseLeave={handleMouseUp}
             ref={nodeStoreRef}
           >
             <Layer>
