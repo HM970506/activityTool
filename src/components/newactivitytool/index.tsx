@@ -3,7 +3,7 @@ import { Layer, Stage } from "react-konva";
 import { useDispatch, useSelector } from "react-redux";
 import { Background, Canvas, LoadButton, MainButton, NewButton } from "./style";
 import { nodeActions } from "../../store/common/nodeSlice";
-import { cursorMove } from "./types";
+import { BRUSH, cursorMove, PEN } from "./types";
 import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
@@ -81,6 +81,7 @@ export default function NewActivityTool() {
     if (draws.tool !== "") {
       setIsDrawing(true);
       const pos = e.target.getStage()?.getPointerPosition();
+
       dispatch(
         nodeActions.addNodes({
           type: draws.tool,

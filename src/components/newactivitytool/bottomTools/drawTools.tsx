@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../store/common/drawSlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import { BRUSH, PEN } from "../types";
 
 export default function DrawToolsMenu() {
   const dispatch = useDispatch();
@@ -31,17 +32,24 @@ export default function DrawToolsMenu() {
     <>
       <button
         onClick={() => {
-          toolChagne("PEN");
+          toolChagne(PEN);
         }}
       >
         펜
       </button>
       <button
         onClick={() => {
-          toolChagne("BRUSH");
+          toolChagne(BRUSH);
         }}
       >
         붓
+      </button>
+      <button
+        onClick={() => {
+          toolChagne("STAMP");
+        }}
+      >
+        도장
       </button>
       <button onClick={() => colorChange("black")}>검은색</button>
       <button onClick={() => colorChange("blue")}>파란색</button>
