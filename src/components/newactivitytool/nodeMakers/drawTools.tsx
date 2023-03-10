@@ -1,6 +1,6 @@
 import { Line } from "react-konva";
-import { useSelector } from "react-redux";
-import { BRUSH, ERASER, PEN } from "./types";
+import { useImage } from "react-konva-utils";
+import { BRUSH, ERASER, PEN } from "../types";
 
 export default function DrawToolsMaker({
   type,
@@ -9,6 +9,8 @@ export default function DrawToolsMaker({
   type: string;
   shapeProps: any;
 }) {
+  const brushBackground = useImage("/patten");
+
   switch (type) {
     case PEN:
       return (
@@ -27,6 +29,7 @@ export default function DrawToolsMaker({
           lineCap="round"
           globalCompositeOperation="source-over"
           {...shapeProps}
+          fillPatternImage={brushBackground}
         />
       );
     case ERASER:

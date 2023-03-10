@@ -6,7 +6,7 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import { TextEditor } from "../style";
 import DeleteButton from "./common/deleteButton";
-import { MakerType } from "./types";
+import { MakerType } from "../types";
 
 export default function TextMaker({
   shapeProps,

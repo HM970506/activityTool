@@ -5,7 +5,7 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import DeleteButton from "./common/deleteButton";
 import { FRAMES } from "./sample";
-import { MakerType } from "./types";
+import { MakerType } from "../types";
 
 export default function PhotoMaker({
   shapeProps,

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
   BRUSH,
-  DRAWTOOLS,
   ERASER,
   NodeMakerType,
   PEN,
@@ -10,7 +9,7 @@ import {
   STICKER,
   TEXT,
   TransformerType,
-} from "./types";
+} from "../types";
 import RecordMaker from "./record";
 import TextMaker from "./text";
 import StickerMaker from "./sticker";
@@ -34,6 +33,7 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
     }
   }, [isSelected]);
 
+  //공통으로 쓰는 함수들-----------------------------
   const onChange = (newAttr: any) => {
     dispatch(nodeActions.modifyNodes({ index: index, modifyProps: newAttr }));
   };

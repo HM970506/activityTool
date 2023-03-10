@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
+import { DRAWTOOLS } from "../types";
 import { Button } from "../style";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();
 
-  return (
-    <Button
-      onClick={() => {
-        dispatch(categoryActions.categoryChange("DRAWTOOLS"));
-      }}
-    >
-      도구
-    </Button>
-  );
+  const drawToolButtonClick = () => {
+    dispatch(categoryActions.categoryChange(DRAWTOOLS));
+  };
+
+  return <Button onClick={drawToolButtonClick}>도구</Button>;
 }

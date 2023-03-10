@@ -1,35 +1,21 @@
-import { SetStateAction, useEffect, useReducer, useRef, useState } from "react";
-import { Layer, Rect, Stage, Transformer, Text, Line } from "react-konva";
+import { useEffect, useRef, useState } from "react";
+import { Layer, Stage } from "react-konva";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Background,
-  Button,
-  ButtonBox,
-  Canvas,
-  LoadButton,
-  MainButton,
-  NewButton,
-  SubButton,
-  ToolBox,
-} from "./style";
-import TextButton from "./sideButtons/text";
-import StickerButton from "./sideButtons/sticker";
+import { Background, Canvas, LoadButton, MainButton, NewButton } from "./style";
 import { nodeActions } from "../../store/common/nodeSlice";
-import { drawActions } from "../../store/common/drawSlice";
 import { cursorMove } from "./types";
 import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
-import { selectActions } from "../../store/common/selectSlice";
-import { BRUSH, DRAWTOOLS, ERASER, PEN } from "./nodeMakers/types";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [scale, setScale] = useState({ scaleX: 1, scaleY: 1 });
-  const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false); //우측 버튼
-  const [activitytools, setActivitytools] = useState<boolean>(false); //하단 버튼과 캔버스
-  const [canvas, setCanvas] = useState<any[]>([]); //노드들이 쌓이는 캔버스
-  const canvasRef = useRef(null);
+  const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
+  const [activitytools, setActivitytools] = useState<boolean>(false);
+  const [nodeStore, setNodeStore] = useState<any[]>([]);
+  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  const nodeStoreRef = useRef(null);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
   const dispatch = useDispatch();
@@ -42,7 +28,9 @@ export default function NewActivityTool() {
     });
   };
 
-  //캔버스 동적 리사이징
+  //할일
+  //1.버튼 메모이제이션
+  //2.캔버스 동적 리사이징 작업
   //width나 height를 조정하는 게 아닌, scaleX로 조정한다!
   //처음에 윈도우에 resize감지 함수를 넣어서 리사이징 감지하기.
   //.......왜 이렇게 작지?
@@ -56,13 +44,14 @@ export default function NewActivityTool() {
     };
   }, []);
 
-  //노드가 생성되거나 삭제될 때마다 캔버스가 업데이트된다
+  //---------------------------------------------
+
   useEffect(() => {
-    setCanvas(nodes);
+    setNodeStore(nodes);
   }, [nodes]);
 
-  //버튼 관련 부분 시작----
-  //버튼들은 useCallback 등으로 메모이제이션 해두기~
+  //버튼 관련 부분 시작------------------------------------
+
   useEffect(() => {
     if (activitytools) newActivityTool.current?.showModal();
     else newActivityTool.current?.close();
@@ -84,28 +73,25 @@ export default function NewActivityTool() {
     setActivitytools(false);
   };
 
-  //버튼 관련 부분 끝-----
+  //버튼 관련 부분 끝-------------------------------------
 
-  const checkDeselect = (e: cursorMove) => {
-    if (e.target == canvasRef.current)
-      dispatch(selectActions.selectChange(null));
-  };
-
-  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  //그림 관련 부분 시작------------------------------------
 
   const handleMouseDown = (e: cursorMove) => {
-    setIsDrawing(true);
-    const pos = e.target.getStage()?.getPointerPosition();
-    dispatch(
-      nodeActions.addNodes({
-        type: draws.tool,
-        shapeProps: {
-          stroke: draws.color,
-          strokeWidth: draws.size,
-          points: [pos?.x, pos?.y],
-        },
-      })
-    );
+    if (draws.tool !== "") {
+      setIsDrawing(true);
+      const pos = e.target.getStage()?.getPointerPosition();
+      dispatch(
+        nodeActions.addNodes({
+          type: draws.tool,
+          shapeProps: {
+            stroke: draws.color,
+            strokeWidth: draws.size,
+            points: [pos?.x, pos?.y],
+          },
+        })
+      );
+    }
   };
 
   const handleMouseMove = (e: cursorMove) => {
@@ -128,10 +114,7 @@ export default function NewActivityTool() {
     setIsDrawing(false);
   };
 
-  const mouseDown = (e: cursorMove) => {
-    if (draws.tool !== "") handleMouseDown(e);
-    else checkDeselect(e);
-  };
+  //그림 관련 부분 끝------------------------------------------
 
   return (
     <>
@@ -143,15 +126,16 @@ export default function NewActivityTool() {
             width={window.innerWidth}
             height={window.innerHeight}
             scaleX={scale.scaleX}
-            onMouseDown={mouseDown}
-            onTouchStart={checkDeselect}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleMouseDown}
             onMousemove={handleMouseMove}
             onMouseup={handleMouseUp}
-            ref={canvasRef}
+            onMouseout={handleMouseUp}
+            ref={nodeStoreRef}
           >
             <Layer>
-              {Array.isArray(canvas) &&
-                canvas.map((value: any, key: number) => {
+              {Array.isArray(nodeStore) &&
+                nodeStore.map((value: any, key: number) => {
                   return (
                     <Node
                       key={key}
@@ -168,11 +152,11 @@ export default function NewActivityTool() {
 
       {!activitytools && (
         <>
-          <MainButton onClick={mainClick}>test</MainButton>
+          <MainButton onClick={mainClick}>활동툴</MainButton>
           {subButtonVisible && (
             <>
               <LoadButton>불러오기</LoadButton>
-              <NewButton onClick={activitytoolsStart}>활동툴 열기</NewButton>
+              <NewButton onClick={activitytoolsStart}>새로하기</NewButton>
             </>
           )}
         </>

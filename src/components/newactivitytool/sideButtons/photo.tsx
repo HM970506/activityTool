@@ -1,8 +1,8 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
-import { useImage } from "react-konva-utils";
 import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import { PHOTO } from "../types";
 import { Button, Uploader } from "../style";
 
 export default function PhotoButton() {
@@ -11,10 +11,10 @@ export default function PhotoButton() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const addNodes = (img: any) => {
+  const addPhotoNode = (img: any) => {
     dispatch(
       nodeActions.addNodes({
-        type: "PHOTO",
+        type: PHOTO,
         shapeProps: {
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
@@ -29,7 +29,7 @@ export default function PhotoButton() {
   };
 
   useEffect(() => {
-    if (photo !== "") addNodes(photo);
+    if (photo !== "") addPhotoNode(photo);
   }, [photo]);
 
   const onUploadImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -52,14 +52,13 @@ export default function PhotoButton() {
     }
   };
 
+  const photoButtonClick = () => {
+    dispatch(categoryActions.categoryChange(PHOTO));
+    photoUpload();
+  };
+
   return (
-    <Button
-      onClick={() => {
-        dispatch(categoryActions.categoryChange("PHOTO"));
-        //이거 왜 2번 실행되지..?
-        photoUpload();
-      }}
-    >
+    <Button onClick={photoButtonClick}>
       <Uploader
         ref={inputRef}
         type="file"

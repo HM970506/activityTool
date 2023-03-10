@@ -1,9 +1,9 @@
 import { Button, SideButton, SideButtonBox } from "../style";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { BIG, MIDIUM, SMALL } from "./types";
+import { BIG, MIDIUM, SMALL } from "../types";
+import { TEXT } from "../types";
 
 export default function TextButton() {
   const dispatch = useDispatch();
@@ -11,11 +11,10 @@ export default function TextButton() {
     (state: any) => state.categoryReducer.category
   );
 
-  const addNodes = (size: number) => {
+  const addTextNodes = (size: number) => {
     dispatch(
       nodeActions.addNodes({
-        type: "TEXT",
-
+        type: TEXT,
         shapeProps: {
           fontSize: size,
           scaleX: 1,
@@ -30,21 +29,25 @@ export default function TextButton() {
     );
   };
 
+  const textButtonClick = () => {
+    dispatch(categoryActions.categoryChange(TEXT));
+  };
+
   return (
     <>
-      {nowCategory === "TEXT" && (
+      {nowCategory === TEXT && (
         <SideButtonBox>
           <SideButton
             size={BIG}
             onClick={() => {
-              addNodes(BIG);
+              addTextNodes(BIG);
             }}
           >
             큰 글자
           </SideButton>
           <SideButton
             onClick={() => {
-              addNodes(MIDIUM);
+              addTextNodes(MIDIUM);
             }}
             size={MIDIUM}
           >
@@ -52,7 +55,7 @@ export default function TextButton() {
           </SideButton>
           <SideButton
             onClick={() => {
-              addNodes(SMALL);
+              addTextNodes(SMALL);
             }}
             size={SMALL}
           >
@@ -60,13 +63,7 @@ export default function TextButton() {
           </SideButton>
         </SideButtonBox>
       )}
-      <Button
-        onClick={() => {
-          dispatch(categoryActions.categoryChange("TEXT"));
-        }}
-      >
-        글상자
-      </Button>
+      <Button onClick={textButtonClick}>글상자</Button>
     </>
   );
 }
