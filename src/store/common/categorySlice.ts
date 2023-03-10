@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const categorySlice = createSlice({
   name: "categoryReducer",
-  initialState: { category: "TOOLS" },
+  initialState: { category: "DRAWTOOLS" },
 
   reducers: {
     categoryChange: (state, action: PayloadAction<any>) => {

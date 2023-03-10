@@ -5,7 +5,20 @@ export const Button = styled.button`
   border: none;
   width: 100px;
   height: 100px;
-  background-color: red;
+  background-color: white;
+  border: 1px solid black;
+
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+`;
+
+export const BottomButton = styled(Button)`
+  width: 70px;
+  height: 50px;
+  border-radius: 0;
 `;
 
 export const MainButton = styled(Button)`
@@ -65,9 +78,16 @@ export const ButtonBox = styled(Box)`
 `;
 
 export const ToolBox = styled(Box)`
-  width: 90%;
+  width: 80%;
   height: 100px;
-  background-color: blue;
+  background-color: white;
+  overflow: auto;
+  padding-right: 100px;
+  padding-left: 12px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const Canvas = styled.div`

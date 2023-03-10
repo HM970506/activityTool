@@ -3,10 +3,12 @@ import { Layer, Stage } from "react-konva";
 import { useDispatch, useSelector } from "react-redux";
 import { Background, Canvas, LoadButton, MainButton, NewButton } from "./style";
 import { nodeActions } from "../../store/common/nodeSlice";
-import { BRUSH, cursorMove, PEN } from "./types";
+import { BRUSH, cursorMove, DRAWTOOLS, PEN } from "./types";
 import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
+import { categoryActions } from "../../store/common/categorySlice";
+import { selectActions } from "../../store/common/selectSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -92,6 +94,8 @@ export default function NewActivityTool() {
           },
         })
       );
+    } else {
+      dispatch(selectActions.selectChange(null));
     }
   };
 

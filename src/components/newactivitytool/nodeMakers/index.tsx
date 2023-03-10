@@ -27,6 +27,10 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
   const isSelected = nowSelect === index ? true : false;
 
   useEffect(() => {
+    dispatch(selectActions.selectChange(null));
+  }, []);
+
+  useEffect(() => {
     if (isSelected && trRef) {
       trRef.current?.nodes([shapeRef.current]);
       trRef.current?.getLayer()?.batchDraw();
