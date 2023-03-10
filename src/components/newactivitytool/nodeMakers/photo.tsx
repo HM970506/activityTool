@@ -7,6 +7,7 @@ import { MakerType } from "../types";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import { OffsetBarX, OffsetBarY } from "../style";
 
 export default function PhotoMaker({
   shapeProps,
@@ -34,8 +35,7 @@ export default function PhotoMaker({
       nodeActions.modifyNodes({
         index: index,
         modifyProps: {
-          fillPatternOffsetX:
-            parseInt(nodes[index].shapeProps.fillPatternOffsetX) - offsetX,
+          fillPatternOffsetX: -offsetX,
         },
       })
     );
@@ -46,8 +46,7 @@ export default function PhotoMaker({
       nodeActions.modifyNodes({
         index: index,
         modifyProps: {
-          fillPatternOffsetY:
-            parseInt(nodes[index].shapeProps.fillPatternOffsetY) + offsetY,
+          fillPatternOffsetY: offsetY,
         },
       })
     );
@@ -129,24 +128,33 @@ export default function PhotoMaker({
             />
             <Html
               groupProps={{
-                position: "relative",
-                x: window.innerWidth - shapeProps.x * shapeProps.scaleX,
+                position: "absolute",
+                x: window.innerWidth - shapeProps.x * shapeProps.scaleX + 50,
                 y: window.innerHeight - shapeProps.y * shapeProps.scaleY,
               }}
             >
-              <input
+              <OffsetBarX
+                length={shapeProps.width * shapeProps.fillPatternOffsetX}
                 type="range"
                 defaultValue={offsetX}
-                min="-10"
-                max="10"
+                min="-100"
+                max="100"
                 onChange={onchangeX}
               />
-
-              <input
+            </Html>
+            <Html
+              groupProps={{
+                position: "absolute",
+                x: window.innerWidth - shapeProps.x * shapeProps.scaleX - 50,
+                y: window.innerHeight - shapeProps.y * shapeProps.scaleY + 100,
+              }}
+            >
+              <OffsetBarY
+                length={shapeProps.width * shapeProps.fillPatternOffsetY}
                 type="range"
                 defaultValue={offsetY}
-                min="-10"
-                max="10"
+                min="-100"
+                max="100"
                 onChange={onchangeY}
               />
             </Html>

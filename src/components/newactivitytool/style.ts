@@ -126,3 +126,12 @@ export const TextEditor = styled.textarea<{ size: number; line: number }>`
 export const Uploader = styled.input`
   display: none;
 `;
+
+export const OffsetBarX = styled.input<{ length: number }>`
+  width: ${(props) => props.length};
+`;
+
+export const OffsetBarY = styled.input<{ length: number }>`
+  width: ${(props) => props.length};
+  transform: rotate(270deg);
+`;
