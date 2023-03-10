@@ -12,6 +12,7 @@ import { selectActions } from "../../store/common/selectSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
+
   const [scale, setScale] = useState({ scaleX: 1, scaleY: 1 });
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
@@ -94,8 +95,6 @@ export default function NewActivityTool() {
           },
         })
       );
-    } else {
-      dispatch(selectActions.selectChange(null));
     }
   };
 
@@ -119,6 +118,12 @@ export default function NewActivityTool() {
     if (isDrawing) setIsDrawing(false);
   };
 
+  const mouseDown = (e: cursorMove) => {
+    if (draws.tool !== "") handleMouseDown(e);
+    else if (e.target == nodeStoreRef.current)
+      dispatch(selectActions.selectChange(null));
+  };
+
   //그림 관련 부분 끝------------------------------------------
 
   return (
@@ -131,7 +136,7 @@ export default function NewActivityTool() {
             width={window.innerWidth}
             height={window.innerHeight}
             scaleX={scale.scaleX}
-            onMouseDown={handleMouseDown}
+            onMouseDown={mouseDown}
             onTouchStart={handleMouseDown}
             onMousemove={handleMouseMove}
             onMouseup={handleMouseUp}

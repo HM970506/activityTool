@@ -73,6 +73,13 @@ export default function PhotoMaker({
         )}
         {isSelected && (
           <>
+            <Transformer
+              ref={trRef}
+              boundBoxFunc={(oldBox, newBox) => {
+                if (newBox.width < 5 || newBox.height < 5) return oldBox;
+                else return newBox;
+              }}
+            />
             <DeleteButton
               index={index}
               shapeProps={{
@@ -92,15 +99,6 @@ export default function PhotoMaker({
           </>
         )}
       </Group>
-      {isSelected && (
-        <Transformer
-          ref={trRef}
-          boundBoxFunc={(oldBox, newBox) => {
-            if (newBox.width < 5 || newBox.height < 5) return oldBox;
-            else return newBox;
-          }}
-        />
-      )}
     </>
   );
 }
