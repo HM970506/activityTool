@@ -7,7 +7,6 @@ import { BRUSH, cursorMove, DRAWTOOLS, PEN } from "./types";
 import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
-import { categoryActions } from "../../store/common/categorySlice";
 import { selectActions } from "../../store/common/selectSlice";
 
 export default function NewActivityTool() {
