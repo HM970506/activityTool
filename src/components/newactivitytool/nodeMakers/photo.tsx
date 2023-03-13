@@ -118,7 +118,14 @@ export default function PhotoMaker({
                 else return newBox;
               }}
             />
-
+            <DeleteButton
+              index={index}
+              x={
+                shapeRef.current?.x() +
+                shapeRef.current?.width() * shapeRef.current?.scaleX()
+              }
+              y={shapeRef.current?.y()}
+            />
             <Html
               groupProps={{
                 position: "absolute",

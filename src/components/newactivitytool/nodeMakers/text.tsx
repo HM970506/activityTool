@@ -79,6 +79,14 @@ export default function TextMaker({
       {isSelected && (
         <>
           <Transformer ref={trRef} />
+          <DeleteButton
+            index={index}
+            x={
+              shapeRef.current?.x() +
+              shapeRef.current?.width() * shapeRef.current?.scaleX()
+            }
+            y={shapeRef.current?.y()}
+          />
         </>
       )}
       {dbclick && (
