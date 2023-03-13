@@ -12,10 +12,6 @@ export default function DrawToolsMaker({
   type: string;
   shapeProps: any;
 }) {
-  const [image] = useImage(
-    "https://i.pinimg.com/564x/1a/a4/62/1aa46267d00383e62cb2b710db2093a1.jpg"
-  );
-
   //누른 곳에 이미지가 도장처럼 찍힌다.
   //꾹 누르고 있으면 0.5초 후 도장이 다시 찍힌다. (쓰로틀링)
 

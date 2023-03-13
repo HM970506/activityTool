@@ -69,8 +69,8 @@ export default function TextMaker({
         onTransform={(e) => {
           onChange({
             ...shapeProps,
-            scaleX: e.target.scaleX(),
-            scaleY: e.target.scaleY(),
+            width: e.target.scaleX() * e.target.width(),
+            height: e.target.scaleY() * e.target.width(),
           });
         }}
         ref={shapeRef}

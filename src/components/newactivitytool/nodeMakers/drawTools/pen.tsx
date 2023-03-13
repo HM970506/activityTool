@@ -6,6 +6,7 @@ export default function Pen({ shapeProps }: { shapeProps: any }) {
       tension={0.1}
       {...shapeProps}
       lineCap="round"
+      shadowForStrokeEnabled={false}
       globalCompositeOperation="source-over"
     />
   );

@@ -67,13 +67,6 @@ export default function PhotoMaker({
         onClick={onSelectCheck}
         onTap={onSelectCheck}
         onDragStart={onSelectCheck}
-        onTransform={(e) => {
-          onChange({
-            ...shapeProps,
-            scaleX: e.target.scaleX(),
-            scaleY: e.target.scaleY(),
-          });
-        }}
       >
         {shapeProps.frame === "RECT" ? (
           <Rect
@@ -89,6 +82,13 @@ export default function PhotoMaker({
             }}
             width={image?.width}
             height={image?.height}
+            onTransform={(e) => {
+              onChange({
+                ...shapeProps,
+                width: e.target.scaleX() * e.target.width(),
+                height: e.target.scaleY() * e.target.width(),
+              });
+            }}
           />
         ) : (
           <Path
@@ -105,6 +105,13 @@ export default function PhotoMaker({
                 ...shapeProps,
                 x: e.target.x(),
                 y: e.target.y(),
+              });
+            }}
+            onTransform={(e) => {
+              onChange({
+                ...shapeProps,
+                width: e.target.scaleX() * e.target.width(),
+                height: e.target.scaleY() * e.target.width(),
               });
             }}
           />
