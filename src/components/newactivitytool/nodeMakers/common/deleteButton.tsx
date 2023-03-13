@@ -4,23 +4,20 @@ import { nodeActions } from "../../../../store/common/nodeSlice";
 import { selectActions } from "../../../../store/common/selectSlice";
 
 export default function DeleteButton({
-  shapeProps,
+  x,
+  y,
   index,
 }: {
-  shapeProps: any;
+  x: number;
+  y: number;
   index: number;
 }) {
   const dispatch = useDispatch();
   return (
     <Circle
       fill={"red"}
-      x={shapeProps.x + shapeProps.scaleX * shapeProps.width + 15}
-      y={
-        shapeProps.y +
-        shapeProps.height -
-        shapeProps.scaleY * shapeProps.height -
-        15
-      }
+      x={x + 20}
+      y={y - 20}
       radius={10}
       onClick={() => {
         dispatch(selectActions.selectChange(null));

@@ -27,6 +27,8 @@ export default function StickerMaker({
         ref={shapeRef}
         {...shapeProps}
         fillPatternImage={image}
+        width={image?.width}
+        height={image?.height}
         onDragEnd={(e) => {
           onChange({
             ...shapeProps,
@@ -37,12 +39,10 @@ export default function StickerMaker({
         onTransform={(e) => {
           onChange({
             ...shapeProps,
-            scaleX: e.target.scaleX(),
-            scaleY: e.target.scaleY(),
+            width: e.target.scaleX() * e.target.width(),
+            height: e.target.scaleY() * e.target.width(),
           });
         }}
-        width={image?.width}
-        height={image?.height}
       />
       {isSelected && (
         <>
@@ -53,7 +53,14 @@ export default function StickerMaker({
               else return newBox;
             }}
           />
-          <DeleteButton index={index} shapeProps={shapeProps} />
+          <DeleteButton
+            index={index}
+            x={
+              shapeRef.current?.x() +
+              shapeRef.current?.width() * shapeRef.current?.scaleX()
+            }
+            y={shapeRef.current?.y()}
+          />
         </>
       )}
     </Group>
