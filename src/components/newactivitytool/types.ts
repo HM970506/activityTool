@@ -12,7 +12,7 @@ export interface MakerType {
   trRef: RefObject<TransformerType>;
   onChange: any;
   isSelected: boolean;
-  onSelectCheck: any;
+  onSelect: any;
 }
 
 export interface NodeMakerType {

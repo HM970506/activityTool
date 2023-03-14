@@ -16,7 +16,7 @@ import StickerMaker from "./sticker";
 import PhotoMaker from "./photo";
 import DrawToolsMaker from "./drawTools";
 import { useDispatch, useSelector } from "react-redux";
-import { nodeActions } from "../../../store/common/nodeSlice";
+import nodeSlice, { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 
 export default function Node({ index, type, shapeProps }: NodeMakerType) {
@@ -43,10 +43,12 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
   };
 
   const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
-
-  const onSelectCheck = () => {
+  const onSelect = () => {
     if (!isDrawing) dispatch(selectActions.selectChange(index));
   };
+
+  //1.클릭한 노드의 인덱스를 0으로 바꾼다.
+  //2.노드의 인덱스가 바뀌면, 0번 인덱스를 셀렉한다.
 
   const props = {
     shapeProps: shapeProps,
@@ -54,7 +56,7 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
     shapeRef: shapeRef,
     trRef: trRef,
     onChange: onChange,
-    onSelectCheck: onSelectCheck,
+    onSelect: onSelect,
     isSelected: isSelected,
   };
 

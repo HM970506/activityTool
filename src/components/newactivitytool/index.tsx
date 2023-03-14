@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { useDispatch, useSelector } from "react-redux";
-import { Background, Canvas, LoadButton, MainButton, NewButton } from "./style";
+import {
+  Background,
+  Overlay,
+  LoadButton,
+  MainButton,
+  NewButton,
+  Canvas,
+} from "./style";
 import { nodeActions } from "../../store/common/nodeSlice";
 import { BRUSH, cursorMove, DRAWTOOLS, ERASER, PEN } from "./types";
 import Node from "./nodeMakers";
@@ -33,10 +40,6 @@ export default function NewActivityTool() {
   //할일
   //1.버튼 메모이제이션
   //2.캔버스 동적 리사이징 작업
-  //width나 height를 조정하는 게 아닌, scaleX로 조정한다!
-  //처음에 윈도우에 resize감지 함수를 넣어서 리사이징 감지하기.
-  //.......왜 이렇게 작지?
-  //-> 윈도우가 아니라 템플릿에 리사이즈를하려면..음....
 
   //메모리 누수 방지를 위해 새로운 리사이즈가 생기기 전 기존 리스너를 제거해주자.
   useEffect(() => {
@@ -128,7 +131,7 @@ export default function NewActivityTool() {
   return (
     <>
       <Background ref={newActivityTool}>
-        <Canvas>
+        <Overlay>
           <BottomTools />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
           <Stage
@@ -161,28 +164,8 @@ export default function NewActivityTool() {
                     );
                 })}
             </Layer>
-            <Layer>
-              {Array.isArray(nodeStore) &&
-                nodeStore.map((value: any, key: number) => {
-                  if (
-                    value.type == PEN ||
-                    value.type == ERASER ||
-                    value.type == BRUSH
-                  ) {
-                    console.log(value);
-                    return (
-                      <Node
-                        key={key}
-                        index={key}
-                        type={value.type}
-                        shapeProps={value.shapeProps}
-                      />
-                    );
-                  }
-                })}
-            </Layer>
           </Stage>
-        </Canvas>
+        </Overlay>
       </Background>
 
       {!activitytools && (

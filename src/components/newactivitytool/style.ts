@@ -90,7 +90,7 @@ export const ToolBox = styled(Box)`
   gap: 10px;
 `;
 
-export const Canvas = styled.div`
+export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -98,6 +98,16 @@ export const Canvas = styled.div`
   left: 0;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.2);
+`;
+
+export const Canvas = styled.canvas`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0);
 `;
 
 export const SideButtonBox = styled.div`

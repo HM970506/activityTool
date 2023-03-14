@@ -16,7 +16,7 @@ export default function PhotoMaker({
   trRef,
   onChange,
   isSelected,
-  onSelectCheck,
+  onSelect,
 }: MakerType) {
   const [image] = useImage(
     "https://i.pinimg.com/564x/56/46/08/564608c8a6094dce93e1dcf4addb7130.jpg"
@@ -62,22 +62,27 @@ export default function PhotoMaker({
     <>
       <Group
         draggable={!isDrawing}
-        onClick={onSelectCheck}
-        onTap={onSelectCheck}
-        onDragStart={onSelectCheck}
+        onClick={onSelect}
+        onTap={onSelect}
+        onDragStart={onSelect}
+        x={shapeProps.x}
+        y={shapeProps.y}
+        onDragEnd={(e) => {
+          onChange({
+            ...shapeProps,
+            x: e.target.x(),
+            y: e.target.y(),
+          });
+        }}
       >
         {shapeProps.frame === "RECT" ? (
           <Rect
+            scaleX={1}
+            scaleY={1}
             ref={shapeRef}
-            {...shapeProps}
+            fillPatternOffsetX={0}
+            fillPatternOffsetY={0}
             fillPatternImage={image}
-            onDragEnd={(e) => {
-              onChange({
-                ...shapeProps,
-                x: e.target.x(),
-                y: e.target.y(),
-              });
-            }}
             width={image?.width}
             height={image?.height}
             onTransform={(e) => {
@@ -91,20 +96,14 @@ export default function PhotoMaker({
         ) : (
           <Path
             data={FRAMES.get(shapeProps.frame)}
-            onClick={onSelectCheck}
-            onTap={onSelectCheck}
-            onDragStart={onSelectCheck}
+            scaleX={1}
+            scaleY={1}
             ref={shapeRef}
-            draggable
-            {...shapeProps}
+            fillPatternOffsetX={0}
+            fillPatternOffsetY={0}
             fillPatternImage={image}
-            onDragEnd={(e) => {
-              onChange({
-                ...shapeProps,
-                x: e.target.x(),
-                y: e.target.y(),
-              });
-            }}
+            width={image?.width}
+            height={image?.height}
             onTransform={(e) => {
               onChange({
                 ...shapeProps,
@@ -134,8 +133,8 @@ export default function PhotoMaker({
             <Html
               groupProps={{
                 position: "absolute",
-                x: window.innerWidth - shapeProps.x * shapeProps.scaleX + 50,
-                y: window.innerHeight - shapeProps.y * shapeProps.scaleY,
+                x: window.innerWidth,
+                y: window.innerHeight,
               }}
             >
               <OffsetBarX

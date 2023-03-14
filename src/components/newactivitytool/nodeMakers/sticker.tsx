@@ -12,7 +12,7 @@ export default function StickerMaker({
   trRef,
   onChange,
   isSelected,
-  onSelectCheck,
+  onSelect,
 }: MakerType) {
   const [image] = useImage(shapeProps.stickerCategory);
   const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
@@ -22,7 +22,7 @@ export default function StickerMaker({
       x={shapeProps.x}
       y={shapeProps.y}
       draggable={!isDrawing}
-      onDragStart={onSelectCheck}
+      onDragStart={onSelect}
       onDragEnd={(e) => {
         onChange({
           ...shapeProps,
@@ -32,8 +32,8 @@ export default function StickerMaker({
       }}
     >
       <Rect
-        onClick={onSelectCheck}
-        onTap={onSelectCheck}
+        onClick={onSelect}
+        onTap={onSelect}
         ref={shapeRef}
         scaleX={1}
         scaleY={1}

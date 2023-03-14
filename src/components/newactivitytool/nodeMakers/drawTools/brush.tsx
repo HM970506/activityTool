@@ -19,7 +19,7 @@ export default function Brush({ shapeProps }: { shapeProps: any }) {
       fillAfterStrokeEnabled={true}
       fillPatternImage={image}
       fillPatternOffset={{ x: 0, y: 0 }}
-      opacity={0.4}
+      opacity={1}
     />
   );
 }

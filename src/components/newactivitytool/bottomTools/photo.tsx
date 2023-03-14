@@ -21,6 +21,7 @@ export default function PhotoMenu() {
     }
   };
 
+  /*
   const offsetArray = [
     { x: 5, y: 0 },
     { x: -5, y: 0 },
@@ -49,6 +50,7 @@ export default function PhotoMenu() {
       );
     }
   };
+  */
 
   return (
     <>
@@ -74,41 +76,7 @@ export default function PhotoMenu() {
         사과
       </button>
       <div>
-        <button
-          onClick={() => {
-            offsetChange(0);
-          }}
-        >
-          오른쪽
-        </button>
-        <button
-          onClick={() => {
-            offsetChange(1);
-          }}
-        >
-          왼쪽
-        </button>
-        <button
-          onClick={() => {
-            offsetChange(2);
-          }}
-        >
-          위
-        </button>
-        <button
-          onClick={() => {
-            offsetChange(3);
-          }}
-        >
-          아래
-        </button>
-        <button
-          onClick={() => {
-            offsetChange(null);
-          }}
-        >
-          원래대로
-        </button>
+        <button>원래대로</button>
       </div>
     </>
   );
