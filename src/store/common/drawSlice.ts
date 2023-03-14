@@ -1,10 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PEN } from "../../components/newactivitytool/types";
 
 const drawSlice = createSlice({
   name: "drawReducer",
-  initialState: { tool: "", color: "black", size: 5 },
+  initialState: { isDrawing: false, tool: PEN, color: "black", size: 5 },
 
   reducers: {
+    draw: (state) => {
+      state.isDrawing = true;
+    },
+    undraw: (state) => {
+      state.isDrawing = false;
+    },
     toolChange: (state, action: PayloadAction<any>) => {
       state.tool = action.payload;
     },

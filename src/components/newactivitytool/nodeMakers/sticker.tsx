@@ -3,6 +3,7 @@ import { Circle, Group, Rect, Transformer } from "react-konva";
 import { useImage } from "react-konva-utils";
 import DeleteButton from "./common/deleteButton";
 import { MakerType } from "../types";
+import { useSelector } from "react-redux";
 
 export default function StickerMaker({
   shapeProps,
@@ -11,14 +12,13 @@ export default function StickerMaker({
   trRef,
   onChange,
   isSelected,
-  isNotDrawing,
   onSelectCheck,
 }: MakerType) {
   const [image] = useImage(shapeProps.stickerCategory);
-
+  const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
   return (
     <Group
-      draggable={isNotDrawing}
+      draggable={!isDrawing}
       onClick={onSelectCheck}
       onTap={onSelectCheck}
       onDragStart={onSelectCheck}

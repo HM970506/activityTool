@@ -12,7 +12,6 @@ export interface MakerType {
   trRef: RefObject<TransformerType>;
   onChange: any;
   isSelected: boolean;
-  isNotDrawing: boolean;
   onSelectCheck: any;
 }
 

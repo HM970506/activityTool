@@ -19,7 +19,6 @@ export default function SideButtons({
 
   useEffect(() => {
     dispatch(selectActions.selectChange(null));
-    dispatch(drawActions.toolChange(""));
   }, [category]);
 
   return (

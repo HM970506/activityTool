@@ -42,23 +42,11 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
     dispatch(nodeActions.modifyNodes({ index: index, modifyProps: newAttr }));
   };
 
-  const onSelect = () => {
-    dispatch(selectActions.selectChange(index));
-  };
-
-  const draw = useSelector((state: any) => state.drawReducer.tool);
-
-  const [isNotDrawing, setIsNotDrawing] = useState<boolean>(
-    draw == "" ? true : false
-  );
+  const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
 
   const onSelectCheck = () => {
-    if (isNotDrawing) onSelect();
+    if (!isDrawing) dispatch(selectActions.selectChange(index));
   };
-
-  useEffect(() => {
-    setIsNotDrawing(draw == "" ? true : false);
-  }, [draw]);
 
   const props = {
     shapeProps: shapeProps,
@@ -68,7 +56,6 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
     onChange: onChange,
     onSelectCheck: onSelectCheck,
     isSelected: isSelected,
-    isNotDrawing: isNotDrawing,
   };
 
   switch (type) {

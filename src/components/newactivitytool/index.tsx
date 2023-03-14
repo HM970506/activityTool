@@ -3,7 +3,7 @@ import { Layer, Stage } from "react-konva";
 import { useDispatch, useSelector } from "react-redux";
 import { Background, Canvas, LoadButton, MainButton, NewButton } from "./style";
 import { nodeActions } from "../../store/common/nodeSlice";
-import { BRUSH, cursorMove, DRAWTOOLS, PEN } from "./types";
+import { BRUSH, cursorMove, DRAWTOOLS, ERASER, PEN } from "./types";
 import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
@@ -16,7 +16,7 @@ export default function NewActivityTool() {
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [nodeStore, setNodeStore] = useState<any[]>([]);
-  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  const [nowDrawing, setnowDrawing] = useState<boolean>(false);
   const nodeStoreRef = useRef(null);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
@@ -80,8 +80,8 @@ export default function NewActivityTool() {
   //그림 관련 부분 시작------------------------------------
 
   const handleMouseDown = (e: cursorMove) => {
-    if (draws.tool !== "") {
-      setIsDrawing(true);
+    if (draws.isDrawing) {
+      setnowDrawing(true);
       const pos = e.target.getStage()?.getPointerPosition();
 
       dispatch(
@@ -95,10 +95,11 @@ export default function NewActivityTool() {
         })
       );
     }
+    dispatch(selectActions.selectChange(null));
   };
 
   const handleMouseMove = (e: cursorMove) => {
-    if (isDrawing) {
+    if (nowDrawing) {
       const stage = e.target.getStage();
       const point = stage?.getPointerPosition();
       const index = nodes.length - 1;
@@ -114,7 +115,7 @@ export default function NewActivityTool() {
   };
 
   const handleMouseUp = () => {
-    if (isDrawing) setIsDrawing(false);
+    if (nowDrawing) setnowDrawing(false);
   };
 
   const mouseDown = (e: cursorMove) => {
@@ -145,14 +146,40 @@ export default function NewActivityTool() {
             <Layer>
               {Array.isArray(nodeStore) &&
                 nodeStore.map((value: any, key: number) => {
-                  return (
-                    <Node
-                      key={key}
-                      index={key}
-                      type={value.type}
-                      shapeProps={value.shapeProps}
-                    />
-                  );
+                  //임시값... 이후 펜 전용 노드맵을 하나 만들어줍시다
+                  if (
+                    value.type !== PEN &&
+                    value.type !== ERASER &&
+                    value.type !== BRUSH
+                  )
+                    return (
+                      <Node
+                        key={key}
+                        index={key}
+                        type={value.type}
+                        shapeProps={value.shapeProps}
+                      />
+                    );
+                })}
+            </Layer>
+            <Layer>
+              {Array.isArray(nodeStore) &&
+                nodeStore.map((value: any, key: number) => {
+                  if (
+                    value.type == PEN ||
+                    value.type == ERASER ||
+                    value.type == BRUSH
+                  ) {
+                    console.log(value);
+                    return (
+                      <Node
+                        key={key}
+                        index={key}
+                        type={value.type}
+                        shapeProps={value.shapeProps}
+                      />
+                    );
+                  }
                 })}
             </Layer>
           </Stage>

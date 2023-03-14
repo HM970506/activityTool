@@ -1,5 +1,6 @@
 import { Line, Rect } from "react-konva";
 import { useImage } from "react-konva-utils";
+import { useSelector } from "react-redux";
 import { BRUSH, ERASER, PEN } from "../../types";
 import Brush from "./brush";
 import Eraser from "./eraser";

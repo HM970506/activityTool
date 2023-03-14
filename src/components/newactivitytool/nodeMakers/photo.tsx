@@ -16,16 +16,14 @@ export default function PhotoMaker({
   trRef,
   onChange,
   isSelected,
-  isNotDrawing,
   onSelectCheck,
 }: MakerType) {
   const [image] = useImage(
     "https://i.pinimg.com/564x/56/46/08/564608c8a6094dce93e1dcf4addb7130.jpg"
   );
-
+  const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
   //좌표 재계산은 에바. tr을 기준으로 좌표를 찾을 수 있게해야하는ㄴ데...
   const dispatch = useDispatch();
-  const nodes = useSelector((state: any) => state.nodeReducer.nodes);
 
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
@@ -63,7 +61,7 @@ export default function PhotoMaker({
   return (
     <>
       <Group
-        draggable={isNotDrawing}
+        draggable={!isDrawing}
         onClick={onSelectCheck}
         onTap={onSelectCheck}
         onDragStart={onSelectCheck}

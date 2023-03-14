@@ -7,6 +7,7 @@ const nodeSlice = createSlice({
   reducers: {
     addNodes: (state, action: PayloadAction<any>) => {
       state.nodes.push(action.payload);
+      //console.log(JSON.stringify(action.payload));
     },
 
     modifyNodes: (state, action: PayloadAction<any>) => {

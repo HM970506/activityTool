@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Group, Text, Transformer } from "react-konva";
 import { Html } from "react-konva-utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import { TextEditor } from "../style";
@@ -15,12 +15,11 @@ export default function TextMaker({
   trRef,
   onChange,
   isSelected,
-  isNotDrawing,
   onSelectCheck,
 }: MakerType) {
   const [dbclick, setDbClick] = useState<boolean>(false);
   const [nowText, setNowText] = useState<string>(shapeProps.text);
-
+  const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
 
@@ -50,7 +49,7 @@ export default function TextMaker({
 
   return (
     <Group
-      draggable={isNotDrawing}
+      draggable={!isDrawing}
       onClick={onSelectCheck}
       onTap={onSelectCheck}
       onDragStart={onSelectCheck}

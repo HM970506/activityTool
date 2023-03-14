@@ -3,9 +3,11 @@ import { drawActions } from "../../../store/common/drawSlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { BottomButton } from "../style";
 import { BRUSH, PEN } from "../types";
+import ToggleButton from "./common/toggleButton/toggleButton";
 
 export default function DrawToolsMenu() {
   const dispatch = useDispatch();
+
   const selectShapeIndex = useSelector(
     (state: any) => state.selectReducer.select
   );
@@ -31,6 +33,7 @@ export default function DrawToolsMenu() {
 
   return (
     <>
+      <ToggleButton />
       <BottomButton
         onClick={() => {
           toolChagne(PEN);
@@ -52,6 +55,7 @@ export default function DrawToolsMenu() {
       >
         도장
       </BottomButton>
+
       <BottomButton onClick={() => colorChange("black")}>검은색</BottomButton>
       <BottomButton onClick={() => colorChange("blue")}>파란색</BottomButton>
       <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
