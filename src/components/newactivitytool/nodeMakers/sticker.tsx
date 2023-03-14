@@ -16,26 +16,30 @@ export default function StickerMaker({
 }: MakerType) {
   const [image] = useImage(shapeProps.stickerCategory);
   const isDrawing = useSelector((state: any) => state.drawReducer.isDrawing);
+
   return (
     <Group
+      x={shapeProps.x}
+      y={shapeProps.y}
       draggable={!isDrawing}
-      onClick={onSelectCheck}
-      onTap={onSelectCheck}
       onDragStart={onSelectCheck}
+      onDragEnd={(e) => {
+        onChange({
+          ...shapeProps,
+          x: e.target.x(),
+          y: e.target.y(),
+        });
+      }}
     >
       <Rect
+        onClick={onSelectCheck}
+        onTap={onSelectCheck}
         ref={shapeRef}
-        {...shapeProps}
+        scaleX={1}
+        scaleY={1}
         fillPatternImage={image}
         width={image?.width}
         height={image?.height}
-        onDragEnd={(e) => {
-          onChange({
-            ...shapeProps,
-            x: e.target.x(),
-            y: e.target.y(),
-          });
-        }}
         onTransform={(e) => {
           onChange({
             ...shapeProps,

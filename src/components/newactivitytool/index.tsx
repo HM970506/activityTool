@@ -95,7 +95,6 @@ export default function NewActivityTool() {
         })
       );
     }
-    dispatch(selectActions.selectChange(null));
   };
 
   const handleMouseMove = (e: cursorMove) => {
@@ -119,7 +118,7 @@ export default function NewActivityTool() {
   };
 
   const mouseDown = (e: cursorMove) => {
-    if (draws.tool !== "") handleMouseDown(e);
+    if (draws.isDrawing) handleMouseDown(e);
     else if (e.target == nodeStoreRef.current)
       dispatch(selectActions.selectChange(null));
   };

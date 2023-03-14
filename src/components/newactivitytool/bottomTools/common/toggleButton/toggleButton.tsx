@@ -17,7 +17,7 @@ export default function ToggleButton() {
 
   return (
     <Label>
-      <Toggle type="checkbox" checked={isCheck} onClick={onclick} />
+      <Toggle type="checkbox" defaultChecked={isCheck} onClick={onclick} />
       <Slider></Slider>
     </Label>
   );
