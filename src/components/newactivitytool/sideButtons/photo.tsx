@@ -7,7 +7,6 @@ import { Button, Uploader } from "../style";
 
 export default function PhotoButton() {
   const dispatch = useDispatch();
-  const nodes = useSelector((state: any) => state.nodeReducer.nodes);
   const [photo, setPhoto] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);

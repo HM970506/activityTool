@@ -1,9 +1,4 @@
-import Konva from "konva";
 import { RefObject } from "react";
-
-export type cursorMove =
-  | Konva.KonvaEventObject<TouchEvent>
-  | Konva.KonvaEventObject<MouseEvent>;
 
 export interface MakerType {
   shapeProps: any;
@@ -38,8 +33,6 @@ export type NodeType =
   | "PHOTO"
   | "RECORD"
   | "DRAWTOOLS";
-
-export type TransformerType = Konva.Transformer;
 
 export interface drawPenType {
   tool: string;

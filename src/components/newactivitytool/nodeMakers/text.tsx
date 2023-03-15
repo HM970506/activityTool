@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Group, Text, Transformer } from "react-konva";
-import { Html } from "react-konva-utils";
+
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
@@ -48,61 +47,18 @@ export default function TextMaker({
   let y = shapeProps.y - 10;
 
   return (
-    <Group
-      draggable={!isDrawing}
-      onClick={onSelect}
-      onTap={onSelect}
-      onDragStart={onSelect}
-    >
-      <Text
-        onDblClick={() => {
-          setDbClick(true);
+    dbclick && (
+      <TextEditor
+        autoFocus
+        ref={textRef}
+        size={shapeProps.fontSize}
+        line={nowText.split("\n").length}
+        onChange={(e) => {
+          setNowText(e.target.value);
         }}
-        onDragEnd={(e) => {
-          onChange({
-            ...shapeProps,
-            x: e.target.x(),
-            y: e.target.y(),
-          });
-        }}
-        onTransform={(e) => {
-          onChange({
-            ...shapeProps,
-            width: e.target.scaleX() * e.target.width(),
-            height: e.target.scaleY() * e.target.width(),
-          });
-        }}
-        ref={shapeRef}
-        {...shapeProps}
+        value={nowText}
+        onBlur={onEdit}
       />
-      {isSelected && (
-        <>
-          <Transformer ref={trRef} />
-          <DeleteButton
-            index={index}
-            x={
-              shapeRef.current?.x() +
-              shapeRef.current?.width() * shapeRef.current?.scaleX()
-            }
-            y={shapeRef.current?.y()}
-          />
-        </>
-      )}
-      {dbclick && (
-        <Html groupProps={{ x, y }}>
-          <TextEditor
-            autoFocus
-            ref={textRef}
-            size={shapeProps.fontSize}
-            line={nowText.split("\n").length}
-            onChange={(e) => {
-              setNowText(e.target.value);
-            }}
-            value={nowText}
-            onBlur={onEdit}
-          />
-        </Html>
-      )}
-    </Group>
+    )
   );
 }

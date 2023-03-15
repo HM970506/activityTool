@@ -14,7 +14,6 @@ import RecordMaker from "./record";
 import TextMaker from "./text";
 import StickerMaker from "./sticker";
 import PhotoMaker from "./photo";
-import DrawToolsMaker from "./drawTools";
 import { useDispatch, useSelector } from "react-redux";
 import nodeSlice, { nodeActions } from "../../../store/common/nodeSlice";
 import { selectActions } from "../../../store/common/selectSlice";
@@ -69,12 +68,6 @@ export default function Node({ index, type, shapeProps }: NodeMakerType) {
       return <StickerMaker {...props} />;
     case PHOTO:
       return <PhotoMaker {...props} />;
-    case PEN:
-      return <DrawToolsMaker type={type} shapeProps={shapeProps} />;
-    case BRUSH:
-      return <DrawToolsMaker type={type} shapeProps={shapeProps} />;
-    case ERASER:
-      return <DrawToolsMaker type={type} shapeProps={shapeProps} />;
   }
   return <></>;
 }

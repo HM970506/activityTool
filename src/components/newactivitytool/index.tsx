@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Layer, Stage } from "react-konva";
+import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Background,
@@ -7,14 +7,10 @@ import {
   LoadButton,
   MainButton,
   NewButton,
-  Canvas,
 } from "./style";
-import { nodeActions } from "../../store/common/nodeSlice";
-import { BRUSH, cursorMove, DRAWTOOLS, ERASER, PEN } from "./types";
-import Node from "./nodeMakers";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
-import { selectActions } from "../../store/common/selectSlice";
+import { fabric } from "fabric";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -23,8 +19,6 @@ export default function NewActivityTool() {
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [nodeStore, setNodeStore] = useState<any[]>([]);
-  const [nowDrawing, setnowDrawing] = useState<boolean>(false);
-  const nodeStoreRef = useRef(null);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
   const dispatch = useDispatch();
@@ -80,53 +74,132 @@ export default function NewActivityTool() {
 
   //버튼 관련 부분 끝-------------------------------------
 
-  //그림 관련 부분 시작------------------------------------
+  const { editor, onReady } = useFabricJSEditor();
+  const history = new Array();
+  const [color, setColor] = useState("#35363a");
+  const [cropImage, setCropImage] = useState(true);
 
-  const handleMouseDown = (e: cursorMove) => {
-    if (draws.isDrawing) {
-      setnowDrawing(true);
-      const pos = e.target.getStage()?.getPointerPosition();
-
-      dispatch(
-        nodeActions.addNodes({
-          type: draws.tool,
-          shapeProps: {
-            stroke: draws.color,
-            strokeWidth: draws.size,
-            points: [pos?.x, pos?.y],
-          },
-        })
-      );
+  useEffect(() => {
+    if (!editor || !fabric) return;
+    if (cropImage) {
+      editor!.canvas.__eventListeners = {};
+      return;
     }
-  };
 
-  const handleMouseMove = (e: cursorMove) => {
-    if (nowDrawing) {
-      const stage = e.target.getStage();
-      const point = stage?.getPointerPosition();
-      const index = nodes.length - 1;
-      dispatch(
-        nodeActions.modifyNodes({
-          index: index,
-          modifyProps: {
-            points: [...nodes[index].shapeProps.points, point?.x, point?.y],
-          },
-        })
-      );
+    if (!editor!.canvas.__eventListeners["mouse:wheel"]) {
+      editor!.canvas.on("mouse:wheel", function (opt: any) {
+        var delta = opt.e.deltaY;
+        var zoom = editor!.canvas.getZoom();
+        zoom *= 0.999 ** delta;
+        if (zoom > 20) zoom = 20;
+        if (zoom < 0.01) zoom = 0.01;
+        editor!.canvas.zoomToPoint(
+          { x: opt.e.offsetX, y: opt.e.offsetY },
+          zoom
+        );
+        opt.e.preventDefault();
+        opt.e.stopPropagation();
+      });
     }
+
+    if (!editor!.canvas.__eventListeners["mouse:down"]) {
+      editor!.canvas.on("mouse:down", function (opt) {
+        if (opt.e.ctrlKey === true) {
+          this.isDragging = true;
+          this.selection = false;
+          this.lastPosX = opt.e.clientX;
+          this.lastPosY = opt.e.clientY;
+        }
+      });
+    }
+
+    if (!editor!.canvas.__eventListeners["mouse:move"]) {
+      editor!.canvas.on("mouse:move", function (opt) {
+        if (this.isDragging) {
+          var vpt = this.viewportTransform;
+          vpt[4] += opt.e.clientX - this.lastPosX;
+          vpt[5] += opt.e.clientY - this.lastPosY;
+          this.requestRenderAll();
+          this.lastPosX = opt.e.clientX;
+          this.lastPosY = opt.e.clientY;
+        }
+      });
+    }
+
+    if (!editor!.canvas.__eventListeners["mouse:up"]) {
+      editor!.canvas.on("mouse:up", function (opt) {
+        // on mouse up we want to recalculate new interaction
+        // for all objects, so we call setViewportTransform
+        this.setViewportTransform(this.viewportTransform);
+        this.isDragging = false;
+        this.selection = true;
+      });
+    }
+
+    editor!.canvas.renderAll();
+  }, [editor]);
+
+  const addBackground = () => {
+    if (!editor || !fabric) return;
+
+    fabric.Image.fromURL("url", (image: any) => {
+      editor!.canvas.setBackgroundImage(
+        image,
+        editor!.canvas.renderAll.bind(editor!.canvas)
+      );
+    });
   };
 
-  const handleMouseUp = () => {
-    if (nowDrawing) setnowDrawing(false);
+  useEffect(() => {
+    if (!editor || !fabric) return;
+    editor!.canvas.setHeight(500);
+    editor!.canvas.setWidth(500);
+    addBackground();
+    editor!.canvas.renderAll();
+  }, [editor?.canvas.backgroundImage]);
+
+  useEffect(() => {
+    if (!editor || !fabric) {
+      return;
+    }
+    editor!.canvas.freeDrawingBrush.color = color;
+    editor!.setStrokeColor(color);
+  }, [color]);
+
+  const toggleDraw = () => {
+    if (editor) editor!.canvas.isDrawingMode = !editor!.canvas.isDrawingMode;
+  };
+  const undo = () => {
+    if (editor!.canvas._objects.length > 0)
+      history.push(editor!.canvas._objects.pop());
+    editor!.canvas.renderAll();
+  };
+  const redo = () => {
+    if (history.length > 0) editor!.canvas.add(history.pop());
   };
 
-  const mouseDown = (e: cursorMove) => {
-    if (draws.isDrawing) handleMouseDown(e);
-    else if (e.target == nodeStoreRef.current)
-      dispatch(selectActions.selectChange(null));
+  const clear = () => {
+    editor!.canvas._objects.splice(0, editor!.canvas._objects.length);
+    history.splice(0, history.length);
+    editor!.canvas.renderAll();
   };
 
-  //그림 관련 부분 끝------------------------------------------
+  const removeSelectedObject = () => {
+    editor!.canvas.remove(editor!.canvas.getActiveObject());
+  };
+
+  const onAddCircle = () => {
+    editor!.addCircle();
+  };
+
+  const addText = () => {
+    editor!.addText("inset text");
+  };
+
+  const exportSVG = () => {
+    const svg = editor!.canvas.toSVG();
+    console.info(svg);
+  };
 
   return (
     <>
@@ -134,37 +207,7 @@ export default function NewActivityTool() {
         <Overlay>
           <BottomTools />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
-          <Stage
-            width={window.innerWidth}
-            height={window.innerHeight}
-            scaleX={scale.scaleX}
-            onMouseDown={mouseDown}
-            onTouchStart={handleMouseDown}
-            onMousemove={handleMouseMove}
-            onMouseup={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            ref={nodeStoreRef}
-          >
-            <Layer>
-              {Array.isArray(nodeStore) &&
-                nodeStore.map((value: any, key: number) => {
-                  //임시값... 이후 펜 전용 노드맵을 하나 만들어줍시다
-                  if (
-                    value.type !== PEN &&
-                    value.type !== ERASER &&
-                    value.type !== BRUSH
-                  )
-                    return (
-                      <Node
-                        key={key}
-                        index={key}
-                        type={value.type}
-                        shapeProps={value.shapeProps}
-                      />
-                    );
-                })}
-            </Layer>
-          </Stage>
+          <FabricJSCanvas className="sample-canvas" onReady={onReady} />
         </Overlay>
       </Background>
 
