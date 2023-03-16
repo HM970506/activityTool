@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Background,
@@ -11,10 +10,13 @@ import {
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import { fabric } from "fabric";
+import { STICKER, TEXT } from "./types";
+import { nodeActions } from "../../store/common/nodeSlice";
+import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
-
+  const canvasRef = useRef(null);
   const [scale, setScale] = useState({ scaleX: 1, scaleY: 1 });
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
@@ -74,132 +76,26 @@ export default function NewActivityTool() {
 
   //버튼 관련 부분 끝-------------------------------------
 
-  const { editor, onReady } = useFabricJSEditor();
-  const history = new Array();
-  const [color, setColor] = useState("#35363a");
-  const [cropImage, setCropImage] = useState(true);
+  //초기 캔버스 세팅------------------------------------------
 
-  useEffect(() => {
-    if (!editor || !fabric) return;
-    if (cropImage) {
-      editor!.canvas.__eventListeners = {};
-      return;
-    }
-
-    if (!editor!.canvas.__eventListeners["mouse:wheel"]) {
-      editor!.canvas.on("mouse:wheel", function (opt: any) {
-        var delta = opt.e.deltaY;
-        var zoom = editor!.canvas.getZoom();
-        zoom *= 0.999 ** delta;
-        if (zoom > 20) zoom = 20;
-        if (zoom < 0.01) zoom = 0.01;
-        editor!.canvas.zoomToPoint(
-          { x: opt.e.offsetX, y: opt.e.offsetY },
-          zoom
-        );
-        opt.e.preventDefault();
-        opt.e.stopPropagation();
-      });
-    }
-
-    if (!editor!.canvas.__eventListeners["mouse:down"]) {
-      editor!.canvas.on("mouse:down", function (opt) {
-        if (opt.e.ctrlKey === true) {
-          this.isDragging = true;
-          this.selection = false;
-          this.lastPosX = opt.e.clientX;
-          this.lastPosY = opt.e.clientY;
-        }
-      });
-    }
-
-    if (!editor!.canvas.__eventListeners["mouse:move"]) {
-      editor!.canvas.on("mouse:move", function (opt) {
-        if (this.isDragging) {
-          var vpt = this.viewportTransform;
-          vpt[4] += opt.e.clientX - this.lastPosX;
-          vpt[5] += opt.e.clientY - this.lastPosY;
-          this.requestRenderAll();
-          this.lastPosX = opt.e.clientX;
-          this.lastPosY = opt.e.clientY;
-        }
-      });
-    }
-
-    if (!editor!.canvas.__eventListeners["mouse:up"]) {
-      editor!.canvas.on("mouse:up", function (opt) {
-        // on mouse up we want to recalculate new interaction
-        // for all objects, so we call setViewportTransform
-        this.setViewportTransform(this.viewportTransform);
-        this.isDragging = false;
-        this.selection = true;
-      });
-    }
-
-    editor!.canvas.renderAll();
-  }, [editor]);
-
-  const addBackground = () => {
-    if (!editor || !fabric) return;
-
-    fabric.Image.fromURL("url", (image: any) => {
-      editor!.canvas.setBackgroundImage(
-        image,
-        editor!.canvas.renderAll.bind(editor!.canvas)
-      );
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  //아이디로 찾는구나~~!!!
+  const initCanvas = () =>
+    new fabric.Canvas("canvas", {
+      height: window.innerWidth,
+      width: window.innerWidth,
+      backgroundColor: "rgba(0,0,0,0)",
     });
-  };
 
   useEffect(() => {
-    if (!editor || !fabric) return;
-    editor!.canvas.setHeight(500);
-    editor!.canvas.setWidth(500);
-    addBackground();
-    editor!.canvas.renderAll();
-  }, [editor?.canvas.backgroundImage]);
+    dispatch(nodeActions.setCanvas(initCanvas()));
+  }, []);
+  //
 
-  useEffect(() => {
-    if (!editor || !fabric) {
-      return;
-    }
-    editor!.canvas.freeDrawingBrush.color = color;
-    editor!.setStrokeColor(color);
-  }, [color]);
+  //초기 캔버스 세팅 끝-----------------------------------------
 
-  const toggleDraw = () => {
-    if (editor) editor!.canvas.isDrawingMode = !editor!.canvas.isDrawingMode;
-  };
-  const undo = () => {
-    if (editor!.canvas._objects.length > 0)
-      history.push(editor!.canvas._objects.pop());
-    editor!.canvas.renderAll();
-  };
-  const redo = () => {
-    if (history.length > 0) editor!.canvas.add(history.pop());
-  };
-
-  const clear = () => {
-    editor!.canvas._objects.splice(0, editor!.canvas._objects.length);
-    history.splice(0, history.length);
-    editor!.canvas.renderAll();
-  };
-
-  const removeSelectedObject = () => {
-    editor!.canvas.remove(editor!.canvas.getActiveObject());
-  };
-
-  const onAddCircle = () => {
-    editor!.addCircle();
-  };
-
-  const addText = () => {
-    editor!.addText("inset text");
-  };
-
-  const exportSVG = () => {
-    const svg = editor!.canvas.toSVG();
-    console.info(svg);
-  };
+  //노드목록이 수정될 때마다 노드목록의 값이 불러와지..게 할 수 없군요.
+  //반대로 해야겠다. 노드목록 값이 불러와질 때마다 노드 목록을 수정합시다.
 
   return (
     <>
@@ -207,7 +103,7 @@ export default function NewActivityTool() {
         <Overlay>
           <BottomTools />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
-          <FabricJSCanvas className="sample-canvas" onReady={onReady} />
+          <canvas id="canvas" ref={canvasRef} />
         </Overlay>
       </Background>
 

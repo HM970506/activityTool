@@ -4,7 +4,6 @@ export interface MakerType {
   shapeProps: any;
   index: number;
   shapeRef: RefObject<any>;
-  trRef: RefObject<TransformerType>;
   onChange: any;
   isSelected: boolean;
   onSelect: any;
@@ -40,6 +39,6 @@ export interface drawPenType {
   size: number;
 }
 
-export const BIG = 25;
-export const MIDIUM = 20;
-export const SMALL = 15;
+export const BIG = 30;
+export const MIDIUM = 25;
+export const SMALL = 20;

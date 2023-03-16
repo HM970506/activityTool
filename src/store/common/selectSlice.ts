@@ -7,7 +7,7 @@ const selectSlice = createSlice({
   reducers: {
     selectChange: (state, action: PayloadAction<any>) => {
       state.select = action.payload;
-      // console.log("선택노드:", action.payload);
+      console.log("선택노드:", action.payload);
     },
   },
 });

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { BIG, MIDIUM, SMALL } from "../types";
 import { TEXT } from "../types";
+import { fabric } from "fabric";
+import { useState } from "react";
 
 export default function TextButton() {
   const dispatch = useDispatch();
@@ -11,26 +13,43 @@ export default function TextButton() {
     (state: any) => state.categoryReducer.category
   );
 
-  const addTextNodes = (size: number) => {
+  const [text, setText] = useState<string>("내용을 입력하세요");
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+
+  const TextMaker = (size: number) => {
+    const defaultProps = {
+      left: window.innerWidth / 2,
+      top: window.innerHeight / 2,
+      color: "black",
+      width: 400,
+      height: 30,
+      fontSize: 10,
+      editable: true,
+    };
+
+    //캔버스에 추가
+    canvas.add(
+      new fabric.Textbox("내용을 입력하세요", {
+        ...defaultProps,
+        fontSize: size,
+      })
+    );
+    canvas.renderAll();
+
+    //노드목록에 저장
     dispatch(
       nodeActions.addNodes({
         type: TEXT,
         shapeProps: {
+          ...defaultProps,
           fontSize: size,
-          scaleX: 1,
-          scaleY: 1,
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          text: "내용을 입력하세요",
-          width: 210,
-          height: 30,
         },
       })
     );
   };
 
   const textButtonClick = () => {
-    dispatch(categoryActions.categoryChange(TEXT));
+    if (nowCategory) dispatch(categoryActions.categoryChange(TEXT));
   };
 
   return (
@@ -40,14 +59,14 @@ export default function TextButton() {
           <SideButton
             size={BIG}
             onClick={() => {
-              addTextNodes(BIG);
+              TextMaker(BIG);
             }}
           >
             큰 글자
           </SideButton>
           <SideButton
             onClick={() => {
-              addTextNodes(MIDIUM);
+              TextMaker(MIDIUM);
             }}
             size={MIDIUM}
           >
@@ -55,7 +74,7 @@ export default function TextButton() {
           </SideButton>
           <SideButton
             onClick={() => {
-              addTextNodes(SMALL);
+              TextMaker(SMALL);
             }}
             size={SMALL}
           >
