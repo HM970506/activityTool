@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { drawActions } from "../../../store/common/drawSlice";
 import { selectActions } from "../../../store/common/selectSlice";
 import { Button, ButtonBox } from "../style";
 import PhotoButton from "./photo";

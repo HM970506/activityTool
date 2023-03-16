@@ -78,19 +78,16 @@ export default function NewActivityTool() {
 
   //초기 캔버스 세팅------------------------------------------
 
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  //아이디로 찾는구나~~!!!
-  const initCanvas = () =>
+  const init = () => {
     new fabric.Canvas("canvas", {
       height: window.innerWidth,
       width: window.innerWidth,
       backgroundColor: "rgba(0,0,0,0)",
     });
-
+  };
   useEffect(() => {
-    dispatch(nodeActions.setCanvas(initCanvas()));
-  }, []);
-  //
+    dispatch(nodeActions.setCanvas(init()));
+  });
 
   //초기 캔버스 세팅 끝-----------------------------------------
 
