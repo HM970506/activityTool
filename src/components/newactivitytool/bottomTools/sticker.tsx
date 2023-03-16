@@ -49,7 +49,7 @@ export default function StickerMenu() {
             <button
               key={key}
               onClick={() => {
-                addNodes(key);
+                addNodes(key + 1);
               }}
             >
               {value}
