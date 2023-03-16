@@ -9,14 +9,6 @@ export default function PhotoMenu() {
 
   const shapeChange = (shape: string) => {
     if (select != null || select != undefined) {
-      dispatch(
-        nodeActions.modifyNodes({
-          index: select,
-          modifyProps: {
-            frame: shape,
-          },
-        })
-      );
       dispatch(selectActions.selectChange(null));
     }
   };

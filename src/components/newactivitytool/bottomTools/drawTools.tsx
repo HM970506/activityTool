@@ -19,17 +19,7 @@ export default function DrawToolsMenu() {
     dispatch(drawActions.sizeChange(size));
   };
 
-  const colorChange = (color: string) => {
-    if (selectShapeIndex == null) dispatch(drawActions.colorChange(color));
-    else {
-      dispatch(
-        nodeActions.modifyNodes({
-          index: selectShapeIndex,
-          modifyProps: { fill: color },
-        })
-      );
-    }
-  };
+  const colorChange = (color: string) => {};
 
   return (
     <>

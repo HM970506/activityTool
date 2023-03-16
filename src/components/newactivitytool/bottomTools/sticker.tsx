@@ -17,20 +17,7 @@ export default function StickerMenu() {
     setStickers(sample.get(stickerCategory));
   }, [stickerCategory]);
 
-  const addNodes = (index: number) => {
-    dispatch(
-      nodeActions.addNodes({
-        type: "STICKER",
-        shapeProps: {
-          stickerCategory: `./${stickerCategory}_sticker_${index}.png`,
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          width: 100,
-          height: 100,
-        },
-      })
-    );
-  };
+  const addNodes = (index: number) => {};
 
   return (
     <>
@@ -53,12 +40,7 @@ export default function StickerMenu() {
       <div>
         {Array.isArray(stickers) &&
           stickers.map((value, key) => (
-            <button
-              key={key}
-              onClick={() => {
-                addNodes(key + 1);
-              }}
-            >
+            <button key={key} onClick={() => {}}>
               {value}
             </button>
           ))}

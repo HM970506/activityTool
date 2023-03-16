@@ -11,22 +11,7 @@ export default function PhotoButton() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const addPhotoNode = (img: any) => {
-    dispatch(
-      nodeActions.addNodes({
-        type: PHOTO,
-        shapeProps: {
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          scaleX: 1,
-          scaleY: 1,
-          frame: "RECT",
-          fillPatternOffsetX: 0,
-          fillPatternOffsetY: 0,
-        },
-      })
-    );
-  };
+  const addPhotoNode = (img: any) => {};
 
   const onUploadImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {

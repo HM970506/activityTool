@@ -9,18 +9,7 @@ export default function RecordMenu() {
 
   const dispatch = useDispatch();
 
-  const addNodes = (audioSrc: string) => {
-    dispatch(
-      nodeActions.addNodes({
-        type: "RECORD",
-        shapeProps: {
-          src: audioSrc,
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-        },
-      })
-    );
-  };
+  const addNodes = (audioSrc: string) => {};
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const recorderControls = useAudioRecorder();
