@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const nodeSlice = createSlice({
   name: "nodeReducer",
-  initialState: { canvas: "" },
+  initialState: { canvas: null },
 
   reducers: {
     setCanvas: (state, action: PayloadAction<any>) => {
       state.canvas = action.payload;
+      console.log(JSON.stringify(action.payload));
     },
   },
 });

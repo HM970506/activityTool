@@ -25,9 +25,6 @@ export default function TextMenu() {
     };
     canvas.add(new fabric.Textbox("내용을 입력하세요", { ...node }));
     canvas.renderAll();
-
-    //노드목록에 저장
-    dispatch(nodeActions.addNodes(node));
   };
   return (
     <>

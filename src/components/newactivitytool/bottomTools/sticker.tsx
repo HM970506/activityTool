@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { nodeActions } from "../../../store/common/nodeSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fabric } from "fabric";
 const sample = new Map([
   ["fluffy", ["토끼", "병아리"]],
   ["round", ["달걀프라이", "어항"]],
@@ -11,13 +10,20 @@ export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
   const [stickers, setStickers] = useState<string[] | undefined>([]);
   const dispatch = useDispatch();
-
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   useEffect(() => {
     //스티커카테고리에 따라 다른 url로 api를 호출, 데이터를 가져온다
     setStickers(sample.get(stickerCategory));
   }, [stickerCategory]);
 
-  const addNodes = (index: number) => {};
+  const addNodes = (index: number) => {
+    new fabric.Image.fromURL(
+      `./${stickerCategory}_sticker_${index}.png`,
+      (img: any) => {
+        canvas.add(img);
+      }
+    );
+  };
 
   return (
     <>
@@ -40,7 +46,12 @@ export default function StickerMenu() {
       <div>
         {Array.isArray(stickers) &&
           stickers.map((value, key) => (
-            <button key={key} onClick={() => {}}>
+            <button
+              key={key}
+              onClick={() => {
+                addNodes(key);
+              }}
+            >
               {value}
             </button>
           ))}

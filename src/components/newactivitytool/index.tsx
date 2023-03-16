@@ -9,21 +9,18 @@ import {
 } from "./style";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
-import { fabric } from "fabric";
-import { STICKER, TEXT } from "./types";
-import { nodeActions } from "../../store/common/nodeSlice";
-import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
+import Canvas from "./canvas";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
-  const canvasRef = useRef(null);
+
   const [scale, setScale] = useState({ scaleX: 1, scaleY: 1 });
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [nodeStore, setNodeStore] = useState<any[]>([]);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
-  const dispatch = useDispatch();
+
   const firstSize = { width: window.innerWidth, height: window.innerHeight };
 
   const onResize = (e: any) => {
@@ -76,21 +73,6 @@ export default function NewActivityTool() {
 
   //버튼 관련 부분 끝-------------------------------------
 
-  //초기 캔버스 세팅------------------------------------------
-
-  const init = () => {
-    new fabric.Canvas("canvas", {
-      height: window.innerWidth,
-      width: window.innerWidth,
-      backgroundColor: "rgba(0,0,0,0)",
-    });
-  };
-  useEffect(() => {
-    dispatch(nodeActions.setCanvas(init()));
-  });
-
-  //초기 캔버스 세팅 끝-----------------------------------------
-
   //노드목록이 수정될 때마다 노드목록의 값이 불러와지..게 할 수 없군요.
   //반대로 해야겠다. 노드목록 값이 불러와질 때마다 노드 목록을 수정합시다.
 
@@ -100,7 +82,7 @@ export default function NewActivityTool() {
         <Overlay>
           <BottomTools />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
-          <canvas id="canvas" ref={canvasRef} />
+          <Canvas />
         </Overlay>
       </Background>
 
