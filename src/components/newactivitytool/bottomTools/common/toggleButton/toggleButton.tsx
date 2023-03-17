@@ -15,6 +15,7 @@ export default function ToggleButton() {
 
   useEffect(() => {
     if (canvas) {
+      canvas.discardActiveObject().renderAll();
       canvas.isDrawingMode = isCheck;
       console.log(canvas.isDrawingMode);
     }

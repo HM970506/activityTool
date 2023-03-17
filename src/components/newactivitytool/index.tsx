@@ -10,6 +10,7 @@ import {
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas";
+import ToggleButton from "./bottomTools/common/toggleButton/toggleButton";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -80,6 +81,7 @@ export default function NewActivityTool() {
     <>
       <Background ref={newActivityTool}>
         <Overlay>
+          <ToggleButton />
           <BottomTools />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
           <Canvas />
