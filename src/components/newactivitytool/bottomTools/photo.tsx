@@ -5,7 +5,7 @@ import { selectActions } from "../../../store/common/selectSlice";
 import { Uploader } from "../style";
 import { fabric } from "fabric";
 export default function PhotoMenu() {
-  const shapeChange = (shape: string) => {
+  const shapeChange1 = (shape: string) => {
     const now = canvas.getActiveObject();
 
     if (!now) return;
@@ -15,7 +15,6 @@ export default function PhotoMenu() {
     const width = now.width;
     const height = now.height;
 
-    console.log(width, height);
     fabric.Image.fromURL(`/${shape}.png`, (img: any) => {
       let frameImg = img;
       frameImg.left = x;
@@ -24,6 +23,7 @@ export default function PhotoMenu() {
       frameImg.width = width + 1;
       fabric.Image.fromURL(url, (img: any) => {
         let innerImg = img;
+        innerImg.setControlsVisibility({ deleteControl: false });
         innerImg.left = x;
         innerImg.top = y;
         innerImg.globalCompositeOperation = "source-atop";
@@ -34,6 +34,37 @@ export default function PhotoMenu() {
     });
     canvas.remove(now);
     canvas.requestRenderAll();
+  };
+
+  const shapeChange2 = (shape: string) => {
+    const now = canvas.getActiveObject();
+
+    if (!now) return;
+
+    const url =
+      now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc();
+    const { x, y } = now.aCoords.tl;
+    const width = now.width;
+    const height = now.height;
+
+    fabric.Image.fromURL(`/${shape}.png`, (img: any) => {
+      let frameImg = img;
+      frameImg.height = height + 10;
+      frameImg.width = width + 10;
+
+      fabric.Image.fromURL(url, (img: any) => {
+        let innerImg = img;
+        innerImg.globalCompositeOperation = "source-atop";
+
+        const group = new fabric.Group([frameImg, innerImg], {
+          left: x,
+          top: y,
+        });
+        canvas.add(group);
+      });
+      canvas.remove(now);
+      canvas.requestRenderAll();
+    });
   };
 
   const [photo, setPhoto] = useState<string>("");
@@ -84,21 +115,21 @@ export default function PhotoMenu() {
       <button onClick={photoUpload}>사진 가져오기</button>
       <button
         onClick={() => {
-          shapeChange("RECT");
+          // shapeChange("RECT");
         }}
       >
         사각형
       </button>
       <button
         onClick={() => {
-          shapeChange("heart");
+          shapeChange1("heart");
         }}
       >
         하트
       </button>
       <button
         onClick={() => {
-          shapeChange("star");
+          shapeChange2("star");
         }}
       >
         별
