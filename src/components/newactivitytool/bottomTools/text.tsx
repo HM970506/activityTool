@@ -7,6 +7,7 @@ import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 
 export default function TextMenu() {
   const dispatch = useDispatch();
+
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const defaultProps = {
     left: window.innerWidth / 2,
@@ -23,11 +24,25 @@ export default function TextMenu() {
       ...defaultProps,
       fontSize: size,
     };
-    canvas.add(new fabric.Textbox("내용을 입력하세요", { ...node }));
+    const textbox = new fabric.Textbox("왜 수정이 안되냐고", {
+      ...node,
+    });
+    console.log(textbox);
+    canvas.add(textbox);
     canvas.renderAll();
   };
+
+  const test = () => {
+    if (canvas.getActiveObject()) {
+      canvas.getActiveObject().set("text", "이건 되나");
+      canvas.renderAll();
+      console.log(canvas.getActiveObject());
+    }
+  };
+
   return (
     <>
+      <button onClick={test}>test</button>
       <SideButton
         size={BIG}
         onClick={() => {

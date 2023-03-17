@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../../store/common/drawSlice";
 import { selectActions } from "../../../../../store/common/selectSlice";
 import { Label, Toggle, Slider } from "./style";
@@ -7,13 +7,18 @@ import { Label, Toggle, Slider } from "./style";
 export default function ToggleButton() {
   const [isCheck, setIsCheck] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
   const onclick = () => {
-    if (!isCheck) dispatch(drawActions.draw());
-    else dispatch(drawActions.undraw());
     setIsCheck((x) => !x);
-    dispatch(selectActions.selectChange(null));
   };
+
+  useEffect(() => {
+    if (canvas) {
+      canvas.isDrawingMode = isCheck;
+      console.log(canvas.isDrawingMode);
+    }
+  }, [isCheck]);
 
   return (
     <Label>

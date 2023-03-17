@@ -1,6 +1,6 @@
 import { fabric } from "fabric";
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../store/common/nodeSlice";
 
 const deleteIcon =
@@ -10,12 +10,12 @@ export default function Canvas() {
   const canvasRef = useRef(null);
 
   const deleteObject = (eventData: any, transform: any) => {
-    var target = transform.target;
-    var canvas = target.canvas;
+    const target = transform.target;
+    const canvas = target.canvas;
     canvas.remove(target);
-    canvas.requestRenderAll();
+    canvas.renderAll();
   };
-  var img = document.createElement("img");
+  const img = document.createElement("img");
   img.src = deleteIcon;
 
   const renderIcon = (
@@ -54,7 +54,7 @@ export default function Canvas() {
     );
   }, []);
   fabric.Object.prototype.cornerColor = "black";
-  fabric.Object.prototype.cornerStrokeColor = "black";
+  fabric.Object.prototype.editingBorderColor = "black";
 
   //삭제용 컨트롤 버튼을 추가할 수 있음.
   fabric.Object.prototype.controls.deleteControl = new fabric.Control({
@@ -66,5 +66,11 @@ export default function Canvas() {
     y: -1,
   });
 
-  return <canvas id="canvas" ref={canvasRef} />;
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+
+  return (
+    <>
+      <canvas id="canvas" ref={canvasRef} />
+    </>
+  );
 }

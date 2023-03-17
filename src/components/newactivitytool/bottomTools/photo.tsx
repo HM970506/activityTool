@@ -33,7 +33,7 @@ export default function PhotoMenu() {
       });
     });
     canvas.remove(now);
-    canvas.requestRenderAll();
+    canvas.renderAll();
   };
 
   const shapeChange2 = (shape: string) => {
@@ -63,7 +63,7 @@ export default function PhotoMenu() {
         canvas.add(group);
       });
       canvas.remove(now);
-      canvas.requestRenderAll();
+      canvas.renderAll();
     });
   };
 
