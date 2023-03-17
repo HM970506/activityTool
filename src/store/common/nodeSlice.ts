@@ -7,7 +7,7 @@ const nodeSlice = createSlice({
   reducers: {
     setCanvas: (state, action: PayloadAction<any>) => {
       state.canvas = action.payload;
-      console.log(JSON.stringify(action.payload));
+      //console.log(JSON.stringify(action.payload));
     },
   },
 });

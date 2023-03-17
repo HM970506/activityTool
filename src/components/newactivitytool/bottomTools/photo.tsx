@@ -5,65 +5,50 @@ import { selectActions } from "../../../store/common/selectSlice";
 import { Uploader } from "../style";
 import { fabric } from "fabric";
 export default function PhotoMenu() {
-  const dispatch = useDispatch();
-  const select = useSelector((state: any) => state.selectReducer.select);
-  const nodes = useSelector((state: any) => state.nodeReducer.nodes);
-
   const shapeChange = (shape: string) => {
     const now = canvas.getActiveObject();
 
+    //1. 원본 -> a모양    o
+    //2. a모양 -> a모양   o
+    //3. a모양 -> b모양   o
+    //4. a모양 -> 원본
+
     if (!now) return;
 
-    const url = now.getSrc();
+    const url =
+      now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc();
     const { x, y } = now.aCoords.tl;
+    const width = now.width;
+    const height = now.height;
 
-    new fabric.Image.fromURL(url, (img: any) => {
-      canvas.add(
-        img.set({
-          left: x,
-          top: y,
-          clipPath: new fabric.Circle({
-            radius: 100,
-            originX: "center",
-            originY: "center",
-          }),
-        })
-      );
+    console.log(x, y);
+    fabric.Image.fromURL(`/${shape}.png`, (img: any) => {
+      let frameImg = img;
+      frameImg.height = height + 10;
+      frameImg.width = width + 10;
+
+      fabric.Image.fromURL(url, (img: any) => {
+        let innerImg = img;
+        innerImg.globalCompositeOperation = "source-atop";
+
+        const group = new fabric.Group([frameImg, innerImg], (group: any) => {
+          group.left = x;
+          group.top = y;
+          group.frameState = "heart";
+          console.log(group);
+        });
+        canvas.add(group);
+      });
     });
     canvas.remove(now);
     canvas.requestRenderAll();
+
+    //4. a모양 -> 원본
+
+    //현재 프레임에서 링크를 구해와서
+    //그걸 넣는다
   };
 
-  /*
-  const offsetArray = [
-    { x: 5, y: 0 },
-    { x: -5, y: 0 },
-    { x: 0, y: 5 },
-    { x: 0, y: -5 },
-  ];
-
-  const offsetChange = (offset: number | null) => {
-    if (select != null || select != undefined) {
-      dispatch(
-        nodeActions.modifyNodes({
-          index: select,
-          modifyProps: {
-            fillPatternOffsetX:
-              offset === null
-                ? 0
-                : nodes[select].shapeProps.fillPatternOffsetX +
-                  offsetArray[offset].x,
-            fillPatternOffsetY:
-              offset === null
-                ? 0
-                : nodes[select].shapeProps.fillPatternOffsetY +
-                  offsetArray[offset].y,
-          },
-        })
-      );
-    }
-  };
-  */
   const [photo, setPhoto] = useState<string>("");
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -71,6 +56,7 @@ export default function PhotoMenu() {
   useEffect(() => {
     if (photo != "") {
       new fabric.Image.fromURL(photo, (img: any) => {
+        img.viewportCenter();
         canvas.add(img);
       });
       setPhoto("");
@@ -117,17 +103,17 @@ export default function PhotoMenu() {
       </button>
       <button
         onClick={() => {
-          shapeChange("HEART");
+          shapeChange("heart");
         }}
       >
         하트
       </button>
       <button
         onClick={() => {
-          shapeChange("APPLE");
+          shapeChange("star");
         }}
       >
-        사과
+        별
       </button>
       <div>
         <button>원래대로</button>

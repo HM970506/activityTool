@@ -48,22 +48,23 @@ export default function Canvas() {
           height: window.innerWidth,
           width: window.innerWidth,
           backgroundColor: "rgba(0,0,0,0)",
+          preserveObjectStacking: true,
         })
       )
     );
   }, []);
   fabric.Object.prototype.cornerColor = "black";
+  fabric.Object.prototype.cornerStrokeColor = "black";
 
   //삭제용 컨트롤 버튼을 추가할 수 있음.
   fabric.Object.prototype.controls.deleteControl = new fabric.Control({
     ...deleteProps,
   });
-
+  //텍스트에도 추가
   fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
     ...deleteProps,
     y: -1,
   });
-  console.log(fabric);
 
   return <canvas id="canvas" ref={canvasRef} />;
 }
