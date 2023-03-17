@@ -8,45 +8,32 @@ export default function PhotoMenu() {
   const shapeChange = (shape: string) => {
     const now = canvas.getActiveObject();
 
-    //1. 원본 -> a모양    o
-    //2. a모양 -> a모양   o
-    //3. a모양 -> b모양   o
-    //4. a모양 -> 원본
-
     if (!now) return;
 
-    const url =
-      now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc();
+    const url = now.getSrc();
     const { x, y } = now.aCoords.tl;
     const width = now.width;
     const height = now.height;
 
-    console.log(x, y);
+    console.log(width, height);
     fabric.Image.fromURL(`/${shape}.png`, (img: any) => {
       let frameImg = img;
+      frameImg.left = x;
+      frameImg.top = y;
       frameImg.height = height + 10;
-      frameImg.width = width + 10;
-
+      frameImg.width = width + 1;
       fabric.Image.fromURL(url, (img: any) => {
         let innerImg = img;
+        innerImg.left = x;
+        innerImg.top = y;
         innerImg.globalCompositeOperation = "source-atop";
 
-        const group = new fabric.Group([frameImg, innerImg], (group: any) => {
-          group.left = x;
-          group.top = y;
-          group.frameState = "heart";
-          console.log(group);
-        });
-        canvas.add(group);
+        canvas.add(frameImg);
+        canvas.add(innerImg);
       });
     });
     canvas.remove(now);
     canvas.requestRenderAll();
-
-    //4. a모양 -> 원본
-
-    //현재 프레임에서 링크를 구해와서
-    //그걸 넣는다
   };
 
   const [photo, setPhoto] = useState<string>("");
@@ -56,6 +43,7 @@ export default function PhotoMenu() {
   useEffect(() => {
     if (photo != "") {
       new fabric.Image.fromURL(photo, (img: any) => {
+        console.log(img);
         img.viewportCenter();
         canvas.add(img);
       });
