@@ -17,7 +17,7 @@ export default function DrawToolsMenu() {
   const HeartPatternBrush = new fabric.PatternBrush(canvas);
   HeartPatternBrush.source = img;
 
-  const toolChange = (tool: string) => {
+  const setTool = (tool: string) => {
     if (tool == "pen") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
@@ -39,77 +39,79 @@ export default function DrawToolsMenu() {
     // canvas.freeDrawingBrush = Eraser;
   };
 
-  const sizeChange = (size: number) => {
+  const setSize = (size: number) => {
     canvas.freeDrawingBrush.width = size;
   };
 
-  const colorChange = (color: string) => {
+  const setColor = (color: string) => {
     if (canvas.getActiveObject()) canvas.getActiveObject().set("fill", color);
     else canvas.freeDrawingBrush.color = color;
   };
 
   useEffect(() => {
     if (canvas) {
-      toolChange(draws.tool);
-      sizeChange(draws.size);
-      colorChange(draws.color);
+      setTool(draws.tool);
+      setSize(draws.size);
+      setColor(draws.color);
     }
   }, [draws]);
+
+  const toolChange = (tool: string) => {
+    dispatch(drawActions.toolChange(tool));
+  };
+
+  const sizeChange = (size: number) => {
+    dispatch(drawActions.sizeChange(size));
+  };
+
+  const colorChange = (color: string) => {
+    dispatch(drawActions.colorChange(color));
+  };
 
   const dispatch = useDispatch();
   return (
     <>
       <BottomButton
         onClick={() => {
-          dispatch(drawActions.toolChange("pen"));
+          toolChange("pen");
         }}
       >
         펜
       </BottomButton>
       <BottomButton
         onClick={() => {
-          dispatch(drawActions.toolChange("heartPatten"));
+          toolChange("heartPatten");
         }}
       >
         하트패턴
       </BottomButton>
       <BottomButton
         onClick={() => {
-          dispatch(drawActions.toolChange("spray"));
+          toolChange("spray");
         }}
       >
         스프레이
       </BottomButton>
       <BottomButton
         onClick={() => {
-          dispatch(drawActions.toolChange("tape"));
+          toolChange("tape");
         }}
       >
         테이프
       </BottomButton>
       <BottomButton
         onClick={() => {
-          dispatch(drawActions.toolChange("stamp"));
+          toolChange("stamp");
         }}
       >
         도장
       </BottomButton>
 
-      <BottomButton onClick={() => dispatch(drawActions.colorChange("black"))}>
-        검은색
-      </BottomButton>
-      <BottomButton onClick={() => dispatch(drawActions.colorChange("blue"))}>
-        파란색
-      </BottomButton>
-      <BottomButton onClick={() => dispatch(drawActions.sizeChange(20))}>
-        큰 브러쉬
-      </BottomButton>
-      <BottomButton onClick={() => dispatch(drawActions.sizeChange(3))}>
-        작은 브러쉬
-      </BottomButton>
-      <BottomButton onClick={() => dispatch(drawActions.toolChange("ERASER"))}>
-        지우개
-      </BottomButton>
+      <BottomButton onClick={() => colorChange("black")}>검은색</BottomButton>
+      <BottomButton onClick={() => colorChange("blue")}>파란색</BottomButton>
+      <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
+      <BottomButton onClick={() => sizeChange(3)}>작은 브러쉬</BottomButton>
+      <BottomButton onClick={() => toolChange("ERASER")}>지우개</BottomButton>
     </>
   );
 }
