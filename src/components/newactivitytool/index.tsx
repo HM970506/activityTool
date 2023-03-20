@@ -24,7 +24,6 @@ export default function NewActivityTool() {
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [nodeStore, setNodeStore] = useState<any[]>([]);
   const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
-  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
   const firstSize = { width: window.innerWidth, height: window.innerHeight };
 
@@ -80,6 +79,8 @@ export default function NewActivityTool() {
 
   //노드목록이 수정될 때마다 노드목록의 값이 불러와지..게 할 수 없군요.
   //반대로 해야겠다. 노드목록 값이 불러와질 때마다 노드 목록을 수정합시다.
+
+  //저장 관련 부분 시작--------------------------------------
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
   const getCanvas = () => {
@@ -89,6 +90,8 @@ export default function NewActivityTool() {
       activitytoolsStart();
     } else alert("저장된 데이터가 없습니다");
   };
+
+  //저장 관련 부분 끝------------------------------------------
 
   return (
     <>

@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
 import { fabric } from "fabric";
+import { useEffect } from "react";
+import { drawActions } from "../../../store/common/drawSlice";
 
 export default function DrawToolsMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
@@ -14,7 +17,7 @@ export default function DrawToolsMenu() {
   const HeartPatternBrush = new fabric.PatternBrush(canvas);
   HeartPatternBrush.source = img;
 
-  const toolChagne = (tool: string) => {
+  const toolChange = (tool: string) => {
     if (tool == "pen") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
@@ -45,52 +48,68 @@ export default function DrawToolsMenu() {
     else canvas.freeDrawingBrush.color = color;
   };
 
-  //버튼을 클릭할 때마다 전역상태가 바뀌고,
-  //전역 상태가 바뀔 때마다 거기에 맞춰 캔버스정보의 모든 값이 바뀌게 월욜에 수정합시다..
+  useEffect(() => {
+    if (canvas) {
+      toolChange(draws.tool);
+      sizeChange(draws.size);
+      colorChange(draws.color);
+    }
+  }, [draws]);
 
+  const dispatch = useDispatch();
   return (
     <>
       <BottomButton
         onClick={() => {
-          toolChagne("pen");
+          dispatch(drawActions.toolChange("pen"));
         }}
       >
         펜
       </BottomButton>
       <BottomButton
         onClick={() => {
-          toolChagne("heartPatten");
+          dispatch(drawActions.toolChange("heartPatten"));
         }}
       >
         하트패턴
       </BottomButton>
       <BottomButton
         onClick={() => {
-          toolChagne("spray");
+          dispatch(drawActions.toolChange("spray"));
         }}
       >
         스프레이
       </BottomButton>
       <BottomButton
         onClick={() => {
-          toolChagne("tape");
+          dispatch(drawActions.toolChange("tape"));
         }}
       >
         테이프
       </BottomButton>
       <BottomButton
         onClick={() => {
-          toolChagne("stamp");
+          dispatch(drawActions.toolChange("stamp"));
         }}
       >
         도장
       </BottomButton>
 
-      <BottomButton onClick={() => colorChange("black")}>검은색</BottomButton>
-      <BottomButton onClick={() => colorChange("blue")}>파란색</BottomButton>
-      <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
-      <BottomButton onClick={() => sizeChange(3)}>작은 브러쉬</BottomButton>
-      <BottomButton onClick={() => toolChagne("ERASER")}>지우개</BottomButton>
+      <BottomButton onClick={() => dispatch(drawActions.colorChange("black"))}>
+        검은색
+      </BottomButton>
+      <BottomButton onClick={() => dispatch(drawActions.colorChange("blue"))}>
+        파란색
+      </BottomButton>
+      <BottomButton onClick={() => dispatch(drawActions.sizeChange(20))}>
+        큰 브러쉬
+      </BottomButton>
+      <BottomButton onClick={() => dispatch(drawActions.sizeChange(3))}>
+        작은 브러쉬
+      </BottomButton>
+      <BottomButton onClick={() => dispatch(drawActions.toolChange("ERASER"))}>
+        지우개
+      </BottomButton>
     </>
   );
 }
