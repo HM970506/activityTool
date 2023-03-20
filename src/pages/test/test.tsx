@@ -1,16 +1,11 @@
 import { Background, StageArea } from "./style";
 import { fabric } from "fabric";
 import { useEffect } from "react";
+import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 
 export default function Test() {
-  var canvas = new fabric.Canvas("c", {
-    left: 0,
-    top: 0,
-    height: window.innerWidth,
-    width: window.innerWidth,
-    preserveObjectStacking: true,
-  });
-  console.log(canvas);
+  const { editor, onReady } = useFabricJSEditor();
+
   var itext = new fabric.IText("This is a IText object", {
     left: 100,
     top: 150,
@@ -26,9 +21,17 @@ export default function Test() {
     strokeWidth: 2,
     stroke: "#D81B60",
   });
-  useEffect(() => {
-    canvas.add(itext, textbox);
-    canvas.renderAll();
-  }, []);
-  return <canvas id="c" />;
+
+  const onAddCircle = () => {
+    editor?.addText("inset text");
+  };
+
+  useEffect(() => {}, []);
+
+  return (
+    <Background>
+      <button onClick={onAddCircle}>Add circle</button>
+      <FabricJSCanvas className="sample-canvas" onReady={onReady} />
+    </Background>
+  );
 }

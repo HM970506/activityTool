@@ -5,38 +5,7 @@ import { selectActions } from "../../../store/common/selectSlice";
 import { Uploader } from "../style";
 import { fabric } from "fabric";
 export default function PhotoMenu() {
-  const shapeChange1 = (shape: string) => {
-    const now = canvas.getActiveObject();
-
-    if (!now) return;
-
-    const url = now.getSrc();
-    const { x, y } = now.aCoords.tl;
-    const width = now.width;
-    const height = now.height;
-
-    fabric.Image.fromURL(`/${shape}.png`, (img: any) => {
-      let frameImg = img;
-      frameImg.left = x;
-      frameImg.top = y;
-      frameImg.height = height + 10;
-      frameImg.width = width + 1;
-      fabric.Image.fromURL(url, (img: any) => {
-        let innerImg = img;
-        innerImg.setControlsVisibility({ deleteControl: false });
-        innerImg.left = x;
-        innerImg.top = y;
-        innerImg.globalCompositeOperation = "source-atop";
-
-        canvas.add(frameImg);
-        canvas.add(innerImg);
-      });
-    });
-    canvas.remove(now);
-    canvas.renderAll();
-  };
-
-  const shapeChange2 = (shape: string) => {
+  const shapeChange = (shape: string) => {
     const now = canvas.getActiveObject();
 
     if (!now) return;
@@ -122,21 +91,18 @@ export default function PhotoMenu() {
       </button>
       <button
         onClick={() => {
-          shapeChange1("heart");
+          shapeChange("heart");
         }}
       >
         하트
       </button>
       <button
         onClick={() => {
-          shapeChange2("star");
+          shapeChange("star");
         }}
       >
         별
       </button>
-      <div>
-        <button>원래대로</button>
-      </div>
     </>
   );
 }

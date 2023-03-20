@@ -1,17 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CreyonBrush } from "fabric-brush";
 import { BottomButton } from "../style";
-
-import ToggleButton from "./common/toggleButton/toggleButton";
 import { fabric } from "fabric";
 
 export default function DrawToolsMenu() {
-  const dispatch = useDispatch();
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-
+  // const Eraser = new fabric.EraserBrush(canvas);
   //커스텀 브러쉬 추가1
   const img = new Image();
   img.src = "./pattern.jpg";
@@ -35,7 +31,9 @@ export default function DrawToolsMenu() {
       });
 
       canvas.isDrawingMode = true;
+    } else if (tool == "eraser") {
     }
+    // canvas.freeDrawingBrush = Eraser;
   };
 
   const sizeChange = (size: number) => {
@@ -46,6 +44,9 @@ export default function DrawToolsMenu() {
     if (canvas.getActiveObject()) canvas.getActiveObject().set("fill", color);
     else canvas.freeDrawingBrush.color = color;
   };
+
+  //버튼을 클릭할 때마다 전역상태가 바뀌고,
+  //전역 상태가 바뀔 때마다 거기에 맞춰 캔버스정보의 모든 값이 바뀌게 월욜에 수정합시다..
 
   return (
     <>

@@ -4,6 +4,7 @@ import { SideButton } from "../style";
 import { fabric } from "fabric";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
+import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
 
 export default function TextMenu() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function TextMenu() {
       ...defaultProps,
       fontSize: size,
     };
+
     const textbox = new fabric.Textbox("왜 수정이 안되냐고", {
       ...node,
     });
@@ -32,17 +34,8 @@ export default function TextMenu() {
     canvas.renderAll();
   };
 
-  const test = () => {
-    if (canvas.getActiveObject()) {
-      canvas.getActiveObject().set("text", "이건 되나");
-      canvas.renderAll();
-      console.log(canvas.getActiveObject());
-    }
-  };
-
   return (
     <>
-      <button onClick={test}>test</button>
       <SideButton
         size={BIG}
         onClick={() => {
