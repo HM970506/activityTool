@@ -1,37 +1,38 @@
-import { Background, StageArea } from "./style";
 import { fabric } from "fabric";
 import { useEffect } from "react";
-import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 
 export default function Test() {
-  const { editor, onReady } = useFabricJSEditor();
+  let canvas2: { add: (arg0: any) => void; renderAll: () => void } | null =
+    null;
 
-  var itext = new fabric.IText("This is a IText object", {
-    left: 100,
-    top: 150,
-    fill: "#D81B60",
-    strokeWidth: 2,
-    stroke: "#880E4F",
-  });
+  useEffect(() => {
+    canvas2 = new fabric.Canvas("canvas3", {
+      width: 1000,
+      height: 700,
+      backgroundColor: "grey",
+    });
+  }, []);
 
-  var textbox = new fabric.Textbox("This is a Textbox object", {
-    left: 20,
-    top: 50,
+  const textbox = new fabric.Textbox("This is a Textbox object", {
+    left: 0,
+    top: 0,
     fill: "#880E4F",
     strokeWidth: 2,
     stroke: "#D81B60",
   });
 
-  const onAddCircle = () => {
-    editor?.addText("inset text");
-  };
-
-  useEffect(() => {}, []);
-
   return (
-    <Background>
-      <button onClick={onAddCircle}>Add circle</button>
-      <FabricJSCanvas className="sample-canvas" onReady={onReady} />
-    </Background>
+    <>
+      <button
+        onClick={() => {
+          canvas2?.add(textbox);
+          canvas2?.renderAll();
+          console.log("추가");
+        }}
+      >
+        테스트
+      </button>
+      <canvas id="canvas3"></canvas>
+    </>
   );
 }

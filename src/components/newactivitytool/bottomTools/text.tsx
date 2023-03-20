@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SideButton } from "../style";
 import { fabric } from "fabric";
-import { nodeActions } from "../../../store/common/nodeSlice";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
-import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
+import { useEffect } from "react";
 
 export default function TextMenu() {
   const dispatch = useDispatch();
@@ -26,7 +24,7 @@ export default function TextMenu() {
       fontSize: size,
     };
 
-    const textbox = new fabric.Textbox("왜 수정이 안되냐고", {
+    const textbox = new fabric.Textbox("왜 수정이 안되지", {
       ...node,
     });
     console.log(textbox);

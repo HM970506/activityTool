@@ -9,6 +9,7 @@ export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
 
+  //삭제버튼 관련 부분 시작
   const deleteObject = (eventData: any, transform: any) => {
     const target = transform.target;
     const canvas = target.canvas;
@@ -41,18 +42,6 @@ export default function Canvas() {
     render: renderIcon,
     cornerSize: 30,
   };
-  useEffect(() => {
-    dispatch(
-      nodeActions.setCanvas(
-        new fabric.Canvas("canvas", {
-          height: window.innerWidth,
-          width: window.innerWidth,
-          backgroundColor: "rgba(0,0,0,0)",
-          preserveObjectStacking: true,
-        })
-      )
-    );
-  }, []);
 
   //오브젝트 기본세팅
   fabric.Object.prototype.cornerColor = "black";
@@ -69,10 +58,44 @@ export default function Canvas() {
     y: -1,
   });
 
+  //삭제버튼 관련 부분 끝
+
+  useEffect(() => {
+    dispatch(
+      nodeActions.setCanvas(
+        new fabric.Canvas("canvas", {
+          height: window.innerWidth,
+          width: window.innerWidth,
+          preserveObjectStacking: true,
+        })
+      )
+    );
+  }, []);
+
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const textbox = new fabric.Textbox("This is a Textbox object", {
+    left: 0,
+    top: 0,
+    fill: "#880E4F",
+    strokeWidth: 2,
+    stroke: "#D81B60",
+  });
+
+  textbox.on("mouseup", () => {
+    console.log("뭐꼬");
+  });
 
   return (
     <>
+      <button
+        onClick={() => {
+          canvas.add(textbox);
+          canvas.renderAll();
+          console.log(canvas);
+        }}
+      >
+        테스트
+      </button>
       <canvas id="canvas" ref={canvasRef}></canvas>
     </>
   );

@@ -8,6 +8,11 @@ export const Background = styled.div`
   align-items: center;
 `;
 
+export const CanvasTest = styled.canvas`
+  background-color: white;
+  border: 1px solid black;
+`;
+
 export const StageArea = styled.img`
   object-fit: cover;
   width: 100%;

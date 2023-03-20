@@ -80,6 +80,15 @@ export default function NewActivityTool() {
 
   //노드목록이 수정될 때마다 노드목록의 값이 불러와지..게 할 수 없군요.
   //반대로 해야겠다. 노드목록 값이 불러와질 때마다 노드 목록을 수정합시다.
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+
+  const getCanvas = () => {
+    const json = localStorage.getItem("canvasData");
+    if (json) {
+      canvas.loadFromJSON(json, () => canvas.renderAll());
+      activitytoolsStart();
+    } else alert("저장된 데이터가 없습니다");
+  };
 
   return (
     <>
@@ -99,7 +108,7 @@ export default function NewActivityTool() {
           <MainButton onClick={mainClick}>활동툴</MainButton>
           {subButtonVisible && (
             <>
-              <LoadButton>불러오기</LoadButton>
+              <LoadButton onClick={getCanvas}>불러오기</LoadButton>
               <NewButton onClick={activitytoolsStart}>새로하기</NewButton>
             </>
           )}
