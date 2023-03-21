@@ -29,7 +29,14 @@ export default function TextMenu() {
     });
 
     textbox.selectable = true;
+    textbox.__eventListeners["mousedblclick"] = []; //더블클릭시 단어 선택하던 함수
+    textbox.__eventListeners["tripleclick"] = [];
+    textbox.__eventListeners["mousedown"] = [];
+
+    //버그인 것 같으니 수정 버튼을 추가해서 임의로 수정모드에 들어가게 합시다.
+
     canvas.add(textbox);
+
     canvas.renderAll();
   };
 

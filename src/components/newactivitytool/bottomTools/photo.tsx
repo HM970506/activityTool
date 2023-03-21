@@ -44,7 +44,6 @@ export default function PhotoMenu() {
   useEffect(() => {
     if (photo != "") {
       new fabric.Image.fromURL(photo, (img: any) => {
-        console.log(img);
         img.viewportCenter();
         canvas.add(img);
       });

@@ -31,22 +31,19 @@ export default function DrawToolsMenu() {
   //커스텀 브러쉬 추가1 끝
 
   //커스텀 브러쉬 추가2: 스탬프 브러쉬
-  //카테고리가 변하면 그림기능 off되게 하는 거 추가하기~
   const stamping = (e: any) => {
     if (draws.tool == "stamp" && draws.isDrawing) {
       canvas.selection = false;
       canvas.isDrawingMode = false;
-      console.log(canvas.selection);
-      // fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-      //   canvas.add(fabric.util.groupSVGElements(objects, options));
-      //   canvas.calcOffset();
-      //   canvas.renderAll();
-      // });
+
+      fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
+        canvas.add(fabric.util.groupSVGElements(objects, options));
+        canvas.calcOffset();
+        canvas.renderAll();
+      });
     }
   };
-  useEffect(() => {
-    if (canvas) console.log("현재 이벤트 목록", canvas.__eventListeners);
-  });
+
   //커스텀 브러쉬 추가2끝
 
   //브러쉬 정보가 바뀜 시작
@@ -60,7 +57,7 @@ export default function DrawToolsMenu() {
 
       //커서도 바꾸기
       canvas.hoverCursor = `url("./${draws.tool}.png"), auto`;
-
+      console.log(canvas.hoverCursor);
       setSize(draws.size);
       setColor(draws.color);
     }

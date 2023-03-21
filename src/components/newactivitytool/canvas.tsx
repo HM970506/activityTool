@@ -74,29 +74,9 @@ export default function Canvas() {
   }, []);
 
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const textbox = new fabric.Textbox("This is a Textbox object", {
-    left: 0,
-    top: 0,
-    fill: "#880E4F",
-    strokeWidth: 2,
-    stroke: "#D81B60",
-  });
-
-  textbox.on("mouseup", () => {
-    console.log("뭐꼬");
-  });
 
   return (
     <>
-      <button
-        onClick={() => {
-          canvas.add(textbox);
-          canvas.renderAll();
-          console.log(canvas);
-        }}
-      >
-        테스트
-      </button>
       <canvas id="canvas" ref={canvasRef}></canvas>
     </>
   );

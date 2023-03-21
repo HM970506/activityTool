@@ -19,6 +19,7 @@ export default function Test() {
     fill: "#880E4F",
     strokeWidth: 2,
     stroke: "#D81B60",
+    selectable: true,
   });
 
   return (
@@ -26,8 +27,8 @@ export default function Test() {
       <button
         onClick={() => {
           canvas2?.add(textbox);
+
           canvas2?.renderAll();
-          console.log("추가");
         }}
       >
         테스트
