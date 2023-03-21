@@ -12,6 +12,13 @@ export default function DrawToolsMenu() {
   //근데 이럴거면 리덕스가 아니라 그냥 useState를 써도 되지 않아?🤔 펜은 여기서밖에 안 쓰니까..
   //혹시 모르니까 우선 리덕스로 하고.. 끝까지 도구를 사용하는 곳이 없으면 여기에 useReducer로 다시 정리하자
 
+  //커서 부분 시작
+
+  const CURSOR = new Map([
+    ["stamp", `./stampGripHand.png`],
+    ["pen", "./pencil.png"],
+  ]);
+
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
   // const Eraser = new fabric.EraserBrush(canvas);
@@ -26,65 +33,56 @@ export default function DrawToolsMenu() {
   //커스텀 브러쉬 추가2: 스탬프 브러쉬
   //카테고리가 변하면 그림기능 off되게 하는 거 추가하기~
 
-  const makeStampe = (stamp: string) => {
-    //if (draws.isDrawing) {
-    canvas.selection = false;
-    canvas.isDrawingMode = false;
-    console.log(canvas.isDrawingMode);
-
-    fabric.Image.fromURL(`./stampGripHand.png`, (cursor: any) => {
-      cursor.scaleX = 0.5;
-      cursor.scaleY = 0.5;
-      console.log(cursor);
-
-      //캔버스 안에서는 커서 대신 도장이 보이게 하는 함수
-      canvas.wrapperEl.addEventListener("mouseleave", () => {
-        canvas.remove(cursor);
-      });
-      canvas.wrapperEl.addEventListener("mouseenter", () => {
-        canvas.add(cursor);
-      });
-
-      canvas.on("object:selected", (evt: any) => {
-        evt.target.selectable = false;
-        return false;
-      });
-      canvas.on("mouse:move", (e: any) => {
-        cursor.set({
-          left: e.e.layerX - 50,
-          top: e.e.layerY - 300,
-        });
+  const stamping = (e: any) => {
+    if (draws.tool == "stamp" && draws.isDrawing) {
+      fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
+        canvas.add(fabric.util.groupSVGElements(objects, options));
+        canvas.calcOffset();
         canvas.renderAll();
       });
-
-      canvas.on("mouse:up", (e: any) => {
-        const coord = canvas.getPointer(e.target);
-        console.log(coord);
-        cursor.set({
-          left: e.e.layerX - 50,
-          top: e.e.layerY - 250,
-        });
-        fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-          canvas.add(fabric.util.groupSVGElements(objects, options));
-          canvas.calcOffset();
-          canvas.renderAll();
-        });
-      });
-    });
-    //}
+    }
   };
+
+  useEffect(() => {
+    if (canvas) {
+      console.log("여기다아아아", canvas.__eventListeners);
+      canvas.on("mouse:up", stamping);
+    }
+  }, [canvas]);
 
   //커스텀 브러쉬 추가2끝
 
+  //브러쉬 정보가 바뀜 시작
+  useEffect(() => {
+    console.log(draws);
+    if (canvas) {
+      if (draws.isDrawing) {
+        canvas.selection = true;
+        canvas.isDrawingMode = true;
+      }
+
+      setTool(draws.tool);
+
+      //커서도 바꾸기
+      canvas.hoverCursor = `url("./${draws.tool}.png"), auto`;
+
+      setSize(draws.size);
+      setColor(draws.color);
+    }
+  }, [draws]);
+  //브러쉬 정보가 바뀜 끝
+
+  //실질적으로 브러쉬를 바꾸는 함수들 시작
   const setTool = (tool: string) => {
     if (tool == "pen") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
     else if (tool == "tape") {
     } else if (tool == "stamp") {
-      makeStampe(
-        "M 0 0 L -8 -9 Q -15 -8 -15 1 L 0 13 L 25 -20 Q 27 -26 20 -24 z"
-      );
+      if (draws.isDrawing) {
+        canvas.selection = false;
+        canvas.isDrawingMode = false;
+      }
     } else if (tool == "eraser") {
     }
     // canvas.freeDrawingBrush = Eraser;
@@ -99,14 +97,9 @@ export default function DrawToolsMenu() {
     else canvas.freeDrawingBrush.color = color;
   };
 
-  useEffect(() => {
-    //이전 정보를 저장하면서 툴이 바뀌게끔..
-    if (canvas) {
-      setTool(draws.tool);
-      setSize(draws.size);
-      setColor(draws.color);
-    }
-  }, [draws]);
+  //실질적으로 브러쉬를 바꾸는 함수들 끝
+
+  //보일러 플레이트를 줄이기 위한 함수들 시작
 
   const toolChange = (tool: string) => {
     dispatch(drawActions.toolChange(tool));
@@ -119,6 +112,8 @@ export default function DrawToolsMenu() {
   const colorChange = (color: string) => {
     dispatch(drawActions.colorChange(color));
   };
+
+  //보일러 플레이트를 줄이기 위한 함수들 끝
 
   const dispatch = useDispatch();
   return (
