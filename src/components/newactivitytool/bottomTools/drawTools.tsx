@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
-import { fabric } from "fabric";
+import { fabric } from "fabric"; //기존 사용. 모듈x
+
 import { useEffect, useState } from "react";
 import { drawActions } from "../../../store/common/drawSlice";
 
@@ -26,51 +27,51 @@ export default function DrawToolsMenu() {
   //카테고리가 변하면 그림기능 off되게 하는 거 추가하기~
 
   const makeStampe = (stamp: string) => {
-    if (draws.isDrawing) {
-      canvas.selection = false;
-      canvas.isDrawingMode = false;
-      console.log(canvas.isDrawingMode);
+    //if (draws.isDrawing) {
+    canvas.selection = false;
+    canvas.isDrawingMode = false;
+    console.log(canvas.isDrawingMode);
 
-      fabric.Image.fromURL(`./stampGripHand.png`, (cursor: any) => {
-        cursor.scaleX = 0.5;
-        cursor.scaleY = 0.5;
-        console.log(cursor);
+    fabric.Image.fromURL(`./stampGripHand.png`, (cursor: any) => {
+      cursor.scaleX = 0.5;
+      cursor.scaleY = 0.5;
+      console.log(cursor);
 
-        //캔버스 안에서는 커서 대신 도장이 보이게 하는 함수
-        canvas.wrapperEl.addEventListener("mouseleave", () => {
-          canvas.remove(cursor);
-        });
-        canvas.wrapperEl.addEventListener("mouseenter", () => {
-          canvas.add(cursor);
-        });
+      //캔버스 안에서는 커서 대신 도장이 보이게 하는 함수
+      canvas.wrapperEl.addEventListener("mouseleave", () => {
+        canvas.remove(cursor);
+      });
+      canvas.wrapperEl.addEventListener("mouseenter", () => {
+        canvas.add(cursor);
+      });
 
-        canvas.on("object:selected", (evt: any) => {
-          evt.target.selectable = false;
-          return false;
+      canvas.on("object:selected", (evt: any) => {
+        evt.target.selectable = false;
+        return false;
+      });
+      canvas.on("mouse:move", (e: any) => {
+        cursor.set({
+          left: e.e.layerX - 50,
+          top: e.e.layerY - 300,
         });
-        canvas.on("mouse:move", (e: any) => {
-          cursor.set({
-            left: e.e.layerX - 50,
-            top: e.e.layerY - 300,
-          });
+        canvas.renderAll();
+      });
+
+      canvas.on("mouse:up", (e: any) => {
+        const coord = canvas.getPointer(e.target);
+        console.log(coord);
+        cursor.set({
+          left: e.e.layerX - 50,
+          top: e.e.layerY - 250,
+        });
+        fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
+          canvas.add(fabric.util.groupSVGElements(objects, options));
+          canvas.calcOffset();
           canvas.renderAll();
         });
-
-        canvas.on("mouse:up", (e: any) => {
-          const coord = canvas.getPointer(e.target);
-          console.log(coord);
-          cursor.set({
-            left: e.e.layerX - 50,
-            top: e.e.layerY - 250,
-          });
-          fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-            canvas.add(fabric.util.groupSVGElements(objects, options));
-            canvas.calcOffset();
-            canvas.renderAll();
-          });
-        });
       });
-    }
+    });
+    //}
   };
 
   //커스텀 브러쉬 추가2끝
