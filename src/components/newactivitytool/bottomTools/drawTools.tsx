@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
 import { fabric } from "fabric"; //기존 사용. 모듈x
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { drawActions } from "../../../store/common/drawSlice";
 
 export default function DrawToolsMenu() {
@@ -32,35 +32,30 @@ export default function DrawToolsMenu() {
 
   //커스텀 브러쉬 추가2: 스탬프 브러쉬
   //카테고리가 변하면 그림기능 off되게 하는 거 추가하기~
-
   const stamping = (e: any) => {
     if (draws.tool == "stamp" && draws.isDrawing) {
-      fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-        canvas.add(fabric.util.groupSVGElements(objects, options));
-        canvas.calcOffset();
-        canvas.renderAll();
-      });
+      canvas.selection = false;
+      canvas.isDrawingMode = false;
+      console.log(canvas.selection);
+      // fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
+      //   canvas.add(fabric.util.groupSVGElements(objects, options));
+      //   canvas.calcOffset();
+      //   canvas.renderAll();
+      // });
     }
   };
-
   useEffect(() => {
-    if (canvas) {
-      console.log("여기다아아아", canvas.__eventListeners);
-      canvas.on("mouse:up", stamping);
-    }
-  }, [canvas]);
-
+    if (canvas) console.log("현재 이벤트 목록", canvas.__eventListeners);
+  });
   //커스텀 브러쉬 추가2끝
 
   //브러쉬 정보가 바뀜 시작
   useEffect(() => {
-    console.log(draws);
     if (canvas) {
-      if (draws.isDrawing) {
+      if (draws.isDrawing && draws.tool != "stamp") {
         canvas.selection = true;
         canvas.isDrawingMode = true;
       }
-
       setTool(draws.tool);
 
       //커서도 바꾸기
@@ -74,29 +69,24 @@ export default function DrawToolsMenu() {
 
   //실질적으로 브러쉬를 바꾸는 함수들 시작
   const setTool = (tool: string) => {
+    canvas.off("mouse:up", stamping);
     if (tool == "pen") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
     else if (tool == "tape") {
     } else if (tool == "stamp") {
-      if (draws.isDrawing) {
-        canvas.selection = false;
-        canvas.isDrawingMode = false;
-      }
+      if (draws.isDrawing) canvas.on("mouse:up", stamping);
     } else if (tool == "eraser") {
     }
     // canvas.freeDrawingBrush = Eraser;
   };
-
   const setSize = (size: number) => {
     canvas.freeDrawingBrush.width = size;
   };
-
   const setColor = (color: string) => {
     if (canvas.getActiveObject()) canvas.getActiveObject().set("fill", color);
     else canvas.freeDrawingBrush.color = color;
   };
-
   //실질적으로 브러쉬를 바꾸는 함수들 끝
 
   //보일러 플레이트를 줄이기 위한 함수들 시작
@@ -104,15 +94,12 @@ export default function DrawToolsMenu() {
   const toolChange = (tool: string) => {
     dispatch(drawActions.toolChange(tool));
   };
-
   const sizeChange = (size: number) => {
     dispatch(drawActions.sizeChange(size));
   };
-
   const colorChange = (color: string) => {
     dispatch(drawActions.colorChange(color));
   };
-
   //보일러 플레이트를 줄이기 위한 함수들 끝
 
   const dispatch = useDispatch();
