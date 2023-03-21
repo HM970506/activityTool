@@ -6,12 +6,10 @@ const drawSlice = createSlice({
   initialState: { isDrawing: false, tool: "pen", color: "black", size: 5 },
 
   reducers: {
-    draw: (state) => {
-      state.isDrawing = true;
+    setDraw: (state, action: PayloadAction<any>) => {
+      state.isDrawing = action.payload;
     },
-    undraw: (state) => {
-      state.isDrawing = false;
-    },
+
     toolChange: (state, action: PayloadAction<any>) => {
       state.tool = action.payload;
     },
