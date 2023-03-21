@@ -1,6 +1,7 @@
 import fabric from "fabric/fabric-impl";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { TempLink } from "./style";
 
 export default function CanvasSave() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
@@ -31,7 +32,7 @@ export default function CanvasSave() {
 
   return (
     <>
-      <a ref={linkRef}>임시</a>
+      <TempLink ref={linkRef} />
       <button onClick={saveJson}>저장하기</button>
       <button onClick={savePng}>올리기</button>
     </>

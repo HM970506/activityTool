@@ -10,11 +10,11 @@ import {
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas";
-import ToggleButton from "./bottomTools/common/toggleButton/toggleButton";
+import ToggleButton from "./topButtons/toggleButton/toggleButton";
 
 import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
-import CanvasHistory from "./history";
-import CanvasSave from "./save";
+import CanvasHistory from "./topButtons/historyButton/history";
+import CanvasSave from "./topButtons/saveButton/save";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
