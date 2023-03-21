@@ -29,6 +29,7 @@ export default function PhotoMenu() {
           left: x,
           top: y,
         });
+        group.selectable = true;
         canvas.add(group);
       });
       canvas.remove(now);

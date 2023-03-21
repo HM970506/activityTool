@@ -20,6 +20,7 @@ export default function StickerMenu() {
     new fabric.Image.fromURL(
       `./${stickerCategory}_sticker_${index}.png`,
       (img: any) => {
+        img.selectable = true;
         canvas.add(img);
       }
     );

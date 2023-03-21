@@ -47,6 +47,7 @@ export default function Canvas() {
   fabric.Object.prototype.cornerColor = "black";
   fabric.Object.prototype.editingBorderColor = "black";
   fabric.Object.prototype.erasable = false;
+  fabric.Object.prototype.selectable = false;
 
   //삭제용 컨트롤 버튼을 추가할 수 있음.
   fabric.Object.prototype.controls.deleteControl = new fabric.Control({

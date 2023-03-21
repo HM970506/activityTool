@@ -27,7 +27,8 @@ export default function TextMenu() {
     const textbox = new fabric.Textbox("왜 수정이 안되지", {
       ...node,
     });
-    console.log(textbox);
+
+    textbox.selectable = true;
     canvas.add(textbox);
     canvas.renderAll();
   };
