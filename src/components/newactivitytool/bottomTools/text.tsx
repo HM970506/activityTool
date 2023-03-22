@@ -4,6 +4,20 @@ import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { useEffect } from "react";
 
+const editStart = (e: any) => {
+  const textArea = document.createElement("textarea");
+  textArea.style.width = e.target.width;
+  textArea.style.height = e.target.height;
+  textArea.style.left = e.target.left + "px";
+  textArea.style.top = e.target.top + "px";
+  textArea.style.fontSize = e.target.fontSize;
+  textArea.value = e.target.text;
+
+  console.log(e.target);
+};
+
+const editEnd = (e: any) => {};
+
 export default function TextMenu() {
   const dispatch = useDispatch();
 
@@ -32,7 +46,7 @@ export default function TextMenu() {
     textbox.__eventListeners["mousedblclick"] = []; //더블클릭시 단어 선택하던 함수
     textbox.__eventListeners["tripleclick"] = [];
     textbox.__eventListeners["mousedown"] = [];
-
+    textbox.on("mousedblclick", editStart);
     //버그인 것 같으니 수정 버튼을 추가해서 임의로 수정모드에 들어가게 합시다.
 
     canvas.add(textbox);

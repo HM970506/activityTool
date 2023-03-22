@@ -6,7 +6,7 @@ import TemplatesIndex from "./pages/list";
 import NonTemplate from "./pages/nonTemplate";
 import Test from "./pages/test/test";
 
-function App() {
+const App = () => {
   return (
     <>
       <Reset />
@@ -20,6 +20,6 @@ function App() {
       <NewActivityTool />
     </>
   );
-}
+};
 
 export default App;
