@@ -34,31 +34,9 @@ export default function Canvas() {
     });
 
     dispatch(nodeActions.setCanvas(test));
-
-    const btn = document.createElement("div");
-    btn.innerText = "test";
-    btn.style.width = 100 + "px";
-    btn.style.height = 100 + "px";
-
-    const positionBtn = (left: number, top: number) => {
-      btn.style.left = left + "px";
-      btn.style.top = top + "px";
-    };
-
-    fabric.Image.fromURL("./pencil.png", (img: any) => {
-      img.on("moving", (e: any) => {
-        positionBtn(e.target.left, e.target.top);
-      });
-      img.on("scaling", (e: any) => {
-        positionBtn(e.target.left, e.target.top);
-      });
-      console.log(img);
-      test.add(img.set({ left: 250, top: 250, angle: 30 }).scale(0.25));
-      test.renderAll();
-    });
   }, []);
 
-  //받은 코드 시작
+  //받은 코드 시작--------------------------------------------------------
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -95,7 +73,7 @@ export default function Canvas() {
       )
     );
   }, [loading]);
-  //받은 코드 끝
+  //받은 코드 끝-----------------------------------------------------
 
   return (
     <>
