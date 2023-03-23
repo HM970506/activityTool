@@ -14,14 +14,11 @@ export default function DrawToolsMenu() {
 
   //커서 부분 시작
 
-  const CURSOR = new Map([
-    ["stamp", `./stampGripHand.png`],
-    ["pen", "./pencil.png"],
-  ]);
-
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-  const Eraser = new fabric.PencilBrush(canvas, {});
+  const Eraser = new fabric.PencilBrush(canvas, {
+    globalCompositeOperation: "destination-out",
+  });
 
   //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
   const img = new Image();
@@ -31,13 +28,18 @@ export default function DrawToolsMenu() {
   //커스텀 브러쉬 추가1 끝
 
   //커스텀 브러쉬 추가2: 스탬프 브러쉬
-  const stamping = (e: any) => {
+  const stamping = () => {
     if (draws.tool == "stamp" && draws.isDrawing) {
       canvas.selection = false;
       canvas.isDrawingMode = false;
 
+      const pointer = canvas.getPointer();
+
       fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-        canvas.add(fabric.util.groupSVGElements(objects, options));
+        const stamp = fabric.util.groupSVGElements(objects, options);
+        stamp.x = pointer.x;
+        stamp.y = pointer.y;
+        canvas.add(stamp);
         canvas.calcOffset();
         canvas.renderAll();
       });
@@ -45,6 +47,43 @@ export default function DrawToolsMenu() {
   };
 
   //커스텀 브러쉬 추가2끝
+
+  //커서 시작
+  useEffect(() => {
+    if (canvas && draws.isDrawing) {
+      fabric.Image.fromURL(`./pencil.png`, (cursor: any) => {
+        cursor.selectable = false;
+        cursor.scaleX = 0.5;
+        cursor.scaleY = 0.5;
+        console.log(cursor);
+        //캔버스 안에서는 커서 대신 도장이 보이게 하는 함수
+        canvas.wrapperEl.addEventListener("mouseleave", () => {
+          canvas.remove(cursor);
+        });
+        canvas.wrapperEl.addEventListener("mouseenter", () => {
+          canvas.add(cursor);
+        });
+
+        canvas.on("object:selected", (evt: any) => {
+          evt.target.selectable = false;
+          return false;
+        });
+        canvas.on("mouse:move", (e: any) => {
+          const mouse = canvas.getPointer(e);
+          cursor.set({
+            left: mouse.x + 10,
+            top: mouse.y - 100,
+          });
+          canvas.renderAll();
+        });
+
+        canvas.add(cursor);
+        canvas.renderAll();
+      });
+    }
+  }, [canvas]);
+
+  //커서 끝
 
   //브러쉬 정보가 바뀜 시작
   useEffect(() => {
@@ -56,17 +95,17 @@ export default function DrawToolsMenu() {
       setTool(draws.tool);
 
       //커서도 바꾸기
-      canvas.hoverCursor = `url("./${draws.tool}.png"), auto`;
-      console.log(canvas.hoverCursor);
+
       setSize(draws.size);
       setColor(draws.color);
+      canvas.renderAll();
     }
   }, [draws]);
   //브러쉬 정보가 바뀜 끝
 
   //실질적으로 브러쉬를 바꾸는 함수들 시작
   const setTool = (tool: string) => {
-    canvas.off("mouse:up", stamping);
+    if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"].shift();
     if (tool == "pen") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
@@ -74,7 +113,7 @@ export default function DrawToolsMenu() {
     } else if (tool == "stamp") {
       if (draws.isDrawing) canvas.on("mouse:up", stamping);
     } else if (tool == "eraser") {
-      // canvas.freeDrawingBrush = Eraser;
+      canvas.freeDrawingBrush = Eraser;
     }
   };
   const setSize = (size: number) => {

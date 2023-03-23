@@ -1,10 +1,9 @@
 import { fabric } from "fabric";
 import { useDispatch, useSelector } from "react-redux";
-import { nodeActions } from "../../../store/common/nodeSlice";
-import { deleteProps } from "../setting/deleteButton";
+import { nodeActions } from "../../store/common/nodeSlice";
+import { deleteProps } from "./setting/deleteButton";
 import { useEffect, useRef, useState } from "react";
-import { Background } from "../style";
-import { Textarea } from "./style";
+import { Background, CanvasBackground, Textarea } from "./style";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -41,7 +40,6 @@ export default function Canvas() {
       preserveObjectStacking: true,
       freeDrawingCursor: `none`,
     });
-
     dispatch(nodeActions.setCanvas(canvas));
 
     dispatch(nodeActions.setTextarea(textAreaRef));
@@ -87,9 +85,9 @@ export default function Canvas() {
   //받은 코드 끝-----------------------------------------------------
 
   return (
-    <Background>
+    <CanvasBackground>
       <canvas ref={canvasRef}></canvas>
       <Textarea ref={textAreaRef} onChange={resize} />
-    </Background>
+    </CanvasBackground>
   );
 }
