@@ -46,17 +46,18 @@ export default function TextMenu() {
     textbox.on("mousedblclick", () => {
       if (textAreaRef.current) {
         textAreaRef.current.style.display = "block";
-
-        console.log(textAreaRef.current);
         textAreaRef.current.style.width = textbox.width + "px";
         textAreaRef.current.style.height = textbox.height + "px";
-        textAreaRef.current.style.left = textbox.left - 15 + "px";
-        textAreaRef.current.style.top = textbox.top - 15 + "px";
-        textAreaRef.current.style.fontSize = textbox.fontSize + "px";
+        textAreaRef.current.style.left = textbox.left - 1 + "px";
+        textAreaRef.current.style.top = textbox.top - 5 + "px";
+        textAreaRef.current.style.fontSize =
+          textbox.getCurrentCharFontSize() + "px";
+        textAreaRef.current.style.fontFamily = textbox.fontFamily;
         textAreaRef.current.value = textbox.text;
-        //   textAreaRef.current.select;
+        textAreaRef.current.focus();
 
-        console.log(textAreaRef.current);
+        canvas.renderAll();
+        console.log(textbox.setVisible);
       }
     });
     textbox.on("moving", () => {
@@ -75,6 +76,8 @@ export default function TextMenu() {
       if (textAreaRef.current) {
         textbox.text = textAreaRef.current.value;
         textAreaRef.current.style.display = "none";
+        textbox.visible = true;
+        canvas.renderAll();
       }
     });
 

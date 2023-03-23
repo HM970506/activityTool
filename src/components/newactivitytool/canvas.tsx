@@ -10,20 +10,31 @@ const Textarea = style.textarea`
  display:none;
  top:0;
  left:0;
- padding:5px;
+ resize: none;
+ overflow: hidden;
+ outline: none;
+ word-break: keep-all;
+ rows:1;
+ border:none;
+ backgroundColor:white;
 `;
 
 const Background = style.div`
   position:relative;
-  height: window.innerHeight,
-  width: window.innerWidth,
-  backgroundColor: black,
+  height: window.innerHeight;
+  width: window.innerWidth;
+  backgroundColor: black;
 `;
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const resize = (e: any) => {
+    e.target.style.height = "auto";
+    e.target.style.height = e.target.scrollHeight + "px";
+  };
 
   //오브젝트 기본세팅
   fabric.Object.prototype.cornerColor = "black";
@@ -99,7 +110,7 @@ export default function Canvas() {
   return (
     <Background>
       <canvas ref={canvasRef}></canvas>
-      <Textarea ref={textAreaRef} />
+      <Textarea ref={textAreaRef} onChange={resize} />
     </Background>
   );
 }
