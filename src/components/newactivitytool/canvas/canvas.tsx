@@ -1,30 +1,10 @@
 import { fabric } from "fabric";
 import { useDispatch, useSelector } from "react-redux";
-import { nodeActions } from "../../store/common/nodeSlice";
-import { deleteProps } from "./setting/deleteButton";
+import { nodeActions } from "../../../store/common/nodeSlice";
+import { deleteProps } from "../setting/deleteButton";
 import { useEffect, useRef, useState } from "react";
-import style from "styled-components";
-
-const Textarea = style.textarea`
- position:absolute;
- display:none;
- top:0;
- left:0;
- resize: none;
- overflow: hidden;
- outline: none;
- word-break: keep-all;
- rows:1;
- border:none;
- backgroundColor:white;
-`;
-
-const Background = style.div`
-  position:relative;
-  height: window.innerHeight;
-  width: window.innerWidth;
-  backgroundColor: black;
-`;
+import { Background } from "../style";
+import { Textarea } from "./style";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -54,16 +34,15 @@ export default function Canvas() {
   //오브젝트 기본세팅 끝
 
   useEffect(() => {
-    dispatch(
-      nodeActions.setCanvas(
-        new fabric.Canvas(canvasRef.current, {
-          height: window.innerHeight,
-          width: window.innerWidth,
-          backgroundColor: "white",
-          preserveObjectStacking: true,
-        })
-      )
-    );
+    const canvas = new fabric.Canvas(canvasRef.current, {
+      height: window.innerHeight,
+      width: window.innerWidth,
+      backgroundColor: "white",
+      preserveObjectStacking: true,
+      freeDrawingCursor: `none`,
+    });
+
+    dispatch(nodeActions.setCanvas(canvas));
 
     dispatch(nodeActions.setTextarea(textAreaRef));
   }, []);

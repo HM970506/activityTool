@@ -9,7 +9,7 @@ import {
 } from "./style";
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
-import Canvas from "./canvas";
+import Canvas from "./canvas/canvas";
 import ToggleButton from "./topButtons/toggleButton/toggleButton";
 
 import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
