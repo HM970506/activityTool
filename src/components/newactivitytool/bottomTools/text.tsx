@@ -16,48 +16,45 @@ export default function TextMenu() {
     };
   };
 
-  const defaultProps = {
-    left: window.innerWidth / 2,
-    top: window.innerHeight / 2,
-    color: "black",
-    width: 400,
-    height: 30,
-    fontSize: 10,
-    editable: true,
-  };
   useEffect(() => {
     console.log(textAreaRef.current?.style);
   }, [textAreaRef.current?.style]);
 
   const TextMaker = (size: number) => {
-    const node = {
-      ...defaultProps,
+    const textbox = new fabric.Textbox("텍스트를 입력하세요", {
+      left: window.innerWidth / 2,
+      top: window.innerHeight / 2,
+      color: "black",
+      width: 400,
+      height: 30,
+      editable: true,
       fontSize: size,
-    };
-
-    const textbox = new fabric.Textbox("왜 수정이 안되지", {
-      ...node,
+      selectable: true,
     });
-    textbox.selectable = true;
+
     textbox.__eventListeners["mousedblclick"] = [];
     textbox.__eventListeners["tripleclick"] = [];
     textbox.__eventListeners["mousedown"] = [];
 
+    const controls = JSON.stringify(textbox.controls);
+    console.log(textbox.controls);
+
     textbox.on("mousedblclick", () => {
       if (textAreaRef.current) {
+        textbox.opacity = 0;
         textAreaRef.current.style.display = "block";
         textAreaRef.current.style.width = textbox.width + "px";
         textAreaRef.current.style.height = textbox.height + "px";
-        textAreaRef.current.style.left = textbox.left - 1 + "px";
-        textAreaRef.current.style.top = textbox.top - 5 + "px";
+        textAreaRef.current.style.left = textbox.left - 10 + "px";
+        textAreaRef.current.style.top = textbox.top - 10 + "px";
         textAreaRef.current.style.fontSize =
           textbox.getCurrentCharFontSize() + "px";
         textAreaRef.current.style.fontFamily = textbox.fontFamily;
         textAreaRef.current.value = textbox.text;
+        textbox.hasControls = false;
         textAreaRef.current.focus();
 
         canvas.renderAll();
-        console.log(textbox.setVisible);
       }
     });
     textbox.on("moving", () => {
@@ -76,7 +73,8 @@ export default function TextMenu() {
       if (textAreaRef.current) {
         textbox.text = textAreaRef.current.value;
         textAreaRef.current.style.display = "none";
-        textbox.visible = true;
+        textbox.hasControls = true;
+        textbox.opacity = 1;
         canvas.renderAll();
       }
     });

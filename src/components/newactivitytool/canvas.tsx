@@ -87,7 +87,11 @@ export default function Canvas() {
   return (
     <CanvasBackground>
       <canvas ref={canvasRef}></canvas>
-      <Textarea ref={textAreaRef} onChange={resize} />
+      <Textarea
+        ref={textAreaRef}
+        defaultValue={"텍스트를 입력하세요"}
+        onChange={resize}
+      />
     </CanvasBackground>
   );
 }

@@ -156,13 +156,14 @@ export const Textarea = styled.textarea`
   outline: none;
   word-break: keep-all;
   rows: 1;
+  padding: 7px;
   border: none;
-  backgroundcolor: white;
+  background-color: white;
 `;
 
 export const CanvasBackground = styled.div`
   position: relative;
   height: window.innerHeight;
   width: window.innerWidth;
-  backgroundcolor: black;
+  background-color: black;
 `;
