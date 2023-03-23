@@ -3,38 +3,18 @@ import { SideButton } from "../style";
 import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { useEffect, useRef, useState } from "react";
+import style from "styled-components";
 
 export default function TextMenu() {
-  const dispatch = useDispatch();
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const textArea = document.createElement("textarea");
-  const [isEditing, setIsEditing] = useState<string>("unselect");
+  const textAreaRef = useSelector((state: any) => state.nodeReducer.textarea);
 
-  let now = new fabric.Textbox();
-
-  useEffect(() => {
-    if (isEditing == "select") {
-      textArea.style.width = now.width;
-      textArea.style.height = now.height;
-      textArea.style.left = now.left + "px";
-      textArea.style.top = now.top + "px";
-      textArea.style.fontSize = now.fontSize;
-      textArea.innerText = now.text;
-      textArea.style.display = "absolute";
-    }
-    if (isEditing == "moving") {
-      textArea.style.left = now.left + "px";
-      textArea.style.top = now.top + "px";
-    } else if (isEditing == "scale") {
-      textArea.style.width = now.width;
-      textArea.style.height = now.height;
-    } else if (isEditing == "unselect") {
-      now.text = textArea.innerText;
-      textArea.style.display = "none";
-    }
-
-    console.log(isEditing, textArea);
-  }, [isEditing]);
+  fabric.Canvas.prototype.getAbsoluteCoords = (object: any) => {
+    return {
+      left: object.left + canvas._offset?.left,
+      top: object.top + canvas._offset.top,
+    };
+  };
 
   const defaultProps = {
     left: window.innerWidth / 2,
@@ -45,6 +25,9 @@ export default function TextMenu() {
     fontSize: 10,
     editable: true,
   };
+  useEffect(() => {
+    console.log(textAreaRef.current?.style);
+  }, [textAreaRef.current?.style]);
 
   const TextMaker = (size: number) => {
     const node = {
@@ -55,16 +38,45 @@ export default function TextMenu() {
     const textbox = new fabric.Textbox("왜 수정이 안되지", {
       ...node,
     });
-    now = textbox;
     textbox.selectable = true;
     textbox.__eventListeners["mousedblclick"] = [];
     textbox.__eventListeners["tripleclick"] = [];
     textbox.__eventListeners["mousedown"] = [];
 
-    textbox.on("mousedblclick", () => setIsEditing("select"));
-    textbox.on("moving", () => setIsEditing("move"));
-    textbox.on("scaling", () => setIsEditing("scale"));
-    textbox.on("deselected", () => setIsEditing("unselect"));
+    textbox.on("mousedblclick", () => {
+      if (textAreaRef.current) {
+        textAreaRef.current.style.display = "block";
+
+        console.log(textAreaRef.current);
+        textAreaRef.current.style.width = textbox.width + "px";
+        textAreaRef.current.style.height = textbox.height + "px";
+        textAreaRef.current.style.left = textbox.left - 15 + "px";
+        textAreaRef.current.style.top = textbox.top - 15 + "px";
+        textAreaRef.current.style.fontSize = textbox.fontSize + "px";
+        textAreaRef.current.value = textbox.text;
+        //   textAreaRef.current.select;
+
+        console.log(textAreaRef.current);
+      }
+    });
+    textbox.on("moving", () => {
+      if (textAreaRef.current) {
+        textAreaRef.current.style.left = textbox.left;
+        textAreaRef.current.style.top = textbox.top;
+      }
+    });
+    textbox.on("scaling", () => {
+      if (textAreaRef.current) {
+        textAreaRef.current.style.width = textbox.width + "px";
+        textAreaRef.current.style.height = textbox.height + "px";
+      }
+    });
+    textbox.on("deselected", () => {
+      if (textAreaRef.current) {
+        textbox.text = textAreaRef.current.value;
+        textAreaRef.current.style.display = "none";
+      }
+    });
 
     canvas.add(textbox);
 

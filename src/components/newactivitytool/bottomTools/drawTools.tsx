@@ -21,7 +21,7 @@ export default function DrawToolsMenu() {
 
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-  //  const Eraser = new fabric.EraserBrush(canvas);
+  const Eraser = new fabric.PencilBrush(canvas, {});
 
   //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
   const img = new Image();
