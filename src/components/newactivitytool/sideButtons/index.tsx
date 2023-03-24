@@ -7,6 +7,7 @@ import RecordButton from "./record";
 import StickerButton from "./sticker";
 import TextButton from "./text";
 import DrawToolsButton from "./drawTools";
+import DecorationButton from "./decoration";
 
 export default function SideButtons({
   activitytoolsEnd,
@@ -26,6 +27,7 @@ export default function SideButtons({
       <RecordButton />
       <PhotoButton />
       <StickerButton />
+      <DecorationButton />
       <DrawToolsButton />
       <Button onClick={activitytoolsEnd}>활동툴 닫기</Button>
     </ButtonBox>

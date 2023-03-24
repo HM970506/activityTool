@@ -49,39 +49,6 @@ export default function DrawToolsMenu() {
   //커스텀 브러쉬 추가2끝
 
   //커서 시작
-  useEffect(() => {
-    if (canvas && draws.isDrawing) {
-      fabric.Image.fromURL(`./pencil.png`, (cursor: any) => {
-        cursor.selectable = false;
-        cursor.scaleX = 0.5;
-        cursor.scaleY = 0.5;
-        console.log(cursor);
-        //캔버스 안에서는 커서 대신 도장이 보이게 하는 함수
-        canvas.wrapperEl.addEventListener("mouseleave", () => {
-          canvas.remove(cursor);
-        });
-        canvas.wrapperEl.addEventListener("mouseenter", () => {
-          canvas.add(cursor);
-        });
-
-        canvas.on("object:selected", (evt: any) => {
-          evt.target.selectable = false;
-          return false;
-        });
-        canvas.on("mouse:move", (e: any) => {
-          const mouse = canvas.getPointer(e);
-          cursor.set({
-            left: mouse.x + 10,
-            top: mouse.y - 100,
-          });
-          canvas.renderAll();
-        });
-
-        canvas.add(cursor);
-        canvas.renderAll();
-      });
-    }
-  }, [canvas]);
 
   //커서 끝
 
@@ -105,8 +72,8 @@ export default function DrawToolsMenu() {
 
   //실질적으로 브러쉬를 바꾸는 함수들 시작
   const setTool = (tool: string) => {
-    if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"].shift();
-    if (tool == "pen") canvas.freeDrawingBrush = PenBrush;
+    if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"] = [];
+    if (tool == "pencil") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
     else if (tool == "tape") {
@@ -143,7 +110,7 @@ export default function DrawToolsMenu() {
     <>
       <BottomButton
         onClick={() => {
-          toolChange("pen");
+          toolChange("pencil");
         }}
       >
         펜
