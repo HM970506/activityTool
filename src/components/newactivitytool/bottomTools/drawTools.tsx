@@ -27,27 +27,6 @@ export default function DrawToolsMenu() {
   HeartPatternBrush.source = img;
   //커스텀 브러쉬 추가1 끝
 
-  //커스텀 브러쉬 추가2: 스탬프 브러쉬
-  const stamping = () => {
-    if (draws.tool == "stamp" && draws.isDrawing) {
-      canvas.selection = false;
-      canvas.isDrawingMode = false;
-
-      const pointer = canvas.getPointer();
-
-      fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-        const stamp = fabric.util.groupSVGElements(objects, options);
-        stamp.x = pointer.x;
-        stamp.y = pointer.y;
-        canvas.add(stamp);
-        canvas.calcOffset();
-        canvas.renderAll();
-      });
-    }
-  };
-
-  //커스텀 브러쉬 추가2끝
-
   //커서 시작
 
   //커서 끝
@@ -76,10 +55,7 @@ export default function DrawToolsMenu() {
     if (tool == "pencil") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
-    else if (tool == "tape") {
-    } else if (tool == "stamp") {
-      if (draws.isDrawing) canvas.on("mouse:up", stamping);
-    } else if (tool == "eraser") {
+    else if (tool == "eraser") {
       canvas.freeDrawingBrush = Eraser;
     }
   };
@@ -128,20 +104,6 @@ export default function DrawToolsMenu() {
         }}
       >
         스프레이
-      </BottomButton>
-      <BottomButton
-        onClick={() => {
-          toolChange("tape");
-        }}
-      >
-        테이프
-      </BottomButton>
-      <BottomButton
-        onClick={() => {
-          toolChange("stamp");
-        }}
-      >
-        도장
       </BottomButton>
 
       <BottomButton onClick={() => colorChange("black")}>검은색</BottomButton>
