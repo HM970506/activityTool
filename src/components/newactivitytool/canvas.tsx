@@ -17,6 +17,7 @@ export default function Canvas() {
   };
 
   //오브젝트 기본세팅
+
   fabric.Object.prototype.cornerColor = "black";
   fabric.Object.prototype.editingBorderColor = "black";
   fabric.Object.prototype.erasable = false;
@@ -43,10 +44,9 @@ export default function Canvas() {
       hoverCursor: "default",
     });
     console.log(canvas);
+
     dispatch(nodeActions.setCanvas(canvas));
     dispatch(nodeActions.setTextarea(textAreaRef));
-    dispatch(historyActions.push(canvas.getObjects()));
-    dispatch(historyActions.setIndex(0));
   }, []);
 
   //받은 코드 시작--------------------------------------------------------
