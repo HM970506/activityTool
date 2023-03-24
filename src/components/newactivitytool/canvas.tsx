@@ -4,6 +4,7 @@ import { nodeActions } from "../../store/common/nodeSlice";
 import { deleteProps } from "./setting/deleteButton";
 import { useEffect, useRef, useState } from "react";
 import { Background, CanvasBackground, Textarea } from "./style";
+import { historyActions } from "../../store/common/historySlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -41,16 +42,11 @@ export default function Canvas() {
       freeDrawingCursor: `none`,
       hoverCursor: "default",
     });
-    //  console.log(canvas.defaultCursor);
-    // canvas.on("mouse:out", () => {
-    //   console.log("out");
-    // });
-    // canvas.on("mouse:over", () => {
-    //   console.log("in");
-    // });
+    console.log(canvas);
     dispatch(nodeActions.setCanvas(canvas));
-
     dispatch(nodeActions.setTextarea(textAreaRef));
+    dispatch(historyActions.push(canvas.getObjects()));
+    dispatch(historyActions.setIndex(0));
   }, []);
 
   //받은 코드 시작--------------------------------------------------------

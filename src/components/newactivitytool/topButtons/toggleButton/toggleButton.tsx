@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../store/common/drawSlice";
-import { selectActions } from "../../../../store/common/selectSlice";
 import { Label, Toggle, Slider } from "./style";
 
 export default function ToggleButton() {

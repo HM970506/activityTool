@@ -1,7 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nodeActions } from "../../../store/common/nodeSlice";
-import { selectActions } from "../../../store/common/selectSlice";
 import { Uploader } from "../style";
 import { fabric } from "fabric";
 export default function PhotoMenu() {

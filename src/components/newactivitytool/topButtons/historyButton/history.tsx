@@ -1,13 +1,25 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { historyActions } from "../../../../store/common/historySlice";
 
 export default function CanvasHistory() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const history = useSelector((state: any) => state.historyReducer.history);
+  const nowIndex = useSelector((state: any) => state.historyReducer.nowIndex);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(history);
+  }, [history]);
+
   const Undo = () => {
-    canvas.undo();
+    if (nowIndex - 1 >= 0) dispatch(historyActions.setIndex(nowIndex - 1));
   };
 
   const Redo = () => {
-    canvas.redo();
+    if (nowIndex + 1 < history.length)
+      dispatch(historyActions.setIndex(nowIndex + 1));
   };
 
   return (
