@@ -22,7 +22,7 @@ export default function Canvas() {
 
   fabric.Object.prototype.cornerColor = "black";
   fabric.Object.prototype.editingBorderColor = "black";
-  fabric.Object.prototype.erasable = false;
+  fabric.Object.prototype.erasable = true;
   fabric.Object.prototype.selectable = false;
   fabric.Object.prototype.hasBorders = false;
 
@@ -46,6 +46,9 @@ export default function Canvas() {
       freeDrawingCursor: `none`,
       hoverCursor: "default",
     });
+
+    canvas.freeDrawingBrush.inverted = true;
+
     dispatch(nodeActions.setCanvas(canvas));
 
     dispatch(nodeActions.setTextarea(textAreaRef));
