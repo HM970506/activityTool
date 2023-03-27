@@ -45,6 +45,7 @@ export default function Canvas() {
       hoverCursor: "default",
     });
     dispatch(nodeActions.setCanvas(canvas));
+
     dispatch(nodeActions.setTextarea(textAreaRef));
   }, []);
 

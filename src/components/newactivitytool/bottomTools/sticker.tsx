@@ -25,7 +25,6 @@ export default function StickerMenu() {
         img.selectable = true;
         img.id = history.length.toString(16);
 
-        console.log(img);
         canvas.add(img);
       }
     );

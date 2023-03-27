@@ -22,6 +22,7 @@
     "fabric": "^5.2.1",
     "fabric-brush": "^0.0.1",
     "fabric-history": "^1.7.0",
+    "fabric-with-erasing": "^1.0.1",
     "fabricjs": "^1.0.0",
     "fabricjs-react": "^1.2.0",
     "FileReader": "^0.10.2",

@@ -58,7 +58,6 @@ export default function DrawToolsMenu() {
       canvas.freeDrawingBrush = Eraser;
       canvas.freeDrawingBrush.globalCompositeOperation = "destination-out";
 
-      console.log(canvas.freeDrawingBrush);
       canvas.renderAll();
     }
   };
