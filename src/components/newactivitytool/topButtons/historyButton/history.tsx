@@ -13,6 +13,7 @@ export default function CanvasHistory() {
   const canvasAddHandler = () => {
     canvas.on("object:added", function (this: any, e: any) {
       if (e.target.id == "cursor") return;
+      e.target.id = new Date().getTime().toString(36);
       e.target.index = canvas.getObjects().length - 1;
       dispatch(
         historyActions.push({
@@ -38,29 +39,38 @@ export default function CanvasHistory() {
     });
   };
 
+  const canvasModifyHandler = () => {
+    canvas.on(
+      "before:transform",
+      ({ e, transform }: { e: any; transform: any }) => {
+        if (transform.target.id == "cursor") return;
+        console.log("수정");
+        dispatch(
+          historyActions.push({
+            act: "modify",
+            value: JSON.stringify(transform.target),
+            target: transform.target,
+          })
+        );
+      }
+    );
+  };
+
   useEffect(() => {
     if (canvas) {
       canvasAddHandler();
       canvasRemoveHandler();
-      canvas.on(
-        "before:transform",
-        ({ e, transform }: { e: any; transform: any }) => {
-          if (transform.target.id == "cursor") return;
-          console.log("수정");
-          dispatch(
-            historyActions.push({
-              act: "modify",
-              value: JSON.stringify(transform.target),
-              target: transform.target,
-            })
-          );
-        }
-      );
+      canvasModifyHandler();
     }
   }, [canvas]);
 
   useEffect(() => {
-    console.log(nowIndex, history);
+    console.log(
+      nowIndex,
+      history.map((x: any) => {
+        return x.target.id;
+      })
+    );
   }, [nowIndex]);
 
   useEffect(() => {
@@ -94,6 +104,7 @@ export default function CanvasHistory() {
         canvas._objects.forEach((obj: any) => {
           if (target.id == obj.id) {
             console.log("있으니까 삭제");
+            console.log(target);
             canvas.remove(obj);
             check = false;
           }
