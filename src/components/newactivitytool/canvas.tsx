@@ -1,4 +1,6 @@
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
+
+import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../store/common/nodeSlice";
 import { deleteProps } from "./setting/deleteButton";

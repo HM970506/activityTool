@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
-import { fabric } from "fabric"; //기존 사용. 모듈x
+import { fabric } from "fabric-with-erasing"; //기존 사용. 모듈x
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { drawActions } from "../../../store/common/drawSlice";
@@ -16,7 +16,7 @@ export default function DrawToolsMenu() {
 
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-  const Eraser = new fabric.PencilBrush(canvas, {});
+  const Eraser = new fabric.EraserBrush(canvas);
 
   //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
   const img = new Image();
@@ -53,13 +53,7 @@ export default function DrawToolsMenu() {
     if (tool == "pencil") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
-    else if (tool == "eraser") {
-      console.log("지우개");
-      canvas.freeDrawingBrush = Eraser;
-      canvas.freeDrawingBrush.globalCompositeOperation = "destination-out";
-
-      canvas.renderAll();
-    }
+    else if (tool == "eraser") canvas.freeDrawingBrush = Eraser;
   };
   const setSize = (size: number) => {
     canvas.freeDrawingBrush.width = size;
