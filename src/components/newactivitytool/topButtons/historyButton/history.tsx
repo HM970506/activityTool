@@ -68,10 +68,10 @@ export default function CanvasHistory() {
     console.log(
       nowIndex,
       history.map((x: any) => {
-        return x.target.id;
+        return JSON.parse(x.value).text;
       })
     );
-  }, [nowIndex]);
+  }, [history]);
 
   useEffect(() => {
     if (canvas && nowIndex >= 0 && timeslip != "") {
@@ -95,6 +95,7 @@ export default function CanvasHistory() {
             obj.height = changeObject.height;
             obj.scaleX = changeObject.scaleX;
             obj.scaleY = changeObject.scaleY;
+            obj.text = changeObject.text;
           }
         });
       } else {
@@ -107,6 +108,7 @@ export default function CanvasHistory() {
             console.log(target);
             canvas.remove(obj);
             check = false;
+            console.log(obj.id);
           }
         });
 
@@ -114,12 +116,12 @@ export default function CanvasHistory() {
         if (check) {
           console.log("없으니까 생성");
           const nowObjects = canvas.getObjects();
+          console.log(nowObjects);
           canvas._objects = [
             ...nowObjects.slice(0, target.index),
             target,
             ...nowObjects.slice(target.index, nowObjects.length),
           ];
-          console.log(canvas._objects);
         }
         //remove하면 타겟이 아예 사라지나? 테스트해 봅시다.
       }

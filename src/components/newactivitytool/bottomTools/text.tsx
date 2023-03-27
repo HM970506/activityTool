@@ -4,6 +4,7 @@ import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { useEffect, useRef, useState } from "react";
 import style from "styled-components";
+import { historyActions } from "../../../store/common/historySlice";
 
 export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
@@ -20,6 +21,7 @@ export default function TextMenu() {
     console.log(textAreaRef.current?.style);
   }, [textAreaRef.current?.style]);
 
+  const dispatch = useDispatch();
   const TextMaker = (size: number) => {
     const textbox = new fabric.Textbox("텍스트를 입력하세요", {
       left: window.innerWidth / 2,
@@ -36,9 +38,6 @@ export default function TextMenu() {
     textbox.__eventListeners["tripleclick"] = [];
     textbox.__eventListeners["mousedown"] = [];
 
-    const controls = JSON.stringify(textbox.controls);
-    console.log(textbox.controls);
-
     textbox.on("mousedblclick", () => {
       if (textAreaRef.current) {
         textbox.opacity = 0;
@@ -47,6 +46,7 @@ export default function TextMenu() {
         textAreaRef.current.style.height = textbox.height + "px";
         textAreaRef.current.style.left = textbox.left - 10 + "px";
         textAreaRef.current.style.top = textbox.top - 10 + "px";
+        textAreaRef.current.style.rotate = textbox.rotate + "deg";
         textAreaRef.current.style.fontSize =
           textbox.getCurrentCharFontSize() + "px";
         textAreaRef.current.style.fontFamily = textbox.fontFamily;
@@ -75,6 +75,16 @@ export default function TextMenu() {
         textAreaRef.current.style.display = "none";
         textbox.hasControls = true;
         textbox.opacity = 1;
+
+        //텍스트 수정은 transform에 해당되지 않으므로 별도로 처리
+        dispatch(
+          historyActions.push({
+            act: "modify",
+            value: JSON.stringify(textbox),
+            target: textbox,
+          })
+        );
+
         canvas.renderAll();
       }
     });
