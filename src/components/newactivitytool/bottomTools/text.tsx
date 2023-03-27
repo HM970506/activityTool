@@ -76,15 +76,6 @@ export default function TextMenu() {
         textbox.hasControls = true;
         textbox.opacity = 1;
 
-        //텍스트 수정은 transform에 해당되지 않으므로 별도로 처리
-        dispatch(
-          historyActions.push({
-            act: "modify",
-            value: JSON.stringify(textbox),
-            target: textbox,
-          })
-        );
-
         canvas.renderAll();
       }
     });

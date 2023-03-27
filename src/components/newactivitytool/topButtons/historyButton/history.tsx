@@ -11,14 +11,16 @@ export default function CanvasHistory() {
   const dispatch = useDispatch();
 
   const canvasAddHandler = () => {
-    canvas.on("object:added", function (this: any, e: any) {
+    canvas.on("object:added", (e: any) => {
       if (e.target.id == "cursor") return;
+      dispatch(historyActions.renden());
+
       e.target.id = new Date().getTime().toString(36);
-      e.target.index = canvas.getObjects().length - 1;
+      e.target.before = JSON.stringify(e.target);
+
       dispatch(
         historyActions.push({
           act: "add",
-          value: JSON.stringify(e.target), //당시의 value. target에서는 해당 값이 계속 바뀜.
           target: e.target,
         })
       );
@@ -26,13 +28,12 @@ export default function CanvasHistory() {
   };
 
   const canvasRemoveHandler = () => {
-    canvas.on("object:removed", function (e: any) {
+    canvas.on("object:removed", (e: any) => {
       if (e.target.id == "cursor") return;
       console.log("제거");
       dispatch(
         historyActions.push({
           act: "delete",
-          value: JSON.stringify(e.target),
           target: e.target,
         })
       );
@@ -40,20 +41,20 @@ export default function CanvasHistory() {
   };
 
   const canvasModifyHandler = () => {
-    canvas.on(
-      "before:transform",
-      ({ e, transform }: { e: any; transform: any }) => {
-        if (transform.target.id == "cursor") return;
-        console.log("수정");
-        dispatch(
-          historyActions.push({
-            act: "modify",
-            value: JSON.stringify(transform.target),
-            target: transform.target,
-          })
-        );
-      }
-    );
+    canvas.on("object:modified", (e: any) => {
+      if (e.target.id == "cursor") return;
+      console.log("수정");
+      console.log(e.target);
+      dispatch(
+        historyActions.push({
+          act: "modify",
+          before: e.target.before,
+          after: JSON.stringify(e.target),
+          target: e.target,
+        })
+      );
+      e.target.before = JSON.stringify(e.target);
+    });
   };
 
   useEffect(() => {
@@ -65,65 +66,61 @@ export default function CanvasHistory() {
   }, [canvas]);
 
   useEffect(() => {
-    console.log(
-      nowIndex,
-      history.map((x: any) => {
-        return JSON.parse(x.value).text;
-      })
-    );
+    console.log(nowIndex, history);
   }, [history]);
+
+  const exchange = (target: any, changeObject: any) => {
+    canvas._objects.forEach((obj: any) => {
+      if (target.id == obj.id) {
+        //그냥 곧바로 저장하는 방법은 없나..?
+        obj.top = changeObject.top;
+        obj.left = changeObject.left;
+        obj.right = changeObject.right;
+        obj.angle = changeObject.angle;
+        obj.width = changeObject.width;
+        obj.height = changeObject.height;
+        obj.scaleX = changeObject.scaleX;
+        obj.scaleY = changeObject.scaleY;
+        obj.text = changeObject.text;
+      }
+    });
+  };
 
   useEffect(() => {
     if (canvas && nowIndex >= 0 && timeslip != "") {
       canvas.__eventListeners["object:added"] = [];
       canvas.__eventListeners["object:removed"] = [];
 
-      const { act, target, value } = history[nowIndex];
-
-      const changeObject = JSON.parse(value);
+      const { act, target, before, after } = history[nowIndex];
 
       if (act == "modify") {
         console.log("이동이나 변화");
-        canvas._objects.forEach((obj: any) => {
-          if (target.id == obj.id) {
-            //그냥 곧바로 저장하는 방법은 없나..?
-            obj.top = changeObject.top;
-            obj.left = changeObject.left;
-            obj.right = changeObject.right;
-            obj.angle = changeObject.angle;
-            obj.width = changeObject.width;
-            obj.height = changeObject.height;
-            obj.scaleX = changeObject.scaleX;
-            obj.scaleY = changeObject.scaleY;
-            obj.text = changeObject.text;
-          }
-        });
+
+        const bef = JSON.parse(before);
+        const aft = JSON.parse(after);
+
+        if (timeslip == "undo") exchange(target, bef);
+        else exchange(target, aft);
       } else {
         let check = true;
 
-        //있음-삭제
         canvas._objects.forEach((obj: any) => {
           if (target.id == obj.id) {
-            console.log("있으니까 삭제");
-            console.log(target);
             canvas.remove(obj);
             check = false;
-            console.log(obj.id);
           }
         });
 
-        //없음-생성
         if (check) {
-          console.log("없으니까 생성");
           const nowObjects = canvas.getObjects();
-          console.log(nowObjects);
+
+          //도중에 삭제되면 인덱스가 바뀔텐데..
           canvas._objects = [
             ...nowObjects.slice(0, target.index),
             target,
             ...nowObjects.slice(target.index, nowObjects.length),
           ];
         }
-        //remove하면 타겟이 아예 사라지나? 테스트해 봅시다.
       }
       canvas.discardActiveObject().renderAll();
 
