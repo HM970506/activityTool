@@ -23,6 +23,7 @@ export default function Canvas() {
   fabric.Object.prototype.erasable = false;
   fabric.Object.prototype.selectable = false;
   fabric.Object.prototype.hasBorders = false;
+
   fabric.Object.prototype.controls.deleteControl = new fabric.Control({
     ...deleteProps,
   });
@@ -43,8 +44,6 @@ export default function Canvas() {
       freeDrawingCursor: `none`,
       hoverCursor: "default",
     });
-    console.log(canvas);
-
     dispatch(nodeActions.setCanvas(canvas));
     dispatch(nodeActions.setTextarea(textAreaRef));
   }, []);

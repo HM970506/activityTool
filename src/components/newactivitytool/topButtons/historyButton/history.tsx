@@ -6,36 +6,42 @@ export default function CanvasHistory() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const history = useSelector((state: any) => state.historyReducer.history);
   const nowIndex = useSelector((state: any) => state.historyReducer.nowIndex);
-  const [timeslip, setTimeslip] = useState<boolean>(false);
+  const [timeslip, setTimeslip] = useState<string>("");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (canvas) {
       canvas.on("object:added", (e: any) => {
-        console.log("추가", e.target);
+        if (e.target.id == "cursor") return;
+        e.target.index = canvas.getObjects().length - 1;
         dispatch(
           historyActions.push({
-            id: e.target.id,
-            value: JSON.stringify(e.target),
+            act: "add",
+            value: JSON.stringify(e.target), //당시의 value. target에서는 해당 값이 계속 바뀜.
+            target: e.target,
           })
         );
       });
       canvas.on("object:modified", (e: any) => {
-        console.log("수정", e.target);
+        if (e.target.id == "cursor") return;
+        console.log("수정");
         dispatch(
           historyActions.push({
-            id: e.target.id,
+            act: "modify",
             value: JSON.stringify(e.target),
+            target: e.target,
           })
         );
       });
       canvas.on("object:removed", (e: any) => {
-        console.log("제거", e.target);
+        if (e.target.id == "cursor") return;
+        console.log("제거");
         dispatch(
           historyActions.push({
-            id: e.target.id,
+            act: "delete",
             value: JSON.stringify(e.target),
+            target: e.target,
           })
         );
         // dispatch(historyActions.push(JSON.stringify(canvas.getObjects())));
@@ -48,42 +54,68 @@ export default function CanvasHistory() {
   }, [history]);
 
   useEffect(() => {
-    if (canvas && nowIndex >= 0 && timeslip) {
-      const id = history[nowIndex].id;
-      const changeObject = JSON.parse(history[nowIndex].value);
-      console.log("복귀시작", changeObject);
-      //변한 오브젝트를 찾아서 해당 값으로 되돌린다
+    if (canvas && nowIndex >= 0) {
+      console.log(timeslip, nowIndex);
+      const { act, target, value } = history[nowIndex];
 
-      canvas._objects.forEach((obj: any) => {
-        if (id == obj.id) {
-          obj = { ...obj, ...changeObject };
-          // obj.top = changeObject.top;
-          // obj.left = changeObject.left;
-          // obj.right = changeObject.right;
-          // obj.angle = changeObject.angle;
-          // obj.width = changeObject.width;
-          // obj.height = changeObject.height;
-          console.log("복귀완료", obj);
+      const changeObject = JSON.parse(value);
+
+      if (act == "modify") {
+        canvas._objects.forEach((obj: any) => {
+          if (target.id == obj.id) {
+            console.log(JSON.parse(JSON.stringify(obj)), changeObject);
+            //그냥 곧바로 저장하는 방법은 없나..?
+            obj.top = changeObject.top;
+            obj.left = changeObject.left;
+            obj.right = changeObject.right;
+            obj.angle = changeObject.angle;
+            obj.width = changeObject.width;
+            obj.height = changeObject.height;
+            obj.scaleX = changeObject.scaleX;
+            obj.scaleY = changeObject.scaleY;
+          }
+        });
+      } else {
+        console.log("삭제나 생성 되돌리기");
+        let check = true;
+
+        //있음-삭제
+        canvas._objects.forEach((obj: any) => {
+          if (target.id == obj.id) {
+            canvas.remove(obj);
+            check = false;
+          }
+        });
+
+        //없음-생성
+        if (check) {
+          const nowObjects = canvas.getObjects();
+          canvas._objects = [
+            ...nowObjects.slice(0, target.index),
+            target,
+            ...nowObjects.slice(target.index, nowObjects.length),
+          ];
+          console.log(canvas._objects);
         }
-      });
-
+        //remove하면 타겟이 아예 사라지나? 테스트해 봅시다.
+      }
       canvas.discardActiveObject().renderAll();
-      setTimeslip(false);
     }
-  }, [nowIndex]);
+
+    if (timeslip == "undo") dispatch(historyActions.setIndex(nowIndex - 1));
+    else dispatch(historyActions.setIndex(nowIndex + 1));
+  }, [timeslip]);
 
   const Undo = () => {
     if (nowIndex - 1 >= -1) {
-      dispatch(historyActions.setIndex(nowIndex - 1));
-      setTimeslip(true);
+      console.log("눌린기가");
+      setTimeslip("undo");
     }
   };
 
   const Redo = () => {
     if (nowIndex + 1 < history.length) {
-      dispatch(historyActions.setIndex(nowIndex + 1));
-
-      setTimeslip(true);
+      setTimeslip("redo");
     }
   };
 

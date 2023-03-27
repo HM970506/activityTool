@@ -16,9 +16,7 @@ export default function DrawToolsMenu() {
 
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-  const Eraser = new fabric.PencilBrush(canvas, {
-    globalCompositeOperation: "destination-out",
-  });
+  const Eraser = new fabric.PencilBrush(canvas, {});
 
   //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
   const img = new Image();
@@ -56,7 +54,12 @@ export default function DrawToolsMenu() {
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
     else if (tool == "eraser") {
+      console.log("지우개");
       canvas.freeDrawingBrush = Eraser;
+      canvas.freeDrawingBrush.globalCompositeOperation = "destination-out";
+
+      console.log(canvas.freeDrawingBrush);
+      canvas.renderAll();
     }
   };
   const setSize = (size: number) => {
@@ -110,7 +113,7 @@ export default function DrawToolsMenu() {
       <BottomButton onClick={() => colorChange("blue")}>파란색</BottomButton>
       <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
       <BottomButton onClick={() => sizeChange(3)}>작은 브러쉬</BottomButton>
-      <BottomButton onClick={() => toolChange("ERASER")}>지우개</BottomButton>
+      <BottomButton onClick={() => toolChange("eraser")}>지우개</BottomButton>
     </>
   );
 }
