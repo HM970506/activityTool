@@ -23,8 +23,11 @@ export default function CanvasHistory() {
           })
         );
       });
-      canvas.on("object:modified", (e: any) => {
+      canvas.on("before:transform", (e: any, transform: any) => {
+        console.log(transform.target);
         if (e.target.id == "cursor") return;
+        //이동 전 위치를 저장해야 하는데 음..
+        //beforex, beforey를 줍시다.
         console.log("수정");
         dispatch(
           historyActions.push({
@@ -55,12 +58,13 @@ export default function CanvasHistory() {
 
   useEffect(() => {
     if (canvas && nowIndex >= 0) {
-      console.log(timeslip, nowIndex);
+      console.log(timeslip, nowIndex, history[nowIndex]);
       const { act, target, value } = history[nowIndex];
 
       const changeObject = JSON.parse(value);
 
       if (act == "modify") {
+        console.log("이동이나 변화");
         canvas._objects.forEach((obj: any) => {
           if (target.id == obj.id) {
             console.log(JSON.parse(JSON.stringify(obj)), changeObject);
@@ -101,20 +105,18 @@ export default function CanvasHistory() {
       }
       canvas.discardActiveObject().renderAll();
     }
-
-    if (timeslip == "undo") dispatch(historyActions.setIndex(nowIndex - 1));
-    else dispatch(historyActions.setIndex(nowIndex + 1));
   }, [timeslip]);
 
   const Undo = () => {
     if (nowIndex - 1 >= -1) {
-      console.log("눌린기가");
+      // dispatch(historyActions.setIndex(nowIndex - 1));
       setTimeslip("undo");
     }
   };
 
   const Redo = () => {
     if (nowIndex + 1 < history.length) {
+      // dispatch(historyActions.setIndex(nowIndex + 1));
       setTimeslip("redo");
     }
   };

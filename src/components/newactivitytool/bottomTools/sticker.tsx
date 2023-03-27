@@ -23,8 +23,9 @@ export default function StickerMenu() {
       `./${stickerCategory}_sticker_${index}.png`,
       (img: any) => {
         img.selectable = true;
-        img.id = history.length;
+        img.id = history.length.toString(16);
 
+        console.log(img);
         canvas.add(img);
       }
     );
