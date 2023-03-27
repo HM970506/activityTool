@@ -15,6 +15,7 @@ import ToggleButton from "./topButtons/toggleButton/toggleButton";
 import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
 import CanvasHistory from "./topButtons/historyButton/history";
 import CanvasSave from "./topButtons/saveButton/save";
+import TopButtons from "./topButtons";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -97,10 +98,7 @@ export default function NewActivityTool() {
     <>
       <Background ref={newActivityTool}>
         <Overlay>
-          <ToggleButton />
-          <BottomTools />
-          <CanvasHistory />
-          <CanvasSave />
+          <TopButtons />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
           <Canvas />
         </Overlay>
