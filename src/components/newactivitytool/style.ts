@@ -156,8 +156,6 @@ export const Textarea = styled.textarea`
   outline: none;
   word-break: keep-all;
   rows: 1;
-  padding: 7px;
-  border: none;
   background-color: white;
 `;
 

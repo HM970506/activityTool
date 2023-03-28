@@ -40,13 +40,15 @@ export default function TextMenu() {
 
     textbox.on("mousedblclick", () => {
       if (textAreaRef.current) {
+        console.log(`rotate(${Math.floor(textbox.angle)})deg`);
         textbox.opacity = 0;
         textAreaRef.current.style.display = "block";
         textAreaRef.current.style.width = textbox.width + "px";
         textAreaRef.current.style.height = textbox.height + "px";
-        textAreaRef.current.style.left = textbox.left - 10 + "px";
-        textAreaRef.current.style.top = textbox.top - 10 + "px";
-        textAreaRef.current.style.rotate = textbox.rotate + "deg";
+        textAreaRef.current.style.left = textbox.left - 0 + "px";
+        textAreaRef.current.style.top = textbox.top - 0 + "px";
+        textAreaRef.current.style.transformOrigin = "left top";
+        textAreaRef.current.style.transform = `rotate(${textbox.angle}deg)`;
         textAreaRef.current.style.fontSize =
           textbox.getCurrentCharFontSize() + "px";
         textAreaRef.current.style.fontFamily = textbox.fontFamily;
@@ -57,6 +59,11 @@ export default function TextMenu() {
         canvas.renderAll();
       }
     });
+
+    textbox.on("mousedown", () => {
+      textAreaRef.current.value = textbox.text;
+    });
+
     textbox.on("moving", () => {
       if (textAreaRef.current) {
         textAreaRef.current.style.left = textbox.left;
