@@ -15,42 +15,18 @@ import ToggleButton from "./topButtons/toggleButton/toggleButton";
 import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
 import CanvasHistory from "./topButtons/historyButton/history";
 import TopButtons from "./topButtons";
+import { saveJson } from "./topButtons/saveButton/save";
+import { nodeActions } from "../../store/common/nodeSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
-
-  const [scale, setScale] = useState({ scaleX: 1, scaleY: 1 });
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
-  const [nodeStore, setNodeStore] = useState<any[]>([]);
-  const nodes = useSelector((state: any) => state.nodeReducer.nodes); //노드 관리
-
-  const firstSize = { width: window.innerWidth, height: window.innerHeight };
-
-  const onResize = (e: any) => {
-    setScale({
-      scaleX: e.target.innerWidth / firstSize.width,
-      scaleY: e.target.innerHeight / firstSize.height,
-    });
-  };
+  const [url, setUrl] = useState<string>(window.location.href);
+  const dispatch = useDispatch();
 
   //할일
   //1.버튼 메모이제이션
-  //2.캔버스 동적 리사이징 작업
-
-  //메모리 누수 방지를 위해 새로운 리사이즈가 생기기 전 기존 리스너를 제거해주자.
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
-  //---------------------------------------------
-
-  useEffect(() => {
-    setNodeStore(nodes);
-  }, [nodes]);
 
   //버튼 관련 부분 시작------------------------------------
 
@@ -58,6 +34,18 @@ export default function NewActivityTool() {
     if (activitytools) newActivityTool.current?.showModal();
     else newActivityTool.current?.close();
   }, [activitytools]);
+
+  const urlCheck = () => {
+    const nowUrl = window.location.href;
+    if (nowUrl != url) {
+      if (canvas) {
+        saveJson(canvas); //서버에서는 url도 함께 저장할 수 있게 하기
+        dispatch(nodeActions.setOpacity(255));
+        dispatch(nodeActions.setZoom(1));
+        canvas.clear();
+      }
+    }
+  };
 
   const mainClick = () => {
     if (!activitytools) setSubButtonVisible((x) => !x);
@@ -108,8 +96,22 @@ export default function NewActivityTool() {
           <MainButton onClick={mainClick}>활동툴</MainButton>
           {subButtonVisible && (
             <>
-              <LoadButton onClick={getCanvas}>불러오기</LoadButton>
-              <NewButton onClick={activitytoolsStart}>새로하기</NewButton>
+              <LoadButton
+                onClick={() => {
+                  urlCheck();
+                  getCanvas();
+                }}
+              >
+                불러오기
+              </LoadButton>
+              <NewButton
+                onClick={() => {
+                  urlCheck();
+                  activitytoolsStart();
+                }}
+              >
+                새로하기
+              </NewButton>
             </>
           )}
         </>

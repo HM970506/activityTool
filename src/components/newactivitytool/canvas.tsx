@@ -38,6 +38,8 @@ export default function Canvas() {
   //오브젝트 기본세팅 끝
 
   useEffect(() => {
+    window.addEventListener("resize", resizeHandler);
+
     const canvas = new fabric.Canvas(canvasRef.current, {
       height: window.innerHeight,
       width: window.innerWidth,
@@ -75,17 +77,6 @@ export default function Canvas() {
       canvas.renderAll();
     }
   };
-
-  const urlHandler = () => {
-    console.log("url바꿈");
-    saveJson(canvas);
-    dispatch(nodeActions.setOpacity(255));
-    dispatch(nodeActions.setZoom(1));
-    canvas.clear();
-  };
-
-  window.addEventListener("resize", resizeHandler);
-  window.addEventListener("locationchange", urlHandler);
 
   return (
     <CanvasBackground ref={containerRef}>
