@@ -1,46 +1,45 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { zoomActions } from "../../../../store/common/zoomSlice";
+import { DefaultButton } from "../../style";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const [delta, setDelta] = useState<number>(1);
+  const zoom = useSelector((state: any) => state.zoomReducer.zoom);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (canvas) setDelta(canvas.getZoom());
+    if (canvas) dispatch(zoomActions.set(canvas.getZoom()));
   }, [canvas]);
 
   useEffect(() => {
-    if (canvas) canvas.setZoom(delta);
-  }, [delta]);
+    if (canvas) canvas.setZoom(zoom);
+  }, [zoom]);
 
   return (
     <>
-      <button
+      <DefaultButton
         onClick={() => {
-          setDelta((x: number) => {
-            return Math.round((x + 0.1) * 100) / 100;
-          });
+          dispatch(zoomActions.set(Math.round((zoom + 0.1) * 100) / 100));
         }}
       >
         확대
-      </button>
-      {delta}
-      <button
+      </DefaultButton>
+      {zoom}
+      <DefaultButton
         onClick={() => {
-          setDelta((x: number) => {
-            return Math.round((x - 0.1) * 100) / 100;
-          });
+          dispatch(zoomActions.set(Math.round((zoom - 0.1) * 100) / 100));
         }}
       >
         축소
-      </button>
-      <button
+      </DefaultButton>
+      <DefaultButton
         onClick={() => {
-          setDelta(1);
+          dispatch(zoomActions.reset());
         }}
       >
         원래대로
-      </button>
+      </DefaultButton>
     </>
   );
 }

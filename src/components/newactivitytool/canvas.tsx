@@ -5,7 +5,8 @@ import { nodeActions } from "../../store/common/nodeSlice";
 import { deleteProps } from "./setting/deleteButton";
 import { useEffect, useRef, useState } from "react";
 import { Background, CanvasBackground, Textarea } from "./style";
-import { historyActions } from "../../store/common/historySlice";
+import { zoomActions } from "../../store/common/zoomSlice";
+import { saveJson } from "./topButtons/saveButton/save";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -42,8 +43,6 @@ export default function Canvas() {
       width: window.innerWidth,
       backgroundColor: "white",
       preserveObjectStacking: true,
-      freeDrawingCursor: `none`,
-      hoverCursor: "default",
     });
 
     canvas.freeDrawingBrush.inverted = true;
@@ -53,47 +52,39 @@ export default function Canvas() {
     dispatch(nodeActions.setTextarea(textAreaRef));
   }, []);
 
-  //받은 코드 시작--------------------------------------------------------
-  // const [loading, setLoading] = useState<boolean>(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const zoom = useSelector((state: any) => state.zoomReducer.zoom);
 
-  // useEffect(() => {
-  //   let script = document.querySelector(`script[src="./fabric.min.js"]`);
+  const resizeHandler = () => {
+    const outerCanvasContainer = containerRef.current;
+    if (outerCanvasContainer && canvas) {
+      const ratio = canvas.getWidth() / canvas.getHeight();
+      const containerWidth = outerCanvasContainer.clientWidth;
+      const containerHeight = outerCanvasContainer.clientHeight;
 
-  //   if (!script) {
-  //     const test = document.createElement("script");
-  //     test.src = "/fabric.min.js";
-  //     test.async = true;
-  //     document.body.appendChild(test);
-  //     const handleLoad = () => setLoading(false);
-  //     test.addEventListener("load", handleLoad);
-  //     return () => {
-  //       test.removeEventListener("load", handleLoad);
-  //     };
-  //   } else {
-  //     const handleLoad = () => setLoading(false);
-  //     script.addEventListener("load", handleLoad);
-  //     return () => {
-  //       script?.removeEventListener("load", handleLoad);
-  //     };
-  //   }
-  // }, []);
+      const scale = containerWidth / canvas.getWidth();
+      const zoom = canvas.getZoom() * scale;
+      canvas.setDimensions({
+        width: containerWidth,
+        height: containerWidth / ratio,
+      });
+      canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0]);
+      canvas.renderAll();
+    }
+  };
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   dispatch(
-  //     nodeActions.setCanvas(
-  //       new fabric.Canvas(canvasRef.current, {
-  //         height: window.innerWidth,
-  //         width: window.innerWidth,
-  //         preserveObjectStacking: true,
-  //       })
-  //     )
-  //   );
-  // }, [loading]);
-  //받은 코드 끝-----------------------------------------------------
+  const urlHandler = () => {
+    console.log("url바꿈");
+    saveJson(canvas);
+    canvas.clear();
+  };
+
+  window.addEventListener("resize", resizeHandler);
+  window.addEventListener("locationchange", urlHandler);
 
   return (
-    <CanvasBackground>
+    <CanvasBackground ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
       <Textarea
         ref={textAreaRef}
