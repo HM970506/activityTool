@@ -58,10 +58,18 @@ export default function DecorationMenu() {
   };
 
   const templating = (templateId: number) => {
-    const url = `/test${templateId}.PNG`;
+    const url = `/test${templateId + 1}.PNG`;
+    fabric.Image.fromURL(url, (img: any) => {
+      console.log(img);
+      const mag = canvas.width / img.width;
 
-    canvas.backgroundImage = url;
-    canvas.renderAll();
+      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+        scaleX: mag,
+        scaleY: mag,
+      });
+      canvas.setHeight(img.height * mag);
+      canvas.renderAll();
+    });
   };
 
   return (
