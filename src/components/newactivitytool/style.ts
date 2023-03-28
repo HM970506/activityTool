@@ -1,18 +1,20 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const DefaultButton = styled.button`
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+`;
+
+export const Button = styled(DefaultButton)`
   border-radius: 100%;
   border: none;
   width: 100px;
   height: 100px;
   background-color: white;
   border: 1px solid black;
-
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
 `;
 
 export const BottomButton = styled(Button)`

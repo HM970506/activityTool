@@ -4,8 +4,9 @@ import PhotoMenu from "./photo";
 import RecordMenu from "./record";
 import StickerMenu from "./sticker";
 import DrawToolsMenu from "./drawTools";
-import { DRAWTOOLS, PHOTO, RECORD, STICKER, TEXT } from "../types";
+import { DECORATION, DRAWTOOLS, PHOTO, RECORD, STICKER, TEXT } from "../types";
 import TextMenu from "./text";
+import DecorationMenu from "./decoration";
 
 export default function BottomTools() {
   const nowCategory = useSelector(
@@ -19,6 +20,7 @@ export default function BottomTools() {
       {nowCategory === PHOTO && <PhotoMenu />}
       {nowCategory === STICKER && <StickerMenu />}
       {nowCategory === TEXT && <TextMenu />}
+      {nowCategory === DECORATION && <DecorationMenu />}
     </ToolBox>
   );
 }

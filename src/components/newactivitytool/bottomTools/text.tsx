@@ -4,7 +4,7 @@ import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { useEffect, useRef, useState } from "react";
 import style from "styled-components";
-import { historyActions } from "../../../store/common/historySlice";
+import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);

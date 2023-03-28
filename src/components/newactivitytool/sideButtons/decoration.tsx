@@ -9,5 +9,5 @@ export default function DecorationButton() {
     dispatch(categoryActions.categoryChange(DECORATION));
   };
 
-  return <Button onClick={photoButtonClick}>사진</Button>;
+  return <Button onClick={photoButtonClick}>꾸미기</Button>;
 }
