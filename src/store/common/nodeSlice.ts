@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const nodeSlice = createSlice({
   name: "nodeReducer",
-  initialState: { canvas: null, textarea: null },
+  initialState: { canvas: null, textarea: null, opacity: 0, zoom: 1 },
 
   reducers: {
     setCanvas: (state, action: PayloadAction<any>) => {
@@ -11,6 +11,15 @@ const nodeSlice = createSlice({
     },
     setTextarea: (state, action: PayloadAction<any>) => {
       state.textarea = action.payload;
+      //console.log(JSON.stringify(action.payload));
+    },
+
+    setOpacity: (state, action: PayloadAction<any>) => {
+      state.opacity = action.payload;
+      //console.log(JSON.stringify(action.payload));
+    },
+    setZoom: (state, action: PayloadAction<any>) => {
+      state.opacity = action.payload;
       //console.log(JSON.stringify(action.payload));
     },
   },

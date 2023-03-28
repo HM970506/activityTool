@@ -41,10 +41,10 @@ export default function Canvas() {
     const canvas = new fabric.Canvas(canvasRef.current, {
       height: window.innerHeight,
       width: window.innerWidth,
-      backgroundColor: "white",
+      backgroundColor: "rgba(255,255,255,0)",
       preserveObjectStacking: true,
     });
-
+    console.log(canvas);
     canvas.freeDrawingBrush.inverted = true;
 
     dispatch(nodeActions.setCanvas(canvas));
@@ -55,8 +55,10 @@ export default function Canvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const zoom = useSelector((state: any) => state.zoomReducer.zoom);
+  const opacity = useSelector((state: any) => state.zoomReducer.opacity);
 
   const resizeHandler = () => {
+    dispatch(nodeActions.setZoom(1));
     const outerCanvasContainer = containerRef.current;
     if (outerCanvasContainer && canvas) {
       const ratio = canvas.getWidth() / canvas.getHeight();
@@ -77,6 +79,8 @@ export default function Canvas() {
   const urlHandler = () => {
     console.log("url바꿈");
     saveJson(canvas);
+    dispatch(nodeActions.setOpacity(255));
+    dispatch(nodeActions.setZoom(1));
     canvas.clear();
   };
 

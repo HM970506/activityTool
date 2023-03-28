@@ -165,5 +165,4 @@ export const CanvasBackground = styled.div`
   position: relative;
   height: window.innerHeight;
   width: window.innerWidth;
-  background-color: black;
 `;
