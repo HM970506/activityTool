@@ -59,6 +59,7 @@ export default function DecorationMenu() {
 
   const templating = (templateId: number) => {
     const url = `/test${templateId + 1}.PNG`;
+
     fabric.Image.fromURL(url, (img: any) => {
       console.log(img);
       const mag = canvas.width / img.width;
