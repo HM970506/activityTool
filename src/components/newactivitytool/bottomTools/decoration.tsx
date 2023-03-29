@@ -1,6 +1,6 @@
 import { fabric } from "fabric";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import style from "styled-components";
 import { zoomActions } from "../../../store/common/zoomSlice";
 
@@ -28,23 +28,35 @@ overflow-x: scroll;
 overflow-y:hidden.
 `;
 
-const SubButtons = style.button`
+const SubButtons = style.button<{ select: number }>`
   width: 40px;
   height: 30px;
   padding: 10px;
+  background-color:${(props) => {
+    return props.select == 1 ? "red" : "white";
+  }};
   border: 1px solid black;
 `;
 
 const array = Array.from(Array(20).keys());
 
 export default function DecorationMenu() {
+  const initalState = {
+    template: -1,
+    stamp: -1,
+    tape: -1,
+  };
+
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const [subCategory, setSubCategory] = useState<string>("template");
+  const [subState, setSubState] = useReducer((prev: any, next: any) => {
+    return { ...prev, ...next };
+  }, initalState);
   const dispatch = useDispatch();
 
-  const stamping = (id: number) => {
+  const stamping = () => {
     const pointer = canvas.getPointer();
-
+    console.log(pointer);
     fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
       const stamp = fabric.util.groupSVGElements(objects, options);
       stamp.x = pointer.x;
@@ -55,8 +67,9 @@ export default function DecorationMenu() {
     });
   };
 
-  const taping = (id: number) => {
+  const taping = () => {
     const pointer = canvas.getPointer();
+    console.log(pointer);
   };
 
   const templating = (templateId: number) => {
@@ -75,6 +88,11 @@ export default function DecorationMenu() {
     });
   };
 
+  useEffect(() => {
+    if (subCategory == "stamp") stamping();
+    else if (subCategory == "tape") taping();
+  }, [subCategory]);
+
   return (
     <BackgroundContainer>
       <SubCategoryContainer>
@@ -87,9 +105,11 @@ export default function DecorationMenu() {
           array.map((value, key) => {
             return (
               <SubButtons
+                select={subState.template == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   templating(value);
+                  setSubState({ template: value });
                 }}
               >
                 {value}
@@ -100,9 +120,10 @@ export default function DecorationMenu() {
           array.map((value, key) => {
             return (
               <SubButtons
+                select={subState.stamp == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  stamping(value);
+                  setSubState({ stamp: value });
                 }}
               >
                 {value}
@@ -113,9 +134,10 @@ export default function DecorationMenu() {
           array.map((value, key) => {
             return (
               <SubButtons
+                select={subState.tape == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  taping(value);
+                  setSubState({ tape: value });
                 }}
               >
                 {value}

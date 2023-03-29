@@ -36,7 +36,7 @@ export default function DrawToolsMenu() {
       setSize(draws.size);
       canvas.renderAll();
     }
-  }, [draws]);
+  }, [draws.tool, draws.size]);
   //브러쉬 정보가 바뀜 끝
 
   //실질적으로 브러쉬를 바꾸는 함수들 시작
@@ -90,6 +90,7 @@ export default function DrawToolsMenu() {
 
       <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
       <BottomButton onClick={() => sizeChange(3)}>작은 브러쉬</BottomButton>
+
       <BottomButton onClick={() => toolChange("eraser")}>지우개</BottomButton>
     </>
   );

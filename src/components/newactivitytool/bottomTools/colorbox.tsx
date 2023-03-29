@@ -49,18 +49,12 @@ export default function Colorbox() {
 
   const setColor = (color: string) => {
     const now = canvas.getActiveObject();
-    if (now) {
-      if (now.type == "textbox") {
-        now.set("fill", color);
-        console.log(now);
-        canvas.renderAll();
-      }
-    } else canvas.freeDrawingBrush.color = color;
+    if (now) now.set("fill", color);
+    else canvas.freeDrawingBrush.color = color;
   };
 
   useEffect(() => {
     if (canvas) {
-      console.log(draws.color);
       setColor(draws.color);
       canvas.renderAll();
     }
