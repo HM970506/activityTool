@@ -60,18 +60,18 @@ export default function Canvas() {
       const ratio = canvas.getWidth() / canvas.getHeight();
 
       const containerWidth = outerCanvasContainer.clientWidth;
-      const scale = containerWidth / canvas.getWidth();
-      const zoom = canvas.getZoom() * scale;
+      const zoom = containerWidth / canvas.getWidth();
+      const scale = canvas.getZoom() * zoom;
 
-      dispatch(nodeActions.setZoom(zoom));
+      dispatch(nodeActions.setZoom(scale));
 
       canvas.setDimensions({
         width: containerWidth,
         height: containerWidth / ratio,
       });
-      canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0]);
+      canvas.setViewportTransform([scale, 0, 0, scale, 0, 0]);
 
-      dispatch(zoomActions.setScale(zoom));
+      dispatch(zoomActions.setScale(scale));
       canvas.renderAll();
     }
   };

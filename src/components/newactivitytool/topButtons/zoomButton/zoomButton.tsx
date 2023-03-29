@@ -15,9 +15,7 @@ export default function ZoomButton() {
   }, [canvas]);
 
   useEffect(() => {
-    if (canvas) {
-      canvas.setZoom(zoom);
-    }
+    if (canvas) canvas.setZoom(zoom);
   }, [zoom]);
 
   useEffect(() => {
@@ -46,7 +44,7 @@ export default function ZoomButton() {
       </DefaultButton>
       <DefaultButton
         onClick={() => {
-          dispatch(zoomActions.reset(canvas.getZoom()));
+          dispatch(zoomActions.reset());
         }}
       >
         원래대로

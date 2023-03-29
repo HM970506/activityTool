@@ -2,13 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { SideButton } from "../style";
 import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import style from "styled-components";
 import { zoomActions } from "../../../store/common/zoomSlice";
+import nodeSlice, { nodeActions } from "../../../store/common/nodeSlice";
 
 export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const textAreaRef = useSelector((state: any) => state.nodeReducer.textarea);
+  const zoom = useSelector((state: any) => state.zoomReducer.zoom);
 
   fabric.Canvas.prototype.getAbsoluteCoords = (object: any) => {
     return {
@@ -22,42 +24,57 @@ export default function TextMenu() {
   }, [textAreaRef.current?.style]);
 
   const dispatch = useDispatch();
+
+  const test = (textbox: any) => {
+    if (textAreaRef.current) {
+      textbox.opacity = 0;
+      textAreaRef.current.style.display = "block";
+      textAreaRef.current.style.width = textbox.width * zoom + "px";
+      textAreaRef.current.style.height = textbox.height * zoom + "px";
+      textAreaRef.current.style.left = textbox.left * zoom + "px";
+      textAreaRef.current.style.top = textbox.top * zoom + "px";
+      textAreaRef.current.style.transformOrigin = "left top";
+      textAreaRef.current.style.transform = `scale(${textbox.zoomX}, ${textbox.zoomY}) rotate(${textbox.angle}deg)`;
+      textAreaRef.current.style.fontSize =
+        textbox.getCurrentCharFontSize() + "px";
+      textAreaRef.current.style.fontFamily = textbox.fontFamily;
+      textAreaRef.current.value = textbox.text;
+      textbox.hasControls = false;
+      textAreaRef.current.focus();
+      console.log(textbox, textAreaRef.current.style);
+      canvas.renderAll();
+    }
+  };
+  const nowTextbox = useSelector((state: any) => state.nodeReducer.nowTextbox);
+  useEffect(() => {
+    if (nowTextbox != null) {
+      test(nowTextbox);
+      dispatch(nodeActions.setTextbox(null));
+    }
+  }, [nowTextbox]);
+
   const TextMaker = (size: number) => {
-    const textbox = new fabric.Textbox("텍스트를 입력하세요", {
-      left: window.innerWidth / 2,
-      top: window.innerHeight / 2,
-      color: "black",
-      width: 400,
-      height: 30,
-      editable: true,
-      fontSize: size,
-      selectable: true,
-    });
+    const textbox = new fabric.Textbox(
+      "텍스트를 입력하세요",
+      {
+        left: window.innerWidth / 2,
+        top: window.innerHeight / 2,
+        color: "black",
+        width: 400,
+        height: 30,
+        editable: true,
+        fontSize: size,
+        selectable: true,
+      },
+      [zoom]
+    );
 
     textbox.__eventListeners["mousedblclick"] = [];
     textbox.__eventListeners["tripleclick"] = [];
     textbox.__eventListeners["mousedown"] = [];
 
     textbox.on("mousedblclick", () => {
-      if (textAreaRef.current) {
-        console.log(`rotate(${Math.floor(textbox.angle)})deg`);
-        textbox.opacity = 0;
-        textAreaRef.current.style.display = "block";
-        textAreaRef.current.style.width = textbox.width + "px";
-        textAreaRef.current.style.height = textbox.height + "px";
-        textAreaRef.current.style.left = textbox.left - 0 + "px";
-        textAreaRef.current.style.top = textbox.top - 0 + "px";
-        textAreaRef.current.style.transformOrigin = "left top";
-        textAreaRef.current.style.transform = `rotate(${textbox.angle}deg)`;
-        textAreaRef.current.style.fontSize =
-          textbox.getCurrentCharFontSize() + "px";
-        textAreaRef.current.style.fontFamily = textbox.fontFamily;
-        textAreaRef.current.value = textbox.text;
-        textbox.hasControls = false;
-        textAreaRef.current.focus();
-
-        canvas.renderAll();
-      }
+      dispatch(nodeActions.setTextbox(textbox));
     });
 
     textbox.on("mousedown", () => {
