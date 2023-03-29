@@ -79,17 +79,20 @@ export const ButtonBox = styled(Box)`
   flex-direction: column;
 `;
 
-export const ToolBox = styled(Box)`
-  width: 80%;
+export const BottomContainer = styled(Box)`
+  width: 90%;
+`;
+
+export const ToolBox = styled.div`
   height: 100px;
   background-color: white;
   overflow: auto;
   padding-right: 100px;
   padding-left: 12px;
+  gap: 10px;
   display: flex;
   justify-content: left;
   align-items: center;
-  gap: 10px;
 `;
 
 export const Overlay = styled.div`
