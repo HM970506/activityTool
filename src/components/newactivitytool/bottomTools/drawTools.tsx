@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
 import { fabric } from "fabric-with-erasing"; //기존 사용. 모듈x
-
+import "fabric-brushes-main";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { drawActions } from "../../../store/common/drawSlice";
 
@@ -17,6 +17,7 @@ export default function DrawToolsMenu() {
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
   const Eraser = new fabric.EraserBrush(canvas);
+  const Cryon = new fabric.CrayonBrush(canvas);
 
   //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
   const img = new Image();

@@ -48,6 +48,7 @@ export default function Canvas() {
       preserveObjectStacking: true,
     });
     canvas.freeDrawingBrush.inverted = true;
+    canvas.on("selection", () => {});
 
     dispatch(nodeActions.setCanvas(canvas));
     dispatch(nodeActions.setTextarea(textAreaRef));

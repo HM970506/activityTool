@@ -68,8 +68,10 @@ export default function DecorationMenu() {
   };
 
   const taping = () => {
-    const pointer = canvas.getPointer();
-    console.log(pointer);
+    if (canvas) {
+      const pointer = canvas.getPointer();
+      console.log(pointer);
+    }
   };
 
   const templating = (templateId: number) => {
@@ -89,8 +91,11 @@ export default function DecorationMenu() {
   };
 
   useEffect(() => {
-    if (subCategory == "stamp") stamping();
-    else if (subCategory == "tape") taping();
+    canvas.__eventListeners["mouse:down"] = [];
+    if (subCategory == "stamp") canvas.on("mouse:down", stamping);
+    else if (subCategory == "tape") canvas.on("mouse:down", taping);
+
+    console.log(canvas.__eventListeners["mouse:down"]);
   }, [subCategory]);
 
   return (
