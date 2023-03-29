@@ -19,10 +19,6 @@ export default function TextMenu() {
     };
   };
 
-  useEffect(() => {
-    console.log(textAreaRef.current?.style);
-  }, [textAreaRef.current?.style]);
-
   const dispatch = useDispatch();
 
   const test = (textbox: any) => {
@@ -41,7 +37,6 @@ export default function TextMenu() {
       textAreaRef.current.value = textbox.text;
       textbox.hasControls = false;
       textAreaRef.current.focus();
-      console.log(textbox, textAreaRef.current.style);
       canvas.renderAll();
     }
   };

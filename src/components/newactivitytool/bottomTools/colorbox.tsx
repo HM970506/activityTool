@@ -1,6 +1,20 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { drawActions } from "../../../store/common/drawSlice";
+
+const COLORS = [
+  "black",
+  "blue",
+  "red",
+  "pink",
+  "purple",
+  "grey",
+  "green",
+  "yellow",
+  "skyblue",
+  "white",
+];
 
 const ColorContainer = styled.div`
   display: flex;
@@ -30,19 +44,27 @@ export default function Colorbox() {
   const colorChange = (color: string) => {
     dispatch(drawActions.colorChange(color));
   };
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
-  const COLORS = [
-    "black",
-    "blue",
-    "red",
-    "pink",
-    "purple",
-    "grey",
-    "green",
-    "yellow",
-    "skyblue",
-    "white",
-  ];
+  const setColor = (color: string) => {
+    const now = canvas.getActiveObject();
+    if (now) {
+      if (now.type == "textbox") {
+        now.set("fill", color);
+        console.log(now);
+        canvas.renderAll();
+      }
+    } else canvas.freeDrawingBrush.color = color;
+  };
+
+  useEffect(() => {
+    if (canvas) {
+      console.log(draws.color);
+      setColor(draws.color);
+      canvas.renderAll();
+    }
+  }, [draws.color]);
 
   return (
     <ColorContainer>

@@ -32,16 +32,8 @@ export default function DrawToolsMenu() {
   //브러쉬 정보가 바뀜 시작
   useEffect(() => {
     if (canvas) {
-      if (draws.isDrawing && draws.tool != "stamp") {
-        canvas.selection = true;
-        canvas.isDrawingMode = true;
-      }
       setTool(draws.tool);
-
-      //커서도 바꾸기
-
       setSize(draws.size);
-      setColor(draws.color);
       canvas.renderAll();
     }
   }, [draws]);
@@ -58,10 +50,7 @@ export default function DrawToolsMenu() {
   const setSize = (size: number) => {
     canvas.freeDrawingBrush.width = size;
   };
-  const setColor = (color: string) => {
-    if (canvas.getActiveObject()) canvas.getActiveObject().set("fill", color);
-    else canvas.freeDrawingBrush.color = color;
-  };
+
   //실질적으로 브러쉬를 바꾸는 함수들 끝
 
   //보일러 플레이트를 줄이기 위한 함수들 시작
@@ -71,9 +60,6 @@ export default function DrawToolsMenu() {
   };
   const sizeChange = (size: number) => {
     dispatch(drawActions.sizeChange(size));
-  };
-  const colorChange = (color: string) => {
-    dispatch(drawActions.colorChange(color));
   };
   //보일러 플레이트를 줄이기 위한 함수들 끝
 
@@ -102,8 +88,6 @@ export default function DrawToolsMenu() {
         스프레이
       </BottomButton>
 
-      <BottomButton onClick={() => colorChange("black")}>검은색</BottomButton>
-      <BottomButton onClick={() => colorChange("blue")}>파란색</BottomButton>
       <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
       <BottomButton onClick={() => sizeChange(3)}>작은 브러쉬</BottomButton>
       <BottomButton onClick={() => toolChange("eraser")}>지우개</BottomButton>
