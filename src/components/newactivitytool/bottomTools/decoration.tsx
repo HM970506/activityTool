@@ -1,7 +1,8 @@
 import { fabric } from "fabric";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import style from "styled-components";
+import { zoomActions } from "../../../store/common/zoomSlice";
 
 const BackgroundContainer = style.div`
   width:95%;
@@ -39,6 +40,7 @@ const array = Array.from(Array(20).keys());
 export default function DecorationMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const [subCategory, setSubCategory] = useState<string>("template");
+  const dispatch = useDispatch();
 
   const stamping = (id: number) => {
     const pointer = canvas.getPointer();
@@ -61,14 +63,14 @@ export default function DecorationMenu() {
     const url = `/test${templateId + 1}.PNG`;
 
     fabric.Image.fromURL(url, (img: any) => {
-      console.log(img);
-      const mag = canvas.width / img.width;
+      const scale = canvas.width / img.width;
 
       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        scaleX: mag,
-        scaleY: mag,
+        scaleX: scale,
+        scaleY: scale,
       });
-      canvas.setHeight(img.height * mag);
+
+      canvas.setHeight(img.height * scale);
       canvas.renderAll();
     });
   };

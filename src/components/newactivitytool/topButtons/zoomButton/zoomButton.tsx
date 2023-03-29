@@ -5,7 +5,9 @@ import { DefaultButton } from "../../style";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const zoom = useSelector((state: any) => state.zoomReducer.zoom);
+  const { zoom, zoomView, scale } = useSelector(
+    (state: any) => state.zoomReducer
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,29 +15,38 @@ export default function ZoomButton() {
   }, [canvas]);
 
   useEffect(() => {
-    if (canvas) canvas.setZoom(zoom);
+    if (canvas) {
+      canvas.setZoom(zoom);
+    }
   }, [zoom]);
 
+  useEffect(() => {
+    console.log(zoom, zoomView, scale);
+  }, [zoom, zoomView, scale]);
   return (
     <>
       <DefaultButton
         onClick={() => {
-          dispatch(zoomActions.set(Math.round((zoom + 0.1) * 100) / 100));
+          const nowZoom = Math.round((canvas.getZoom() + 0.1) * 100) / 100;
+          dispatch(zoomActions.set(nowZoom));
+          dispatch(zoomActions.setView(nowZoom));
         }}
       >
         확대
       </DefaultButton>
-      {zoom}
+      {zoomView}
       <DefaultButton
         onClick={() => {
-          dispatch(zoomActions.set(Math.round((zoom - 0.1) * 100) / 100));
+          const nowZoom = Math.round((canvas.getZoom() - 0.1) * 100) / 100;
+          dispatch(zoomActions.set(nowZoom));
+          dispatch(zoomActions.setView(nowZoom));
         }}
       >
         축소
       </DefaultButton>
       <DefaultButton
         onClick={() => {
-          dispatch(zoomActions.reset());
+          dispatch(zoomActions.reset(canvas.getZoom()));
         }}
       >
         원래대로

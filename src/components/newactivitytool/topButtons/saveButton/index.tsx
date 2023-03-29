@@ -20,8 +20,6 @@ export default function CanvasSave() {
       linkRef.current.href = pngData;
       linkRef.current.download = "test";
       linkRef.current?.click();
-      //투명화 파일만 저장된다.
-      //보여줄 때만 템플릿을 적용하여 보여주는게 좋을까?
     }
   };
 
@@ -33,9 +31,9 @@ export default function CanvasSave() {
           saveJson(canvas);
         }}
       >
-        저장하기
+        임시저장
       </DefaultButton>
-      <DefaultButton onClick={savePng}>올리기</DefaultButton>
+      <DefaultButton onClick={savePng}>화면다운</DefaultButton>
     </>
   );
 }

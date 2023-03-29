@@ -13,7 +13,7 @@ export default function Canvas() {
   const canvasRef = useRef(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const resize = (e: any) => {
+  const textareaResize = (e: any) => {
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + "px";
   };
@@ -37,46 +37,45 @@ export default function Canvas() {
 
   //오브젝트 기본세팅 끝
 
-  useEffect(() => {
-    window.addEventListener("resize", resizeHandler);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
+  useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       height: window.innerHeight,
       width: window.innerWidth,
       backgroundColor: "rgba(255,255,255,0)",
       preserveObjectStacking: true,
     });
-    console.log(canvas);
     canvas.freeDrawingBrush.inverted = true;
 
     dispatch(nodeActions.setCanvas(canvas));
-
     dispatch(nodeActions.setTextarea(textAreaRef));
   }, []);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const zoom = useSelector((state: any) => state.zoomReducer.zoom);
-  const opacity = useSelector((state: any) => state.zoomReducer.opacity);
 
   const resizeHandler = () => {
     dispatch(nodeActions.setZoom(1));
     const outerCanvasContainer = containerRef.current;
     if (outerCanvasContainer && canvas) {
       const ratio = canvas.getWidth() / canvas.getHeight();
-      const containerWidth = outerCanvasContainer.clientWidth;
-      const containerHeight = outerCanvasContainer.clientHeight;
 
+      const containerWidth = outerCanvasContainer.clientWidth;
       const scale = containerWidth / canvas.getWidth();
       const zoom = canvas.getZoom() * scale;
+
+      dispatch(nodeActions.setZoom(zoom));
+
       canvas.setDimensions({
         width: containerWidth,
         height: containerWidth / ratio,
       });
       canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0]);
+
+      dispatch(zoomActions.setScale(zoom));
       canvas.renderAll();
     }
   };
+  window.addEventListener("resize", resizeHandler);
 
   return (
     <CanvasBackground ref={containerRef}>
@@ -84,7 +83,7 @@ export default function Canvas() {
       <Textarea
         ref={textAreaRef}
         defaultValue={"텍스트를 입력하세요"}
-        onChange={resize}
+        onChange={textareaResize}
       />
     </CanvasBackground>
   );
