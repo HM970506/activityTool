@@ -2,17 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const zoomSlice = createSlice({
   name: "zoomReducer",
-  initialState: { zoom: 1, zoomView: 1, scale: null },
+  initialState: { zoom: 1, zoomView: 1, scale: 1 },
 
   reducers: {
     set: (state, action: PayloadAction<any>) => {
       state.zoom = action.payload;
     },
     reset: (state) => {
-      if (state.scale != null) {
-        state.zoom = state.scale;
-        state.zoomView = 1;
-      }
+      state.zoom = state.scale;
+      state.zoomView = 1;
     },
     setView: (state, action: PayloadAction<any>) => {
       state.zoomView = action.payload;

@@ -5,7 +5,7 @@ import { nodeActions } from "../../store/common/nodeSlice";
 import { deleteProps } from "./setting/deleteButton";
 import { useEffect, useRef, useState } from "react";
 import { Background, CanvasBackground, Textarea } from "./style";
-import { zoomActions } from "../../store/common/zoomSlice";
+import zoomSlice, { zoomActions } from "../../store/common/zoomSlice";
 import { saveJson } from "./topButtons/saveButton/save";
 
 export default function Canvas() {
@@ -76,9 +76,13 @@ export default function Canvas() {
 
     dispatch(nodeActions.setCanvas(canvas));
     dispatch(nodeActions.setTextarea(textAreaRef));
-
-    console.log(fabric.Object.prototype);
   }, []);
+
+  const zoom = useSelector((state: any) => state.zoomReducer);
+
+  useEffect(() => {
+    console.log(zoom);
+  }, [zoom]);
 
   const resizeHandler = () => {
     dispatch(nodeActions.setZoom(1));
