@@ -63,15 +63,15 @@ export default function Canvas() {
       "selection:updated": () => {
         DeselctMultipleObjects(canvas);
       },
-      "event:dragover": () => {
-        console.log("dragover");
-      },
-      "event:dragenter": () => {
-        console.log("dragenter");
-      },
-      "event:dragleave": () => {
-        console.log("dragleave");
-      },
+      // "mouse:down": () => {
+      //   console.log(canvas.getPointer());
+      // },
+      // "event:dragenter": () => {
+      //   console.log("dragenter");
+      // },
+      // "event:dragleave": () => {
+      //   console.log("dragleave");
+      // },
     });
 
     dispatch(nodeActions.setCanvas(canvas));
