@@ -29,7 +29,7 @@ export default function TextMenu() {
         color: "black",
         width: 400,
         height: 30,
-        editable: true,
+        editable: false,
         fontSize: size,
         selectable: true,
       },
@@ -45,8 +45,7 @@ export default function TextMenu() {
     });
 
     textbox.on("mousedown", (e: any) => {
-      if (e.target.selected) dispatch(nodeActions.setTextbox(textbox));
-      else textAreaRef.current.value = textbox.text;
+      textAreaRef.current.value = textbox.text;
     });
 
     textbox.on("moving", () => {
@@ -73,7 +72,7 @@ export default function TextMenu() {
     });
 
     canvas.add(textbox);
-
+    console.log(textbox);
     canvas.renderAll();
   };
 

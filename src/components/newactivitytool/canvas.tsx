@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Background, CanvasBackground, Textarea } from "./style";
 import zoomSlice, { zoomActions } from "../../store/common/zoomSlice";
 import { saveJson } from "./topButtons/saveButton/save";
+import { modifyProps } from "./setting/modifyButton";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -51,7 +52,15 @@ export default function Canvas() {
 
     fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
       ...deleteProps,
-      y: -1,
+    });
+    const modifyObject = (e: any, transform: any) => {
+      const target = transform.target;
+      dispatch(nodeActions.setTextbox(target));
+    };
+
+    fabric.Textbox.prototype.controls.modifyControl = new fabric.Control({
+      ...modifyProps,
+      mouseUpHandler: modifyObject,
     });
 
     //오브젝트 기본세팅 끝
