@@ -11,7 +11,6 @@ export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const textAreaRef = useSelector((state: any) => state.nodeReducer.textarea);
   const zoom = useSelector((state: any) => state.zoomReducer.zoom);
-
   fabric.Canvas.prototype.getAbsoluteCoords = (object: any) => {
     return {
       left: object.left + canvas._offset?.left,
@@ -43,11 +42,11 @@ export default function TextMenu() {
 
     textbox.on("mousedblclick", () => {
       dispatch(nodeActions.setTextbox(textbox));
-      console.log(textbox);
     });
 
-    textbox.on("mousedown", () => {
-      textAreaRef.current.value = textbox.text;
+    textbox.on("mousedown", (e: any) => {
+      if (e.target.selected) dispatch(nodeActions.setTextbox(textbox));
+      else textAreaRef.current.value = textbox.text;
     });
 
     textbox.on("moving", () => {
