@@ -3,55 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useReducer, useState } from "react";
 import style from "styled-components";
 import { zoomActions } from "../../../store/common/zoomSlice";
-
-const BackgroundContainer = style.div`
-  width:95%;
-  border:1px solid black;
-`;
-
-const Container = style.div`
-  display: flex;
-  justify-content:left;
-  align-items:center;
-
-`;
-const SubCategoryContainer = style(Container)`
-  .button{
-    width: 100px;
-    height: 10px;
-  }
-`;
-
-const ListContainer = style(Container)`
-gap: 5px;
-overflow-x: scroll;
-overflow-y:hidden.
-`;
-
-const SubButtons = style.button<{ select: number }>`
-  width: 40px;
-  height: 30px;
-  padding: 10px;
-  background-color:${(props) => {
-    return props.select == 1 ? "red" : "white";
-  }};
-  border: 1px solid black;
-`;
+import {
+  BackgroundContainer,
+  ListContainer,
+  SubButtons,
+  SubCategoryContainer,
+} from "./style";
+import { categoryActions } from "../../../store/common/categorySlice";
 
 const array = Array.from(Array(20).keys());
 
 export default function DecorationMenu() {
-  const initalState = {
-    template: -1,
-    stamp: -1,
-    tape: -1,
-  };
-
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const [subCategory, setSubCategory] = useState<string>("template");
-  const [subState, setSubState] = useReducer((prev: any, next: any) => {
-    return { ...prev, ...next };
-  }, initalState);
+  const subState = useSelector(
+    (state: any) => state.categoryReducer.subcategory
+  );
   const dispatch = useDispatch();
 
   const stamping = () => {
@@ -69,8 +36,17 @@ export default function DecorationMenu() {
 
   const taping = () => {
     if (canvas) {
-      const pointer = canvas.getPointer();
-      console.log(pointer);
+      canvas.on("dragenter", () => {
+        console.log("start");
+      });
+      canvas.on("dragover", () => {
+        console.log("go");
+      });
+      canvas.on("dragleave", () => {
+        console.log("end");
+      });
+
+      console.log(canvas.__eventListeners);
     }
   };
 
@@ -91,11 +67,8 @@ export default function DecorationMenu() {
   };
 
   useEffect(() => {
-    canvas.__eventListeners["mouse:down"] = [];
-    if (subCategory == "stamp") canvas.on("mouse:down", stamping);
-    else if (subCategory == "tape") canvas.on("mouse:down", taping);
-
-    console.log(canvas.__eventListeners["mouse:down"]);
+    if (subCategory == "stamp") stamping();
+    else if (subCategory == "tape") taping();
   }, [subCategory]);
 
   return (
@@ -114,7 +87,7 @@ export default function DecorationMenu() {
                 key={key}
                 onClick={() => {
                   templating(value);
-                  setSubState({ template: value });
+                  dispatch(categoryActions.templateChange(value));
                 }}
               >
                 {value}
@@ -128,7 +101,7 @@ export default function DecorationMenu() {
                 select={subState.stamp == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  setSubState({ stamp: value });
+                  dispatch(categoryActions.stampChange(value));
                 }}
               >
                 {value}
@@ -142,7 +115,7 @@ export default function DecorationMenu() {
                 select={subState.tape == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  setSubState({ tape: value });
+                  dispatch(categoryActions.tapeChange(value));
                 }}
               >
                 {value}
