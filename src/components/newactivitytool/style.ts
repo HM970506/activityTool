@@ -9,12 +9,12 @@ export const DefaultButton = styled.button`
 `;
 
 export const Button = styled(DefaultButton)`
-  border-radius: 100%;
   border: none;
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 20%;
   background-color: white;
   border: 1px solid black;
+  text-align: center;
 `;
 
 export const BottomButton = styled.button<{ select: number }>`
@@ -25,12 +25,16 @@ export const BottomButton = styled.button<{ select: number }>`
   }};
 `;
 
-export const MainButton = styled(Button)`
+export const MainButton = styled(DefaultButton)`
   position: absolute;
   bottom: 0;
   right: 0;
   margin: 20px;
   z-index: 1001;
+  width: 10%;
+  height: 8%;
+  border: 1px solid black;
+  background-color: white;
   transition-property: top-layer;
 `;
 
@@ -79,6 +83,9 @@ export const ButtonBox = styled(Box)`
   display: flex;
   gap: 10px;
   flex-direction: column;
+  justify-content: space-between;
+  width: 10%;
+  height: 60%;
 `;
 
 export const BottomContainer = styled(Box)`
