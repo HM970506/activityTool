@@ -67,8 +67,9 @@ export default function DecorationMenu() {
   };
 
   useEffect(() => {
-    if (subCategory == "stamp") stamping();
-    else if (subCategory == "tape") taping();
+    if (subCategory == "stamp") {
+    } else if (subCategory == "tape") {
+    }
   }, [subCategory]);
 
   return (
@@ -83,7 +84,7 @@ export default function DecorationMenu() {
           array.map((value, key) => {
             return (
               <SubButtons
-                select={subState.template == key ? 1 : 0}
+                select={subState.template.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   templating(value);
@@ -98,7 +99,7 @@ export default function DecorationMenu() {
           array.map((value, key) => {
             return (
               <SubButtons
-                select={subState.stamp == key ? 1 : 0}
+                select={subState.stamp.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   dispatch(categoryActions.stampChange(value));
@@ -112,7 +113,7 @@ export default function DecorationMenu() {
           array.map((value, key) => {
             return (
               <SubButtons
-                select={subState.tape == key ? 1 : 0}
+                select={subState.tape.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   dispatch(categoryActions.tapeChange(value));

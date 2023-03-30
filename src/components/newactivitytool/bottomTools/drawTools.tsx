@@ -15,7 +15,8 @@ export default function DrawToolsMenu() {
 
   //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
   const img = new Image();
-  img.src = "./pattern.jpg";
+  img.src =
+    "https://i.pinimg.com/564x/5a/ad/10/5aad103e59c05d2b7a85c217287fae10.jpg";
   const HeartPatternBrush = new fabric.PatternBrush(canvas);
   HeartPatternBrush.source = img;
   //커스텀 브러쉬 추가1 끝
@@ -63,7 +64,7 @@ export default function DrawToolsMenu() {
           toolChange("heartPatten");
         }}
       >
-        하트패턴
+        패턴배경
       </BottomButton>
       <BottomButton
         select={draws.tool == "spray" ? 1 : 0}
