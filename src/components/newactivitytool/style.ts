@@ -17,10 +17,12 @@ export const Button = styled(DefaultButton)`
   border: 1px solid black;
 `;
 
-export const BottomButton = styled(Button)`
+export const BottomButton = styled.button<{ select: number }>`
   width: 70px;
   height: 50px;
-  border-radius: 0;
+  background-color: ${(props) => {
+    return props.select == 1 ? "red" : "white";
+  }};
 `;
 
 export const MainButton = styled(Button)`

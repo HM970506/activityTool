@@ -78,12 +78,6 @@ export default function Canvas() {
     dispatch(nodeActions.setTextarea(textAreaRef));
   }, []);
 
-  const zoom = useSelector((state: any) => state.zoomReducer);
-
-  useEffect(() => {
-    console.log(zoom);
-  }, [zoom]);
-
   const resizeHandler = () => {
     dispatch(nodeActions.setZoom(1));
     if (canvas) {

@@ -50,6 +50,7 @@ export default function DrawToolsMenu() {
   return (
     <>
       <BottomButton
+        select={draws.tool == "pencil" ? 1 : 0}
         onClick={() => {
           toolChange("pencil");
         }}
@@ -57,6 +58,7 @@ export default function DrawToolsMenu() {
         펜
       </BottomButton>
       <BottomButton
+        select={draws.tool == "heartPatten" ? 1 : 0}
         onClick={() => {
           toolChange("heartPatten");
         }}
@@ -64,6 +66,7 @@ export default function DrawToolsMenu() {
         하트패턴
       </BottomButton>
       <BottomButton
+        select={draws.tool == "spray" ? 1 : 0}
         onClick={() => {
           toolChange("spray");
         }}
@@ -71,10 +74,15 @@ export default function DrawToolsMenu() {
         스프레이
       </BottomButton>
 
-      <BottomButton onClick={() => sizeChange(20)}>큰 브러쉬</BottomButton>
-      <BottomButton onClick={() => sizeChange(3)}>작은 브러쉬</BottomButton>
+      <button onClick={() => sizeChange(20)}>큰 브러쉬</button>
+      <button onClick={() => sizeChange(3)}>작은 브러쉬</button>
 
-      <BottomButton onClick={() => toolChange("eraser")}>지우개</BottomButton>
+      <BottomButton
+        select={draws.tool == "eraser" ? 1 : 0}
+        onClick={() => toolChange("eraser")}
+      >
+        지우개
+      </BottomButton>
     </>
   );
 }
