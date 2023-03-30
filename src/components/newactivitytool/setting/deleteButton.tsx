@@ -1,4 +1,4 @@
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
 
 const deleteIcon = "./deleteButton.svg";
 const deleteObject = (e: any, transform: any) => {

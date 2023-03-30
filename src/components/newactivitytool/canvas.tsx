@@ -18,25 +18,6 @@ export default function Canvas() {
     e.target.style.height = e.target.scrollHeight + "px";
   };
 
-  //오브젝트 기본세팅
-
-  fabric.Object.prototype.cornerColor = "black";
-  fabric.Object.prototype.editingBorderColor = "black";
-  fabric.Object.prototype.erasable = true;
-  fabric.Object.prototype.selectable = false;
-  fabric.Object.prototype.hasBorders = false;
-
-  fabric.Object.prototype.controls.deleteControl = new fabric.Control({
-    ...deleteProps,
-  });
-
-  fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
-    ...deleteProps,
-    y: -1,
-  });
-
-  //오브젝트 기본세팅 끝
-
   const containerRef = useRef<HTMLDivElement>(null);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
@@ -55,6 +36,25 @@ export default function Canvas() {
       preserveObjectStacking: true,
     });
     canvas.freeDrawingBrush.inverted = true;
+
+    //오브젝트 기본세팅
+
+    fabric.Object.prototype.cornerColor = "black";
+    fabric.Object.prototype.selectionBorderColor = "black";
+    fabric.Object.prototype.erasable = true;
+    fabric.Object.prototype.selectable = false;
+    fabric.Object.prototype.hasBorders = false;
+
+    fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+      ...deleteProps,
+    });
+
+    fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
+      ...deleteProps,
+      y: -1,
+    });
+
+    //오브젝트 기본세팅 끝
 
     canvas.on({
       "selection:created": () => {
@@ -76,6 +76,8 @@ export default function Canvas() {
 
     dispatch(nodeActions.setCanvas(canvas));
     dispatch(nodeActions.setTextarea(textAreaRef));
+
+    console.log(fabric.Object.prototype);
   }, []);
 
   const resizeHandler = () => {

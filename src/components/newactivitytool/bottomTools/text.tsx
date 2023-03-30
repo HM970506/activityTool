@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SideButton } from "../style";
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import style from "styled-components";

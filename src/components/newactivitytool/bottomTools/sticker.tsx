@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
 const sample = new Map([
   ["fluffy", ["토끼", "병아리"]],
   ["round", ["달걀프라이", "어항"]],
@@ -20,6 +20,7 @@ export default function StickerMenu() {
       `./${stickerCategory}_sticker_${index}.png`,
       (img: any) => {
         img.selectable = true;
+        console.log(img.cornerColor);
         canvas.add(img);
       }
     );

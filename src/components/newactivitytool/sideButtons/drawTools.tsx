@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { DRAWTOOLS } from "../types";
 import { Button } from "../style";
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useReducer, useState } from "react";
 import style from "styled-components";
