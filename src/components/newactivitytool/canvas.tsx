@@ -40,6 +40,13 @@ export default function Canvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
+  const DeselctMultipleObjects = (canvas: any) => {
+    if (canvas.getActiveObject().type == "activeSelection") {
+      canvas.discardActiveObject();
+      canvas.requestRenderAll();
+    }
+  };
+
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       height: window.innerHeight,
@@ -48,19 +55,23 @@ export default function Canvas() {
       preserveObjectStacking: true,
     });
     canvas.freeDrawingBrush.inverted = true;
-    canvas.on("selection:created", () => {
-      console.log(canvas.getActiveObject());
-      if (canvas.getActiveObject().type == "activeSelection") {
-        canvas.discardActiveObject();
-        canvas.requestRenderAll();
-      }
-    });
-    canvas.on("selection:updated", () => {
-      console.log(canvas.getActiveObject());
-      if (canvas.getActiveObject().type == "activeSelection") {
-        canvas.discardActiveObject();
-        canvas.requestRenderAll();
-      }
+
+    canvas.on({
+      "selection:created": () => {
+        DeselctMultipleObjects(canvas);
+      },
+      "selection:updated": () => {
+        DeselctMultipleObjects(canvas);
+      },
+      "event:dragover": () => {
+        console.log("dragover");
+      },
+      "event:dragenter": () => {
+        console.log("dragenter");
+      },
+      "event:dragleave": () => {
+        console.log("dragleave");
+      },
     });
 
     dispatch(nodeActions.setCanvas(canvas));

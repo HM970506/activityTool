@@ -19,11 +19,7 @@ export default function NonTemplate() {
 
   return (
     <>
-      {templateId == "3" ? (
-        <Background url={url} />
-      ) : (
-        <iframe width="100%" height="1000" src="https://velog.io/" />
-      )}
+      <iframe width="100%" height="1000" src="https://velog.io/" />
     </>
   );
 }

@@ -18,9 +18,6 @@ export default function ZoomButton() {
     if (canvas) canvas.setZoom(zoom);
   }, [zoom]);
 
-  useEffect(() => {
-    console.log(zoom, zoomView, scale);
-  }, [zoom, zoomView, scale]);
   return (
     <>
       <DefaultButton

@@ -44,17 +44,11 @@ export default function TemplatesIndex() {
         </DialogMain>
       </Dialog>
       <TemplatesContainer>
-        {dummy.map((value, key) =>
-          value == 1 || value == 2 ? (
-            <Template key={key} onClick={() => templateClick(value)}>
-              {value} 템플릿
-            </Template>
-          ) : (
-            <Template key={key} onClick={() => templateClick(value)}>
-              {value} 템플릿 아님
-            </Template>
-          )
-        )}
+        {dummy.map((value, key) => (
+          <Template key={key} onClick={() => templateClick(value)}>
+            테스트사이트 {value}
+          </Template>
+        ))}
       </TemplatesContainer>
     </Background>
   );
