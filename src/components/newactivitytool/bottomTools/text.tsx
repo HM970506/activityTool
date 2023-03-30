@@ -21,34 +21,6 @@ export default function TextMenu() {
 
   const dispatch = useDispatch();
 
-  const test = (textbox: any) => {
-    if (textAreaRef.current) {
-      textbox.opacity = 0;
-      textAreaRef.current.style.display = "block";
-      textAreaRef.current.style.width = textbox.width * zoom + "px";
-      textAreaRef.current.style.height = textbox.height * zoom + "px";
-      textAreaRef.current.style.left = textbox.left * zoom + "px";
-      textAreaRef.current.style.top = textbox.top * zoom + "px";
-      textAreaRef.current.style.transformOrigin = "left top";
-      textAreaRef.current.style.transform = `scale(${textbox.zoomX}, ${textbox.zoomY}) rotate(${textbox.angle}deg)`;
-      textAreaRef.current.style.fontSize =
-        textbox.getCurrentCharFontSize() + "px";
-      textAreaRef.current.style.fontFamily = textbox.fontFamily;
-      textAreaRef.current.value = textbox.text;
-      textbox.hasControls = false;
-      textAreaRef.current.focus();
-      canvas.renderAll();
-    }
-  };
-  const nowTextbox = useSelector((state: any) => state.nodeReducer.nowTextbox);
-  useEffect(() => {
-    console.log("nowtextbox 변함", nowTextbox);
-    if (nowTextbox != null) {
-      test(nowTextbox);
-      dispatch(nodeActions.setTextbox(null));
-    }
-  }, [nowTextbox]);
-
   const TextMaker = (size: number) => {
     const textbox = new fabric.Textbox(
       "텍스트를 입력하세요",
