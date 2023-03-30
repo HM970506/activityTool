@@ -110,6 +110,11 @@ export default function Canvas() {
   };
   window.addEventListener("resize", resizeHandler);
 
+  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
+  useEffect(() => {
+    console.log(draws);
+  }, [draws]);
+
   return (
     <CanvasBackground ref={containerRef}>
       <canvas ref={canvasRef}></canvas>

@@ -8,37 +8,7 @@ export default function DrawToolsMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
-  const PenBrush = new fabric.PencilBrush(canvas);
-  const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-  const Eraser = new fabric.EraserBrush(canvas);
   // const Cryon = new fabric.CrayonBrush(canvas);
-
-  //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
-  const img = new Image();
-  img.src =
-    "https://i.pinimg.com/564x/5a/ad/10/5aad103e59c05d2b7a85c217287fae10.jpg";
-  const HeartPatternBrush = new fabric.PatternBrush(canvas);
-  HeartPatternBrush.source = img;
-  //커스텀 브러쉬 추가1 끝
-
-  useEffect(() => {
-    if (canvas) {
-      setTool(draws.tool);
-      setSize(draws.size);
-      canvas.renderAll();
-    }
-  }, [draws.tool, draws.size]);
-
-  const setTool = (tool: string) => {
-    if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"] = [];
-    if (tool == "pencil") canvas.freeDrawingBrush = PenBrush;
-    else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
-    else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
-    else if (tool == "eraser") canvas.freeDrawingBrush = Eraser;
-  };
-  const setSize = (size: number) => {
-    canvas.freeDrawingBrush.width = size;
-  };
 
   const toolChange = (tool: string) => {
     dispatch(drawActions.toolChange(tool));

@@ -49,19 +49,6 @@ export default function Colorbox() {
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
   const [colorCategory, setColorCategory] = useState<string>("black");
 
-  const setColor = (color: string) => {
-    const now = canvas.getActiveObject();
-    if (now) now.set("fill", color);
-    else canvas.freeDrawingBrush.color = color;
-  };
-
-  useEffect(() => {
-    if (canvas) {
-      setColor(draws.color);
-      canvas.renderAll();
-    }
-  }, [draws.color]);
-
   return (
     <ColorContainer>
       {COLORS.map((value: string, key: number) => (
