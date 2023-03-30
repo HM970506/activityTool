@@ -20,7 +20,6 @@ export default function StickerMenu() {
       `./${stickerCategory}_sticker_${index}.png`,
       (img: any) => {
         img.selectable = true;
-        console.log(img.cornerColor);
         canvas.add(img);
       }
     );

@@ -42,6 +42,7 @@ export default function TextMenu() {
   };
   const nowTextbox = useSelector((state: any) => state.nodeReducer.nowTextbox);
   useEffect(() => {
+    console.log("nowtextbox 변함", nowTextbox);
     if (nowTextbox != null) {
       test(nowTextbox);
       dispatch(nodeActions.setTextbox(null));
@@ -70,6 +71,7 @@ export default function TextMenu() {
 
     textbox.on("mousedblclick", () => {
       dispatch(nodeActions.setTextbox(textbox));
+      console.log(textbox);
     });
 
     textbox.on("mousedown", () => {
