@@ -86,11 +86,10 @@ export default function Canvas() {
 
   const resizeHandler = () => {
     dispatch(nodeActions.setZoom(1));
-    const outerCanvasContainer = containerRef.current;
-    if (outerCanvasContainer && canvas) {
+    if (canvas) {
       const ratio = canvas.getWidth() / canvas.getHeight();
+      const containerWidth = window.innerWidth;
 
-      const containerWidth = outerCanvasContainer.clientWidth;
       const zoom = containerWidth / canvas.getWidth();
       const scale = canvas.getZoom() * zoom;
 
