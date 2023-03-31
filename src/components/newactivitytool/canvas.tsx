@@ -35,6 +35,7 @@ export default function Canvas() {
       width: window.innerWidth,
       backgroundColor: "rgba(255,255,255,0)",
       preserveObjectStacking: true,
+      freeDrawingCursor: "url(./eraser.svg) 2 2, auto",
     });
     canvas.freeDrawingBrush.inverted = true;
 

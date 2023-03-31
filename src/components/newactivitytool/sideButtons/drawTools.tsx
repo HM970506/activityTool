@@ -48,75 +48,79 @@ export default function DrawToolsButton() {
     canvas.freeDrawingBrush.width = size;
   };
 
-  // const isCursorExist = () => {
-  //   let check = false;
-  //   const objects = canvas.getObjects();
-  //   for (let i = 0; i < objects.length; i++) {
-  //     if (objects[i].id == "cursor") {
-  //       check = true;
-  //       break;
-  //     }
-  //   }
-  //   return check;
-  // };
+  const iscursorExist = () => {
+    let check = false;
+    const objects = canvas.getObjects();
+    for (let i = 0; i < objects.length; i++) {
+      if (objects[i].id == "cursor") {
+        check = true;
+        break;
+      }
+    }
+    return check;
+  };
 
   useEffect(() => {
     if (canvas) {
       if (draws.isDrawing) {
-        canvas.discardActiveObject().renderAll();
+        if (iscursorExist()) {
+          canvas.__eventListeners["mouse:move"].pop();
+          canvas.__eventListeners["mouse:out"].pop();
+          canvas.__eventListeners["mouse:over"].pop();
+
+          canvas.getObjects().forEach((object: any) => {
+            if (object.id == "cursor") {
+              canvas.remove(object);
+              canvas.renderAll();
+            }
+          });
+        }
+
         canvas.isDrawingMode = true;
+        canvas.discardActiveObject().renderAll();
+        // if (draws.tool == "eraser") {
+        //   canvas.freeDrawingCursor = "auto";
+        //   return;
+        // }
+        canvas.freeDrawingCursor = "none";
+        const cursor = new fabric.Circle({
+          radius: draws.size / 2,
+          fill: draws.tool != "eraser" ? draws.color : "rgba(0,0,0,0)",
+          stroke: draws.tool != "eraser" ? "none" : "2px solid black",
+          left: 0,
+          top: 0,
+          opacity: 0,
+          id: "cursor",
+          selectable: false,
+          erasable: false,
+        });
 
-        // fabric.Image.fromURL(`./${draws.tool}.png`, (cursor: any) => {
-        //   cursor.selectable = false;
-        //   cursor.scaleX = 0.5;
-        //   cursor.scaleY = 0.5;
-        //   cursor.top = -100;
-        //   cursor.left = -100;
-        //   cursor.id = "cursor";
+        canvas.on("mouse:out", () => {
+          cursor.opacity = 0;
+          canvas.renderAll();
+        });
+        canvas.on("mouse:over", () => {
+          cursor.opacity = 1;
+          canvas.renderAll();
+        });
+        canvas.on("mouse:move", (e: any) => {
+          const mouse = canvas.getPointer(e);
+          cursor.set({
+            left: mouse.x - draws.size / 2,
+            top: mouse.y - draws.size / 2,
+          });
+          canvas.renderAll();
+        });
 
-        //   canvas.on("mouse:out", () => {
-        //     cursor.opacity = 0;
-        //     canvas.renderAll();
-        //   });
-        //   canvas.on("mouse:over", () => {
-        //     cursor.opacity = 1;
-        //     canvas.renderAll();
-        //   });
-
-        //   canvas.on("object:selected", (e: any) => {
-        //     e.target.selectable = false;
-        //     return false;
-        //   });
-
-        //   canvas.on("mouse:move", (e: any) => {
-        //     const mouse = canvas.getPointer(e);
-        //     cursor.set({
-        //       left: mouse.x + 10,
-        //       top: mouse.y - 100,
-        //     });
-        //     canvas.renderAll();
-        //   });
-
-        //   canvas.add(cursor);
-        //   canvas.renderAll();
-        // });
+        canvas.add(cursor);
+        console.log(cursor, canvas.getObjects());
+        canvas.renderAll();
       } else {
         canvas.isDrawingMode = false;
         canvas.renderAll();
-
-        // if (isCursorExist()) {
-        //   canvas.__eventListeners["object:selected"].pop();
-        //   canvas.__eventListeners["mouse:move"].pop();
-        //   canvas.__eventListeners["mouse:out"].pop();
-        //   canvas.__eventListeners["mouse:over"].pop();
-
-        //   canvas.getObjects().forEach((object: any) => {
-        //     if (object.id == "cursor") canvas.remove(object);
-        //   });
-        // }
       }
     }
-  }, [draws.isDrawing, draws.tool]);
+  }, [draws]);
 
   const drawToolButtonClick = () => {
     dispatch(categoryActions.categoryChange(DRAWTOOLS));
