@@ -25,6 +25,8 @@ export default function StickerMenu() {
       `./${stickerCategory}_sticker_${index}.png`,
       (img: any) => {
         img.selectable = true;
+        img.erasable = false;
+        img.hoverCursor = "auto";
         canvas.add(img);
       }
     );

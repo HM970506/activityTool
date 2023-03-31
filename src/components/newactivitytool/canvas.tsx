@@ -43,7 +43,8 @@ export default function Canvas() {
 
     fabric.Object.prototype.cornerColor = "black";
     fabric.Object.prototype.selectionBorderColor = "black";
-    fabric.Object.prototype.erasable = true;
+    fabric.Object.prototype.erasable = false;
+    fabric.Object.prototype.hoverCursor = "default";
     fabric.Object.prototype.selectable = false;
     fabric.Object.prototype.hasBorders = false;
 

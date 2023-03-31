@@ -18,16 +18,22 @@ export default function PhotoMenu() {
       let frameImg = img;
       frameImg.height = height + 10;
       frameImg.width = width + 10;
+      frameImg.erasable = false;
+      frameImg.hoverCursor = "auto";
 
       fabric.Image.fromURL(url, (img: any) => {
         let innerImg = img;
         innerImg.globalCompositeOperation = "source-atop";
+        innerImg.erasable = false;
+        innerImg.hoverCursor = "auto";
 
         const group = new fabric.Group([frameImg, innerImg], {
           left: x,
           top: y,
         });
         group.selectable = true;
+        console.log(group);
+
         canvas.add(group);
       });
       canvas.remove(now);
@@ -43,6 +49,9 @@ export default function PhotoMenu() {
     if (photo != "") {
       new fabric.Image.fromURL(photo, (img: any) => {
         img.viewportCenter();
+        img.hoverCursor = "auto";
+        img.erasable = false;
+        img.selectable = true;
         canvas.add(img);
       });
       setPhoto("");

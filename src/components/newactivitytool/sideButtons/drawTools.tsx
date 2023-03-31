@@ -78,12 +78,14 @@ export default function DrawToolsButton() {
   };
   const category = useSelector((state: any) => state.categoryReducer.category);
   useEffect(() => {
-    if (category != DRAWTOOLS) {
-      if (iscursorExist()) cursorReset();
-      canvas.isDrawingMode = false;
-      canvas.renderAll();
+    if (canvas) {
+      if (category != DRAWTOOLS || !draws.isDrawing) {
+        if (iscursorExist()) cursorReset();
+        canvas.isDrawingMode = false;
+        canvas.renderAll();
+      }
     }
-  }, [category]);
+  }, [category, draws.isDrawing]);
 
   useEffect(() => {
     if (canvas) {
@@ -106,6 +108,7 @@ export default function DrawToolsButton() {
           opacity: 0,
           id: "cursor",
           selectable: false,
+          hoverCursor: "default",
           erasable: false,
         });
 
