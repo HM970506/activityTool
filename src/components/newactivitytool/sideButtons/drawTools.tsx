@@ -67,6 +67,7 @@ export default function DrawToolsButton() {
           canvas.__eventListeners["mouse:move"].pop();
           canvas.__eventListeners["mouse:out"].pop();
           canvas.__eventListeners["mouse:over"].pop();
+          canvas.__eventListeners["mouse:down:before"].pop();
 
           canvas.getObjects().forEach((object: any) => {
             if (object.id == "cursor") {
@@ -103,7 +104,12 @@ export default function DrawToolsButton() {
           cursor.opacity = 1;
           canvas.renderAll();
         });
+        canvas.on("mouse:down:before", () => {
+          cursor.opacity = 0;
+          canvas.renderAll();
+        });
         canvas.on("mouse:move", (e: any) => {
+          cursor.opacity = 1;
           const mouse = canvas.getPointer(e);
           cursor.set({
             left: mouse.x - draws.size / 2,
