@@ -36,6 +36,7 @@ export default function Canvas() {
       backgroundColor: "rgba(255,255,255,0)",
       preserveObjectStacking: true,
       freeDrawingCursor: "url(./eraser.svg) 2 2, auto",
+      selection: false,
     });
     canvas.freeDrawingBrush.inverted = true;
 
@@ -74,15 +75,6 @@ export default function Canvas() {
       "selection:updated": () => {
         DeselctMultipleObjects(canvas);
       },
-      // "mouse:down": () => {
-      //   console.log(canvas.getPointer());
-      // },
-      // "event:dragenter": () => {
-      //   console.log("dragenter");
-      // },
-      // "event:dragleave": () => {
-      //   console.log("dragleave");
-      // },
     });
 
     dispatch(nodeActions.setCanvas(canvas));

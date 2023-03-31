@@ -13,13 +13,14 @@ export default function PhotoMenu() {
     fabric.Image.fromURL(`/${shape}.png`, (frameImg: any) => {
       frameImg.erasable = false;
       frameImg.selectable = true;
-
+      frameImg.crossOrigin = "Anonymous";
       fabric.Image.fromURL(
         now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
         (innerImg: any) => {
           innerImg.globalCompositeOperation = "source-atop";
           innerImg.erasable = false;
-          frameImg.selectable = true;
+          innerImg.selectable = true;
+          innerImg.crossOrigin = "Anonymous";
 
           innerImg.scaleX =
             now.type == "image" ? now.scaleX : now.getObjects()[1].scaleX;

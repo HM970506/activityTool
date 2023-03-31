@@ -1,8 +1,6 @@
 import { fabric } from "fabric-with-erasing";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useReducer, useState } from "react";
-import style from "styled-components";
-import { zoomActions } from "../../../store/common/zoomSlice";
 import {
   BackgroundContainer,
   ListContainer,
@@ -36,17 +34,6 @@ export default function DecorationMenu() {
 
   const taping = () => {
     if (canvas) {
-      canvas.on("dragenter", () => {
-        console.log("start");
-      });
-      canvas.on("dragover", () => {
-        console.log("go");
-      });
-      canvas.on("dragleave", () => {
-        console.log("end");
-      });
-
-      console.log(canvas.__eventListeners);
     }
   };
 
@@ -67,8 +54,45 @@ export default function DecorationMenu() {
   };
 
   useEffect(() => {
-    if (subCategory == "stamp") {
-    } else if (subCategory == "tape") {
+    if (canvas) {
+      if (subCategory == "stamp") {
+      } else if (subCategory == "tape") {
+        canvas.on("mouse:down", () => {
+          const pointer = canvas.getPointer();
+          const points = [pointer.x, pointer.y, pointer.x, pointer.y];
+          const line = new fabric.Line(points, {
+            strokeWidth: 5,
+            fill: "red",
+            stroke: "red",
+            originX: "center",
+            originY: "center",
+          });
+          canvas.add(line);
+          canvas.taping = true;
+        });
+
+        canvas.on("mouse:move", () => {
+          if (canvas.taping) {
+            const pointer = canvas.getPointer();
+            canvas.getObjects()[canvas.getObjects().length - 1].set({
+              x2: pointer.x,
+              y2: pointer.y,
+            });
+
+            canvas.renderAll();
+          }
+        });
+        canvas.on("mouse:up", () => {
+          if (canvas.taping) {
+            canvas.getObjects()[canvas.getObjects().length - 1].setCoords();
+            canvas.renderAll();
+            canvas.taping = false;
+          }
+        });
+
+        console.log(canvas.__eventListeners);
+      } else {
+      }
     }
   }, [subCategory]);
 
