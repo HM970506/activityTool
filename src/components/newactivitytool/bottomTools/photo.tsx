@@ -2,6 +2,8 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Uploader } from "../style";
 import { fabric } from "fabric-with-erasing";
+
+const defaultX = 300;
 export default function PhotoMenu() {
   const shapeChange = (shape: string) => {
     const now = canvas.getActiveObject();
@@ -23,6 +25,12 @@ export default function PhotoMenu() {
             now.type == "image" ? now.scaleX : now.getObjects()[1].scaleX;
           innerImg.scaleY =
             now.type == "image" ? now.scaleY : now.getObjects()[1].scaleY;
+          innerImg.width =
+            now.type == "image" ? now.width : now.getObjects()[1].width;
+          innerImg.height =
+            now.type == "image" ? now.height : now.getObjects()[1].height;
+          innerImg.rotate =
+            now.type == "image" ? now.rotate : now.getObjects()[1].rotate;
 
           const group = new fabric.Group([frameImg, innerImg], {
             selectable: true,
@@ -52,7 +60,7 @@ export default function PhotoMenu() {
         img.erasable = false;
         img.selectable = true;
 
-        const scale = 300 / img.width;
+        const scale = defaultX / img.width;
         img.scaleX = scale;
         img.scaleY = scale;
 
