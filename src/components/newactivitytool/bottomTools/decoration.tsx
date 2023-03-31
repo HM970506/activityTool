@@ -13,8 +13,7 @@ const array = Array.from(Array(20).keys());
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const [subCategory, setSubCategory] = useState<string>("template");
-  const subState = useSelector(
+  const { template, stamp, tape } = useSelector(
     (state: any) => state.categoryReducer.subcategory
   );
   const dispatch = useDispatch();
@@ -53,62 +52,23 @@ export default function DecorationMenu() {
     });
   };
 
-  useEffect(() => {
-    if (canvas) {
-      if (subCategory == "stamp") {
-      } else if (subCategory == "tape") {
-        canvas.on("mouse:down", () => {
-          const pointer = canvas.getPointer();
-          const points = [pointer.x, pointer.y, pointer.x, pointer.y];
-          const line = new fabric.Line(points, {
-            strokeWidth: 5,
-            fill: "red",
-            stroke: "red",
-            originX: "center",
-            originY: "center",
-          });
-          canvas.add(line);
-          canvas.taping = true;
-        });
-
-        canvas.on("mouse:move", () => {
-          if (canvas.taping) {
-            const pointer = canvas.getPointer();
-            canvas.getObjects()[canvas.getObjects().length - 1].set({
-              x2: pointer.x,
-              y2: pointer.y,
-            });
-
-            canvas.renderAll();
-          }
-        });
-        canvas.on("mouse:up", () => {
-          if (canvas.taping) {
-            canvas.getObjects()[canvas.getObjects().length - 1].setCoords();
-            canvas.renderAll();
-            canvas.taping = false;
-          }
-        });
-
-        console.log(canvas.__eventListeners);
-      } else {
-      }
-    }
-  }, [subCategory]);
-
   return (
     <BackgroundContainer>
       <SubCategoryContainer>
-        <button onClick={() => setSubCategory("template")}>템플릿</button>
-        <button onClick={() => setSubCategory("stamp")}>도장</button>
-        <button onClick={() => setSubCategory("tape")}>마스킹테이프</button>
+        <button onClick={() => dispatch(categoryActions.templatepOn)}>
+          템플릿
+        </button>
+        <button onClick={() => dispatch(categoryActions.stampOn)}>도장</button>
+        <button onClick={() => dispatch(categoryActions.tapeOn)}>
+          마스킹테이프
+        </button>
       </SubCategoryContainer>
       <ListContainer>
-        {subCategory == "template" &&
+        {template.state &&
           array.map((value, key) => {
             return (
               <SubButtons
-                select={subState.template.index == key ? 1 : 0}
+                select={template.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   templating(value);
@@ -119,11 +79,11 @@ export default function DecorationMenu() {
               </SubButtons>
             );
           })}
-        {subCategory == "stamp" &&
+        {stamp.state &&
           array.map((value, key) => {
             return (
               <SubButtons
-                select={subState.stamp.index == key ? 1 : 0}
+                select={stamp.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   dispatch(categoryActions.stampChange(value));
@@ -133,11 +93,11 @@ export default function DecorationMenu() {
               </SubButtons>
             );
           })}
-        {subCategory == "tape" &&
+        {tape.state &&
           array.map((value, key) => {
             return (
               <SubButtons
-                select={subState.tape.index == key ? 1 : 0}
+                select={tape.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
                   dispatch(categoryActions.tapeChange(value));

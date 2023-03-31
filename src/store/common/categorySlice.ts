@@ -5,7 +5,7 @@ const categorySlice = createSlice({
   initialState: {
     category: "DRAWTOOLS",
     subcategory: {
-      template: { index: -1, state: false },
+      template: { index: -1, state: true },
       stamp: { index: 0, state: false },
       tape: { index: 0, state: false },
     },
@@ -24,18 +24,22 @@ const categorySlice = createSlice({
     tapeChange: (state, action: PayloadAction<any>) => {
       state.subcategory.tape.index = action.payload;
     },
+    templatepOn: (state) => {
+      state.subcategory.template.state = true;
+      state.subcategory.stamp.state = false;
+      state.subcategory.tape.state = false;
+    },
 
     stampOn: (state) => {
       state.subcategory.stamp.state = true;
+      state.subcategory.template.state = false;
+      state.subcategory.tape.state = false;
     },
-    stampOff: (state) => {
-      state.subcategory.stamp.state = false;
-    },
+
     tapeOn: (state) => {
       state.subcategory.tape.state = true;
-    },
-    tapeoff: (state) => {
-      state.subcategory.tape.state = false;
+      state.subcategory.template.state = false;
+      state.subcategory.stamp.state = false;
     },
   },
 });
