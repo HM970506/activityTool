@@ -60,22 +60,35 @@ export default function DrawToolsButton() {
     return check;
   };
 
+  const cursorReset = () => {
+    //우선 여기서밖에 해당 이벤트를 사용하는 곳이 없어 이렇게 해놓긴 했지만..
+    //만약 다른 곳에서 해당 이벤트를 사용할 경우를 대비하여 함수를 찾아 삭제하는 방법으로 이후수정하기.
+
+    canvas.__eventListeners["mouse:move"].pop();
+    canvas.__eventListeners["mouse:out"].pop();
+    canvas.__eventListeners["mouse:over"].pop();
+    canvas.__eventListeners["mouse:down:before"].pop();
+
+    canvas.getObjects().forEach((object: any) => {
+      if (object.id == "cursor") {
+        canvas.remove(object);
+        canvas.renderAll();
+      }
+    });
+  };
+  const category = useSelector((state: any) => state.categoryReducer.category);
+  useEffect(() => {
+    if (category != DRAWTOOLS) {
+      if (iscursorExist()) cursorReset();
+      canvas.isDrawingMode = false;
+      canvas.renderAll();
+    }
+  }, [category]);
+
   useEffect(() => {
     if (canvas) {
       if (draws.isDrawing) {
-        if (iscursorExist()) {
-          canvas.__eventListeners["mouse:move"].pop();
-          canvas.__eventListeners["mouse:out"].pop();
-          canvas.__eventListeners["mouse:over"].pop();
-          canvas.__eventListeners["mouse:down:before"].pop();
-
-          canvas.getObjects().forEach((object: any) => {
-            if (object.id == "cursor") {
-              canvas.remove(object);
-              canvas.renderAll();
-            }
-          });
-        }
+        if (iscursorExist()) cursorReset();
 
         canvas.isDrawingMode = true;
         canvas.discardActiveObject().renderAll();
@@ -119,7 +132,6 @@ export default function DrawToolsButton() {
         });
 
         canvas.add(cursor);
-        console.log(cursor, canvas.getObjects());
         canvas.renderAll();
       } else {
         canvas.isDrawingMode = false;

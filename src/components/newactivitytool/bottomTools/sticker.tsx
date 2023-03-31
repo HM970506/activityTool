@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
+import {
+  BackgroundContainer,
+  ListContainer,
+  SubCategoryContainer,
+} from "./style";
 const sample = new Map([
   ["fluffy", ["토끼", "병아리"]],
   ["round", ["달걀프라이", "어항"]],
@@ -26,8 +31,8 @@ export default function StickerMenu() {
   };
 
   return (
-    <>
-      <div>
+    <BackgroundContainer>
+      <SubCategoryContainer>
         <button
           onClick={() => {
             setStickerCategory("fluffy");
@@ -42,8 +47,8 @@ export default function StickerMenu() {
         >
           인형아님
         </button>
-      </div>
-      <div>
+      </SubCategoryContainer>
+      <ListContainer>
         {Array.isArray(stickers) &&
           stickers.map((value, key) => (
             <button
@@ -55,7 +60,7 @@ export default function StickerMenu() {
               {value}
             </button>
           ))}
-      </div>
-    </>
+      </ListContainer>
+    </BackgroundContainer>
   );
 }
