@@ -27,6 +27,7 @@ export default function StickerMenu() {
         img.selectable = true;
         img.erasable = false;
         img.hoverCursor = "auto";
+        img._element.crossOrigin = "anonymous";
         canvas.add(img);
       }
     );

@@ -8,36 +8,35 @@ export default function PhotoMenu() {
 
     if (!now) return;
 
-    const url =
-      now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc();
-    const { x, y } = now.aCoords.tl;
-    const width = now.width;
-    const height = now.height;
-
-    fabric.Image.fromURL(`/${shape}.png`, (img: any) => {
-      let frameImg = img;
-      frameImg.height = height + 10;
-      frameImg.width = width + 10;
+    fabric.Image.fromURL(`/${shape}.png`, (frameImg: any) => {
       frameImg.erasable = false;
-      frameImg.hoverCursor = "auto";
+      frameImg.selectable = true;
 
-      fabric.Image.fromURL(url, (img: any) => {
-        let innerImg = img;
-        innerImg.globalCompositeOperation = "source-atop";
-        innerImg.erasable = false;
-        innerImg.hoverCursor = "auto";
+      fabric.Image.fromURL(
+        now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
+        (innerImg: any) => {
+          innerImg.globalCompositeOperation = "source-atop";
+          innerImg.erasable = false;
+          frameImg.selectable = true;
 
-        const group = new fabric.Group([frameImg, innerImg], {
-          left: x,
-          top: y,
-        });
-        group.selectable = true;
-        console.log(group);
+          innerImg.scaleX =
+            now.type == "image" ? now.scaleX : now.getObjects()[1].scaleX;
+          innerImg.scaleY =
+            now.type == "image" ? now.scaleY : now.getObjects()[1].scaleY;
 
-        canvas.add(group);
-      });
-      canvas.remove(now);
-      canvas.renderAll();
+          const group = new fabric.Group([frameImg, innerImg], {
+            selectable: true,
+            erasable: false,
+            left: now.left,
+            top: now.top,
+          });
+
+          canvas.add(group);
+          canvas.remove(now);
+          canvas.renderAll();
+          console.log(group);
+        }
+      );
     });
   };
 
@@ -52,6 +51,11 @@ export default function PhotoMenu() {
         img.hoverCursor = "auto";
         img.erasable = false;
         img.selectable = true;
+
+        const scale = 300 / img.width;
+        img.scaleX = scale;
+        img.scaleY = scale;
+
         canvas.add(img);
       });
       setPhoto("");
@@ -63,14 +67,13 @@ export default function PhotoMenu() {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onloadend = async () => {
-        //해당 이미지를 서버에 저장하는 로직
-        //서버에 저장된 주소 가져옴
-        //서버에 저장된 주소로 setPhoto
-        setPhoto(
-          "https://i.pinimg.com/564x/df/af/1a/dfaf1ab08c6f30cfe18a14e3fdd815ad.jpg"
-        );
+      reader.onloadend = async (e: any) => {
+        setPhoto(e.target.result);
       };
+
+      //해당 이미지를 서버에 저장하는 로직
+      //서버에 저장된 주소 가져옴
+      //서버에 저장된 주소로 setPhoto
 
       e.target.value = ""; //같은 이름 파일을 넣어도 반응하도록 값 리셋해주기
     }
@@ -91,24 +94,46 @@ export default function PhotoMenu() {
       <button onClick={photoUpload}>사진 가져오기</button>
       <button
         onClick={() => {
-          // shapeChange("RECT");
+          const now = canvas.getActiveObject();
+          if (!now) return;
+          const target = now.getObjects()[1];
+          const url = now.type == "image" ? now.getSrc() : target.getSrc();
+          console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
+          console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
+          new fabric.Image.fromURL(url, (img: any) => {
+            img.set({
+              hoverCursor: "auto",
+              erasable: false,
+              selectable: true,
+              scaleX: target.scaleX,
+              scaleY: target.scaleY,
+              width: target.width,
+              height: target.height,
+              top: now.top,
+              left: now.left,
+              angle: target.angle,
+            });
+            canvas.remove(now);
+            canvas.add(img);
+            canvas.renderAll();
+          });
         }}
       >
-        사각형
+        원래대로
       </button>
       <button
         onClick={() => {
-          shapeChange("heart");
+          shapeChange("fluffy_sticker_1");
         }}
       >
-        하트
+        토끼
       </button>
       <button
         onClick={() => {
-          shapeChange("star");
+          shapeChange("fluffy_sticker_2");
         }}
       >
-        별
+        병아리
       </button>
     </>
   );
