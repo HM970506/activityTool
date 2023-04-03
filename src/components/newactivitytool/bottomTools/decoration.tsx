@@ -10,6 +10,13 @@ import {
 import { categoryActions } from "../../../store/common/categorySlice";
 
 const array = Array.from(Array(20).keys());
+const TAPES = [
+  "https://i.pinimg.com/564x/08/dd/35/08dd35fcf52d84495113ea6d900d8350.jpg",
+  "https://i.pinimg.com/736x/dc/5c/2f/dc5c2f082d46071cca41bd31e1a0ea50.jpg",
+  "https://i.pinimg.com/564x/07/75/c2/0775c21e58ff42da3975d751e3784579.jpg",
+  "https://i.pinimg.com/736x/90/a4/4b/90a44bca4d3c37c0a958dd3ebfd85c27.jpg",
+  "https://i.pinimg.com/564x/f5/8c/00/f58c008a20bd9054becbe01d5c8ff6cc.jpg",
+];
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
@@ -91,7 +98,7 @@ export default function DecorationMenu() {
                 key={key}
                 onClick={() => {
                   templating(value);
-                  dispatch(categoryActions.templateChange(value));
+                  dispatch(categoryActions.templateChange(key));
                 }}
               >
                 {value}
@@ -105,7 +112,7 @@ export default function DecorationMenu() {
                 select={stamp.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  dispatch(categoryActions.stampChange(value));
+                  dispatch(categoryActions.stampChange(key));
                 }}
               >
                 {value}
@@ -113,13 +120,14 @@ export default function DecorationMenu() {
             );
           })}
         {tape.state &&
-          array.map((value, key) => {
+          TAPES.map((value, key) => {
             return (
               <SubButtons
                 select={tape.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  dispatch(categoryActions.tapeChange(value));
+                  dispatch(categoryActions.tapeChange(key));
+                  dispatch(categoryActions.tapeSet(value));
                 }}
               >
                 {value}
