@@ -5,20 +5,11 @@ import { nodeActions } from "../../store/common/nodeSlice";
 import { deleteProps } from "./setting/deleteButton";
 import { useEffect, useRef, useState } from "react";
 import { Background, CanvasBackground, Textarea } from "./style";
-import zoomSlice, { zoomActions } from "../../store/common/zoomSlice";
-import { saveJson } from "./topButtons/saveButton/save";
-import { modifyProps } from "./setting/modifyButton";
+import { zoomActions } from "../../store/common/zoomSlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  const textareaResize = (e: any) => {
-    e.target.style.height = "auto";
-    e.target.style.height = e.target.scrollHeight + "px";
-  };
-
   const containerRef = useRef<HTMLDivElement>(null);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
@@ -28,6 +19,17 @@ export default function Canvas() {
       canvas.requestRenderAll();
     }
   };
+
+  fabric.Object.prototype.cornerColor = "black";
+  fabric.Object.prototype.selectionBorderColor = "black";
+  fabric.Object.prototype.erasable = false;
+  fabric.Object.prototype.hoverCursor = "default";
+  fabric.Object.prototype.selectable = false;
+  fabric.Object.prototype.hasBorders = false;
+
+  fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+    ...deleteProps,
+  });
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -39,34 +41,7 @@ export default function Canvas() {
       selection: false,
     });
     canvas.freeDrawingBrush.inverted = true;
-
-    //오브젝트 기본세팅
-
-    fabric.Object.prototype.cornerColor = "black";
-    fabric.Object.prototype.selectionBorderColor = "black";
-    fabric.Object.prototype.erasable = false;
-    fabric.Object.prototype.hoverCursor = "default";
-    fabric.Object.prototype.selectable = false;
-    fabric.Object.prototype.hasBorders = false;
-
-    fabric.Object.prototype.controls.deleteControl = new fabric.Control({
-      ...deleteProps,
-    });
-
-    fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
-      ...deleteProps,
-    });
-    const modifyObject = (e: any, transform: any) => {
-      const target = transform.target;
-      dispatch(nodeActions.setTextbox(target));
-    };
-
-    fabric.Textbox.prototype.controls.modifyControl = new fabric.Control({
-      ...modifyProps,
-      mouseUpHandler: modifyObject,
-    });
-
-    //오브젝트 기본세팅 끝
+    canvas.renderAll();
 
     canvas.on({
       "selection:created": () => {
@@ -78,7 +53,7 @@ export default function Canvas() {
     });
 
     dispatch(nodeActions.setCanvas(canvas));
-    dispatch(nodeActions.setTextarea(textAreaRef));
+    dispatch(nodeActions.setTextareaContainer(containerRef.current));
   }, []);
 
   const resizeHandler = () => {
@@ -86,37 +61,23 @@ export default function Canvas() {
     if (canvas) {
       const ratio = canvas.getWidth() / canvas.getHeight();
       const containerWidth = window.innerWidth;
-
       const zoom = containerWidth / canvas.getWidth();
       const scale = canvas.getZoom() * zoom;
-
       dispatch(nodeActions.setZoom(scale));
-
       canvas.setDimensions({
         width: containerWidth,
         height: containerWidth / ratio,
       });
       canvas.setViewportTransform([scale, 0, 0, scale, 0, 0]);
-
       dispatch(zoomActions.setScale(scale));
       canvas.renderAll();
     }
   };
   window.addEventListener("resize", resizeHandler);
 
-  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
-  useEffect(() => {
-    console.log(draws);
-  }, [draws]);
-
   return (
     <CanvasBackground ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
-      <Textarea
-        ref={textAreaRef}
-        defaultValue={"텍스트를 입력하세요"}
-        onChange={textareaResize}
-      />
     </CanvasBackground>
   );
 }

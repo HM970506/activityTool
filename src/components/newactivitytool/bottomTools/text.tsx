@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SideButton } from "../style";
-import { fabric } from "fabric-with-erasing";
+import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import style from "styled-components";
@@ -9,7 +9,9 @@ import nodeSlice, { nodeActions } from "../../../store/common/nodeSlice";
 
 export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const textAreaRef = useSelector((state: any) => state.nodeReducer.textarea);
+  const textAreaContainer = useSelector(
+    (state: any) => state.nodeReducer.textareaContainer
+  );
   const zoom = useSelector((state: any) => state.zoomReducer.zoom);
   fabric.Canvas.prototype.getAbsoluteCoords = (object: any) => {
     return {
@@ -29,50 +31,14 @@ export default function TextMenu() {
         color: "black",
         width: 400,
         height: 30,
-        editable: false,
+        editable: true,
         fontSize: size,
         selectable: true,
+        hiddenTextareaContainer: textAreaContainer,
       },
       [zoom]
     );
-
-    textbox.__eventListeners["mousedblclick"] = [];
-    textbox.__eventListeners["tripleclick"] = [];
-    textbox.__eventListeners["mousedown"] = [];
-
-    textbox.on("mousedblclick", () => {
-      dispatch(nodeActions.setTextbox(textbox));
-    });
-
-    textbox.on("mousedown", (e: any) => {
-      textAreaRef.current.value = textbox.text;
-    });
-
-    textbox.on("moving", () => {
-      if (textAreaRef.current) {
-        textAreaRef.current.style.left = textbox.left;
-        textAreaRef.current.style.top = textbox.top;
-      }
-    });
-    textbox.on("scaling", () => {
-      if (textAreaRef.current) {
-        textAreaRef.current.style.width = textbox.width + "px";
-        textAreaRef.current.style.height = textbox.height + "px";
-      }
-    });
-    textbox.on("deselected", () => {
-      if (textAreaRef.current) {
-        textbox.text = textAreaRef.current.value;
-        textAreaRef.current.style.display = "none";
-        textbox.hasControls = true;
-        textbox.opacity = 1;
-
-        canvas.renderAll();
-      }
-    });
-
     canvas.add(textbox);
-    console.log(textbox);
     canvas.renderAll();
   };
 

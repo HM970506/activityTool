@@ -5,7 +5,7 @@ const nodeSlice = createSlice({
   initialState: {
     canvas: null,
     nowTextbox: null,
-    textarea: null,
+    textareaContainer: null,
     opacity: 0,
     zoom: 1,
   },
@@ -15,8 +15,8 @@ const nodeSlice = createSlice({
       state.canvas = action.payload;
       //console.log(JSON.stringify(action.payload));
     },
-    setTextarea: (state, action: PayloadAction<any>) => {
-      state.textarea = action.payload;
+    setTextareaContainer: (state, action: PayloadAction<any>) => {
+      state.textareaContainer = action.payload;
       //console.log(JSON.stringify(action.payload));
     },
 

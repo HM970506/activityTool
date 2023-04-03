@@ -30,7 +30,7 @@ export const MainButton = styled(DefaultButton)`
   bottom: 0;
   right: 0;
   margin: 20px;
-  z-index: 1001;
+  z-index: 1000;
   width: 10%;
   height: 8%;
   border: 1px solid black;
@@ -45,7 +45,7 @@ export const SubButton = styled(Button)`
   height: 80px;
   background-color: blue;
   color: white;
-  z-index: 1000;
+  z-index: 1001;
 `;
 
 export const NewButton = styled(SubButton)`
