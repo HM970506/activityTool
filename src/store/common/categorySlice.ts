@@ -24,7 +24,7 @@ const categorySlice = createSlice({
     tapeChange: (state, action: PayloadAction<any>) => {
       state.subcategory.tape.index = action.payload;
     },
-    templatepOn: (state) => {
+    templateOn: (state) => {
       state.subcategory.template.state = true;
       state.subcategory.stamp.state = false;
       state.subcategory.tape.state = false;

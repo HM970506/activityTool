@@ -13,9 +13,10 @@ const array = Array.from(Array(20).keys());
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const { template, stamp, tape } = useSelector(
+  const subcateogory = useSelector(
     (state: any) => state.categoryReducer.subcategory
   );
+  const { template, stamp, tape } = subcateogory;
   const dispatch = useDispatch();
 
   const stamping = () => {
@@ -29,11 +30,6 @@ export default function DecorationMenu() {
       canvas.calcOffset();
       canvas.renderAll();
     });
-  };
-
-  const taping = () => {
-    if (canvas) {
-    }
   };
 
   const templating = (templateId: number) => {
@@ -52,16 +48,37 @@ export default function DecorationMenu() {
     });
   };
 
-  //서브카테고리 변환이 안 됨....
+  useEffect(() => {
+    if (tape.state) canvas.taping = 1;
+    else canvas.taping = 0;
+  }, [tape]);
+
+  useEffect(() => {
+    console.log(JSON.stringify(subcateogory));
+  }, [subcateogory]);
 
   return (
     <BackgroundContainer>
       <SubCategoryContainer>
-        <button onClick={() => dispatch(categoryActions.templatepOn)}>
+        <button
+          onClick={() => {
+            dispatch(categoryActions.templateOn());
+          }}
+        >
           템플릿
         </button>
-        <button onClick={() => dispatch(categoryActions.stampOn)}>도장</button>
-        <button onClick={() => dispatch(categoryActions.tapeOn)}>
+        <button
+          onClick={() => {
+            dispatch(categoryActions.stampOn());
+          }}
+        >
+          도장
+        </button>
+        <button
+          onClick={() => {
+            dispatch(categoryActions.tapeOn());
+          }}
+        >
           마스킹테이프
         </button>
       </SubCategoryContainer>
