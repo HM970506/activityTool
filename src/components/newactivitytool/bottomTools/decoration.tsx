@@ -52,6 +52,8 @@ export default function DecorationMenu() {
     });
   };
 
+  //서브카테고리 변환이 안 됨....
+
   return (
     <BackgroundContainer>
       <SubCategoryContainer>

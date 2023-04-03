@@ -26,6 +26,7 @@
     "fabricjs": "^1.0.0",
     "fabricjs-react": "^1.2.0",
     "FileReader": "^0.10.2",
+    "firebase": "^9.19.1",
     "gsap": "^3.11.4",
     "mic-recorder-to-mp3": "^2.2.2",
     "react": "^18.2.0",
