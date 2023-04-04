@@ -10,6 +10,7 @@ export default function DrawToolsButton() {
   const dispatch = useDispatch();
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
+  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
 
   const setColor = (color: string) => {
     const now = canvas.getActiveObject();
@@ -81,20 +82,21 @@ export default function DrawToolsButton() {
   };
   const category = useSelector((state: any) => state.categoryReducer.category);
   useEffect(() => {
+    console.log(isDrawing);
     if (canvas) {
-      if (category != DRAWTOOLS || !draws.isDrawing) {
+      if (category != DRAWTOOLS || !isDrawing) {
         if (iscursorExist()) cursorReset();
         canvas.isDrawingMode = false;
         canvas.renderAll();
       }
     }
-  }, [category, draws.isDrawing]);
+  }, [category, isDrawing]);
 
   useEffect(() => {
     if (canvas) {
-      if (draws.isDrawing) {
+      if (isDrawing) {
         if (iscursorExist()) cursorReset();
-
+        console.log("뭐꼬");
         canvas.isDrawingMode = true;
         canvas.discardActiveObject().renderAll();
         // if (draws.tool == "eraser") {
@@ -144,7 +146,7 @@ export default function DrawToolsButton() {
         canvas.renderAll();
       }
     }
-  }, [draws]);
+  }, [isDrawing, draws]);
 
   const drawToolButtonClick = () => {
     dispatch(categoryActions.categoryChange(DRAWTOOLS));

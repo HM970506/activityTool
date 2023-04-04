@@ -10,7 +10,7 @@ import {
 import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
-import ToggleButton from "./topButtons/toggleButton/toggleButton";
+import ToggleButton from "./topButtons/drawingButton/drawingButton";
 
 import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
 import CanvasHistory from "./topButtons/historyButton/history";

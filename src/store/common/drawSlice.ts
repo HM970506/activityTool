@@ -3,13 +3,9 @@ import { PEN } from "../../components/newactivitytool/types";
 
 const drawSlice = createSlice({
   name: "drawReducer",
-  initialState: { isDrawing: false, tool: "pencil", color: "black", size: 5 },
+  initialState: { tool: "pencil", color: "black", size: 5 },
 
   reducers: {
-    setDraw: (state, action: PayloadAction<any>) => {
-      state.isDrawing = action.payload;
-    },
-
     toolChange: (state, action: PayloadAction<any>) => {
       state.tool = action.payload;
     },

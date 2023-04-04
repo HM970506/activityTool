@@ -4,7 +4,8 @@ const nodeSlice = createSlice({
   name: "nodeReducer",
   initialState: {
     canvas: null,
-    nowTextbox: null,
+    isDrawing: false,
+    isPanning: false,
     textareaContainer: null,
     opacity: 0,
     zoom: 1,
@@ -28,9 +29,14 @@ const nodeSlice = createSlice({
       state.opacity = action.payload;
       //console.log(JSON.stringify(action.payload));
     },
-    setTextbox: (state, action: PayloadAction<any>) => {
-      state.nowTextbox = action.payload;
-      //console.log(JSON.stringify(action.payload));
+    setDraw: (state, action: PayloadAction<any>) => {
+      state.isDrawing = action.payload;
+      state.isPanning = false;
+    },
+
+    setPan: (state, action: PayloadAction<any>) => {
+      state.isPanning = action.payload;
+      state.isDrawing = false;
     },
   },
 });
