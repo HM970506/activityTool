@@ -4,6 +4,7 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { DRAWTOOLS } from "../types";
 import { Button } from "../style";
 import { fabric } from "fabric-with-erasing";
+import canvasSetting from "../canvas/canvasSetting";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function DrawToolsButton() {
   }, [draws]);
 
   const PenBrush = new fabric.PencilBrush(canvas);
+  const Pen2Brush = new fabric.Shadow(canvas, { blur: 100 });
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
   const Eraser = new fabric.EraserBrush(canvas);
 
@@ -43,6 +45,7 @@ export default function DrawToolsButton() {
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
     else if (tool == "eraser") canvas.freeDrawingBrush = Eraser;
+    else if (tool == "pencil2") canvas.freeDrawingBrush = Pen2Brush;
   };
   const setSize = (size: number) => {
     canvas.freeDrawingBrush.width = size;

@@ -29,6 +29,14 @@ export default function DrawToolsMenu() {
         펜
       </BottomButton>
       <BottomButton
+        select={draws.tool == "pencil2" ? 1 : 0}
+        onClick={() => {
+          toolChange("pencil2");
+        }}
+      >
+        펜2
+      </BottomButton>
+      <BottomButton
         select={draws.tool == "heartPatten" ? 1 : 0}
         onClick={() => {
           toolChange("heartPatten");
