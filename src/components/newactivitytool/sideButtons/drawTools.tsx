@@ -23,7 +23,7 @@ export default function DrawToolsButton() {
       setTool(draws.tool);
       setSize(draws.size);
       setColor(draws.color);
-      canvas.tapeState.color = draws.color;
+      canvas.toolColor = draws.color;
       canvas.renderAll();
     }
   }, [draws]);
@@ -33,7 +33,7 @@ export default function DrawToolsButton() {
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
   const Eraser = new fabric.EraserBrush(canvas);
 
-  //커스텀 브러쉬 추가1: 패턴 배경 브러쉬
+  //커스텀 브러쉬 추가1:  배경 브러쉬
   const img = new Image();
   img.src =
     "https://i.pinimg.com/564x/5a/ad/10/5aad103e59c05d2b7a85c217287fae10.jpg";
@@ -68,6 +68,7 @@ export default function DrawToolsButton() {
   const cursorReset = () => {
     //우선 여기서밖에 해당 이벤트를 사용하는 곳이 없어 이렇게 해놓긴 했지만..
     //만약 다른 곳에서 해당 이벤트를 사용할 경우를 대비하여 함수를 찾아 삭제하는 방법으로 이후수정하기.
+    //이벤트 목록에서 해당하는 함수만 슬라이스해주는 함수를 별도로 만듭시다..
 
     let flag = false;
 

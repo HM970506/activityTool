@@ -24,6 +24,7 @@ export default function DrawToggle() {
           onChange={(e: any) => {
             canvas.taping = 0;
             canvas.panning = 0;
+            canvas.stamping = -1;
             dispatch(nodeActions.setDraw(e.target.checked));
           }}
         />

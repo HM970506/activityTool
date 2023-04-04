@@ -8,16 +8,10 @@ import {
   SubCategoryContainer,
 } from "./style";
 import { categoryActions } from "../../../store/common/categorySlice";
+import { STAMP } from "./decorationSample";
 import { nodeActions } from "../../../store/common/nodeSlice";
 
 const array = Array.from(Array(20).keys());
-const TAPES = [
-  "https://i.pinimg.com/564x/08/dd/35/08dd35fcf52d84495113ea6d900d8350.jpg",
-  "https://i.pinimg.com/736x/dc/5c/2f/dc5c2f082d46071cca41bd31e1a0ea50.jpg",
-  "https://i.pinimg.com/564x/07/75/c2/0775c21e58ff42da3975d751e3784579.jpg",
-  "https://i.pinimg.com/736x/90/a4/4b/90a44bca4d3c37c0a958dd3ebfd85c27.jpg",
-  "https://i.pinimg.com/564x/f5/8c/00/f58c008a20bd9054becbe01d5c8ff6cc.jpg",
-];
 
 export default function DecorationMenu() {
   const [tapeOpacity, setTapeOpacity] = useState<number>(50);
@@ -27,19 +21,6 @@ export default function DecorationMenu() {
   );
   const { template, stamp, tape } = subcateogory;
   const dispatch = useDispatch();
-
-  const stamping = () => {
-    const pointer = canvas.getPointer();
-    console.log(pointer);
-    fabric.loadSVGFromUrl("./stamp.svg", (objects: any, options: any) => {
-      const stamp = fabric.util.groupSVGElements(objects, options);
-      stamp.x = pointer.x;
-      stamp.y = pointer.y;
-      canvas.add(stamp);
-      canvas.calcOffset();
-      canvas.renderAll();
-    });
-  };
 
   const templating = (templateId: number) => {
     const url = `/test${templateId + 1}.PNG`;
@@ -58,9 +39,18 @@ export default function DecorationMenu() {
   };
 
   useEffect(() => {
-    if (tape.state) canvas.taping = 1;
-    else canvas.taping = 0;
+    if (tape.state) {
+      canvas.taping = 1;
+      dispatch(nodeActions.setDraw(false));
+    } else canvas.taping = 0;
   }, [tape]);
+
+  useEffect(() => {
+    if (stamp.state) {
+      canvas.stamping = stamp.index;
+      dispatch(nodeActions.setDraw(false));
+    } else canvas.stamping = -1;
+  }, [stamp]);
 
   return (
     <BackgroundContainer>
@@ -104,16 +94,17 @@ export default function DecorationMenu() {
             );
           })}
         {stamp.state &&
-          TAPES.map((value, key) => {
+          STAMP.map((value, key) => {
             return (
               <SubButtons
-                select={tape.index == key ? 1 : 0}
+                select={stamp.index == key ? 1 : 0}
                 key={key}
                 onClick={() => {
-                  dispatch(categoryActions.tapeChange(key));
+                  canvas.stamping = stamp.key;
+                  dispatch(categoryActions.stampChange(key));
                 }}
               >
-                {key}
+                {value.name}
               </SubButtons>
             );
           })}

@@ -1,4 +1,5 @@
 import { fabric } from "fabric-with-erasing";
+import { STAMP } from "../bottomTools/decorationSample";
 
 const tapeStep_1 = (canvas: any) => {
   const pointer = canvas.getPointer();
@@ -7,8 +8,8 @@ const tapeStep_1 = (canvas: any) => {
   const line = new fabric.Line(points, {
     strokeWidth: canvas.tapeState.size,
     opacity: canvas.tapeState.opacity,
-    fill: canvas.tapeState.color,
-    stroke: canvas.tapeState.color,
+    fill: canvas.toolColor,
+    stroke: canvas.toolColor,
     originX: "center",
     originY: "center",
   });
@@ -64,6 +65,25 @@ const panStep_3 = (e: any) => {
   canvas.panning = 1;
 };
 
+const stampStep_1 = (e: any) => {
+  const canvas = e.target;
+  const pointer = canvas.getPointer();
+  fabric.loadSVGFromString(
+    STAMP[canvas.stamping].value,
+    (objects: any, options: any) => {
+      const stamp = fabric.util.groupSVGElements(objects, options);
+
+      stamp.fill = canvas.toolColor;
+
+      stamp.left = pointer.x;
+      stamp.top = pointer.y;
+
+      canvas.add(stamp);
+      canvas.renderAll();
+    }
+  );
+};
+
 export default function canvasSetting(canvas: any) {
   canvas.on({
     "selection:created": () => DeselctMultipleObjects(canvas),
@@ -72,6 +92,7 @@ export default function canvasSetting(canvas: any) {
       e.target = canvas;
       if (e.target.taping == 1) tapeStep_1(e.target);
       else if (e.target.panning == 1) panStep_1(e);
+      else if (e.target.stamping >= 0) stampStep_1(e);
     },
     "mouse:move": (e: any) => {
       e.target = canvas;

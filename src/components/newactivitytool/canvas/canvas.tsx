@@ -23,6 +23,7 @@ export default function Canvas() {
       selection: false,
       taping: 0,
       panning: 0,
+      stamping: -1,
       skipOffscreen: true,
       allowTouchScrolling: true,
       deltaX: 0,
@@ -32,8 +33,8 @@ export default function Canvas() {
       tapeState: {
         size: 20,
         opacity: 0.5,
-        color: "black",
       },
+      toolColor: "black",
     });
     canvas.freeDrawingBrush.inverted = true;
 

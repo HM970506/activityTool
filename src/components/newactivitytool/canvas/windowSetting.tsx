@@ -1,5 +1,3 @@
-import { fabric } from "fabric-with-erasing";
-import { deleteProps } from "../setting/deleteButton";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 

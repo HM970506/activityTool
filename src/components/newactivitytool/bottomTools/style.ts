@@ -25,11 +25,14 @@ overflow-y:hidden.
 `;
 
 export const SubButtons = style.button<{ select: number }>`
-  width: 40px;
+  width: 100px;
   height: 30px;
   padding: 10px;
   background-color:${(props) => {
     return props.select == 1 ? "red" : "white";
   }};
   border: 1px solid black;
+  display: flex;
+  justify-content:center;
+  align-items:center;
 `;
