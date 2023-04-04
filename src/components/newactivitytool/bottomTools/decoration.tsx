@@ -127,10 +127,9 @@ export default function DecorationMenu() {
                 key={key}
                 onClick={() => {
                   dispatch(categoryActions.tapeChange(key));
-                  dispatch(categoryActions.tapeSet(value));
                 }}
               >
-                {value}
+                {key}
               </SubButtons>
             );
           })}
