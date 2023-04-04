@@ -21,9 +21,14 @@ export default function Canvas() {
       preserveObjectStacking: true,
       freeDrawingCursor: "url(./eraser.svg) 2 2, auto",
       selection: false,
-      taping: false,
+      taping: 0,
+      panState: 0,
       skipOffscreen: true,
       allowTouchScrolling: true,
+      deltaX: 0,
+      deltaY: 0,
+      lastClientX: 0,
+      lastClientY: 0,
     });
     canvas.freeDrawingBrush.inverted = true;
 

@@ -19,6 +19,7 @@ export default function PanningToggle() {
           onChange={(e: any) => {
             if (canvas.panState == 0) {
               canvas.defaultCursor = "move";
+
               canvas.forEachObject((object: any) => {
                 object.prevEvented = object.evented;
                 object.prevSelectable = object.selectable;
@@ -27,6 +28,8 @@ export default function PanningToggle() {
               });
               canvas.selectable = false;
               canvas.panState = 1;
+              canvas.taping = 0;
+              canvas.discardActiveObject().renderAll();
               dispatch(nodeActions.setPan(true));
             } else {
               canvas.defaultCursor = "default";
