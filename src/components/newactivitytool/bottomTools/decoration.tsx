@@ -62,10 +62,6 @@ export default function DecorationMenu() {
     else canvas.taping = 0;
   }, [tape]);
 
-  useEffect(() => {
-    console.log(JSON.stringify(subcateogory));
-  }, [subcateogory]);
-
   return (
     <BackgroundContainer>
       <SubCategoryContainer>

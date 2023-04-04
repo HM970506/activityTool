@@ -4,7 +4,6 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function windowSetting(dispatch: any, canvas: any) {
-  console.log(window.onresize);
   if (window.onresize == null) {
     const resizeHandler = () => {
       dispatch(nodeActions.setZoom(1));

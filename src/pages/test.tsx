@@ -23,8 +23,6 @@ export default function Test() {
     selectable: true,
   });
 
-  console.log(textbox.__eventListeners);
-
   return (
     <>
       <canvas id="canvas3"></canvas>

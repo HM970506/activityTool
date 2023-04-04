@@ -88,7 +88,6 @@ export default function DrawToolsButton() {
   };
   const category = useSelector((state: any) => state.categoryReducer.category);
   useEffect(() => {
-    console.log(isDrawing);
     if (canvas) {
       if (category != DRAWTOOLS || !isDrawing) {
         if (iscursorExist()) cursorReset();

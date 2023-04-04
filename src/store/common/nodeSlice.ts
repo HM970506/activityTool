@@ -14,20 +14,16 @@ const nodeSlice = createSlice({
   reducers: {
     setCanvas: (state, action: PayloadAction<any>) => {
       state.canvas = action.payload;
-      //console.log(JSON.stringify(action.payload));
     },
     setTextareaContainer: (state, action: PayloadAction<any>) => {
       state.textareaContainer = action.payload;
-      //console.log(JSON.stringify(action.payload));
     },
 
     setOpacity: (state, action: PayloadAction<any>) => {
       state.opacity = action.payload;
-      //console.log(JSON.stringify(action.payload));
     },
     setZoom: (state, action: PayloadAction<any>) => {
       state.opacity = action.payload;
-      //console.log(JSON.stringify(action.payload));
     },
     setDraw: (state, action: PayloadAction<any>) => {
       state.isDrawing = action.payload;
