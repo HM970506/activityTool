@@ -5,9 +5,10 @@ const tapeStep_1 = (canvas: any) => {
   const points = [pointer.x, pointer.y, pointer.x, pointer.y];
 
   const line = new fabric.Line(points, {
-    strokeWidth: 30,
-    fill: "red",
-    stroke: "red",
+    strokeWidth: canvas.tapeState.size,
+    opacity: canvas.tapeState.opacity,
+    fill: canvas.tapeState.color,
+    stroke: canvas.tapeState.color,
     originX: "center",
     originY: "center",
   });
@@ -44,7 +45,7 @@ const panStep_1 = (e: any) => {
   const canvas = e.target;
   canvas.lastClientX = e.e.clientX;
   canvas.lastClientY = e.e.clientY;
-  canvas.panState = 2;
+  canvas.panning = 2;
 };
 
 const panStep_2 = (e: any) => {
@@ -60,7 +61,7 @@ const panStep_2 = (e: any) => {
 
 const panStep_3 = (e: any) => {
   const canvas = e.target;
-  canvas.panState = 1;
+  canvas.panning = 1;
 };
 
 export default function canvasSetting(canvas: any) {
@@ -70,17 +71,17 @@ export default function canvasSetting(canvas: any) {
     "mouse:down": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 1) tapeStep_1(e.target);
-      else if (e.target.panState == 1) panStep_1(e);
+      else if (e.target.panning == 1) panStep_1(e);
     },
     "mouse:move": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 2) tapeStep_2(e.target);
-      else if (e.target.panState == 2) panStep_2(e);
+      else if (e.target.panning == 2) panStep_2(e);
     },
     "mouse:up": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 2) tapeStep_3(e.target);
-      else if (e.target.panState == 2) panStep_3(e);
+      else if (e.target.panning == 2) panStep_3(e);
     },
   });
 

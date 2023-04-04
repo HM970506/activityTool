@@ -22,13 +22,18 @@ export default function Canvas() {
       freeDrawingCursor: "url(./eraser.svg) 2 2, auto",
       selection: false,
       taping: 0,
-      panState: 0,
+      panning: 0,
       skipOffscreen: true,
       allowTouchScrolling: true,
       deltaX: 0,
       deltaY: 0,
       lastClientX: 0,
       lastClientY: 0,
+      tapeState: {
+        size: 20,
+        opacity: 0.5,
+        color: "black",
+      },
     });
     canvas.freeDrawingBrush.inverted = true;
 

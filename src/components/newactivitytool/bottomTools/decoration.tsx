@@ -8,6 +8,7 @@ import {
   SubCategoryContainer,
 } from "./style";
 import { categoryActions } from "../../../store/common/categorySlice";
+import { nodeActions } from "../../../store/common/nodeSlice";
 
 const array = Array.from(Array(20).keys());
 const TAPES = [
@@ -19,6 +20,7 @@ const TAPES = [
 ];
 
 export default function DecorationMenu() {
+  const [tapeOpacity, setTapeOpacity] = useState<number>(50);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const subcateogory = useSelector(
     (state: any) => state.categoryReducer.subcategory
@@ -106,20 +108,6 @@ export default function DecorationMenu() {
             );
           })}
         {stamp.state &&
-          array.map((value, key) => {
-            return (
-              <SubButtons
-                select={stamp.index == key ? 1 : 0}
-                key={key}
-                onClick={() => {
-                  dispatch(categoryActions.stampChange(key));
-                }}
-              >
-                {value}
-              </SubButtons>
-            );
-          })}
-        {tape.state &&
           TAPES.map((value, key) => {
             return (
               <SubButtons
@@ -133,6 +121,55 @@ export default function DecorationMenu() {
               </SubButtons>
             );
           })}
+        {tape.state && (
+          <>
+            투명도
+            <input
+              type="range"
+              min="0"
+              max="100"
+              defaultValue={(tape.opacity * 100).toString()}
+              onChange={(e: any) =>
+                (canvas.tapeState = {
+                  ...canvas.tapeState,
+                  opacity:
+                    e.target.value == "0" ? 0 : parseInt(e.target.value) / 100,
+                })
+              }
+            />
+            크기
+            <button
+              onClick={() =>
+                (canvas.tapeState = {
+                  ...canvas.tapeState,
+                  size: 30,
+                })
+              }
+            >
+              30
+            </button>
+            <button
+              onClick={() =>
+                (canvas.tapeState = {
+                  ...canvas.tapeState,
+                  size: 20,
+                })
+              }
+            >
+              20
+            </button>
+            <button
+              onClick={() =>
+                (canvas.tapeState = {
+                  ...canvas.tapeState,
+                  size: 10,
+                })
+              }
+            >
+              10
+            </button>
+          </>
+        )}
       </ListContainer>
     </BackgroundContainer>
   );

@@ -17,7 +17,7 @@ export default function PanningToggle() {
           type="checkbox"
           checked={isPanning}
           onChange={(e: any) => {
-            if (canvas.panState == 0) {
+            if (canvas.panning == 0) {
               canvas.defaultCursor = "move";
 
               canvas.forEachObject((object: any) => {
@@ -27,7 +27,7 @@ export default function PanningToggle() {
                 object.selectable = false;
               });
               canvas.selectable = false;
-              canvas.panState = 1;
+              canvas.panning = 1;
               canvas.taping = 0;
               canvas.discardActiveObject().renderAll();
               dispatch(nodeActions.setPan(true));
@@ -44,7 +44,7 @@ export default function PanningToggle() {
                     : object.selectable;
               });
               canvas.selectable = true;
-              canvas.panState = 0;
+              canvas.panning = 0;
               dispatch(nodeActions.setPan(false));
             }
           }}

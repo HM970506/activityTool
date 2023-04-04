@@ -7,7 +7,7 @@ const categorySlice = createSlice({
     subcategory: {
       template: { index: -1, state: true },
       stamp: { index: 0, state: false },
-      tape: { index: 0, state: false, url: "" },
+      tape: { index: 0, state: false },
     },
   },
 
@@ -40,10 +40,6 @@ const categorySlice = createSlice({
       state.subcategory.tape.state = true;
       state.subcategory.template.state = false;
       state.subcategory.stamp.state = false;
-    },
-
-    tapeSet: (state, action: PayloadAction<any>) => {
-      state.subcategory.tape.url = action.payload;
     },
   },
 });

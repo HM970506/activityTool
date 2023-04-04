@@ -23,6 +23,7 @@ export default function DrawToolsButton() {
       setTool(draws.tool);
       setSize(draws.size);
       setColor(draws.color);
+      canvas.tapeState.color = draws.color;
       canvas.renderAll();
     }
   }, [draws]);
