@@ -70,9 +70,7 @@ export default function canvasSetting(canvas: any) {
     "mouse:down": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 1) tapeStep_1(e.target);
-      else if (e.target.taping == 2) tapeStep_3(e.target);
       else if (e.target.panState == 1) panStep_1(e);
-      else if (e.target.panState == 2) panStep_3(e);
     },
     "mouse:move": (e: any) => {
       e.target = canvas;
@@ -81,7 +79,8 @@ export default function canvasSetting(canvas: any) {
     },
     "mouse:up": (e: any) => {
       e.target = canvas;
-      if (e.target.panState == 2) panStep_3(e);
+      if (e.target.taping == 2) tapeStep_3(e.target);
+      else if (e.target.panState == 2) panStep_3(e);
     },
   });
 

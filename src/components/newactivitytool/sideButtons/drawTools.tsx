@@ -41,7 +41,7 @@ export default function DrawToolsButton() {
   //커스텀 브러쉬 추가1 끝
 
   const setTool = (tool: string) => {
-    if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"] = [];
+    //  if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"] = [];
     if (tool == "pencil") canvas.freeDrawingBrush = PenBrush;
     else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
     else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
@@ -68,17 +68,22 @@ export default function DrawToolsButton() {
     //우선 여기서밖에 해당 이벤트를 사용하는 곳이 없어 이렇게 해놓긴 했지만..
     //만약 다른 곳에서 해당 이벤트를 사용할 경우를 대비하여 함수를 찾아 삭제하는 방법으로 이후수정하기.
 
-    canvas.__eventListeners["mouse:move"].pop();
-    canvas.__eventListeners["mouse:out"].pop();
-    canvas.__eventListeners["mouse:over"].pop();
-    canvas.__eventListeners["mouse:down:before"].pop();
+    let flag = false;
 
     canvas.getObjects().forEach((object: any) => {
       if (object.id == "cursor") {
+        flag = true;
         canvas.remove(object);
         canvas.renderAll();
       }
     });
+
+    if (flag) {
+      canvas.__eventListeners["mouse:move"].pop();
+      canvas.__eventListeners["mouse:out"].pop();
+      canvas.__eventListeners["mouse:over"].pop();
+      canvas.__eventListeners["mouse:down:before"].pop();
+    }
   };
   const category = useSelector((state: any) => state.categoryReducer.category);
   useEffect(() => {
@@ -96,7 +101,6 @@ export default function DrawToolsButton() {
     if (canvas) {
       if (isDrawing) {
         if (iscursorExist()) cursorReset();
-        console.log("뭐꼬");
         canvas.isDrawingMode = true;
         canvas.discardActiveObject().renderAll();
         // if (draws.tool == "eraser") {
