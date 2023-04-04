@@ -18,7 +18,10 @@ export default function ToggleButton() {
       <Toggle
         type="checkbox"
         checked={draws.isDrawing}
-        onChange={(e) => dispatch(drawActions.setDraw(e.target.checked))}
+        onChange={(e) => {
+          dispatch(drawActions.setDraw(e.target.checked));
+          canvas.taping = 0;
+        }}
       />
       <Slider></Slider>
     </Label>
