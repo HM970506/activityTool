@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { zoomActions } from "../../../../store/common/zoomSlice";
 import { DefaultButton } from "../../style";
+import { fabric } from "fabric-with-erasing";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
@@ -15,7 +16,11 @@ export default function ZoomButton() {
   }, [canvas]);
 
   useEffect(() => {
-    if (canvas) canvas.setZoom(zoom);
+    if (canvas)
+      canvas.zoomToPoint(
+        new fabric.Point(canvas.width / 2, canvas.height / 2),
+        zoom
+      );
   }, [zoom]);
 
   return (

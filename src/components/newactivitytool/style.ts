@@ -160,21 +160,12 @@ export const OffsetBarY = styled.input<{ length: number }>`
   transform: rotate(270deg);
 `;
 
-export const Textarea = styled.textarea`
-  position: absolute;
-  display: none;
-  top: 0;
-  left: 0;
-  resize: none;
-  overflow: hidden;
-  outline: none;
-  word-break: keep-all;
-  rows: 1;
-  background-color: white;
-`;
-
 export const CanvasBackground = styled.div`
   position: relative;
   height: window.innerHeight;
   width: window.innerWidth;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
