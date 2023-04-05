@@ -4,6 +4,7 @@ const categorySlice = createSlice({
   name: "categoryReducer",
   initialState: {
     category: "DRAWTOOLS",
+    view: true,
     subcategory: {
       template: { index: -1, state: true },
       stamp: { index: 0, state: false },
@@ -40,6 +41,10 @@ const categorySlice = createSlice({
       state.subcategory.tape.state = true;
       state.subcategory.template.state = false;
       state.subcategory.stamp.state = false;
+    },
+
+    setView: (state, action: PayloadAction<any>) => {
+      state.view = action.payload;
     },
   },
 });

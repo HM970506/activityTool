@@ -12,7 +12,7 @@ export default function ZoomButton() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (canvas) dispatch(zoomActions.set(canvas.getZoom()));
+    if (canvas) dispatch(zoomActions.setZoom(canvas.getZoom()));
   }, [canvas]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function ZoomButton() {
       <DefaultButton
         onClick={() => {
           const nowZoom = Math.round((canvas.getZoom() + 0.1) * 100) / 100;
-          dispatch(zoomActions.set(nowZoom));
+          dispatch(zoomActions.setZoom(nowZoom));
           dispatch(zoomActions.setView(nowZoom));
         }}
       >
@@ -38,7 +38,7 @@ export default function ZoomButton() {
       <DefaultButton
         onClick={() => {
           const nowZoom = Math.round((canvas.getZoom() - 0.1) * 100) / 100;
-          dispatch(zoomActions.set(nowZoom));
+          dispatch(zoomActions.setZoom(nowZoom));
           dispatch(zoomActions.setView(nowZoom));
         }}
       >

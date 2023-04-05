@@ -13,9 +13,10 @@ export default function BottomTools() {
   const nowCategory = useSelector(
     (state: any) => state.categoryReducer.category
   );
+  const view = useSelector((state: any) => state.categoryReducer.view);
 
   return (
-    <BottomContainer>
+    <BottomContainer view={view ? 1 : 0}>
       <Colorbox />
       <ToolBox>
         {nowCategory === DRAWTOOLS && <DrawToolsMenu />}

@@ -8,7 +8,6 @@ const nodeSlice = createSlice({
     isPanning: false,
     textareaContainer: null,
     opacity: 0,
-    zoom: 1,
   },
 
   reducers: {
@@ -20,9 +19,6 @@ const nodeSlice = createSlice({
     },
 
     setOpacity: (state, action: PayloadAction<any>) => {
-      state.opacity = action.payload;
-    },
-    setZoom: (state, action: PayloadAction<any>) => {
       state.opacity = action.payload;
     },
     setDraw: (state, action: PayloadAction<any>) => {

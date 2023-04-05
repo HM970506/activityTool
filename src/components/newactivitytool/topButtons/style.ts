@@ -54,3 +54,9 @@ export const Toggle = styled.input`
     transform: translateX(26px);
   }
 `;
+
+export const TopButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

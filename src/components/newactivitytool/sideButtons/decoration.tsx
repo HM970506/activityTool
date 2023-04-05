@@ -7,12 +7,6 @@ import { DECORATION } from "../types";
 
 export default function DecorationButton() {
   const dispatch = useDispatch();
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const draws = useSelector((state: any) => state.drawReducer);
-  const { tape } = useSelector(
-    (state: any) => state.categoryReducer.subcategory
-  );
-
   const photoButtonClick = () => {
     dispatch(categoryActions.categoryChange(DECORATION));
   };

@@ -17,12 +17,12 @@ import CanvasHistory from "./topButtons/historyButton/history";
 import TopButtons from "./topButtons";
 import { saveJson } from "./topButtons/saveButton/save";
 import { nodeActions } from "../../store/common/nodeSlice";
+import { zoomActions } from "../../store/common/zoomSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>(window.location.href);
   const dispatch = useDispatch();
 
   //할일
@@ -37,13 +37,9 @@ export default function NewActivityTool() {
 
   const urlCheck = () => {
     const nowUrl = window.location.href;
-    if (nowUrl != url) {
-      if (canvas) {
-        saveJson(canvas); //서버에서는 url도 함께 저장할 수 있게 하기
-        dispatch(nodeActions.setOpacity(255));
-        dispatch(nodeActions.setZoom(1));
-        canvas.clear();
-      }
+    if (canvas) {
+      saveJson(canvas); //서버에서는 url도 함께 저장할 수 있게 하기
+      canvas.clear();
     }
   };
 

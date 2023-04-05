@@ -12,8 +12,11 @@ export default function CanvasOpacity() {
   };
 
   useEffect(() => {
+    console.log(opacity);
     if (canvas) {
-      canvas.setBackgroundColor(`rgba(255,255,255,${opacity / 100})`);
+      canvas.setBackgroundColor(
+        `rgba(255,255,255,${opacity == 0 ? 0 : opacity / 100})`
+      );
       canvas.renderAll();
     }
   }, [opacity]);

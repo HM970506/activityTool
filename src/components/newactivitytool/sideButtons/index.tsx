@@ -13,11 +13,10 @@ export default function SideButtons({
 }: {
   activitytoolsEnd: any;
 }) {
-  const dispatch = useDispatch();
-  const category = useSelector((state: any) => state.categoryReducer.category);
+  const view = useSelector((state: any) => state.categoryReducer.view);
 
   return (
-    <ButtonBox>
+    <ButtonBox view={view ? 1 : 0}>
       <TextButton />
       <RecordButton />
       <PhotoButton />

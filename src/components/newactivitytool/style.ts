@@ -79,17 +79,20 @@ export const Box = styled.div`
   z-index: 1000;
 `;
 
-export const ButtonBox = styled(Box)`
+export const ButtonBox = styled(Box)<{ view: number }>`
   display: flex;
   gap: 10px;
   flex-direction: column;
   justify-content: space-between;
   width: 10%;
   height: 60%;
+
+  right: ${(props) => `${props.view == 1 ? 0 : -200}px`};
 `;
 
-export const BottomContainer = styled(Box)`
+export const BottomContainer = styled(Box)<{ view: number }>`
   width: 90%;
+  bottom: ${(props) => `${props.view == 1 ? 0 : -200}px`};
 `;
 
 export const ToolBox = styled.div`
