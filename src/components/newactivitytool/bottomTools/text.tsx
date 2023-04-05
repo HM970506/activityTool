@@ -2,12 +2,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { SideButton } from "../style";
 import { fabric } from "fabric";
 import { BIG, MIDIUM, SMALL, TEXT } from "../types";
+import { deleteProps } from "../setting/deleteButton";
 
 export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const textAreaContainer = useSelector(
     (state: any) => state.nodeReducer.textareaContainer
   );
+
+  fabric.Textbox.prototype.set({
+    cornerColor: "black",
+    selectionBorderColor: "black",
+  });
+  fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
+    ...deleteProps,
+  });
 
   const TextMaker = (size: number) => {
     const textbox = new fabric.Textbox("텍스트를 입력하세요", {
@@ -17,10 +26,12 @@ export default function TextMenu() {
       width: 400,
       height: 30,
       editable: true,
+      // cornerColor: "black",
       fontSize: size,
       selectable: true,
       hiddenTextareaContainer: textAreaContainer,
     });
+    console.log(textbox);
     canvas.add(textbox);
     canvas.renderAll();
   };
