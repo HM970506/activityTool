@@ -7,13 +7,26 @@ import StickerButton from "./sticker";
 import TextButton from "./text";
 import DrawToolsButton from "./drawTools";
 import DecorationButton from "./decoration";
+import store from "../../../store/store";
+import { DECORATION } from "../types";
 
 export default function SideButtons({
   activitytoolsEnd,
 }: {
   activitytoolsEnd: any;
 }) {
-  const view = useSelector((state: any) => state.categoryReducer.view);
+  const { view, category } = useSelector((state: any) => state.categoryReducer);
+  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+
+  useEffect(() => {
+    console.log(category);
+    if (canvas) {
+      if (category != DECORATION) {
+        canvas.taping = 0;
+        canvas.stamping = -1;
+      }
+    }
+  }, [category]);
 
   return (
     <ButtonBox view={view ? 1 : 0}>
