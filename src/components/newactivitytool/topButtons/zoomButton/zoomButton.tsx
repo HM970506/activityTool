@@ -47,6 +47,7 @@ export default function ZoomButton() {
       <DefaultButton
         onClick={() => {
           dispatch(zoomActions.reset());
+          canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
         }}
       >
         원래대로
