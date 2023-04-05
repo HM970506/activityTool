@@ -45,20 +45,17 @@ export default function Colorbox() {
   const colorChange = (color: string) => {
     dispatch(drawActions.colorChange(color));
   };
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
-  const [colorCategory, setColorCategory] = useState<string>("black");
+  const color = useSelector((state: any) => state.drawReducer.color);
 
   return (
     <ColorContainer>
       {COLORS.map((value: string, key: number) => (
         <Colorchip
-          select={colorCategory == value ? 1 : 0}
+          select={color == value ? 1 : 0}
           color={value}
           key={key}
           onClick={() => {
             colorChange(value);
-            setColorCategory(value);
           }}
         />
       ))}

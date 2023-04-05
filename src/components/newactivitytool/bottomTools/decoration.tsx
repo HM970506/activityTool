@@ -14,7 +14,6 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 const array = Array.from(Array(20).keys());
 
 export default function DecorationMenu() {
-  const [tapeOpacity, setTapeOpacity] = useState<number>(50);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const subcateogory = useSelector(
     (state: any) => state.categoryReducer.subcategory
