@@ -3,7 +3,7 @@ import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef, useState } from "react";
-import { Background, CanvasBackground } from "../style";
+import { Background, CanvasBackground, Test } from "../style";
 import canvasSetting from "./canvasSetting";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
@@ -13,6 +13,7 @@ export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [test, setTest] = useState<string>("test");
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -45,13 +46,14 @@ export default function Canvas() {
     getData();
 
     canvas.renderAll();
-    dispatch(nodeActions.setCanvas(canvasSetting(canvas)));
+    dispatch(nodeActions.setCanvas(canvasSetting(canvas, setTest)));
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
   }, []);
 
   return (
     <CanvasBackground ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
+      <Test>{test}</Test>
     </CanvasBackground>
   );
 }

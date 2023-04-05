@@ -172,3 +172,9 @@ export const CanvasBackground = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Test = styled.div`
+  position: absolute;
+  top: 100;
+  left: 100;
+`;

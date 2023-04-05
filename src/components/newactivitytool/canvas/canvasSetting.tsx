@@ -84,7 +84,7 @@ const stampStep_1 = (e: any) => {
   );
 };
 
-export default function canvasSetting(canvas: any) {
+export default function canvasSetting(canvas: any, setTest: any) {
   canvas.on({
     "selection:created": () => DeselctMultipleObjects(canvas),
     "selection:updated": () => DeselctMultipleObjects(canvas),
@@ -103,6 +103,21 @@ export default function canvasSetting(canvas: any) {
       e.target = canvas;
       if (e.target.taping == 2) tapeStep_3(e.target);
       else if (e.target.panning == 2) panStep_3(e);
+    },
+    "touch:gesture": () => {
+      setTest("gesture");
+    },
+    "touch:drag": () => {
+      setTest("drag");
+    },
+    "touch:orientation": () => {
+      setTest("orientation");
+    },
+    "touch:shake": () => {
+      setTest("shake");
+    },
+    "touch:longpress": () => {
+      setTest("longpress");
     },
   });
 
