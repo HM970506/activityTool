@@ -53,7 +53,6 @@ export default function Canvas() {
   return (
     <CanvasBackground ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
-      <Test>{test}</Test>
     </CanvasBackground>
   );
 }

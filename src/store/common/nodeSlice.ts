@@ -23,12 +23,10 @@ const nodeSlice = createSlice({
     },
     setDraw: (state, action: PayloadAction<any>) => {
       state.isDrawing = action.payload;
-      state.isPanning = false;
     },
 
     setPan: (state, action: PayloadAction<any>) => {
       state.isPanning = action.payload;
-      state.isDrawing = false;
     },
   },
 });
