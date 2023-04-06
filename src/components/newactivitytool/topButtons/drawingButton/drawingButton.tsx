@@ -5,6 +5,7 @@ import { Label, Toggle, Slider } from "../style";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { fabric } from "fabric-with-erasing";
 import { DRAWTOOLS } from "../../types";
+import { functionRemover } from "../../commonFunction";
 
 export default function DrawToggle() {
   const dispatch = useDispatch();
@@ -14,121 +15,142 @@ export default function DrawToggle() {
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
   useEffect(() => {
-    if (category != "DRAWTOOLS") dispatch(nodeActions.setDraw(false));
-  }, [category]);
+    if (canvas && !isDrawing) drawOff();
+  }, [isDrawing]);
 
-  const iscursorExist = () => {
-    let check = false;
-    const objects = canvas.getObjects();
-    for (let i = 0; i < objects.length; i++) {
-      if (objects[i].id == "cursor") {
-        check = true;
-        break;
-      }
-    }
-    return check;
-  };
-
-  const cursorReset = () => {
-    //우선 여기서밖에 해당 이벤트를 사용하는 곳이 없어 이렇게 해놓긴 했지만..
-    //만약 다른 곳에서 해당 이벤트를 사용할 경우를 대비하여 함수를 찾아 삭제하는 방법으로 이후수정하기.
-    //이벤트 목록에서 해당하는 함수만 슬라이스해주는 함수를 별도로 만듭시다..
-
-    let flag = false;
-
+  const cursorRemove = () => {
     canvas.getObjects().forEach((object: any) => {
       if (object.id == "cursor") {
-        flag = true;
         canvas.remove(object);
         canvas.renderAll();
       }
     });
-
-    if (flag) {
-      canvas.__eventListeners["mouse:move"].pop();
-      canvas.__eventListeners["mouse:out"].pop();
-      canvas.__eventListeners["mouse:over"].pop();
-      canvas.__eventListeners["mouse:down:before"].pop();
-    }
   };
 
-  useEffect(() => {
-    if (canvas) {
-      if (category != DRAWTOOLS || !isDrawing) {
-        if (iscursorExist()) cursorReset();
-        canvas.isDrawingMode = false;
-        canvas.renderAll();
-      }
+  const cursorMaker = () => {
+    canvas.isDrawingMode = true;
+    canvas.discardActiveObject().renderAll();
+    canvas.freeDrawingCursor = "none";
+
+    const cursor = new fabric.Circle({
+      radius: draws.size / 2,
+      fill: draws.tool != "eraser" ? draws.color : "rgba(0,0,0,0)",
+      stroke: draws.tool != "eraser" ? "none" : "2px solid black",
+      left: 0,
+      top: 0,
+      opacity: 0,
+      id: "cursor",
+      selectable: false,
+      hoverCursor: "default",
+      erasable: false,
+    });
+
+    const cursorOut = () => {
+      cursor.opacity = 0;
+      canvas.renderAll();
+    };
+
+    const cursorOver = () => {
+      cursor.opacity = 1;
+      canvas.renderAll();
+    };
+
+    const cursorDown = () => {
+      cursor.opacity = 0;
+      canvas.renderAll();
+    };
+
+    const cursorMove = (e: any) => {
+      cursor.opacity = 1;
+      const mouse = canvas.getPointer(e);
+      cursor.set({
+        left: mouse.x - draws.size / 2,
+        top: mouse.y - draws.size / 2,
+      });
+      canvas.renderAll();
+    };
+
+    canvas.on({
+      "mouse:out": cursorOut,
+      "mouse:over": cursorOver,
+      "mouse:down:before": cursorDown,
+      "mouse:move": cursorMove,
+    });
+
+    canvas.add(cursor);
+    canvas.renderAll();
+  };
+
+  const drawOn = () => {
+    //1.커서 바꾸고
+    cursorMaker();
+
+    //2.캔버스 설정 바꾸고
+    canvas.isDrawingMode = true;
+
+    //3.드로우는 켜고 나머지 설정들 끄고
+    canvas.panning = 0;
+    canvas.stamp = -1;
+    canvas.taping = 0;
+    dispatch(nodeActions.setPan(false));
+    dispatch(nodeActions.setDraw(true));
+
+    //5.함수 추가하고
+    canvas.on({ "selection:created": drawOff });
+
+    //6.렌더링
+    canvas.discardActiveObject().renderAll();
+  };
+
+  const drawOff = () => {
+    //1.커서 바꾸고
+    cursorRemove();
+    canvas.defaultCursor = "default";
+
+    //3.캔버스 설정 바꾸고
+    canvas.isDrawingMode = false;
+
+    //4.드로우 끄고
+    dispatch(nodeActions.setDraw(false));
+
+    //5.함수 삭제하고
+    canvas.__eventListeners["mouse:out"] = functionRemover(
+      canvas.__eventListeners["mouse:out"],
+      "cursorOut"
+    );
+    canvas.__eventListeners["mouse:over"] = functionRemover(
+      canvas.__eventListeners["mouse:over"],
+      "cursorOver"
+    );
+    canvas.__eventListeners["mouse:down:before"] = functionRemover(
+      canvas.__eventListeners["mouse:down:before"],
+      "cursorDown"
+    );
+    canvas.__eventListeners["mouse:move"] = functionRemover(
+      canvas.__eventListeners["mouse:move"],
+      "cursorMove"
+    );
+    canvas.__eventListeners["selection:created"] = functionRemover(
+      canvas.__eventListeners["selection:created"],
+      "drawOff"
+    );
+  };
+
+  const drawHandler = (e: any) => {
+    if (e.target.checked) {
+      //켜는 버튼
+      drawOn();
+    } else {
+      //끄는 버튼
+      drawOff();
     }
-  }, [category, isDrawing]);
-
-  useEffect(() => {
-    if (canvas) {
-      if (isDrawing) {
-        if (iscursorExist()) {
-          console.log("커서 있음");
-          cursorReset();
-        }
-        canvas.isDrawingMode = true;
-        canvas.discardActiveObject().renderAll();
-        canvas.freeDrawingCursor = "none";
-
-        const cursor = new fabric.Circle({
-          radius: draws.size / 2,
-          fill: draws.tool != "eraser" ? draws.color : "rgba(0,0,0,0)",
-          stroke: draws.tool != "eraser" ? "none" : "2px solid black",
-          left: 0,
-          top: 0,
-          opacity: 0,
-          id: "cursor",
-          selectable: false,
-          hoverCursor: "default",
-          erasable: false,
-        });
-
-        canvas.on("mouse:out", () => {
-          cursor.opacity = 0;
-          canvas.renderAll();
-        });
-        canvas.on("mouse:over", () => {
-          cursor.opacity = 1;
-          canvas.renderAll();
-        });
-        canvas.on("mouse:down:before", () => {
-          cursor.opacity = 0;
-          canvas.renderAll();
-        });
-        canvas.on("mouse:move", (e: any) => {
-          cursor.opacity = 1;
-          const mouse = canvas.getPointer(e);
-          cursor.set({
-            left: mouse.x - draws.size / 2,
-            top: mouse.y - draws.size / 2,
-          });
-          canvas.renderAll();
-        });
-
-        canvas.add(cursor);
-        canvas.renderAll();
-      }
-    }
-  }, [isDrawing, draws]);
+  };
 
   return (
     <span>
       <span>그림모드</span>
       <Label>
-        <Toggle
-          type="checkbox"
-          checked={isDrawing}
-          onChange={(e: any) => {
-            canvas.taping = 0;
-            canvas.panning = 0;
-            canvas.stamping = -1;
-            dispatch(nodeActions.setPan(false));
-            dispatch(nodeActions.setDraw(e.target.checked));
-          }}
-        />
+        <Toggle type="checkbox" checked={isDrawing} onChange={drawHandler} />
         <Slider></Slider>
       </Label>
     </span>

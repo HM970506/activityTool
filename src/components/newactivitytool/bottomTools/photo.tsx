@@ -43,7 +43,7 @@ export default function PhotoMenu() {
           canvas.add(group);
           canvas.remove(now);
           canvas.renderAll();
-          console.log(group);
+          canvas.setActiveObject(group);
         }
       );
     });
@@ -66,6 +66,7 @@ export default function PhotoMenu() {
         img.scaleY = scale;
 
         canvas.add(img);
+        canvas.setActiveObject(img);
       });
       setPhoto("");
     }

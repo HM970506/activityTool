@@ -30,6 +30,7 @@ export default function StickerMenu() {
 
         canvas.add(img);
         canvas.renderAll();
+        canvas.setActiveObject(img);
       }
     );
   };

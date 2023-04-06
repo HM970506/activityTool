@@ -42,29 +42,6 @@ const DeselctMultipleObjects = (canvas: any) => {
   }
 };
 
-const panStep_1 = (e: any) => {
-  const canvas = e.target;
-  canvas.lastClientX = e.e.clientX;
-  canvas.lastClientY = e.e.clientY;
-  canvas.panning = 2;
-};
-
-const panStep_2 = (e: any) => {
-  const canvas = e.target;
-  if (canvas.lastClientX) canvas.deltaX = e.e.clientX - canvas.lastClientX;
-  if (canvas.lastClientY) canvas.deltaY = e.e.clientY - canvas.lastClientY;
-
-  canvas.lastClientX = e.e.clientX;
-  canvas.lastClientY = e.e.clientY;
-
-  canvas.relativePan(new fabric.Point(canvas.deltaX, canvas.deltaY));
-};
-
-const panStep_3 = (e: any) => {
-  const canvas = e.target;
-  canvas.panning = 1;
-};
-
 const stampStep_1 = (e: any) => {
   const canvas = e.target;
   const pointer = canvas.getPointer();
@@ -91,18 +68,15 @@ export default function canvasSetting(canvas: any, setTest: any) {
     "mouse:down": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 1) tapeStep_1(e.target);
-      else if (e.target.panning == 1) panStep_1(e);
       else if (e.target.stamping >= 0) stampStep_1(e);
     },
     "mouse:move": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 2) tapeStep_2(e.target);
-      else if (e.target.panning == 2) panStep_2(e);
     },
     "mouse:up": (e: any) => {
       e.target = canvas;
       if (e.target.taping == 2) tapeStep_3(e.target);
-      else if (e.target.panning == 2) panStep_3(e);
     },
     "touch:gesture": () => {
       setTest("gesture");
@@ -118,11 +92,6 @@ export default function canvasSetting(canvas: any, setTest: any) {
     },
     "touch:longpress": () => {
       setTest("longpress");
-    },
-    "object:added": () => {
-      canvas.panning = 0;
-      canvas.taping = 0;
-      canvas.stamping = -1;
     },
   });
 
