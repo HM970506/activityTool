@@ -6,10 +6,12 @@ import {
   ListContainer,
   SubButtons,
   SubCategoryContainer,
-} from "./style";
-import { categoryActions } from "../../../store/common/categorySlice";
-import { STAMP } from "./decorationSample";
-import { nodeActions } from "../../../store/common/nodeSlice";
+} from "../style";
+import { categoryActions } from "../../../../store/common/categorySlice";
+import { STAMP } from "../decorationSample";
+import { nodeActions } from "../../../../store/common/nodeSlice";
+import Tape from "./tape";
+import Stamp from "./stamp";
 
 const array = Array.from(Array(20).keys());
 
@@ -92,70 +94,8 @@ export default function DecorationMenu() {
               </SubButtons>
             );
           })}
-        {stamp.state &&
-          STAMP.map((value, key) => {
-            return (
-              <SubButtons
-                select={stamp.index == key ? 1 : 0}
-                key={key}
-                onClick={() => {
-                  canvas.stamping = stamp.key;
-                  dispatch(categoryActions.stampChange(key));
-                }}
-              >
-                {value.name}
-              </SubButtons>
-            );
-          })}
-        {tape.state && (
-          <>
-            투명도
-            <input
-              type="range"
-              min="0"
-              max="100"
-              defaultValue={(tape.opacity * 100).toString()}
-              onChange={(e: any) =>
-                (canvas.tapeState = {
-                  ...canvas.tapeState,
-                  opacity:
-                    e.target.value == "0" ? 0 : parseInt(e.target.value) / 100,
-                })
-              }
-            />
-            크기
-            <button
-              onClick={() =>
-                (canvas.tapeState = {
-                  ...canvas.tapeState,
-                  size: 30,
-                })
-              }
-            >
-              30
-            </button>
-            <button
-              onClick={() =>
-                (canvas.tapeState = {
-                  ...canvas.tapeState,
-                  size: 20,
-                })
-              }
-            >
-              20
-            </button>
-            <button
-              onClick={() =>
-                (canvas.tapeState = {
-                  ...canvas.tapeState,
-                  size: 10,
-                })
-              }
-            >
-              10
-            </button>
-          </>
-        )}
+        {stamp.state && <Stamp />}
+        {tape.state && <Tape />}
       </ListContainer>
     </BackgroundContainer>
   );

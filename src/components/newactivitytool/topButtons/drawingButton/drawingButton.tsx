@@ -6,6 +6,8 @@ import { nodeActions } from "../../../../store/common/nodeSlice";
 import { fabric } from "fabric-with-erasing";
 import { DRAWTOOLS } from "../../types";
 import { functionRemover } from "../../commonFunction";
+import { tapeOff } from "../../bottomTools/decorations/tape";
+import { stampOff } from "../../bottomTools/decorations/stamp";
 
 export default function DrawToggle() {
   const dispatch = useDispatch();
@@ -31,7 +33,6 @@ export default function DrawToggle() {
     canvas.isDrawingMode = true;
     canvas.discardActiveObject().renderAll();
     canvas.freeDrawingCursor = "none";
-
     const cursor = new fabric.Circle({
       radius: draws.size / 2,
       fill: draws.tool != "eraser" ? draws.color : "rgba(0,0,0,0)",
@@ -79,6 +80,7 @@ export default function DrawToggle() {
 
     canvas.add(cursor);
     canvas.renderAll();
+    console.log(canvas);
   };
 
   const drawOn = () => {
@@ -89,9 +91,8 @@ export default function DrawToggle() {
     canvas.isDrawingMode = true;
 
     //3.드로우는 켜고 나머지 설정들 끄고
-    canvas.panning = 0;
-    canvas.stamp = -1;
-    canvas.taping = 0;
+    tapeOff(canvas);
+    stampOff(canvas);
     dispatch(nodeActions.setPan(false));
     dispatch(nodeActions.setDraw(true));
 

@@ -18,6 +18,7 @@ export default function Canvas() {
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       height: window.innerHeight,
+
       width: window.innerWidth,
       backgroundColor: "rgba(255,255,255,0)",
       preserveObjectStacking: true,
