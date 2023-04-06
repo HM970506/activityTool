@@ -119,6 +119,11 @@ export default function canvasSetting(canvas: any, setTest: any) {
     "touch:longpress": () => {
       setTest("longpress");
     },
+    "object:added": () => {
+      canvas.panning = 0;
+      canvas.taping = 0;
+      canvas.stamping = -1;
+    },
   });
 
   return canvas;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Uploader } from "../style";
 import { fabric } from "fabric-with-erasing";
 
-const defaultX = 300;
+const defaultX = 500;
 export default function PhotoMenu() {
   const shapeChange = (shape: string) => {
     const now = canvas.getActiveObject();
@@ -132,17 +132,17 @@ export default function PhotoMenu() {
       </button>
       <button
         onClick={() => {
-          shapeChange("fluffy_sticker_1");
+          shapeChange("heart");
         }}
       >
-        토끼
+        하트
       </button>
       <button
         onClick={() => {
-          shapeChange("fluffy_sticker_2");
+          shapeChange("star");
         }}
       >
-        병아리
+        별
       </button>
     </>
   );

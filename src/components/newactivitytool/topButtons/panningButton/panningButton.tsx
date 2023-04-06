@@ -9,6 +9,10 @@ export default function PanningToggle() {
   const dispatch = useDispatch();
   const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
 
+  useEffect(() => {
+    if (canvas) if (canvas.panning == 0) dispatch(nodeActions.setPan(false));
+  }, [canvas]);
+
   return (
     <span>
       <span>화면이동</span>
@@ -29,7 +33,7 @@ export default function PanningToggle() {
               canvas.panning = 1;
               canvas.taping = 0;
               canvas.discardActiveObject().renderAll();
-              dispatch(nodeActions.setPan(true));
+              dispatch(nodeActions.setDraw(false));
             } else {
               canvas.defaultCursor = "default";
               canvas.forEachObject((object: any) => {
