@@ -30,8 +30,6 @@ export default function DrawToggle() {
   };
 
   const cursorMaker = () => {
-    canvas.isDrawingMode = true;
-    canvas.discardActiveObject().renderAll();
     canvas.freeDrawingCursor = "none";
     const cursor = new fabric.Circle({
       radius: draws.size / 2,
@@ -64,6 +62,7 @@ export default function DrawToggle() {
     const cursorMove = (e: any) => {
       cursor.opacity = 1;
       const mouse = canvas.getPointer(e);
+      console.log(mouse);
       cursor.set({
         left: mouse.x - draws.size / 2,
         top: mouse.y - draws.size / 2,
@@ -80,12 +79,11 @@ export default function DrawToggle() {
 
     canvas.add(cursor);
     canvas.renderAll();
-    console.log(canvas);
   };
 
   const drawOn = () => {
     //1.커서 바꾸고
-    cursorMaker();
+    // cursorMaker();
 
     //2.캔버스 설정 바꾸고
     canvas.isDrawingMode = true;
