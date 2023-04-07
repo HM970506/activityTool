@@ -82,17 +82,10 @@ export default function Tape() {
 
   useEffect(() => {
     if (canvas) {
-      if (!isPanning) tapeOn();
+      if (!isPanning && !isDrawing) tapeOn();
       else tapeOff(canvas);
     }
-  }, [isPanning]);
-
-  useEffect(() => {
-    if (canvas) {
-      if (!isDrawing) tapeOn();
-      else tapeOff(canvas);
-    }
-  }, [isDrawing]);
+  }, [isDrawing, isPanning]);
 
   return (
     <>

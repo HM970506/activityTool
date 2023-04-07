@@ -50,17 +50,10 @@ export default function Stamp() {
 
   useEffect(() => {
     if (canvas) {
-      if (!isPanning) stampOn();
+      if (!isPanning && !isDrawing) stampOn();
       else stampOff(canvas);
     }
-  }, [isPanning]);
-
-  useEffect(() => {
-    if (canvas) {
-      if (!isDrawing) stampOn();
-      else stampOff(canvas);
-    }
-  }, [isDrawing]);
+  }, [isPanning, isDrawing]);
 
   return (
     <>
