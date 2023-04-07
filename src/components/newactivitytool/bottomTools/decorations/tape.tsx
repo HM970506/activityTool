@@ -82,6 +82,7 @@ export default function Tape() {
 
   useEffect(() => {
     if (canvas) {
+      console.log(isPanning, isDrawing);
       if (!isPanning && !isDrawing) tapeOn();
       else tapeOff(canvas);
     }
