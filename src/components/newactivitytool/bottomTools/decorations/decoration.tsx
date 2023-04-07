@@ -32,6 +32,7 @@ export default function DecorationMenu() {
       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
         scaleX: scale,
         scaleY: scale,
+        erasable: false,
       });
 
       canvas.setHeight(img.height * scale);
