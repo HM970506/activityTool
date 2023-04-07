@@ -23,7 +23,6 @@ export default function Tape() {
   const tape = useSelector(
     (state: any) => state.categoryReducer.subcategory.tape
   );
-  const category = useSelector((state: any) => state.categoryReducer.category);
   const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
   const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
   const tapeStep_1 = () => {
@@ -82,9 +81,11 @@ export default function Tape() {
 
   useEffect(() => {
     if (canvas) {
+      tapeOff(canvas);
       console.log(isPanning, isDrawing);
       if (!isPanning && !isDrawing) tapeOn();
       else tapeOff(canvas);
+      console.log(canvas.__eventListeners);
     }
   }, [isDrawing, isPanning]);
 
