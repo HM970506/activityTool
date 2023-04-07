@@ -16,10 +16,6 @@ export default function DrawToggle() {
   const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
   const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
-  useEffect(() => {
-    if (canvas && !isDrawing) drawOff();
-  }, [isDrawing]);
-
   const cursorRemove = () => {
     canvas.getObjects().forEach((object: any) => {
       if (object.id == "cursor") {
@@ -91,10 +87,9 @@ export default function DrawToggle() {
     tapeOff(canvas);
     stampOff(canvas);
     dispatch(nodeActions.setPan(false));
-    dispatch(nodeActions.setDraw(true));
 
     //5.함수 추가하고
-    canvas.on({ "selection:created": drawOff });
+    canvas.on({ "selection:created": drawOff, "selection:updated": drawOff });
 
     //6.렌더링
     canvas.discardActiveObject().renderAll();
@@ -109,7 +104,7 @@ export default function DrawToggle() {
     canvas.isDrawingMode = false;
 
     //4.드로우 끄고
-    dispatch(nodeActions.setDraw(false));
+    if (isDrawing) dispatch(nodeActions.setDraw(false));
 
     //5.함수 삭제하고
     canvas.__eventListeners["mouse:out"] = functionRemover(
@@ -134,14 +129,15 @@ export default function DrawToggle() {
     );
   };
 
-  const drawHandler = (e: any) => {
-    if (e.target.checked) {
-      //켜는 버튼
-      drawOn();
-    } else {
-      //끄는 버튼
-      drawOff();
+  useEffect(() => {
+    if (canvas) {
+      if (isDrawing) drawOn();
+      else drawOff();
     }
+  }, [isDrawing]);
+
+  const drawHandler = (e: any) => {
+    dispatch(nodeActions.setDraw(e.target.checked));
   };
 
   return (

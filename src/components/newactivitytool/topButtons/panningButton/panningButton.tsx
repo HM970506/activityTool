@@ -84,6 +84,7 @@ export default function PanningToggle() {
 
     //4.팬 끄고
     canvas.panning = 0;
+    if (isPanning) dispatch(nodeActions.setPan(false));
 
     //5.함수 삭제하고
     canvas.__eventListeners["mouse:down"] = functionRemover(
