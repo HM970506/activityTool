@@ -19,7 +19,6 @@ export default function SideButtons({
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
   useEffect(() => {
-    console.log(category);
     if (canvas) {
       if (category != DECORATION) {
         canvas.taping = 0;

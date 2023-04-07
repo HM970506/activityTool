@@ -12,10 +12,6 @@ export default function PanningToggle() {
   const dispatch = useDispatch();
   const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
 
-  useEffect(() => {
-    if (canvas && !isPanning) panOff();
-  }, [isPanning]);
-
   const panStep_1 = (e: any) => {
     canvas.lastClientX = e.e.clientX;
     canvas.lastClientY = e.e.clientY;
@@ -57,7 +53,6 @@ export default function PanningToggle() {
     tapeOff(canvas);
     stampOff(canvas);
     dispatch(nodeActions.setDraw(false));
-    dispatch(nodeActions.setPan(true));
 
     //5.함수 추가하고
     canvas.on({
@@ -89,7 +84,6 @@ export default function PanningToggle() {
 
     //4.팬 끄고
     canvas.panning = 0;
-    dispatch(nodeActions.setPan(false));
 
     //5.함수 삭제하고
     canvas.__eventListeners["mouse:down"] = functionRemover(
@@ -109,18 +103,19 @@ export default function PanningToggle() {
       "panOff"
     );
 
+    //  console.log(canvas.__eventListeners);
+
     //6.렌더링 할 거 없으므로 넘기기
   };
 
-  const panHandler = (e: any) => {
-    if (e.target.checked) {
-      //켜는 버튼
-      panOn();
-    } else {
-      //끄는 버튼
-      panOff();
+  useEffect(() => {
+    if (canvas) {
+      if (isPanning) panOn();
+      else panOff();
     }
+  }, [isPanning]);
 
+  const panHandler = (e: any) => {
     dispatch(nodeActions.setPan(e.target.checked));
   };
 

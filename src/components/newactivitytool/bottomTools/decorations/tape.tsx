@@ -24,7 +24,8 @@ export default function Tape() {
     (state: any) => state.categoryReducer.subcategory.tape
   );
   const category = useSelector((state: any) => state.categoryReducer.category);
-
+  const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
+  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
   const tapeStep_1 = () => {
     const pointer = canvas.getPointer();
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
@@ -81,10 +82,17 @@ export default function Tape() {
 
   useEffect(() => {
     if (canvas) {
-      if (!functionChecker(canvas.__eventListeners["mouse:up"], "tapeUp"))
-        tapeOn();
+      if (!isPanning) tapeOn();
+      else tapeOff(canvas);
     }
-  }, []);
+  }, [isPanning]);
+
+  useEffect(() => {
+    if (canvas) {
+      if (!isDrawing) tapeOn();
+      else tapeOff(canvas);
+    }
+  }, [isDrawing]);
 
   return (
     <>

@@ -108,8 +108,8 @@ export default function PhotoMenu() {
           if (!now) return;
           const target = now.getObjects()[1];
           const url = now.type == "image" ? now.getSrc() : target.getSrc();
-          console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
-          console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
+          // console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
+          // console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
           new fabric.Image.fromURL(url, (img: any) => {
             img.set({
               hoverCursor: "auto",

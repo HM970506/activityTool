@@ -62,7 +62,6 @@ export default function DrawToggle() {
     const cursorMove = (e: any) => {
       cursor.opacity = 1;
       const mouse = canvas.getPointer(e);
-      console.log(mouse);
       cursor.set({
         left: mouse.x - draws.size / 2,
         top: mouse.y - draws.size / 2,

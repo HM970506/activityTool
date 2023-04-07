@@ -14,6 +14,8 @@ export const stampOff = (canvas: any) => {
 };
 
 export default function Stamp() {
+  const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
+  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const dispatch = useDispatch();
   const stamp = useSelector(
@@ -48,10 +50,17 @@ export default function Stamp() {
 
   useEffect(() => {
     if (canvas) {
-      if (!functionChecker(canvas.__eventListeners["mouse:down"], "stampDown"))
-        stampOn();
+      if (!isPanning) stampOn();
+      else stampOff(canvas);
     }
-  }, []);
+  }, [isPanning]);
+
+  useEffect(() => {
+    if (canvas) {
+      if (!isDrawing) stampOn();
+      else stampOff(canvas);
+    }
+  }, [isDrawing]);
 
   return (
     <>

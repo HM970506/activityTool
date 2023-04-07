@@ -31,7 +31,6 @@ export default function TextMenu() {
       selectable: true,
       hiddenTextareaContainer: textAreaContainer,
     });
-    console.log(textbox);
     canvas.add(textbox);
     canvas.renderAll();
   };
