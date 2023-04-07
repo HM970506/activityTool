@@ -3,21 +3,6 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { functionChecker, functionRemover } from "../../commonFunction";
 
-export const tapeOff = (canvas: any) => {
-  canvas.__eventListeners["mouse:down"] = functionRemover(
-    canvas.__eventListeners["mouse:down"],
-    "tapeDown"
-  );
-  canvas.__eventListeners["mouse:move"] = functionRemover(
-    canvas.__eventListeners["mouse:move"],
-    "tapeMove"
-  );
-  canvas.__eventListeners["mouse:up"] = functionRemover(
-    canvas.__eventListeners["mouse:up"],
-    "tapeUp"
-  );
-};
-
 export default function Tape() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const tape = useSelector(
@@ -77,6 +62,21 @@ export default function Tape() {
       "mouse:move": tapeMove,
       "mouse:up": tapeUp,
     });
+  };
+
+  const tapeOff = (canvas: any) => {
+    canvas.__eventListeners["mouse:down"] = functionRemover(
+      canvas.__eventListeners["mouse:down"],
+      tapeDown.name
+    );
+    canvas.__eventListeners["mouse:move"] = functionRemover(
+      canvas.__eventListeners["mouse:move"],
+      tapeMove.name
+    );
+    canvas.__eventListeners["mouse:up"] = functionRemover(
+      canvas.__eventListeners["mouse:up"],
+      tapeUp.name
+    );
   };
 
   useEffect(() => {

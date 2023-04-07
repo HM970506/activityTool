@@ -4,8 +4,6 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect, useState } from "react";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { functionRemover } from "../../commonFunction";
-import { tapeOff } from "../../bottomTools/decorations/tape";
-import { stampOff } from "../../bottomTools/decorations/stamp";
 
 export default function PanningToggle() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
@@ -50,8 +48,6 @@ export default function PanningToggle() {
     canvas.selectable = false;
 
     //4.팬은 켜고 나머지 설정들 끄고
-    tapeOff(canvas);
-    stampOff(canvas);
     dispatch(nodeActions.setDraw(false));
 
     //5.함수 추가하고

@@ -6,8 +6,6 @@ import { nodeActions } from "../../../../store/common/nodeSlice";
 import { fabric } from "fabric-with-erasing";
 import { DRAWTOOLS } from "../../types";
 import { functionRemover } from "../../commonFunction";
-import { tapeOff } from "../../bottomTools/decorations/tape";
-import { stampOff } from "../../bottomTools/decorations/stamp";
 
 export default function DrawToggle() {
   const dispatch = useDispatch();
@@ -84,8 +82,6 @@ export default function DrawToggle() {
     canvas.isDrawingMode = true;
 
     //3.드로우는 켜고 나머지 설정들 끄고
-    tapeOff(canvas);
-    stampOff(canvas);
     dispatch(nodeActions.setPan(false));
 
     //5.함수 추가하고

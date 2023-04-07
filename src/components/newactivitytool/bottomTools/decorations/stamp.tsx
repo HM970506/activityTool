@@ -6,13 +6,6 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { functionChecker, functionRemover } from "../../commonFunction";
 
-export const stampOff = (canvas: any) => {
-  canvas.__eventListeners["mouse:down"] = functionRemover(
-    canvas.__eventListeners["mouse:down"],
-    "stampDown"
-  );
-};
-
 export default function Stamp() {
   const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
   const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
@@ -46,6 +39,13 @@ export default function Stamp() {
 
   const stampOn = () => {
     canvas.on({ "mouse:down": stampDown });
+  };
+
+  const stampOff = (canvas: any) => {
+    canvas.__eventListeners["mouse:down"] = functionRemover(
+      canvas.__eventListeners["mouse:down"],
+      stampDown.name
+    );
   };
 
   useEffect(() => {
