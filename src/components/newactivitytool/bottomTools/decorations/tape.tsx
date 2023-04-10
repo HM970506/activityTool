@@ -97,12 +97,12 @@ export default function Tape() {
         min="0"
         max="100"
         defaultValue={(tape.opacity * 100).toString()}
-        onChange={(e: any) =>
-          (canvas.tapeState = {
+        onChange={(e: any) => {
+          canvas.tapeState = {
             ...canvas.tapeState,
-            opacity: canvas.value == "0" ? 0 : parseInt(canvas.value) / 100,
-          })
-        }
+            opacity: e.target.value == "0" ? 0 : parseInt(e.target.value) / 100,
+          };
+        }}
       />
       크기
       <button
