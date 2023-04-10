@@ -10,6 +10,7 @@ export default function canvasSetting(canvas: any, setTest: any) {
     "selection:created": () => DeselctMultipleObjects(canvas),
 
     "selection:updated": () => DeselctMultipleObjects(canvas),
+
     "touch:gesture": () => {
       setTest("gesture");
     },

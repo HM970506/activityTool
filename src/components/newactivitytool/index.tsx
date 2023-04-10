@@ -69,6 +69,7 @@ export default function NewActivityTool() {
 
   const getCanvas = () => {
     const json = localStorage.getItem("canvasData");
+    console.log(json);
     if (json) {
       canvas.loadFromJSON(json, () => canvas.renderAll());
       activitytoolsStart();
@@ -94,8 +95,8 @@ export default function NewActivityTool() {
             <>
               <LoadButton
                 onClick={() => {
-                  urlCheck();
                   getCanvas();
+                  //  urlCheck();
                 }}
               >
                 불러오기

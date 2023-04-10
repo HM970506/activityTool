@@ -35,8 +35,8 @@ export default function DrawToolsButton() {
 
   //커스텀 브러쉬 추가1:  배경 브러쉬
   const img = new Image();
-  img.src =
-    "https://i.pinimg.com/564x/5a/ad/10/5aad103e59c05d2b7a85c217287fae10.jpg";
+  img.src = "./pattern.jpg";
+  //여기 cors error 해결하기
   const HeartPatternBrush = new fabric.PatternBrush(canvas);
   HeartPatternBrush.source = img;
   //커스텀 브러쉬 추가1 끝
