@@ -11,18 +11,39 @@ export default function PanningToggle() {
   const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
 
   const panStep_1 = (e: any) => {
-    canvas.lastClientX = e.e.clientX;
-    canvas.lastClientY = e.e.clientY;
+    let x = 0;
+    let y = 0;
+    if (e.e.type == "touchstart") {
+      x = e.e.changedTouches[0].pageX;
+      y = e.e.changedTouches[0].pageY;
+    } else {
+      x = e.e.clientX;
+      y = e.e.clientY;
+    }
+
+    canvas.lastClientX = x;
+    canvas.lastClientY = y;
+
     canvas.panning = 2;
   };
 
   const panStep_2 = (e: any) => {
     if (canvas.panning == 2) {
-      if (canvas.lastClientX) canvas.deltaX = e.e.clientX - canvas.lastClientX;
-      if (canvas.lastClientY) canvas.deltaY = e.e.clientY - canvas.lastClientY;
+      let x = 0;
+      let y = 0;
+      if (e.e.type == "touchmove") {
+        x = e.e.changedTouches[0].pageX;
+        y = e.e.changedTouches[0].pageY;
+      } else {
+        x = e.e.clientX;
+        y = e.e.clientY;
+      }
 
-      canvas.lastClientX = e.e.clientX;
-      canvas.lastClientY = e.e.clientY;
+      if (canvas.lastClientX) canvas.deltaX = x - canvas.lastClientX;
+      if (canvas.lastClientY) canvas.deltaY = y - canvas.lastClientY;
+
+      canvas.lastClientX = x;
+      canvas.lastClientY = y;
 
       canvas.relativePan(new fabric.Point(canvas.deltaX, canvas.deltaY));
     }
@@ -53,6 +74,7 @@ export default function PanningToggle() {
     //5.함수 추가하고
     canvas.on({
       "mouse:down": panStep_1,
+
       "mouse:move": panStep_2,
       "mouse:up": panStep_3,
       "selection:created": panOff,

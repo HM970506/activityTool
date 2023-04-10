@@ -11,7 +11,7 @@ import getData from "../../firestore/getData";
 
 export default function Canvas() {
   const dispatch = useDispatch();
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [test, setTest] = useState<string>("test");
 
