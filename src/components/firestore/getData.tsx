@@ -18,15 +18,10 @@ export default async function getData() {
       xhr.responseType = "blob";
       xhr.onload = (event) => {
         const blob = xhr.response;
-        console.log(blob);
+        console.log(JSON.stringify(blob));
       };
-      xhr.open("GET", url);
-      xhr.send();
-
-      const img = document.getElementById("myimg");
-      img?.setAttribute("src", url);
     })
     .catch((error) => {
-      console.log("err: ", error);
+      return null;
     });
 }
