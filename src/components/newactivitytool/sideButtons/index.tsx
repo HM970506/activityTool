@@ -22,7 +22,7 @@ export default function SideButtons({
     if (canvas) {
       if (category != DECORATION) {
         canvas.taping = 0;
-        canvas.stamping = -1;
+        canvas.stamping = "";
       }
     }
   }, [category]);

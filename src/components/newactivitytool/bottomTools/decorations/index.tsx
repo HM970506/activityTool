@@ -33,9 +33,9 @@ export default function DecorationMenu() {
 
   useEffect(() => {
     if (stamp.state) {
-      canvas.stamping = stamp.index;
+      // canvas.stamping = stamp.index;
       dispatch(nodeActions.setDraw(false));
-    } else canvas.stamping = -1;
+    } else canvas.stamping = "";
   }, [stamp]);
 
   return (

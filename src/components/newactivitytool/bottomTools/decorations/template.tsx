@@ -25,7 +25,6 @@ export default function Template() {
     }
   );
   useEffect(() => {
-    console.log(isLoading);
     if (!isLoading && data != undefined) setTemplates(data);
   }, [isLoading]);
 
