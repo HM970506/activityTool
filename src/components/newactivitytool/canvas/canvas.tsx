@@ -7,7 +7,6 @@ import { Background, CanvasBackground, Test } from "../style";
 import canvasSetting from "./canvasSetting";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import getData from "../../firestore/getData";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -42,8 +41,6 @@ export default function Canvas() {
 
     fabricSetting();
     windowSetting(dispatch, canvas);
-
-    getData();
 
     canvas.renderAll();
     dispatch(nodeActions.setCanvas(canvasSetting(canvas, setTest)));

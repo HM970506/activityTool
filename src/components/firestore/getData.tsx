@@ -1,27 +1,52 @@
+import axios from "axios";
 import app from "./setting";
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import {
+  StorageReference,
+  getDownloadURL,
+  getStorage,
+  listAll,
+  ref,
+} from "firebase/storage";
 
-export default async function getData() {
-  // const db = getFirestore(app);
-  // const q = query(collection(db, "test"));
-  // const querySnapshot = await getDocs(q);
-  // querySnapshot.forEach((doc) => {
-  //   console.log(doc.id, " => ", doc.data());
-  // });
+const firestore = getFirestore(app);
+const storage = getStorage(app);
 
-  const storage = getStorage(app);
-  const openEyeRef = ref(storage, "topButtons/viewButton/openEye.svg");
-  getDownloadURL(openEyeRef)
-    .then((url) => {
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = "blob";
-      xhr.onload = (event) => {
-        const blob = xhr.response;
-        console.log(JSON.stringify(blob));
-      };
-    })
-    .catch((error) => {
-      return null;
-    });
+export async function getFirestoreData(path: string) {
+  const q = query(collection(firestore, path));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+  });
+}
+
+export async function getStorageData(path: string) {
+  const pathRef = ref(storage, path);
+  const data = await getDownloadURL(pathRef).catch((error) => {
+    console.log("storage Error: ", error);
+    return null;
+  });
+
+  console.log(data);
+
+  return data;
+}
+
+export async function getStorageDataAll(path: string) {
+  const pathRef = ref(storage, path);
+  const imageList = await listAll(pathRef).catch((error) => {
+    console.log("storage allList Error: ", error);
+    return null;
+  });
+
+  if (imageList == null) return;
+
+  return imageList.items.map(async (item: StorageReference) => {
+    const now = await getDownloadURL(ref(storage, item.fullPath)).catch(
+      (error) => {
+        console.log("storage allList get Error: ", error);
+      }
+    );
+    return now;
+  });
 }
