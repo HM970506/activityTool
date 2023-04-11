@@ -6,7 +6,7 @@ import StickerMenu from "./sticker";
 import DrawToolsMenu from "./drawTools";
 import { DECORATION, DRAWTOOLS, PHOTO, RECORD, STICKER, TEXT } from "../types";
 import TextMenu from "./text";
-import DecorationMenu from "./decorations/decoration";
+import DecorationMenu from "./decorations";
 import Colorbox from "./colorbox";
 
 export default function BottomTools() {

@@ -64,7 +64,7 @@ export default function StickerMenu() {
       </SubCategoryContainer>
       <ListContainer>
         {isLoading ? (
-          <Loading />
+          <div>로딩중</div>
         ) : (
           stickers.map((value, key) => (
             <ObjectButton

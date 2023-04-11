@@ -29,19 +29,6 @@ overflow-x: auto;
 overflow-y:hidden;
 `;
 
-export const SubButtons = style.button<{ select: number }>`
-  width: 100px;
-  height: 30px;
-  padding: 10px;
-  background-color:${(props) => {
-    return props.select == 1 ? "red" : "white";
-  }};
-  border: 1px solid black;
-  display: flex;
-  justify-content:center;
-  align-items:center;
-`;
-
 export const ObjectButton = style.button`
   background-color: inherit;
   width: 10%;
@@ -52,11 +39,16 @@ export const ObjectButton = style.button`
   align-items:center;
 `;
 
+export const SelectableObjectButton = style(ObjectButton)<{ select: number }>`
+  background-color:${(props) => {
+    return props.select == 1 ? "red" : "white";
+  }};
+`;
+
 export const Thumbnail = style.img`
   height: 100%;
 `;
 
 export const LoadingContainer = style.div`
-  height: inherit;
-  
+  height: 100%;
 `;

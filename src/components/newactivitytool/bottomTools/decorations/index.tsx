@@ -1,19 +1,19 @@
-import { fabric } from "fabric-with-erasing";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useReducer, useState } from "react";
 import {
   BackgroundContainer,
   ListContainer,
-  SubButtons,
   SubCategoryContainer,
 } from "../style";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { STAMP } from "../decorationSample";
+
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import Tape from "./tape";
 import Stamp from "./stamp";
 
-const array = Array.from(Array(20).keys());
+import Template from "./template";
+import { useQuery } from "react-query";
+import { getStorageDataAll } from "../../../firestore/getData";
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
@@ -21,24 +21,8 @@ export default function DecorationMenu() {
     (state: any) => state.categoryReducer.subcategory
   );
   const { template, stamp, tape } = subcateogory;
+
   const dispatch = useDispatch();
-
-  const templating = (templateId: number) => {
-    const url = `/test${templateId + 1}.PNG`;
-
-    fabric.Image.fromURL(url, (img: any) => {
-      const scale = canvas.width / img.width;
-
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        scaleX: scale,
-        scaleY: scale,
-        erasable: false,
-      });
-
-      canvas.setHeight(img.height * scale);
-      canvas.renderAll();
-    });
-  };
 
   useEffect(() => {
     if (tape.state) {
@@ -80,21 +64,7 @@ export default function DecorationMenu() {
         </button>
       </SubCategoryContainer>
       <ListContainer>
-        {template.state &&
-          array.map((value, key) => {
-            return (
-              <SubButtons
-                select={template.index == key ? 1 : 0}
-                key={key}
-                onClick={() => {
-                  templating(value);
-                  dispatch(categoryActions.templateChange(key));
-                }}
-              >
-                {value}
-              </SubButtons>
-            );
-          })}
+        {template.state && <Template />}
         {stamp.state && <Stamp />}
         {tape.state && <Tape />}
       </ListContainer>

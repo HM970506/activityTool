@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { STAMP } from "../decorationSample";
-import { SubButtons } from "../style";
+import { SelectableObjectButton } from "../style";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
@@ -59,7 +59,7 @@ export default function Stamp() {
     <>
       {STAMP.map((value: any, key: number) => {
         return (
-          <SubButtons
+          <SelectableObjectButton
             select={stamp.index == key ? 1 : 0}
             key={key}
             onClick={() => {
@@ -68,7 +68,7 @@ export default function Stamp() {
             }}
           >
             {value.name}
-          </SubButtons>
+          </SelectableObjectButton>
         );
       })}
     </>
