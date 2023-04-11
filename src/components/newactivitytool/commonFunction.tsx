@@ -1,3 +1,5 @@
+import ReactLoading from "react-loading";
+
 export const functionRemover = (events: any[], target: any) => {
   if (events == undefined) return [];
   for (let i = 0; i < events.length; i++) {
@@ -13,4 +15,10 @@ export const functionChecker = (events: any[], target: any) => {
     if (events[i].name == target) return true;
   }
   return false;
+};
+
+export const Loading = () => {
+  return (
+    <ReactLoading type={"spin"} color={"black"} height={"80%"} width={"80%"} />
+  );
 };

@@ -2,26 +2,31 @@ import style from "styled-components";
 
 export const BackgroundContainer = style.div`
   width:95%;
-  border:1px solid black;
+  height: 90%;
 `;
 
 export const Container = style.div`
   display: flex;
   justify-content:left;
   align-items:center;
-
+  width: 100%;
 `;
 export const SubCategoryContainer = style(Container)`
-  .button{
+height: 30%;  
+gap: 10px;
+border:1px solid black;
+.button{
     width: 100px;
-    height: 10px;
   }
 `;
 
 export const ListContainer = style(Container)`
-gap: 5px;
-overflow-x: scroll;
-overflow-y:hidden.
+gap: 10px;
+border:1px solid black;
+
+height: 70%;
+overflow-x: auto;
+overflow-y:hidden;
 `;
 
 export const SubButtons = style.button<{ select: number }>`
@@ -35,4 +40,23 @@ export const SubButtons = style.button<{ select: number }>`
   display: flex;
   justify-content:center;
   align-items:center;
+`;
+
+export const ObjectButton = style.button`
+  background-color: inherit;
+  width: 10%;
+  height: 100%;
+  border: 1px solid black;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+`;
+
+export const Thumbnail = style.img`
+  height: 100%;
+`;
+
+export const LoadingContainer = style.div`
+  height: inherit;
+  
 `;

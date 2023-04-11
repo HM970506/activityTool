@@ -27,8 +27,6 @@ export async function getStorageData(path: string) {
     return null;
   });
 
-  console.log(data);
-
   return data;
 }
 
@@ -41,12 +39,15 @@ export async function getStorageDataAll(path: string) {
 
   if (imageList == null) return;
 
-  return imageList.items.map(async (item: StorageReference) => {
+  const data = new Array();
+
+  for (const item of imageList.items) {
     const now = await getDownloadURL(ref(storage, item.fullPath)).catch(
       (error) => {
         console.log("storage allList get Error: ", error);
       }
     );
-    return now;
-  });
+    data.push(now);
+  }
+  return data;
 }
