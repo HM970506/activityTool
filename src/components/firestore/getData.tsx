@@ -49,5 +49,6 @@ export async function getStorageDataAll(path: string) {
     );
     data.push(now);
   }
+
   return data;
 }
