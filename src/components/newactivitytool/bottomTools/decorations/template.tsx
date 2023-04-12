@@ -1,19 +1,19 @@
 import { fabric } from "fabric-with-erasing";
-import { LoadingContainer, SelectableObjectButton, Thumbnail } from "../style";
+import { SelectableObjectButton, Thumbnail } from "../style";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../firestore/getData";
-import Loading from "react-loading";
 import { useEffect, useState } from "react";
 
 export default function Template() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const [templates, setTemplates] = useState<any[]>([]);
   const dispatch = useDispatch();
   const { template } = useSelector(
     (state: any) => state.categoryReducer.subcategory
   );
-  const [templates, setTemplates] = useState<any[]>([]);
+
   const { data, isLoading } = useQuery(
     `decoration_template`,
     async () => {

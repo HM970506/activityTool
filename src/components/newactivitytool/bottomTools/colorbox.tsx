@@ -1,44 +1,8 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { drawActions } from "../../../store/common/drawSlice";
+import { ColorContainer, Colorchip } from "./style";
+import { COLORS } from "../types";
 
-const COLORS = [
-  "black",
-  "blue",
-  "red",
-  "pink",
-  "purple",
-  "grey",
-  "green",
-  "yellow",
-  "skyblue",
-  "white",
-];
-
-const ColorContainer = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  width: 100%;
-  gap: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  position: relative;
-  top: -10px;
-`;
-
-const Colorchip = styled.button<{ color: string; select: number }>`
-  width: 30px;
-  height: 30px;
-  border: none;
-  bottom: ${(props) => (props.select == 1 ? "15px" : "0px")};
-  border-radius: 100%;
-  position: relative;
-  background-color: ${(props) => {
-    return props.color;
-  }};
-`;
 export default function Colorbox() {
   const dispatch = useDispatch();
 

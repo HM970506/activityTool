@@ -1,20 +1,6 @@
-import axios from "axios";
 import app from "./setting";
-import {
-  getFirestore,
-  collection,
-  query,
-  getDocs,
-  doc,
-  getDoc,
-} from "firebase/firestore";
-import {
-  StorageReference,
-  getDownloadURL,
-  getStorage,
-  listAll,
-  ref,
-} from "firebase/storage";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 
 const firestore = getFirestore(app);
 const storage = getStorage(app);
@@ -46,7 +32,7 @@ export async function getStorageDataAll(path: string) {
     return null;
   });
 
-  if (imageList == null) return;
+  if (imageList == null) return null;
 
   const data = new Array();
 

@@ -1,26 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect } from "react";
 import {
   BackgroundContainer,
   ListContainer,
   SubCategoryContainer,
 } from "../style";
 import { categoryActions } from "../../../../store/common/categorySlice";
-
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import Tape from "./tape";
 import Stamp from "./stamp";
-
 import Template from "./template";
-import { useQuery } from "react-query";
-import { getStorageDataAll } from "../../../firestore/getData";
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const subcateogory = useSelector(
+  const { template, stamp, tape } = useSelector(
     (state: any) => state.categoryReducer.subcategory
   );
-  const { template, stamp, tape } = subcateogory;
 
   const dispatch = useDispatch();
 
@@ -32,10 +27,8 @@ export default function DecorationMenu() {
   }, [tape]);
 
   useEffect(() => {
-    if (stamp.state) {
-      // canvas.stamping = stamp.index;
-      dispatch(nodeActions.setDraw(false));
-    } else canvas.stamping = "";
+    if (stamp.state) dispatch(nodeActions.setDraw(false));
+    else canvas.stamping = "";
   }, [stamp]);
 
   return (

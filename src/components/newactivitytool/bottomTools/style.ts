@@ -52,3 +52,27 @@ export const Thumbnail = style.img`
 export const LoadingContainer = style.div`
   height: 100%;
 `;
+
+export const ColorContainer = style.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+  top: -10px;
+`;
+
+export const Colorchip = style.button<{ color: string; select: number }>`
+  width: 30px;
+  height: 30px;
+  border: none;
+  bottom: ${(props) => (props.select == 1 ? "15px" : "0px")};
+  border-radius: 100%;
+  position: relative;
+  background-color: ${(props) => {
+    return props.color;
+  }};
+`;

@@ -1,14 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
-import { fabric } from "fabric-with-erasing"; //기존 사용. 모듈xss
-import { useCallback, useEffect, useRef, useState } from "react";
 import { drawActions } from "../../../store/common/drawSlice";
 
 export default function DrawToolsMenu() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
-
-  // const Cryon = new fabric.CrayonBrush(canvas);
+  const dispatch = useDispatch();
+  const draws = useSelector((state: any) => state.drawReducer);
 
   const toolChange = (tool: string) => {
     dispatch(drawActions.toolChange(tool));
@@ -17,7 +13,6 @@ export default function DrawToolsMenu() {
     dispatch(drawActions.sizeChange(size));
   };
 
-  const dispatch = useDispatch();
   return (
     <>
       <BottomButton

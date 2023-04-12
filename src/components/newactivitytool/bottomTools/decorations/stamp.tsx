@@ -1,14 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { STAMP } from "../decorationSample";
 import { SelectableObjectButton, Thumbnail } from "../style";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { fabric } from "fabric-with-erasing";
 import { useEffect, useState } from "react";
-import { functionChecker, functionRemover } from "../../commonFunction";
+import { functionRemover } from "../../commonFunction";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../firestore/getData";
 
 export default function Stamp() {
+  const dispatch = useDispatch();
+  const [stamps, setStamps] = useState<string[]>([]);
+  const { isPanning, isDrawing, canvas } = useSelector(
+    (state: any) => state.nodeReducer
+  );
+  const stamp = useSelector(
+    (state: any) => state.categoryReducer.subcategory.stamp
+  );
+
   const { data, isLoading } = useQuery(
     `decoration_stamp`,
     async () => {
@@ -19,7 +27,6 @@ export default function Stamp() {
       refetchOnWindowFocus: false,
     }
   );
-  const [stamps, setStamps] = useState<any[]>([]);
 
   useEffect(() => {
     if (!isLoading && data != undefined) {
@@ -27,14 +34,6 @@ export default function Stamp() {
       if (canvas.stamping == "") canvas.stamping = data[0];
     }
   }, [isLoading]);
-
-  const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
-  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const dispatch = useDispatch();
-  const stamp = useSelector(
-    (state: any) => state.categoryReducer.subcategory.stamp
-  );
 
   const stampStep_1 = () => {
     const pointer = canvas.getPointer();

@@ -1,15 +1,16 @@
 import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
-import { functionChecker, functionRemover } from "../../commonFunction";
+import { functionRemover } from "../../commonFunction";
 
 export default function Tape() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const { isPanning, isDrawing, canvas } = useSelector(
+    (state: any) => state.nodeReducer
+  );
   const tape = useSelector(
     (state: any) => state.categoryReducer.subcategory.tape
   );
-  const isPanning = useSelector((state: any) => state.nodeReducer.isPanning);
-  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
+
   const tapeStep_1 = () => {
     const pointer = canvas.getPointer();
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
@@ -82,10 +83,8 @@ export default function Tape() {
   useEffect(() => {
     if (canvas) {
       tapeOff(canvas);
-      console.log(isPanning, isDrawing);
       if (!isPanning && !isDrawing) tapeOn();
       else tapeOff(canvas);
-      console.log(canvas.__eventListeners);
     }
   }, [isDrawing, isPanning]);
 

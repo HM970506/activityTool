@@ -6,7 +6,7 @@ import { saveJson } from "./save";
 import { TempLink } from "./style";
 
 export default function CanvasSave() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const { canvas, record } = useSelector((state: any) => state.nodeReducer);
   const linkRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
     // setInterval(() => {
@@ -28,7 +28,7 @@ export default function CanvasSave() {
       <TempLink ref={linkRef} />
       <DefaultButton
         onClick={() => {
-          saveJson(canvas);
+          saveJson(canvas, record);
         }}
       >
         임시저장
