@@ -10,10 +10,16 @@ export default function RecordMenu() {
 
   const addNodes = (audioSrc: string) => {
     //audioSrc를 파이어스토어에 저장
-    //캔버스에 특정 노드를 추가하고 그 노드가 더블클릭될때마다 음성 재생
-    const recoderButton = new fabric.Rect();
-
-    recoderButton.on("dbclick", () => {});
+    // const recoderButton = new fabric.Rect({
+    //   width: 100,
+    //   height: 100,
+    //   top: 0,
+    //   left: 0,
+    //   fill: "black",
+    //   selectable: true,
+    //   erasable: false,
+    //   evented: true,
+    // });
   };
   const audioRef = useRef<HTMLAudioElement>(null);
 

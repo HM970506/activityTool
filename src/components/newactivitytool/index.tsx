@@ -11,6 +11,13 @@ import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
 import TopButtons from "./topButtons";
 import { saveJson } from "./topButtons/saveButton/save";
+import { getFirestoreData } from "../firestore/getData";
+
+interface DATA {
+  data: string;
+  record: null | string;
+  timestampe: Date;
+}
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -27,14 +34,6 @@ export default function NewActivityTool() {
     if (activitytools) newActivityTool.current?.showModal();
     else newActivityTool.current?.close();
   }, [activitytools]);
-
-  const urlCheck = () => {
-    const nowUrl = window.location.href;
-    if (canvas) {
-      saveJson(canvas); //서버에서는 url도 함께 저장할 수 있게 하기
-      canvas.clear();
-    }
-  };
 
   const mainClick = () => {
     if (!activitytools) setSubButtonVisible((x) => !x);
@@ -60,11 +59,11 @@ export default function NewActivityTool() {
   //저장 관련 부분 시작--------------------------------------
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
-  const getCanvas = () => {
-    const json = localStorage.getItem("canvasData");
-    console.log(json);
-    if (json) {
-      canvas.loadFromJSON(json, () => canvas.renderAll());
+  const getCanvas = async () => {
+    const href = window.location.href.replaceAll("/", "_");
+    const data = await getFirestoreData(href);
+    if (data) {
+      canvas.loadFromJSON(data?.data, () => canvas.renderAll());
       activitytoolsStart();
     } else alert("저장된 데이터가 없습니다");
   };
@@ -89,14 +88,13 @@ export default function NewActivityTool() {
               <LoadButton
                 onClick={() => {
                   getCanvas();
-                  //  urlCheck();
                 }}
               >
                 불러오기
               </LoadButton>
               <NewButton
                 onClick={() => {
-                  urlCheck();
+                  canvas.clear();
                   activitytoolsStart();
                 }}
               >

@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
+import { setSaveDate } from "../../../firestore/setData";
 
-export const saveJson = (canvas: any) => {
+export const saveJson = async (canvas: any) => {
   const json = JSON.stringify(canvas);
-  localStorage.setItem("canvasData", json);
+  await setSaveDate(json, null);
 
-  //일반적으로 서버에 저장되지만, 여기서는 임시로 localstorage에 저장.
+  alert("저장되었습니다");
 };

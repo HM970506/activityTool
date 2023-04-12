@@ -1,6 +1,13 @@
 import axios from "axios";
 import app from "./setting";
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  query,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import {
   StorageReference,
   getDownloadURL,
@@ -12,12 +19,14 @@ import {
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-export async function getFirestoreData(path: string) {
-  const q = query(collection(firestore, path));
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
+export async function getFirestoreData(href: string) {
+  const docRef = doc(firestore, "saveData", href);
+  const docSnap = await getDoc(docRef).catch((error) => {
+    console.log("firestore Error: ", error);
+    return null;
   });
+
+  return docSnap == null ? null : docSnap.data();
 }
 
 export async function getStorageData(path: string) {
