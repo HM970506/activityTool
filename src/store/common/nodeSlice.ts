@@ -7,6 +7,7 @@ const nodeSlice = createSlice({
     isDrawing: false,
     isPanning: false,
     textareaContainer: null,
+    record: null,
     opacity: 0,
   },
 
@@ -27,6 +28,10 @@ const nodeSlice = createSlice({
 
     setPan: (state, action: PayloadAction<any>) => {
       state.isPanning = action.payload;
+    },
+
+    setRecord: (state, action: PayloadAction<any>) => {
+      state.record = action.payload;
     },
   },
 });

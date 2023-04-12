@@ -1,25 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
-import { useSelector } from "react-redux";
-import { fabric } from "fabric-with-erasing";
+import { useDispatch, useSelector } from "react-redux";
+import { nodeActions } from "../../../store/common/nodeSlice";
 
 export default function RecordMenu() {
   const [audioSrc, setAudioSrc] = useState<string | undefined>(undefined);
   navigator.mediaDevices.getUserMedia({ audio: true });
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const dispatch = useDispatch();
 
   const addNodes = (audioSrc: string) => {
-    //audioSrc를 파이어스토어에 저장
-    // const recoderButton = new fabric.Rect({
-    //   width: 100,
-    //   height: 100,
-    //   top: 0,
-    //   left: 0,
-    //   fill: "black",
-    //   selectable: true,
-    //   erasable: false,
-    //   evented: true,
-    // });
+    dispatch(nodeActions.setRecord(audioSrc));
   };
   const audioRef = useRef<HTMLAudioElement>(null);
 
