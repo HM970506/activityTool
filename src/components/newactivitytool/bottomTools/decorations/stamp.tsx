@@ -38,10 +38,7 @@ export default function Stamp() {
 
   const stampStep_1 = () => {
     const pointer = canvas.getPointer();
-    console.log(canvas.stamping);
-
-    //잠깐..이건 링크지 svg가 아니잖어
-    fabric.loadSVGFromUrl(canvas.stamping, (objects: any, options: any) => {
+    fabric.loadSVGFromURL(canvas.stamping, (objects: any, options: any) => {
       const stamp = fabric.util.groupSVGElements(objects, options);
 
       stamp.fill = canvas.toolColor;
