@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
 import {
   BackgroundContainer,
   ListContainer,
-  LoadingContainer,
   ObjectButton,
   SubCategoryContainer,
   Thumbnail,
 } from "./style";
 import { getStorageDataAll } from "../../firestore/getData";
 import { useQuery } from "react-query";
-import { Loading } from "../commonFunction";
+import { STICKER_CATEGORY } from "../types";
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
@@ -47,20 +46,18 @@ export default function StickerMenu() {
   return (
     <BackgroundContainer>
       <SubCategoryContainer>
-        <button
-          onClick={() => {
-            setStickerCategory("fluffy");
-          }}
-        >
-          인형
-        </button>
-        <button
-          onClick={() => {
-            setStickerCategory("object");
-          }}
-        >
-          인형아님
-        </button>
+        {STICKER_CATEGORY.map((value: any, key: number) => {
+          return (
+            <button
+              key={`sticker_${key}`}
+              onClick={() => {
+                setStickerCategory(value.id);
+              }}
+            >
+              {value.name}
+            </button>
+          );
+        })}
       </SubCategoryContainer>
       <ListContainer>
         {isLoading ? (

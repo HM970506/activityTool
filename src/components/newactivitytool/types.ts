@@ -28,3 +28,21 @@ export interface drawPenType {
 export const BIG = 30;
 export const MIDIUM = 25;
 export const SMALL = 20;
+
+export const COLORS = [
+  "black",
+  "blue",
+  "red",
+  "pink",
+  "purple",
+  "grey",
+  "green",
+  "yellow",
+  "skyblue",
+  "white",
+];
+
+export const STICKER_CATEGORY = [
+  { id: "fluffy", name: "인형" },
+  { id: "object", name: "인형아님" },
+];
