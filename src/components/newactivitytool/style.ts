@@ -133,9 +133,12 @@ export const SideButtonBox = styled.div`
   right: 100px;
 `;
 
-export const SideButton = styled.button<{ size: number }>`
+export const SideButton = styled.button<{ font: string }>`
   width: 120px;
-  font-size: ${(props) => props.size + "px"};
+  font-family: ${(props) => props.font};
+  font-size: 30px;
+  border: none;
+  background-color: inherit;
 `;
 
 export const TextEditor = styled.textarea<{ size: number; line: number }>`

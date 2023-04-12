@@ -18,7 +18,7 @@ export default function TextMenu() {
     ...deleteProps,
   });
 
-  const TextMaker = (size: number) => {
+  const TextMaker = (font: string) => {
     const textbox = new fabric.Textbox("텍스트를 입력하세요", {
       left: window.innerWidth / 2,
       top: window.innerHeight / 2,
@@ -26,10 +26,10 @@ export default function TextMenu() {
       width: 400,
       height: 30,
       editable: true,
-      // cornerColor: "black",
-      fontSize: size,
+      fontSize: 30,
       selectable: true,
       hiddenTextareaContainer: textAreaContainer,
+      fontFamily: font,
     });
     canvas.add(textbox);
     canvas.renderAll();
@@ -38,28 +38,28 @@ export default function TextMenu() {
   return (
     <>
       <SideButton
-        size={BIG}
+        font={"굴림체"}
         onClick={() => {
-          TextMaker(BIG);
+          TextMaker("굴림체");
         }}
       >
-        큰 글자
+        굴림체
       </SideButton>
       <SideButton
+        font={"궁서체"}
         onClick={() => {
-          TextMaker(MIDIUM);
+          TextMaker("궁서체");
         }}
-        size={MIDIUM}
       >
-        중간 글자
+        궁서체
       </SideButton>
       <SideButton
+        font={"바탕체"}
         onClick={() => {
-          TextMaker(SMALL);
+          TextMaker("바탕체");
         }}
-        size={SMALL}
       >
-        작은 글자
+        바탕체
       </SideButton>
     </>
   );
