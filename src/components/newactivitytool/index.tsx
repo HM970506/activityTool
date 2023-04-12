@@ -7,17 +7,10 @@ import {
   MainButton,
   NewButton,
 } from "./style";
-import BottomTools from "./bottomTools";
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
-import ToggleButton from "./topButtons/drawingButton/drawingButton";
-
-import { FabricJSEditor } from "fabricjs-react/dist/lib/editor";
-import CanvasHistory from "./topButtons/historyButton/history";
 import TopButtons from "./topButtons";
 import { saveJson } from "./topButtons/saveButton/save";
-import { nodeActions } from "../../store/common/nodeSlice";
-import { zoomActions } from "../../store/common/zoomSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
