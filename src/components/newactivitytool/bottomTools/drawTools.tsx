@@ -48,15 +48,25 @@ export default function DrawToolsMenu() {
         스프레이
       </BottomButton>
 
-      <button onClick={() => sizeChange(20)}>큰 브러쉬</button>
-      <button onClick={() => sizeChange(3)}>작은 브러쉬</button>
-
       <BottomButton
         select={draws.tool == "eraser" ? 1 : 0}
         onClick={() => toolChange("eraser")}
       >
         지우개
       </BottomButton>
+
+      <button
+        onClick={() =>
+          sizeChange(draws.size < 100 ? draws.size + 5 : draws.size)
+        }
+      >
+        크게!
+      </button>
+      <button
+        onClick={() => sizeChange(draws.size > 5 ? draws.size - 5 : draws.size)}
+      >
+        작게!
+      </button>
     </>
   );
 }
