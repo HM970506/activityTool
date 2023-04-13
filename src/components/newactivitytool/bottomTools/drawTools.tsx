@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../style";
 import { drawActions } from "../../../store/common/drawSlice";
+import { DrawSample } from "./style";
 
 export default function DrawToolsMenu() {
   const dispatch = useDispatch();
@@ -67,6 +68,8 @@ export default function DrawToolsMenu() {
       >
         작게!
       </button>
+
+      <DrawSample size={draws.size} />
     </>
   );
 }

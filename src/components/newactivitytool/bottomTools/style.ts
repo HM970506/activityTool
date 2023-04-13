@@ -94,3 +94,11 @@ export const FontButton = style.button<{ font: string; url: string }>`
   background-color: inherit;
   font-size: 20px;
 `;
+
+export const DrawSample = style.div<{ size: number }>`
+  border: 1px solid black;
+  backgound-color: inherit;
+  border-radius: 100%;
+  width:  ${(props) => props.size + "px"};
+  height: ${(props) => props.size + "px"};
+`;
