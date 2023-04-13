@@ -4,13 +4,12 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { DRAWTOOLS } from "../types";
 import { Button } from "../style";
 import { fabric } from "fabric-with-erasing";
-import canvasSetting from "../canvas/canvasSetting";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
   const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
+  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
 
   const setColor = (color: string) => {
     const now = canvas.getActiveObject();
@@ -18,15 +17,17 @@ export default function DrawToolsButton() {
     else canvas.freeDrawingBrush.color = color;
   };
 
+  const setDrawTools = () => {
+    setTool(draws.tool);
+    setSize(draws.size);
+    setColor(draws.color);
+    canvas.toolColor = draws.color;
+    canvas.renderAll();
+  };
+
   useEffect(() => {
-    if (canvas) {
-      setTool(draws.tool);
-      setSize(draws.size);
-      setColor(draws.color);
-      canvas.toolColor = draws.color;
-      canvas.renderAll();
-    }
-  }, [draws]);
+    if (canvas) setDrawTools();
+  }, [draws, isDrawing]);
 
   const PenBrush = new fabric.PencilBrush(canvas);
   const Pen2Brush = new fabric.Shadow(canvas, { blur: 100 });
