@@ -10,7 +10,7 @@ import {
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
 import TopButtons from "./topButtons";
-import { saveJson } from "./topButtons/saveButton/save";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { getFirestoreData } from "../firestore/getData";
 
 interface DATA {
@@ -65,9 +65,9 @@ export default function NewActivityTool() {
   };
 
   //저장 관련 부분 끝------------------------------------------
-
+  const queryClient = new QueryClient(); // 인스턴스 생성
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Background ref={newActivityTool}>
         <Overlay>
           <TopButtons />
@@ -100,6 +100,6 @@ export default function NewActivityTool() {
           )}
         </>
       )}
-    </>
+    </QueryClientProvider>
   );
 }

@@ -5,8 +5,7 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect, useState } from "react";
 import { functionRemover } from "../../commonFunction";
 import { useQuery } from "react-query";
-import { getStorageDataAll } from "../../../firestore/getData";
-import { nodeActions } from "../../../../store/common/nodeSlice";
+import { getFirestoreData } from "../../../firestore/getData";
 
 export default function Stamp() {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ export default function Stamp() {
   const { data, isLoading } = useQuery(
     `decoration_stamp`,
     async () => {
-      return await getStorageDataAll(`bottomTools/decorations/stamp`);
+      return await getFirestoreData("menu", "decoration");
     },
     {
       retry: 0,
@@ -31,14 +30,15 @@ export default function Stamp() {
 
   useEffect(() => {
     if (!isLoading && data != undefined) {
-      setStamps(data);
-      if (canvas.stamping == "") canvas.stamping = data[0];
+      console.log(data.stamp);
+      setStamps(data.stamp);
+      if (canvas.stamping == "") canvas.stamping = data.stamp[0];
     }
   }, [isLoading]);
 
   const stampStep_1 = () => {
     const pointer = canvas.getPointer();
-    fabric.loadSVGFromURL(canvas.stamping, (objects: any, options: any) => {
+    fabric.loadSVGFromString(canvas.stamping, (objects: any, options: any) => {
       const stamp = fabric.util.groupSVGElements(objects, options);
 
       stamp.fill = canvas.toolColor;
@@ -88,11 +88,14 @@ export default function Stamp() {
                 dispatch(categoryActions.stampChange(key));
               }}
             >
-              <Thumbnail src={value} />
+              <Thumbnail src={`data:image/svg+xml;utf8,${value}`} />
             </SelectableObjectButton>
           );
         })
       )}
     </>
   );
+}
+function getFireStroeData(arg0: string, arg1: string): any {
+  throw new Error("Function not implemented.");
 }

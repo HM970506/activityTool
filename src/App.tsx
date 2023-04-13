@@ -11,14 +11,12 @@ const App = () => {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route path="/" element={<TemplatesIndex />} />
-          <Route path="/:templateId" element={<NonTemplate />} />
-          <Route path="/test" element={<Test />} />
-        </Routes>
-        <NewActivityTool />
-      </QueryClientProvider>
+      <Routes>
+        <Route path="/" element={<TemplatesIndex />} />
+        <Route path="/:templateId" element={<NonTemplate />} />
+        <Route path="/test" element={<Test />} />
+      </Routes>
+      <NewActivityTool />
       <Reset />
     </>
   );
