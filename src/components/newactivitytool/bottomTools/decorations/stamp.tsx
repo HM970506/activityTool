@@ -30,9 +30,8 @@ export default function Stamp() {
 
   useEffect(() => {
     if (!isLoading && data != undefined) {
-      console.log(data.stamp);
       setStamps(data.stamp);
-      if (canvas.stamping == "") canvas.stamping = data.stamp[0];
+      if (canvas.stamping == "") canvas.stamping = data.stamp[stamp.index];
     }
   }, [isLoading]);
 
