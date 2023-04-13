@@ -2,12 +2,15 @@ import { Button, SideButton, SideButtonBox } from "../style";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { TEXT } from "../types";
-import { useQueries, useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
+import { useEffect, useState } from "react";
 
 export default function TextButton() {
   const dispatch = useDispatch();
-  useQuery(
+  const queryClient = useQueryClient();
+
+  const { data: font, isLoading: fontLoading } = useQuery(
     `text_font`,
     async () => {
       return await getStorageDataAll(`bottomTools/textbox`);
@@ -17,7 +20,7 @@ export default function TextButton() {
       refetchOnWindowFocus: false,
     }
   );
-  useQuery(
+  const { data: fontName, isLoading: fontNameLoading } = useQuery(
     `text_fontname`,
     async () => {
       return await getFirestoreData("menu", "textbox");
@@ -27,6 +30,17 @@ export default function TextButton() {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    if (!fontLoading && !fontNameLoading && font && fontName) {
+      queryClient.setQueryData(
+        "text",
+        fontName.font.map((value: string, key: number) => {
+          return { name: value, url: font[key] };
+        })
+      );
+    }
+  }, [fontLoading, fontNameLoading]);
 
   const nowCategory = useSelector(
     (state: any) => state.categoryReducer.category

@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { SideButton } from "../style";
 import { fabric } from "fabric";
 import { deleteProps } from "../setting/deleteButton";
-import { useQuery } from "react-query";
-import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
+import { useQuery, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { FontButton } from "./style";
 
@@ -13,35 +11,12 @@ export default function TextMenu() {
     (state: any) => state.nodeReducer.textareaContainer
   );
   const [texts, setTexts] = useState<any[]>([]);
-  const { data: font, isLoading: fontLoading } = useQuery(
-    `text_font`,
-    async () => {
-      return await getStorageDataAll(`bottomTools/textbox`);
-    },
-    {
-      retry: 0,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const { data: fontName, isLoading: fontNameLoading } = useQuery(
-    `text_fontname`,
-    async () => {
-      return await getFirestoreData("menu", "textbox");
-    },
-    {
-      retry: 0,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData("text");
 
   useEffect(() => {
-    if (!fontLoading && !fontNameLoading && font && fontName) {
-      const data = fontName.font.map((value: string, key: number) => {
-        return { name: value, url: font[key] };
-      });
-      setTexts(data);
-    }
-  }, [fontLoading, fontNameLoading]);
+    if (Array.isArray(data)) setTexts(data);
+  }, [data]);
 
   fabric.Textbox.prototype.set({
     cornerColor: "black",
@@ -70,9 +45,7 @@ export default function TextMenu() {
 
   return (
     <>
-      {fontNameLoading && fontLoading ? (
-        <div>로딩중</div>
-      ) : (
+      {data ? (
         texts.map((value: any, key: number) => {
           return (
             <FontButton
@@ -87,6 +60,8 @@ export default function TextMenu() {
             </FontButton>
           );
         })
+      ) : (
+        <div>로딩중</div>
       )}
     </>
   );
