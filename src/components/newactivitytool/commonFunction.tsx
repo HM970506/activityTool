@@ -19,6 +19,11 @@ export const functionChecker = (events: any[], target: any) => {
 
 export const Loading = () => {
   return (
-    <ReactLoading type={"spin"} color={"black"} height={"80%"} width={"80%"} />
+    <ReactLoading
+      type={"spin"}
+      color={"black"}
+      height={"100%"}
+      width={"100%"}
+    />
   );
 };

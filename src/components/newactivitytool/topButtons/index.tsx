@@ -7,7 +7,6 @@ import ZoomButton from "./zoomButton/zoomButton";
 import PanningToggle from "./panningButton/panningButton";
 import ViewButton from "./viewButton/viewButton";
 import { TopButtonContainer } from "./style";
-import { useSelector } from "react-redux";
 
 export default function TopButtons() {
   return (

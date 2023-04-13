@@ -1,14 +1,47 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SideButton } from "../style";
 import { fabric } from "fabric";
-import { BIG, MIDIUM, SMALL, TEXT } from "../types";
 import { deleteProps } from "../setting/deleteButton";
+import { useQuery } from "react-query";
+import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
+import { useEffect, useState } from "react";
+import { FontButton } from "./style";
 
 export default function TextMenu() {
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
   const textAreaContainer = useSelector(
     (state: any) => state.nodeReducer.textareaContainer
   );
+  const [texts, setTexts] = useState<any[]>([]);
+  const { data: font, isLoading: fontLoading } = useQuery(
+    `text_font`,
+    async () => {
+      return await getStorageDataAll(`bottomTools/textbox`);
+    },
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const { data: fontName, isLoading: fontNameLoading } = useQuery(
+    `text_fontname`,
+    async () => {
+      return await getFirestoreData("menu", "textbox");
+    },
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  useEffect(() => {
+    if (!fontLoading && !fontNameLoading && font && fontName) {
+      const data = fontName.font.map((value: string, key: number) => {
+        return { name: value, url: font[key] };
+      });
+      setTexts(data);
+    }
+  }, [fontLoading, fontNameLoading]);
 
   fabric.Textbox.prototype.set({
     cornerColor: "black",
@@ -37,30 +70,24 @@ export default function TextMenu() {
 
   return (
     <>
-      <SideButton
-        font={"굴림체"}
-        onClick={() => {
-          TextMaker("굴림체");
-        }}
-      >
-        굴림체
-      </SideButton>
-      <SideButton
-        font={"궁서체"}
-        onClick={() => {
-          TextMaker("궁서체");
-        }}
-      >
-        궁서체
-      </SideButton>
-      <SideButton
-        font={"바탕체"}
-        onClick={() => {
-          TextMaker("바탕체");
-        }}
-      >
-        바탕체
-      </SideButton>
+      {fontNameLoading && fontLoading ? (
+        <div>로딩중</div>
+      ) : (
+        texts.map((value: any, key: number) => {
+          return (
+            <FontButton
+              url={value.url}
+              font={value.name}
+              key={`text_${key}`}
+              onClick={() => {
+                TextMaker(value.name);
+              }}
+            >
+              {value.name}
+            </FontButton>
+          );
+        })
+      )}
     </>
   );
 }

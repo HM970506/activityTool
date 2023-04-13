@@ -1,9 +1,9 @@
 import { fabric } from "fabric-with-erasing";
 import "fabric-history";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef, useState } from "react";
-import { Background, CanvasBackground, Test } from "../style";
+import { CanvasBackground } from "../style";
 import canvasSetting from "./canvasSetting";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";

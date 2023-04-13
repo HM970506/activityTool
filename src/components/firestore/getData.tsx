@@ -5,8 +5,8 @@ import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-export async function getFirestoreData(href: string) {
-  const docRef = doc(firestore, "saveData", href);
+export async function getFirestoreData(path: string, href: string) {
+  const docRef = doc(firestore, path, href);
   const docSnap = await getDoc(docRef).catch((error) => {
     console.log("firestore Error: ", error);
     return null;

@@ -76,3 +76,21 @@ export const Colorchip = style.button<{ color: string; select: number }>`
     return props.color;
   }};
 `;
+
+export const FontButton = style.button<{ font: string; url: string }>`
+@font-face{
+  font-family: ${(props) => {
+    return props.font;
+  }};
+  src: url(${(props) => {
+    return props.url;
+  }});
+}
+
+  font-family: ${(props) => {
+    return props.font;
+  }};
+  border: none;
+  background-color: inherit;
+  font-size: 20px;
+`;

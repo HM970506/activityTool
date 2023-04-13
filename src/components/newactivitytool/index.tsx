@@ -25,8 +25,7 @@ export default function NewActivityTool() {
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  //할일
-  //1.버튼 메모이제이션
+  //할일.버튼 메모이제이션
 
   //버튼 관련 부분 시작------------------------------------
 
@@ -53,15 +52,12 @@ export default function NewActivityTool() {
 
   //버튼 관련 부분 끝-------------------------------------
 
-  //노드목록이 수정될 때마다 노드목록의 값이 불러와지..게 할 수 없군요.
-  //반대로 해야겠다. 노드목록 값이 불러와질 때마다 노드 목록을 수정합시다.
-
   //저장 관련 부분 시작--------------------------------------
   const canvas = useSelector((state: any) => state.nodeReducer.canvas);
 
   const getCanvas = async () => {
     const href = window.location.href.replaceAll("/", "_");
-    const data = await getFirestoreData(href);
+    const data = await getFirestoreData("saveData", href);
     if (data) {
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
       activitytoolsStart();
