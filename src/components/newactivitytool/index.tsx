@@ -10,8 +10,14 @@ import {
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
 import TopButtons from "./topButtons";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { getFirestoreData } from "../firestore/getData";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useQueryClient,
+} from "react-query";
+import { getFirestoreData, getStorageDataAll } from "../firestore/getData";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 interface DATA {
   data: string;
@@ -65,17 +71,17 @@ export default function NewActivityTool() {
   };
 
   //저장 관련 부분 끝------------------------------------------
-  const queryClient = new QueryClient(); // 인스턴스 생성
+
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Background ref={newActivityTool}>
         <Overlay>
           <TopButtons />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
           <Canvas />
+          <ReactQueryDevtools />
         </Overlay>
       </Background>
-
       {!activitytools && (
         <>
           <MainButton onClick={mainClick}>활동툴</MainButton>
@@ -100,6 +106,6 @@ export default function NewActivityTool() {
           )}
         </>
       )}
-    </QueryClientProvider>
+    </>
   );
 }

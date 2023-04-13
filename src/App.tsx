@@ -10,7 +10,7 @@ const App = () => {
   const queryClient = new QueryClient();
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<TemplatesIndex />} />
         <Route path="/:templateId" element={<NonTemplate />} />
@@ -18,7 +18,7 @@ const App = () => {
       </Routes>
       <NewActivityTool />
       <Reset />
-    </>
+    </QueryClientProvider>
   );
 };
 
