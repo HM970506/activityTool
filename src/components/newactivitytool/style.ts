@@ -60,6 +60,11 @@ export const LoadButton = styled(SubButton)`
 
 export const Background = styled.dialog`
   transition-property: top-layer;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 
   width: 100%;
   height: 100%;

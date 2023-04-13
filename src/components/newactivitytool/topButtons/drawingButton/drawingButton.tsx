@@ -12,13 +12,14 @@ export default function DrawToggle() {
 
   const drawOn = () => {
     canvas.isDrawingMode = true;
-    console.log(draws);
     dispatch(nodeActions.setPan(false));
     canvas.on({ "selection:created": drawOff, "selection:updated": drawOff });
     canvas.discardActiveObject().renderAll();
   };
 
   const drawOff = () => {
+    canvas.isDrawingMode = false;
+
     canvas.__eventListeners["selection:created"] = functionRemover(
       canvas.__eventListeners["selection:created"],
       "drawOff"

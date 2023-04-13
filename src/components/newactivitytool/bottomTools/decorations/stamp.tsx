@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { functionRemover } from "../../commonFunction";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../firestore/getData";
+import { nodeActions } from "../../../../store/common/nodeSlice";
 
 export default function Stamp() {
   const dispatch = useDispatch();
