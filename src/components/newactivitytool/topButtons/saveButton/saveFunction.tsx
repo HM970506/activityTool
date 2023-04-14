@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { setSaveDate } from "../../../firestore/setData";
 
 export const saveJson = async (canvas: any, record: null | string) => {
