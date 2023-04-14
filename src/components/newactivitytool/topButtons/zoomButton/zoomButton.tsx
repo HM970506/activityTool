@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { zoomActions } from "../../../../store/common/zoomSlice";
-import { DefaultButton } from "../../style";
+import { DefaultButton } from "../../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
+import { ReducersType } from "../../types";
 
 export default function ZoomButton() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const { zoom, zoomView, scale } = useSelector(
-    (state: any) => state.zoomReducer
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const { zoom, zoomView } = useSelector(
+    (state: ReducersType) => state.zoomReducer
   );
   const dispatch = useDispatch();
 
@@ -16,42 +17,39 @@ export default function ZoomButton() {
   }, [canvas]);
 
   useEffect(() => {
-    if (canvas)
-      canvas.zoomToPoint(
-        new fabric.Point(canvas.width / 2, canvas.height / 2),
-        zoom
-      );
+    if (canvas) {
+      const point = new fabric.Point(canvas.width / 2, canvas.height / 2);
+      canvas.zoomToPoint(point, zoom);
+    }
   }, [zoom]);
+
+  const zoomHandler = (zoom: boolean) => {
+    let state = zoom ? 0.1 : -0.1;
+
+    const nowZoom = Math.round((canvas.getZoom() + state) * 100) / 100;
+    dispatch(zoomActions.setZoom(nowZoom));
+    dispatch(zoomActions.setView(nowZoom));
+  };
+
+  const zoomPlus = () => {
+    zoomHandler(true);
+  };
+
+  const zoomMinus = () => {
+    zoomHandler(false);
+  };
+
+  const restoration = () => {
+    dispatch(zoomActions.reset());
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+  };
 
   return (
     <>
-      <DefaultButton
-        onClick={() => {
-          const nowZoom = Math.round((canvas.getZoom() + 0.1) * 100) / 100;
-          dispatch(zoomActions.setZoom(nowZoom));
-          dispatch(zoomActions.setView(nowZoom));
-        }}
-      >
-        확대
-      </DefaultButton>
+      <DefaultButton onClick={zoomPlus}>확대</DefaultButton>
       {zoomView}
-      <DefaultButton
-        onClick={() => {
-          const nowZoom = Math.round((canvas.getZoom() - 0.1) * 100) / 100;
-          dispatch(zoomActions.setZoom(nowZoom));
-          dispatch(zoomActions.setView(nowZoom));
-        }}
-      >
-        축소
-      </DefaultButton>
-      <DefaultButton
-        onClick={() => {
-          dispatch(zoomActions.reset());
-          canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-        }}
-      >
-        원래대로
-      </DefaultButton>
+      <DefaultButton onClick={zoomMinus}>축소</DefaultButton>
+      <DefaultButton onClick={restoration}>원래대로</DefaultButton>
     </>
   );
 }
