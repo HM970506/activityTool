@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { nodeActions } from "../../../store/common/nodeSlice";
 import { STICKER } from "../types";
-import { Button } from "../style";
+import { Button } from "../styles/indexStyle";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../firestore/getData";
 

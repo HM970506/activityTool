@@ -7,15 +7,15 @@ import {
   ObjectButton,
   SubCategoryContainer,
   Thumbnail,
-} from "./style";
+} from "../styles/bottomToolstyle";
 import { getStorageDataAll } from "../../firestore/getData";
 import { useQuery } from "react-query";
-import { STICKER_CATEGORY } from "../types";
+import { ReducersType, STICKER_CATEGORY } from "../types";
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
   const [stickers, setStickers] = useState<any[]>([]);
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const { data, isLoading } = useQuery(
     `sticker_${stickerCategory}`,
     async () => {

@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nodeActions } from "../../../../store/common/nodeSlice";
+import { nodeActions } from "../../../store/common/nodeSlice";
+import { ReducersType } from "../types";
 
 export default function CanvasOpacity() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const opacity = useSelector((state: any) => state.nodeReducer.opacity);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const opacity = useSelector(
+    (state: ReducersType) => state.nodeReducer.opacity
+  );
   const dispatch = useDispatch();
 
-  const opacityHandler = (e: any) => {
+  const opacityHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(nodeActions.setOpacity(e.target.value));
   };
 

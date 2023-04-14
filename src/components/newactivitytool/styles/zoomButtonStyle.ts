@@ -60,3 +60,10 @@ export const TopButtonContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const ViewButtonContatiner = styled.button`
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  width: 50px;
+  height: 50px;
+`;

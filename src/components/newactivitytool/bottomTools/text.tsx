@@ -1,14 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fabric } from "fabric";
 import { deleteProps } from "../setting/deleteButton";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
-import { FontButton } from "./style";
+import { FontButton } from "../styles/bottomToolstyle";
+import { DEFUALT_TEXTBOX, ReducersType } from "../types";
 
 export default function TextMenu() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const textAreaContainer = useSelector(
-    (state: any) => state.nodeReducer.textareaContainer
+    (state: ReducersType) => state.nodeReducer.textareaContainer
   );
   const [texts, setTexts] = useState<any[]>([]);
   const queryClient = useQueryClient();
@@ -30,12 +31,7 @@ export default function TextMenu() {
     const textbox = new fabric.Textbox("텍스트를 입력하세요", {
       left: window.innerWidth / 2,
       top: window.innerHeight / 2,
-      color: "black",
-      width: 400,
-      height: 30,
-      editable: true,
-      fontSize: 30,
-      selectable: true,
+      ...DEFUALT_TEXTBOX,
       hiddenTextareaContainer: textAreaContainer,
       fontFamily: font,
     });

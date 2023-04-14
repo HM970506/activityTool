@@ -4,17 +4,18 @@ import {
   BackgroundContainer,
   ListContainer,
   SubCategoryContainer,
-} from "../style";
+} from "../../styles/bottomToolstyle";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import Tape from "./tape";
 import Stamp from "./stamp";
 import Template from "./template";
+import { ReducersType } from "../../types";
 
 export default function DecorationMenu() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const { template, stamp, tape } = useSelector(
-    (state: any) => state.categoryReducer.subcategory
+    (state: ReducersType) => state.categoryReducer.subcategory
   );
 
   const dispatch = useDispatch();

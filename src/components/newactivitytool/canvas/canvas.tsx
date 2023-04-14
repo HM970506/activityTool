@@ -3,39 +3,21 @@ import "fabric-history";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef, useState } from "react";
-import { CanvasBackground } from "../style";
-import canvasSetting from "./canvasSetting";
+import { CanvasBackground } from "../styles/indexStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
+import { DEFAULT_CANVAS } from "../types";
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [test, setTest] = useState<string>("test");
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
-      height: window.innerHeight,
-
-      width: window.innerWidth,
-      backgroundColor: "rgba(255,255,255,0)",
-      preserveObjectStacking: true,
-      selection: false,
-      taping: 0,
-      panning: 0,
-      stamping: -1,
-      skipOffscreen: true,
-      allowTouchScrolling: true,
-      deltaX: 0,
-      deltaY: 0,
-      lastClientX: 0,
-      lastClientY: 0,
-      tapeState: {
-        size: 20,
-        opacity: 0.5,
-      },
-      toolColor: "black",
+      ...DEFAULT_CANVAS,
+      left: window.innerWidth / 2,
+      top: window.innerHeight / 2,
     });
     canvas.freeDrawingBrush.inverted = true;
 
@@ -43,8 +25,8 @@ export default function Canvas() {
     windowSetting(dispatch, canvas);
 
     canvas.renderAll();
-    dispatch(nodeActions.setCanvas(canvasSetting(canvas, setTest)));
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
+    dispatch(nodeActions.setCanvas(canvas));
   }, []);
 
   return (

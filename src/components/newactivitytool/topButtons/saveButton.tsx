@@ -1,16 +1,20 @@
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { DefaultButton } from "../../styles/indexStyle";
+import { DefaultButton } from "../styles/indexStyle";
 import { saveJson } from "./saveFunction";
-import { TempLink } from "../../styles/saveButtonstyle";
+import { TempLink } from "../styles/saveButtonstyle";
+import { ReducersType } from "../types";
 
 const INTERVAL_TIME = 10000;
 
 export default function CanvasSave() {
-  const { canvas, record } = useSelector((state: any) => state.nodeReducer);
+  const { canvas, record } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
+
   const linkRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
-    //saveInterval
+    //saveInterval()
   }, []);
 
   const saveInterval = () => {

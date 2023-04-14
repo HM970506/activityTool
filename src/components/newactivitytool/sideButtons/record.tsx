@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { nodeActions } from "../../../store/common/nodeSlice";
 import { RECORD } from "../types";
-import { Button } from "../style";
+import { Button } from "../styles/indexStyle";
 
 export default function RecordButton() {
   const dispatch = useDispatch();

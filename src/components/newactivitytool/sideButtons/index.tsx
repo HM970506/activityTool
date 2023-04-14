@@ -1,22 +1,23 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, ButtonBox } from "../style";
+import { useSelector } from "react-redux";
+import { Button, ButtonBox } from "../styles/indexStyle";
 import PhotoButton from "./photo";
 import RecordButton from "./record";
 import StickerButton from "./sticker";
 import TextButton from "./text";
 import DrawToolsButton from "./drawTools";
 import DecorationButton from "./decoration";
-import store from "../../../store/store";
-import { DECORATION } from "../types";
+import { DECORATION, ReducersType } from "../types";
 
 export default function SideButtons({
   activitytoolsEnd,
 }: {
   activitytoolsEnd: any;
 }) {
-  const { view, category } = useSelector((state: any) => state.categoryReducer);
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const { view, category } = useSelector(
+    (state: ReducersType) => state.categoryReducer
+  );
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
 
   useEffect(() => {
     if (canvas) {

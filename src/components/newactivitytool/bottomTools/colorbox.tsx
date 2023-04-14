@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../store/common/drawSlice";
-import { ColorContainer, Colorchip } from "./style";
-import { COLORS } from "../types";
+import { ColorContainer, Colorchip } from "../styles/bottomToolstyle";
+import { COLORS, ReducersType } from "../types";
 
 export default function Colorbox() {
   const dispatch = useDispatch();
+  const color = useSelector((state: ReducersType) => state.drawReducer.color);
 
   const colorChange = (color: string) => {
     dispatch(drawActions.colorChange(color));
   };
-  const color = useSelector((state: any) => state.drawReducer.color);
 
   return (
     <ColorContainer>

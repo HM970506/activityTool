@@ -1,12 +1,12 @@
 import BottomTools from "../bottomTools";
-import CanvasHistory from "./historyButton/history";
-import CanvasOpacity from "./opacityButton/opacityBar";
+import CanvasHistory from "./historyButton";
+import CanvasOpacity from "./opacityBar";
 import CanvasSave from "./saveButton";
-import DrawToggle from "./drawingButton/drawingButton";
-import ZoomButton from "./zoomButton/zoomButton";
-import PanningToggle from "./panningButton/panningButton";
-import ViewButton from "./viewButton/viewButton";
-import { TopButtonContainer } from "./style";
+import DrawToggle from "./drawingButton";
+import ZoomButton from "./zoomButton";
+import PanningToggle from "./panningButton";
+import ViewButton from "./viewButton";
+import { TopButtonContainer } from "../styles/zoomButtonStyle";
 
 export default function TopButtons() {
   return (

@@ -1,4 +1,4 @@
-import { setSaveDate } from "../../../firestore/setData";
+import { setSaveDate } from "../../firestore/setData";
 
 export const saveJson = async (canvas: any, record: null | string) => {
   const json = JSON.stringify(canvas);

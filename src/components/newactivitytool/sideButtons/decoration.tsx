@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { Button } from "../style";
+import { Button } from "../styles/indexStyle";
 import { DECORATION } from "../types";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
 
 export default function DecorationButton() {
   const dispatch = useDispatch();
-
   useQuery(
     `decoration_stamp`,
     async () => {

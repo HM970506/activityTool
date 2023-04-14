@@ -1,19 +1,27 @@
 import { useSelector } from "react-redux";
-import { BottomContainer, ToolBox } from "../style";
+import { BottomContainer, ToolBox } from "../styles/indexStyle";
 import PhotoMenu from "./photo";
 import RecordMenu from "./record";
 import StickerMenu from "./sticker";
 import DrawToolsMenu from "./drawTools";
-import { DECORATION, DRAWTOOLS, PHOTO, RECORD, STICKER, TEXT } from "../types";
+import {
+  DECORATION,
+  DRAWTOOLS,
+  PHOTO,
+  RECORD,
+  ReducersType,
+  STICKER,
+  TEXT,
+} from "../types";
 import TextMenu from "./text";
 import DecorationMenu from "./decorations";
 import Colorbox from "./colorbox";
 
 export default function BottomTools() {
   const nowCategory = useSelector(
-    (state: any) => state.categoryReducer.category
+    (state: ReducersType) => state.categoryReducer.category
   );
-  const view = useSelector((state: any) => state.categoryReducer.view);
+  const view = useSelector((state: ReducersType) => state.categoryReducer.view);
 
   return (
     <BottomContainer view={view ? 1 : 0}>

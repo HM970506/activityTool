@@ -1,32 +1,28 @@
 import { fabric } from "fabric-with-erasing";
-import { SelectableObjectButton, Thumbnail } from "../style";
+import {
+  SelectableObjectButton,
+  Thumbnail,
+} from "../../styles/bottomToolstyle";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useQuery } from "react-query";
-import { getStorageDataAll } from "../../../firestore/getData";
+import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
+import { ReducersType } from "../../types";
 
 export default function Template() {
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const [templates, setTemplates] = useState<any[]>([]);
   const dispatch = useDispatch();
   const { template } = useSelector(
-    (state: any) => state.categoryReducer.subcategory
+    (state: ReducersType) => state.categoryReducer.subcategory
   );
 
-  const { data, isLoading } = useQuery(
-    `decoration_template`,
-    async () => {
-      return await getStorageDataAll(`bottomTools/decorations/template`);
-    },
-    {
-      retry: 0,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData("decoration_template");
+
   useEffect(() => {
-    if (!isLoading && data != undefined) setTemplates(data);
-  }, [isLoading]);
+    if (Array.isArray(data)) setTemplates(data);
+  }, [data]);
 
   const templating = (url: string) => {
     fabric.Image.fromURL(url, (img: any) => {
@@ -45,9 +41,7 @@ export default function Template() {
 
   return (
     <>
-      {isLoading ? (
-        <div>로딩중</div>
-      ) : (
+      {data ? (
         templates.map((value: string, key: number) => {
           return (
             <SelectableObjectButton
@@ -62,6 +56,8 @@ export default function Template() {
             </SelectableObjectButton>
           );
         })
+      ) : (
+        <div>로딩중</div>
       )}
     </>
   );

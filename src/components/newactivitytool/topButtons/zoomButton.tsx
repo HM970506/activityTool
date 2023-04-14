@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { zoomActions } from "../../../../store/common/zoomSlice";
-import { DefaultButton } from "../../styles/indexStyle";
+import { zoomActions } from "../../../store/common/zoomSlice";
+import { DefaultButton } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
-import { ReducersType } from "../../types";
+import { ReducersType } from "../types";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

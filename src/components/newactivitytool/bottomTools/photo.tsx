@@ -1,10 +1,14 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Uploader } from "../style";
+import { Uploader } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
+import { ReducersType } from "../types";
 
 const defaultX = 500;
 export default function PhotoMenu() {
+  const [photo, setPhoto] = useState<string>("");
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const inputRef = useRef<HTMLInputElement>(null);
   const shapeChange = (shape: string) => {
     const now = canvas.getActiveObject();
 
@@ -48,10 +52,6 @@ export default function PhotoMenu() {
       );
     });
   };
-
-  const [photo, setPhoto] = useState<string>("");
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (photo != "") {

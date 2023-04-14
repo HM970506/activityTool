@@ -1,39 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import { SelectableObjectButton, Thumbnail } from "../style";
+import {
+  SelectableObjectButton,
+  Thumbnail,
+} from "../../styles/bottomToolstyle";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { fabric } from "fabric-with-erasing";
 import { useEffect, useState } from "react";
 import { functionRemover } from "../../commonFunction";
-import { useQuery } from "react-query";
-import { getFirestoreData } from "../../../firestore/getData";
+import { useQueryClient } from "react-query";
+import { ReducersType } from "../../types";
 
 export default function Stamp() {
   const dispatch = useDispatch();
   const [stamps, setStamps] = useState<string[]>([]);
   const { isPanning, isDrawing, canvas } = useSelector(
-    (state: any) => state.nodeReducer
+    (state: ReducersType) => state.nodeReducer
   );
   const stamp = useSelector(
-    (state: any) => state.categoryReducer.subcategory.stamp
+    (state: ReducersType) => state.categoryReducer.subcategory.stamp
   );
 
-  const { data, isLoading } = useQuery(
-    `decoration_stamp`,
-    async () => {
-      return await getFirestoreData("menu", "decoration");
-    },
-    {
-      retry: 0,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData("decoration_stamp");
 
   useEffect(() => {
-    if (!isLoading && data != undefined) {
-      setStamps(data.stamp);
-      if (canvas.stamping == "") canvas.stamping = data.stamp[stamp.index];
-    }
-  }, [isLoading]);
+    if (Array.isArray(data)) setStamps(data);
+  }, [data]);
 
   const stampStep_1 = () => {
     const pointer = canvas.getPointer();
@@ -74,9 +66,7 @@ export default function Stamp() {
 
   return (
     <>
-      {isLoading ? (
-        <div>로딩중</div>
-      ) : (
+      {data ? (
         stamps.map((value: string, key: number) => {
           return (
             <SelectableObjectButton
@@ -91,10 +81,9 @@ export default function Stamp() {
             </SelectableObjectButton>
           );
         })
+      ) : (
+        <div>로딩중</div>
       )}
     </>
   );
-}
-function getFireStroeData(arg0: string, arg1: string): any {
-  throw new Error("Function not implemented.");
 }

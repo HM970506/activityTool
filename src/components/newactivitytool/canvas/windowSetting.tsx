@@ -1,4 +1,3 @@
-import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function windowSetting(dispatch: any, canvas: any) {

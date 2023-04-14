@@ -2,13 +2,14 @@ import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { functionRemover } from "../../commonFunction";
+import { ReducersType } from "../../types";
 
 export default function Tape() {
   const { isPanning, isDrawing, canvas } = useSelector(
-    (state: any) => state.nodeReducer
+    (state: ReducersType) => state.nodeReducer
   );
   const tape = useSelector(
-    (state: any) => state.categoryReducer.subcategory.tape
+    (state: ReducersType) => state.categoryReducer.subcategory.tape
   );
 
   const tapeStep_1 = () => {

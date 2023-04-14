@@ -12,10 +12,11 @@ import Canvas from "./canvas/canvas";
 import TopButtons from "./topButtons";
 import { getFirestoreData } from "../firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ReducersType } from "./types";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
 

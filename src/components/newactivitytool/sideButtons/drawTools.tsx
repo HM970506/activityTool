@@ -1,20 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { DRAWTOOLS } from "../types";
-import { Button } from "../style";
+import {
+  BACKGROUND_BRUSH,
+  DRAWTOOLS,
+  ERASER,
+  PENCIL,
+  ReducersType,
+  SPRAY,
+} from "../types";
+import { Button } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
-  const draws = useSelector((state: any) => state.drawReducer); //펜 관리
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const isDrawing = useSelector(
+    (state: ReducersType) => state.nodeReducer.isDrawing
+  );
+  const draws = useSelector((state: ReducersType) => state.drawReducer);
+
+  useEffect(() => {
+    backgroundPatternMaker();
+  }, []);
+  useEffect(() => {
+    if (canvas) setDrawTools();
+  }, [draws, isDrawing]);
+
+  const backgroundPatternMaker = () => {
+    const img = new Image();
+    img.src = "./pattern.jpg";
+    BackgroundBrush.source = img;
+  };
 
   const setColor = (color: string) => {
     const now = canvas.getActiveObject();
     if (now) now.set("fill", color);
     else canvas.freeDrawingBrush.color = color;
+  };
+
+  const setSize = (size: number) => {
+    canvas.freeDrawingBrush.width = size;
   };
 
   const setDrawTools = () => {
@@ -24,35 +50,17 @@ export default function DrawToolsButton() {
     canvas.toolColor = draws.color;
     canvas.renderAll();
   };
-
-  useEffect(() => {
-    if (canvas) setDrawTools();
-  }, [draws, isDrawing]);
-
+  const setTool = (tool: string) => {
+    if (tool == PENCIL) canvas.freeDrawingBrush = PenBrush;
+    else if (tool == BACKGROUND_BRUSH)
+      canvas.freeDrawingBrush = BackgroundBrush;
+    else if (tool == SPRAY) canvas.freeDrawingBrush = SprayBrush;
+    else if (tool == ERASER) canvas.freeDrawingBrush = Eraser;
+  };
   const PenBrush = new fabric.PencilBrush(canvas);
-  const Pen2Brush = new fabric.Shadow(canvas, { blur: 100 });
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
   const Eraser = new fabric.EraserBrush(canvas);
-
-  //커스텀 브러쉬 추가1:  배경 브러쉬
-  const img = new Image();
-  img.src = "./pattern.jpg";
-  //여기 cors error 해결하기
-  const HeartPatternBrush = new fabric.PatternBrush(canvas);
-  HeartPatternBrush.source = img;
-  //커스텀 브러쉬 추가1 끝
-
-  const setTool = (tool: string) => {
-    //  if (canvas.__eventListeners) canvas.__eventListeners["mouse:up"] = [];
-    if (tool == "pencil") canvas.freeDrawingBrush = PenBrush;
-    else if (tool == "heartPatten") canvas.freeDrawingBrush = HeartPatternBrush;
-    else if (tool == "spray") canvas.freeDrawingBrush = SprayBrush;
-    else if (tool == "eraser") canvas.freeDrawingBrush = Eraser;
-    else if (tool == "pencil2") canvas.freeDrawingBrush = Pen2Brush;
-  };
-  const setSize = (size: number) => {
-    canvas.freeDrawingBrush.width = size;
-  };
+  const BackgroundBrush = new fabric.PatternBrush(canvas);
 
   const drawToolButtonClick = () => {
     dispatch(categoryActions.categoryChange(DRAWTOOLS));

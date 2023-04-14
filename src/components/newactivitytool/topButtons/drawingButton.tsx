@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Label, Toggle, Slider } from "../style";
-import { nodeActions } from "../../../../store/common/nodeSlice";
-import { functionRemover } from "../../commonFunction";
+import { Label, Toggle, Slider } from "../styles/zoomButtonStyle";
+import { nodeActions } from "../../../store/common/nodeSlice";
+import { functionRemover } from "../commonFunction";
+import { ReducersType } from "../types";
 
 export default function DrawToggle() {
   const dispatch = useDispatch();
-  const canvas = useSelector((state: any) => state.nodeReducer.canvas);
-  const isDrawing = useSelector((state: any) => state.nodeReducer.isDrawing);
-  const draws = useSelector((state: any) => state.drawReducer);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const isDrawing = useSelector(
+    (state: ReducersType) => state.nodeReducer.isDrawing
+  );
 
   const drawOn = () => {
     canvas.isDrawingMode = true;
@@ -19,7 +21,6 @@ export default function DrawToggle() {
 
   const drawOff = () => {
     canvas.isDrawingMode = false;
-
     canvas.__eventListeners["selection:created"] = functionRemover(
       canvas.__eventListeners["selection:created"],
       "drawOff"
@@ -33,7 +34,7 @@ export default function DrawToggle() {
     }
   }, [isDrawing]);
 
-  const drawHandler = (e: any) => {
+  const drawHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(nodeActions.setDraw(e.target.checked));
   };
 
