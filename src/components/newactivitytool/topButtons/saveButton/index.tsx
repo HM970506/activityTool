@@ -1,18 +1,23 @@
-import fabric from "fabric/fabric-impl";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { DefaultButton } from "../../style";
-import { saveJson } from "./save";
-import { TempLink } from "./style";
+import { DefaultButton } from "../../styles/indexStyle";
+import { saveJson } from "./saveFunction";
+import { TempLink } from "../../styles/saveButtonstyle";
+
+const INTERVAL_TIME = 10000;
 
 export default function CanvasSave() {
   const { canvas, record } = useSelector((state: any) => state.nodeReducer);
   const linkRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
-    // setInterval(() => {
-    //   saveJson();
-    // }, 10000);
+    //saveInterval
   }, []);
+
+  const saveInterval = () => {
+    setInterval(() => {
+      saveJson(canvas, record);
+    }, INTERVAL_TIME);
+  };
 
   const savePng = () => {
     const pngData = canvas.toDataURL("png");
@@ -23,16 +28,14 @@ export default function CanvasSave() {
     }
   };
 
+  const saveTemporary = () => {
+    saveJson(canvas, record);
+  };
+
   return (
     <>
       <TempLink ref={linkRef} />
-      <DefaultButton
-        onClick={() => {
-          saveJson(canvas, record);
-        }}
-      >
-        임시저장
-      </DefaultButton>
+      <DefaultButton onClick={saveTemporary}>임시저장</DefaultButton>
       <DefaultButton onClick={savePng}>화면다운</DefaultButton>
     </>
   );
