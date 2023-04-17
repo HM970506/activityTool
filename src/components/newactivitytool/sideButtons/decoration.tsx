@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fabric } from "fabric-with-erasing";
+import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { Button } from "../styles/indexStyle";
 import { DECORATION } from "../types";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
 
 export default function DecorationButton() {
@@ -12,7 +10,11 @@ export default function DecorationButton() {
   useQuery(
     `decoration_stamp`,
     async () => {
-      return await getFirestoreData("menu", "decoration");
+      const datas = await getFirestoreData("menu", "decoration");
+      let array = new Array();
+      if (datas) for (let data in datas) array.push(datas[data]);
+      array = array.sort();
+      return array;
     },
     {
       retry: 0,

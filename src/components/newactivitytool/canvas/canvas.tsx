@@ -1,5 +1,4 @@
 import { fabric } from "fabric-with-erasing";
-import { fabric as fabricType } from "fabric";
 import "fabric-history";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
@@ -23,10 +22,6 @@ export default function Canvas() {
       top: window.innerHeight / 2,
     });
     canvas.freeDrawingBrush.inverted = true;
-
-    const test = new fabricType.Canvas("");
-
-    console.log(typeof fabricType.Canvas);
 
     fabricSetting();
     windowSetting(dispatch, canvas);

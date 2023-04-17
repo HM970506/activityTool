@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Uploader } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
 import { ReducersType } from "../types";
+import { Image } from "fabric/fabric-impl";
 
 const defaultX = 500;
 export default function PhotoMenu() {
@@ -14,13 +15,14 @@ export default function PhotoMenu() {
 
     if (!now) return;
 
-    fabric.Image.fromURL(`/${shape}.png`, (frameImg: any) => {
+    fabric.Image.fromURL(`/${shape}.png`, (frameImg: Image) => {
+      console.log(frameImg);
       frameImg.erasable = false;
       frameImg.selectable = true;
       frameImg.crossOrigin = "Anonymous";
       fabric.Image.fromURL(
         now.type === "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
-        (innerImg: any) => {
+        (innerImg: Image) => {
           innerImg.globalCompositeOperation = "source-atop";
           innerImg.erasable = false;
           innerImg.selectable = true;
@@ -34,7 +36,7 @@ export default function PhotoMenu() {
             now.type === "image" ? now.width : now.getObjects()[1].width;
           innerImg.height =
             now.type === "image" ? now.height : now.getObjects()[1].height;
-          innerImg.rotate =
+          innerImg.angle =
             now.type === "image" ? now.rotate : now.getObjects()[1].rotate;
 
           const group = new fabric.Group([frameImg, innerImg], {
@@ -55,15 +57,16 @@ export default function PhotoMenu() {
 
   useEffect(() => {
     if (canvas && photo !== "") {
-      new fabric.Image.fromURL(photo, (img: any) => {
-        img.viewportCenter();
+      new fabric.Image.fromURL(photo, (img: Image) => {
         img.hoverCursor = "auto";
         img.erasable = false;
         img.selectable = true;
 
-        const scale = defaultX / img.width;
-        img.scaleX = scale;
-        img.scaleY = scale;
+        if (img.width !== undefined) {
+          const scale = defaultX / img.width;
+          img.scaleX = scale;
+          img.scaleY = scale;
+        }
 
         canvas.add(img);
         canvas.setActiveObject(img);
@@ -77,8 +80,9 @@ export default function PhotoMenu() {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onloadend = async (e: any) => {
-        setPhoto(e.target.result);
+      reader.onloadend = async (e: ProgressEvent<FileReader>) => {
+        if (e.target !== null && typeof e.target.result === "string")
+          setPhoto(e.target.result);
       };
 
       //해당 이미지를 서버에 저장하는 로직
@@ -110,7 +114,7 @@ export default function PhotoMenu() {
           const url = now.type === "image" ? now.getSrc() : target.getSrc();
           // console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
           // console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
-          new fabric.Image.fromURL(url, (img: any) => {
+          new fabric.Image.fromURL(url, (img: Image) => {
             img.set({
               hoverCursor: "auto",
               erasable: false,

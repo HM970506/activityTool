@@ -14,6 +14,7 @@ export default function SideButtons({
 }: {
   activitytoolsEnd: any;
 }) {
+  console.log(typeof activitytoolsEnd);
   const { view, category } = useSelector(
     (state: ReducersType) => state.categoryReducer
   );
@@ -21,7 +22,7 @@ export default function SideButtons({
 
   useEffect(() => {
     if (canvas) {
-      if (category != DECORATION) {
+      if (category !== DECORATION) {
         canvas.taping = 0;
         canvas.stamping = "";
       }

@@ -1,19 +1,23 @@
-import { fabric } from "fabric-with-erasing";
+import { Transform } from "fabric/fabric-impl";
 
 const deleteIcon = "./deleteButton.svg";
-const deleteObject = (e: MouseEvent, transform: any) => {
-  console.log(e);
+const deleteObject = (e: MouseEvent, transform: Transform) => {
   const target = transform.target;
   const canvas = target.canvas;
-  canvas.remove(target);
-  canvas.renderAll();
+  if (canvas !== undefined) {
+    canvas.remove(target);
+    canvas.renderAll();
+  }
 };
 
-const renderIcon = (ctx: any, left: number, top: number, fabricObject: any) => {
+const renderIcon = (
+  ctx: CanvasRenderingContext2D,
+  left: number,
+  top: number
+) => {
   const size = 30;
   ctx.save();
   ctx.translate(left, top);
-  ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
   const img = document.createElement("img");
   img.src = deleteIcon;
   ctx.drawImage(img, -size / 2, -size / 2, size, size);

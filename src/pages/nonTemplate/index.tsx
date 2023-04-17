@@ -10,7 +10,7 @@ export default function NonTemplate() {
 
   const getColor = async () => {
     const test1 = await extractColors(url);
-    if (colors != test1) setColors(test1);
+    if (colors !== test1) setColors(test1);
   };
 
   useEffect(() => {

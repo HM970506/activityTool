@@ -14,7 +14,7 @@ export default function RecordMenu() {
   };
 
   const recorderControls = useAudioRecorder();
-  const addAudioElement = (blob: any) => {
+  const addAudioElement = (blob: Blob) => {
     const url = URL.createObjectURL(blob);
     setAudioSrc(url);
   };

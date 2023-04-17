@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { functionRemover } from "../commonFunction";
 import { ReducersType } from "../types";
+import { IEvent } from "fabric/fabric-impl";
 
 export default function PanningToggle() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -24,8 +25,7 @@ export default function PanningToggle() {
     dispatch(nodeActions.setPan(e.target.checked));
   };
 
-  const panStep_1 = (e: any) => {
-    console.log(e);
+  const panStep_1 = (e: IEvent | any) => {
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;

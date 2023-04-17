@@ -28,22 +28,27 @@ export default function Stamp() {
   }, [data]);
 
   const stampStep_1 = () => {
+    console.log("머꼬");
     const pointer = canvas.getPointer();
-    fabric.loadSVGFromString(canvas.stamping, (objects: any, options: any) => {
-      const stamp = fabric.util.groupSVGElements(objects, options);
+    fabric.loadSVGFromString(
+      canvas.stamping,
+      (objects: Object[], options: any) => {
+        console.log(objects, options);
+        const stamp = fabric.util.groupSVGElements(objects, options);
 
-      stamp.fill = canvas.toolColor;
+        stamp.fill = canvas.toolColor;
 
-      stamp.left = pointer.x;
-      stamp.top = pointer.y;
+        stamp.left = pointer.x;
+        stamp.top = pointer.y;
 
-      canvas.add(stamp);
-      canvas.renderAll();
-    });
+        canvas.add(stamp);
+        canvas.renderAll();
+      }
+    );
   };
 
   const stampDown = () => {
-    if (canvas.stamping != "") stampStep_1();
+    if (canvas.stamping !== "") stampStep_1();
   };
 
   const stampOn = () => {

@@ -1,5 +1,3 @@
-import { fabric as fabricType } from "fabric";
-
 export const STICKER = "STICKER";
 export const TEXT = "TEXT";
 export const PEN = "PEN";
@@ -32,6 +30,11 @@ export const STICKER_CATEGORY = [
   { id: "object", name: "인형아님" },
 ];
 
+export interface stickerCategoryType {
+  id: string;
+  name: string;
+}
+
 export interface subcategoryInnerType {
   index: number;
   state: boolean;
@@ -59,10 +62,11 @@ export interface drawReducerType {
   tool: string;
 }
 
-export interface CanvasType extends Partial<fabric.Canvas> {
+export interface CanvasType extends Partial<any> {
   taping: number;
   stamping: string;
   toolColor: string;
+  tapeState: any;
 }
 
 export interface nodeReducerType {

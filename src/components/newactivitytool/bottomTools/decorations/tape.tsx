@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { functionRemover } from "../../commonFunction";
-import { ReducersType } from "../../types";
-import { fabric as fabricType } from "fabric";
+import { CanvasType, ReducersType } from "../../types";
 
 export default function Tape() {
   const { isPanning, isDrawing, canvas } = useSelector(

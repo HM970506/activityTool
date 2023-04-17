@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { ReducersType } from "../../types";
+import { Image } from "fabric/fabric-impl";
 
 export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -25,17 +26,19 @@ export default function Template() {
   }, [data]);
 
   const templating = (url: string) => {
-    fabric.Image.fromURL(url, (img: any) => {
-      const scale = canvas.width / img.width;
+    fabric.Image.fromURL(url, (img: Image) => {
+      if (img.width !== undefined && img.height !== undefined) {
+        const scale = canvas.width / img.width;
 
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        scaleX: scale,
-        scaleY: scale,
-        erasable: false,
-      });
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: scale,
+          scaleY: scale,
+          erasable: false,
+        });
 
-      canvas.setHeight(img.height * scale);
-      canvas.renderAll();
+        canvas.setHeight(img.height * scale);
+        canvas.renderAll();
+      }
     });
   };
 
