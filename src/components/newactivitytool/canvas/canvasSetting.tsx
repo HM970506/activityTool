@@ -1,7 +1,7 @@
 //import ReactTouchEvents from "react-touch-events";
 
 const DeselctMultipleObjects = (canvas: any) => {
-  if (canvas.getActiveObject().type == "activeSelection") {
+  if (canvas.getActiveObject().type === "activeSelection") {
     canvas.discardActiveObject();
     canvas.requestRenderAll();
   }

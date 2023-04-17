@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { fabric } from "fabric";
+import { fabric } from "fabric-with-erasing";
 import { deleteProps } from "../setting/deleteButton";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { FontButton } from "../styles/bottomToolstyle";
-import { DEFUALT_TEXTBOX, ReducersType } from "../types";
+import { DEFUALT_TEXTBOX, ReducersType, textType } from "../types";
 
 export default function TextMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -42,7 +42,7 @@ export default function TextMenu() {
   return (
     <>
       {data ? (
-        texts.map((value: any, key: number) => {
+        texts.map((value: textType, key: number) => {
           return (
             <FontButton
               url={value.url}

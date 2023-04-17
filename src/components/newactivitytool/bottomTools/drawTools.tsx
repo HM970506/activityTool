@@ -32,7 +32,7 @@ export default function DrawToolsMenu() {
   return (
     <>
       <BottomButton
-        select={draws.tool == PENCIL ? 1 : 0}
+        select={draws.tool === PENCIL ? 1 : 0}
         onClick={() => {
           toolChange("pencil");
         }}
@@ -40,7 +40,7 @@ export default function DrawToolsMenu() {
         펜
       </BottomButton>
       <BottomButton
-        select={draws.tool == BACKGROUND_BRUSH ? 1 : 0}
+        select={draws.tool === BACKGROUND_BRUSH ? 1 : 0}
         onClick={() => {
           toolChange(BACKGROUND_BRUSH);
         }}
@@ -48,7 +48,7 @@ export default function DrawToolsMenu() {
         패턴배경
       </BottomButton>
       <BottomButton
-        select={draws.tool == SPRAY ? 1 : 0}
+        select={draws.tool === SPRAY ? 1 : 0}
         onClick={() => {
           toolChange(SPRAY);
         }}
@@ -57,7 +57,7 @@ export default function DrawToolsMenu() {
       </BottomButton>
 
       <BottomButton
-        select={draws.tool == ERASER ? 1 : 0}
+        select={draws.tool === ERASER ? 1 : 0}
         onClick={() => toolChange(ERASER)}
       >
         지우개

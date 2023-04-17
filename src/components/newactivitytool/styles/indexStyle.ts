@@ -21,7 +21,7 @@ export const BottomButton = styled.button<{ select: number }>`
   width: 70px;
   height: 50px;
   background-color: ${(props) => {
-    return props.select == 1 ? "red" : "white";
+    return props.select === 1 ? "red" : "white";
   }};
 `;
 
@@ -92,12 +92,12 @@ export const ButtonBox = styled(Box)<{ view: number }>`
   width: 10%;
   height: 60%;
 
-  right: ${(props) => `${props.view == 1 ? 0 : -200}px`};
+  right: ${(props) => `${props.view === 1 ? 0 : -200}px`};
 `;
 
 export const BottomContainer = styled(Box)<{ view: number }>`
   width: 90%;
-  bottom: ${(props) => `${props.view == 1 ? 0 : -200}px`};
+  bottom: ${(props) => `${props.view === 1 ? 0 : -200}px`};
 `;
 
 export const ToolBox = styled.div`

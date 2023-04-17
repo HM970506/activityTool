@@ -51,11 +51,11 @@ export default function DrawToolsButton() {
     canvas.renderAll();
   };
   const setTool = (tool: string) => {
-    if (tool == PENCIL) canvas.freeDrawingBrush = PenBrush;
-    else if (tool == BACKGROUND_BRUSH)
+    if (tool === PENCIL) canvas.freeDrawingBrush = PenBrush;
+    else if (tool === BACKGROUND_BRUSH)
       canvas.freeDrawingBrush = BackgroundBrush;
-    else if (tool == SPRAY) canvas.freeDrawingBrush = SprayBrush;
-    else if (tool == ERASER) canvas.freeDrawingBrush = Eraser;
+    else if (tool === SPRAY) canvas.freeDrawingBrush = SprayBrush;
+    else if (tool === ERASER) canvas.freeDrawingBrush = Eraser;
   };
   const PenBrush = new fabric.PencilBrush(canvas);
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });

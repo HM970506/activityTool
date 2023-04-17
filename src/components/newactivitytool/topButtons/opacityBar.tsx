@@ -17,7 +17,7 @@ export default function CanvasOpacity() {
   useEffect(() => {
     if (canvas) {
       canvas.setBackgroundColor(
-        `rgba(255,255,255,${opacity == 0 ? 0 : opacity / 100})`
+        `rgba(255,255,255,${opacity === 0 ? 0 : opacity / 100})`
       );
       canvas.renderAll();
     }

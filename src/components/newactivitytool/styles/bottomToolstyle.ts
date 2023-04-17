@@ -41,7 +41,7 @@ export const ObjectButton = style.button`
 
 export const SelectableObjectButton = style(ObjectButton)<{ select: number }>`
   background-color:${(props) => {
-    return props.select == 1 ? "red" : "white";
+    return props.select === 1 ? "red" : "white";
   }};
 `;
 
@@ -69,7 +69,7 @@ export const Colorchip = style.button<{ color: string; select: number }>`
   width: 30px;
   height: 30px;
   border: none;
-  bottom: ${(props) => (props.select == 1 ? "15px" : "0px")};
+  bottom: ${(props) => (props.select === 1 ? "15px" : "0px")};
   border-radius: 100%;
   position: relative;
   background-color: ${(props) => {

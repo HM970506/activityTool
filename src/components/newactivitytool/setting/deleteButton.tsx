@@ -23,7 +23,6 @@ const renderIcon = (ctx: any, left: number, top: number, fabricObject: any) => {
 export const deleteProps = {
   x: 0.55,
   y: -0.55,
-
   cursorStyle: "pointer",
   mouseUpHandler: deleteObject,
   render: renderIcon,

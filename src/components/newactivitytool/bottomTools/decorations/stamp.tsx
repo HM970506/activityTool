@@ -70,7 +70,7 @@ export default function Stamp() {
         stamps.map((value: string, key: number) => {
           return (
             <SelectableObjectButton
-              select={stamp.index == key ? 1 : 0}
+              select={stamp.index === key ? 1 : 0}
               key={`stamp_${key}`}
               onClick={() => {
                 canvas.stamping = value;

@@ -47,15 +47,15 @@ export default function Tape() {
   };
 
   const tapeDown = () => {
-    if (canvas.taping == 1) tapeStep_1();
+    if (canvas.taping === 1) tapeStep_1();
   };
 
   const tapeMove = () => {
-    if (canvas.taping == 2) tapeStep_2();
+    if (canvas.taping === 2) tapeStep_2();
   };
 
   const tapeUp = () => {
-    if (canvas.taping == 2) tapeStep_3();
+    if (canvas.taping === 2) tapeStep_3();
   };
 
   const tapeOn = () => {
@@ -100,7 +100,8 @@ export default function Tape() {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           canvas.tapeState = {
             ...canvas.tapeState,
-            opacity: e.target.value == "0" ? 0 : parseInt(e.target.value) / 100,
+            opacity:
+              e.target.value === "0" ? 0 : parseInt(e.target.value) / 100,
           };
         }}
       />

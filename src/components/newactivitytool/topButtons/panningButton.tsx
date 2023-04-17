@@ -27,7 +27,7 @@ export default function PanningToggle() {
   const panStep_1 = (e: any) => {
     console.log(e);
     const nextPoint = { x: 0, y: 0 };
-    if (e.e.type == "touchstart") {
+    if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;
       nextPoint.y = e.e.changedTouches[0].pageY;
     } else {
@@ -42,9 +42,9 @@ export default function PanningToggle() {
   };
 
   const panStep_2 = (e: any) => {
-    if (canvas.panning == 2) {
+    if (canvas.panning === 2) {
       const nextPoint = { x: 0, y: 0 };
-      if (e.e.type == "touchmove") {
+      if (e.e.type === "touchmove") {
         nextPoint.x = e.e.changedTouches[0].pageX;
         nextPoint.y = e.e.changedTouches[0].pageY;
       } else {

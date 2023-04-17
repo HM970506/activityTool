@@ -45,7 +45,7 @@ export default function Template() {
         templates.map((value: string, key: number) => {
           return (
             <SelectableObjectButton
-              select={template.index == key ? 1 : 0}
+              select={template.index === key ? 1 : 0}
               key={`template_${key}`}
               onClick={() => {
                 templating(value);

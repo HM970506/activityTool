@@ -1,7 +1,7 @@
 import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function windowSetting(dispatch: any, canvas: any) {
-  if (window.onresize == null) {
+  if (window.onresize === null) {
     const resizeHandler = () => {
       dispatch(zoomActions.setZoom(1));
       if (canvas) {

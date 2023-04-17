@@ -19,7 +19,7 @@ export default function PhotoMenu() {
       frameImg.selectable = true;
       frameImg.crossOrigin = "Anonymous";
       fabric.Image.fromURL(
-        now.type == "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
+        now.type === "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
         (innerImg: any) => {
           innerImg.globalCompositeOperation = "source-atop";
           innerImg.erasable = false;
@@ -27,15 +27,15 @@ export default function PhotoMenu() {
           innerImg.crossOrigin = "Anonymous";
 
           innerImg.scaleX =
-            now.type == "image" ? now.scaleX : now.getObjects()[1].scaleX;
+            now.type === "image" ? now.scaleX : now.getObjects()[1].scaleX;
           innerImg.scaleY =
-            now.type == "image" ? now.scaleY : now.getObjects()[1].scaleY;
+            now.type === "image" ? now.scaleY : now.getObjects()[1].scaleY;
           innerImg.width =
-            now.type == "image" ? now.width : now.getObjects()[1].width;
+            now.type === "image" ? now.width : now.getObjects()[1].width;
           innerImg.height =
-            now.type == "image" ? now.height : now.getObjects()[1].height;
+            now.type === "image" ? now.height : now.getObjects()[1].height;
           innerImg.rotate =
-            now.type == "image" ? now.rotate : now.getObjects()[1].rotate;
+            now.type === "image" ? now.rotate : now.getObjects()[1].rotate;
 
           const group = new fabric.Group([frameImg, innerImg], {
             selectable: true,
@@ -54,7 +54,7 @@ export default function PhotoMenu() {
   };
 
   useEffect(() => {
-    if (photo != "") {
+    if (canvas && photo !== "") {
       new fabric.Image.fromURL(photo, (img: any) => {
         img.viewportCenter();
         img.hoverCursor = "auto";
@@ -70,7 +70,7 @@ export default function PhotoMenu() {
       });
       setPhoto("");
     }
-  }, [photo]);
+  }, [photo, canvas]);
 
   const onUploadImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -107,7 +107,7 @@ export default function PhotoMenu() {
           const now = canvas.getActiveObject();
           if (!now) return;
           const target = now.getObjects()[1];
-          const url = now.type == "image" ? now.getSrc() : target.getSrc();
+          const url = now.type === "image" ? now.getSrc() : target.getSrc();
           // console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
           // console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
           new fabric.Image.fromURL(url, (img: any) => {

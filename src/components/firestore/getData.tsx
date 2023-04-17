@@ -12,7 +12,7 @@ export async function getFirestoreData(path: string, href: string) {
     return null;
   });
 
-  return docSnap == null ? null : docSnap.data();
+  return docSnap === null ? null : docSnap.data();
 }
 
 export async function getStorageData(path: string) {
@@ -32,7 +32,7 @@ export async function getStorageDataAll(path: string) {
     return null;
   });
 
-  if (imageList == null) return null;
+  if (imageList === null) return null;
 
   const data = new Array();
 

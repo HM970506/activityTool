@@ -15,7 +15,7 @@ export default function Colorbox() {
     <ColorContainer>
       {COLORS.map((value: string, key: number) => (
         <Colorchip
-          select={color == value ? 1 : 0}
+          select={color === value ? 1 : 0}
           color={value}
           key={key}
           onClick={() => {

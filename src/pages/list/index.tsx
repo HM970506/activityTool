@@ -36,7 +36,9 @@ export default function TemplatesIndex() {
           <div>
             <button onClick={closeModal}>취소</button>
             <Link
-              to={index == 1 || index == 2 ? `/template/${index}` : `/${index}`}
+              to={
+                index === 1 || index === 2 ? `/template/${index}` : `/${index}`
+              }
             >
               확인
             </Link>

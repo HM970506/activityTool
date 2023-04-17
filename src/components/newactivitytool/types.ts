@@ -1,3 +1,5 @@
+import { fabric as fabricType } from "fabric";
+
 export const STICKER = "STICKER";
 export const TEXT = "TEXT";
 export const PEN = "PEN";
@@ -57,6 +59,12 @@ export interface drawReducerType {
   tool: string;
 }
 
+export interface CanvasType extends Partial<fabric.Canvas> {
+  taping: number;
+  stamping: string;
+  toolColor: string;
+}
+
 export interface nodeReducerType {
   canvas: any;
   isDrawing: boolean;
@@ -109,3 +117,10 @@ export const DEFUALT_TEXTBOX = {
   fontSize: 30,
   selectable: true,
 };
+
+export interface textType {
+  name: string;
+  url: string;
+}
+
+export interface CanvasType {}
