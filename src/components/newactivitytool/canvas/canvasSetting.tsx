@@ -7,7 +7,7 @@ const DeselctMultipleObjects = (canvas: any) => {
   }
 };
 
-export default function canvasSetting(canvas: any, setTest: any) {
+export default function canvasSetting(canvas: any) {
   canvas.on({
     "selection:created": () => DeselctMultipleObjects(canvas),
     "selection:updated": () => DeselctMultipleObjects(canvas),

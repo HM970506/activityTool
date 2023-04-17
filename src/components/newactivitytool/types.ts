@@ -1,14 +1,3 @@
-import { RefObject } from "react";
-
-export interface MakerType {
-  shapeProps: any;
-  index: number;
-  shapeRef: RefObject<any>;
-  onChange: any;
-  isSelected: boolean;
-  onSelect: any;
-}
-
 export const STICKER = "STICKER";
 export const TEXT = "TEXT";
 export const PEN = "PEN";
@@ -74,7 +63,7 @@ export interface nodeReducerType {
   isPanning: boolean;
   opacity: number;
   record: string | null;
-  textareaContainer: any;
+  textareaContainer: HTMLDivElement;
 }
 
 export interface zoomReducerType {

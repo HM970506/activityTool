@@ -2,7 +2,7 @@ import { fabric } from "fabric-with-erasing";
 import "fabric-history";
 import { useDispatch } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { CanvasBackground } from "../styles/indexStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
@@ -16,6 +16,8 @@ export default function Canvas() {
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       ...DEFAULT_CANVAS,
+      height: window.innerHeight,
+      width: window.innerWidth,
       left: window.innerWidth / 2,
       top: window.innerHeight / 2,
     });
@@ -23,6 +25,8 @@ export default function Canvas() {
 
     fabricSetting();
     windowSetting(dispatch, canvas);
+
+    console.log(canvas, typeof canvas);
 
     canvas.renderAll();
     dispatch(nodeActions.setTextareaContainer(containerRef.current));

@@ -25,6 +25,7 @@ export default function PanningToggle() {
   };
 
   const panStep_1 = (e: any) => {
+    console.log(e);
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type == "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;

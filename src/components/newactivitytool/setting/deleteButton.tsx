@@ -1,7 +1,8 @@
 import { fabric } from "fabric-with-erasing";
 
 const deleteIcon = "./deleteButton.svg";
-const deleteObject = (e: any, transform: any) => {
+const deleteObject = (e: MouseEvent, transform: any) => {
+  console.log(e);
   const target = transform.target;
   const canvas = target.canvas;
   canvas.remove(target);

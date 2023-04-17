@@ -1,7 +1,7 @@
 import { Button } from "../styles/indexStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { TEXT } from "../types";
+import { ReducersType, TEXT } from "../types";
 import { useQuery, useQueryClient } from "react-query";
 import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ export default function TextButton() {
   const queryClient = useQueryClient();
 
   const nowCategory = useSelector(
-    (state: any) => state.categoryReducer.category
+    (state: ReducersType) => state.categoryReducer.category
   );
 
   const { data: font, isLoading: fontLoading } = useQuery(

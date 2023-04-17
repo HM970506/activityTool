@@ -3,6 +3,7 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { functionRemover } from "../../commonFunction";
 import { ReducersType } from "../../types";
+import { fabric as fabricType } from "fabric";
 
 export default function Tape() {
   const { isPanning, isDrawing, canvas } = useSelector(
@@ -11,7 +12,6 @@ export default function Tape() {
   const tape = useSelector(
     (state: ReducersType) => state.categoryReducer.subcategory.tape
   );
-
   const tapeStep_1 = () => {
     const pointer = canvas.getPointer();
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
@@ -97,7 +97,7 @@ export default function Tape() {
         min="0"
         max="100"
         defaultValue={(tape.opacity * 100).toString()}
-        onChange={(e: any) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           canvas.tapeState = {
             ...canvas.tapeState,
             opacity: e.target.value == "0" ? 0 : parseInt(e.target.value) / 100,
