@@ -10,10 +10,11 @@ import {
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
 import TopButtons from "./topButtons";
-import { getFirestoreData } from "../firestore/getData";
+import { getFirestoreData, getStorageData } from "../firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
 import nodeSlice, { nodeActions } from "../../store/common/nodeSlice";
+import PhotoEditor from "./photoEditor";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -46,9 +47,12 @@ export default function NewActivityTool() {
   const getCanvas = async () => {
     const href = window.location.href.replaceAll("/", "_");
     const data = await getFirestoreData("saveData", href);
+    const record = await getStorageData(
+      `bottomTools/record/${window.location.href.replaceAll("/", "_")}`
+    );
+    if (record) dispatch(nodeActions.setRecord(record));
     if (data) {
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
-      dispatch(nodeActions.setRecord(data.record));
       activitytoolsStart();
     } else alert("저장된 데이터가 없습니다");
   };
@@ -65,6 +69,7 @@ export default function NewActivityTool() {
           <TopButtons />
           <SideButtons activitytoolsEnd={activitytoolsEnd} />
           <Canvas />
+          <PhotoEditor />
           <ReactQueryDevtools />
         </Overlay>
       </Background>

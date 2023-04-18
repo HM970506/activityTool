@@ -47,7 +47,6 @@ export default function Stamp() {
       }
     );
   };
-
   const stampDown = () => {
     if (canvas.stamping !== "") stampStep_1();
   };

@@ -14,6 +14,10 @@ export default function RecordMenu() {
   });
   navigator.mediaDevices.getUserMedia({ audio: true });
 
+  useEffect(() => {
+    console.log(audioSavedSrc);
+  }, [audioSavedSrc]);
+
   const recorderControls = useAudioRecorder();
   const addAudioElement = (blob: Blob) => {
     const url = URL.createObjectURL(blob);
@@ -35,7 +39,7 @@ export default function RecordMenu() {
       <audio ref={audioRef} src={audioSrc} controls={true} />
       <button onClick={audioComplete}>확정</button>
       기존 녹음 오디오
-      <audio ref={audioSavedRef} src={audioSavedSrc} controls={true} />
+      <audio ref={audioSavedRef} src={audioSavedRef + ""} controls={true} />
     </>
   );
 }

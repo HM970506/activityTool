@@ -24,6 +24,7 @@
     "fabric-brush": "^0.0.1",
     "fabric-history": "^1.7.0",
     "fabric-with-erasing": "^1.0.1",
+    "ffmpeg": "^0.0.4",
     "FileReader": "^0.10.2",
     "firebase": "^9.19.1",
     "gsap": "^3.11.4",

@@ -96,6 +96,8 @@ export default function PhotoMenu() {
     if (inputRef.current !== null) inputRef.current?.click();
   };
 
+  const photoEdit = () => {};
+
   return (
     <>
       <Uploader
@@ -105,46 +107,7 @@ export default function PhotoMenu() {
         onChange={onUploadImage}
       />
       <button onClick={photoUpload}>사진 가져오기</button>
-      <button
-        onClick={() => {
-          const now = canvas.getActiveObject();
-          if (!now) return;
-          const target = now.getObjects()[1];
-          const url = now.type === "image" ? now.getSrc() : target.getSrc();
-          // console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
-          // console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
-          new fabric.Image.fromURL(url, (img: ImageType) => {
-            img.hoverCursor = "auto";
-            img.selectable = true;
-            img.scaleX = target.scaleX;
-            img.scaleY = target.scaleY;
-            img.width = target.width;
-            img.height = target.height;
-            img.top = now.top;
-            img.left = now.left;
-            img.angle = target.angle;
-            canvas.remove(now);
-            canvas.add(img);
-            canvas.renderAll();
-          });
-        }}
-      >
-        원래대로
-      </button>
-      <button
-        onClick={() => {
-          shapeChange("heart");
-        }}
-      >
-        하트
-      </button>
-      <button
-        onClick={() => {
-          shapeChange("star");
-        }}
-      >
-        별
-      </button>
+      <button onClick={photoEdit}>선택한 사진 편집하기</button>
     </>
   );
 }

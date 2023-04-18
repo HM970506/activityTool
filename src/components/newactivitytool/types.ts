@@ -80,7 +80,7 @@ export interface nodeReducerType {
   isDrawing: boolean;
   isPanning: boolean;
   opacity: number;
-  record: string | undefined;
+  record: Blob | undefined;
   textareaContainer: HTMLDivElement;
 }
 
@@ -90,11 +90,16 @@ export interface zoomReducerType {
   zoomView: number;
 }
 
+export interface photoEditorReducerType {
+  view: boolean;
+}
+
 export interface ReducersType {
   categoryReducer: categoryReducerType;
   drawReducer: drawReducerType;
   nodeReducer: nodeReducerType;
   zoomReducer: zoomReducerType;
+  photoEditorReducer: photoEditorReducerType;
 }
 
 export const DRAW_SIZE = 5;

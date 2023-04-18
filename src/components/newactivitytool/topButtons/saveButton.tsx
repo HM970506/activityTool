@@ -20,7 +20,7 @@ export default function CanvasSave() {
 
   const saveInterval = () => {
     setInterval(() => {
-      saveJson(canvas, record);
+      saveJson(canvas);
     }, INTERVAL_TIME);
   };
 
@@ -35,7 +35,7 @@ export default function CanvasSave() {
 
   const saveTemporary = async () => {
     if (record != undefined) await setAudioDate(record);
-    saveJson(canvas, record);
+    saveJson(canvas);
   };
 
   return (
