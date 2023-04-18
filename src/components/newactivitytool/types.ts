@@ -1,3 +1,9 @@
+import { Image } from "fabric/fabric-impl";
+
+export interface ImageType extends Partial<Image> {
+  erasable: boolean;
+}
+
 export const STICKER = "STICKER";
 export const TEXT = "TEXT";
 export const PEN = "PEN";
@@ -125,6 +131,18 @@ export const DEFUALT_TEXTBOX = {
 export interface textType {
   name: string;
   url: string;
+}
+
+export interface stickerOptionType {
+  crossOrigin: undefined | string;
+  height: number;
+  minX: number;
+  minY: number;
+  svgUid: number;
+  toBeParsed: boolean;
+  viewBoxHeight: number;
+  viewBoxWidth: number;
+  width: number;
 }
 
 export interface CanvasType {}

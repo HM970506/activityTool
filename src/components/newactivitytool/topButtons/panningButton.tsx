@@ -41,7 +41,7 @@ export default function PanningToggle() {
     canvas.panning = 2;
   };
 
-  const panStep_2 = (e: any) => {
+  const panStep_2 = (e: IEvent | any) => {
     if (canvas.panning === 2) {
       const nextPoint = { x: 0, y: 0 };
       if (e.e.type === "touchmove") {

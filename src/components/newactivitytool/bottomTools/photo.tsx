@@ -2,8 +2,7 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Uploader } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
-import { ReducersType } from "../types";
-import { Image } from "fabric/fabric-impl";
+import { ImageType, ReducersType } from "../types";
 
 const defaultX = 500;
 export default function PhotoMenu() {
@@ -15,14 +14,14 @@ export default function PhotoMenu() {
 
     if (!now) return;
 
-    fabric.Image.fromURL(`/${shape}.png`, (frameImg: Image) => {
+    fabric.Image.fromURL(`/${shape}.png`, (frameImg: ImageType) => {
       console.log(frameImg);
       frameImg.erasable = false;
       frameImg.selectable = true;
       frameImg.crossOrigin = "Anonymous";
       fabric.Image.fromURL(
         now.type === "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
-        (innerImg: Image) => {
+        function (innerImg: ImageType) {
           innerImg.globalCompositeOperation = "source-atop";
           innerImg.erasable = false;
           innerImg.selectable = true;
@@ -57,7 +56,7 @@ export default function PhotoMenu() {
 
   useEffect(() => {
     if (canvas && photo !== "") {
-      new fabric.Image.fromURL(photo, (img: Image) => {
+      new fabric.Image.fromURL(photo, (img: ImageType) => {
         img.hoverCursor = "auto";
         img.erasable = false;
         img.selectable = true;
@@ -114,19 +113,16 @@ export default function PhotoMenu() {
           const url = now.type === "image" ? now.getSrc() : target.getSrc();
           // console.log("0", now.getObjects()[0].left, now.getObjects()[0].top);
           // console.log("1", now.getObjects()[1].left, now.getObjects()[1].top);
-          new fabric.Image.fromURL(url, (img: Image) => {
-            img.set({
-              hoverCursor: "auto",
-              erasable: false,
-              selectable: true,
-              scaleX: target.scaleX,
-              scaleY: target.scaleY,
-              width: target.width,
-              height: target.height,
-              top: now.top,
-              left: now.left,
-              angle: target.angle,
-            });
+          new fabric.Image.fromURL(url, (img: ImageType) => {
+            img.hoverCursor = "auto";
+            img.selectable = true;
+            img.scaleX = target.scaleX;
+            img.scaleY = target.scaleY;
+            img.width = target.width;
+            img.height = target.height;
+            img.top = now.top;
+            img.left = now.left;
+            img.angle = target.angle;
             canvas.remove(now);
             canvas.add(img);
             canvas.renderAll();

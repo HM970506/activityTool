@@ -7,8 +7,7 @@ import { categoryActions } from "../../../../store/common/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
-import { ReducersType } from "../../types";
-import { Image } from "fabric/fabric-impl";
+import { ImageType, ReducersType } from "../../types";
 
 export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -26,7 +25,7 @@ export default function Template() {
   }, [data]);
 
   const templating = (url: string) => {
-    fabric.Image.fromURL(url, (img: Image) => {
+    fabric.Image.fromURL(url, (img: ImageType) => {
       if (img.width !== undefined && img.height !== undefined) {
         const scale = canvas.width / img.width;
 

@@ -10,9 +10,12 @@ import {
 } from "../styles/bottomToolstyle";
 import { getStorageDataAll } from "../../firestore/getData";
 import { useQuery } from "react-query";
-import { ReducersType, STICKER_CATEGORY, stickerCategoryType } from "../types";
-
-import { Image } from "fabric/fabric-impl";
+import {
+  ImageType,
+  ReducersType,
+  STICKER_CATEGORY,
+  stickerCategoryType,
+} from "../types";
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
@@ -34,7 +37,7 @@ export default function StickerMenu() {
   }, [isLoading, stickerCategory]);
 
   const addNodes = (url: string) => {
-    new fabric.Image.fromURL(url, (img: Image) => {
+    new fabric.Image.fromURL(url, (img: ImageType) => {
       img.selectable = true;
       img.erasable = false;
       img.hoverCursor = "auto";

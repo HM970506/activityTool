@@ -12,9 +12,8 @@ import { DECORATION, ReducersType } from "../types";
 export default function SideButtons({
   activitytoolsEnd,
 }: {
-  activitytoolsEnd: any;
+  activitytoolsEnd: Function;
 }) {
-  console.log(typeof activitytoolsEnd);
   const { view, category } = useSelector(
     (state: ReducersType) => state.categoryReducer
   );
@@ -37,7 +36,13 @@ export default function SideButtons({
       <StickerButton />
       <DecorationButton />
       <DrawToolsButton />
-      <Button onClick={activitytoolsEnd}>활동툴 닫기</Button>
+      <Button
+        onClick={() => {
+          activitytoolsEnd();
+        }}
+      >
+        활동툴 닫기
+      </Button>
     </ButtonBox>
   );
 }
