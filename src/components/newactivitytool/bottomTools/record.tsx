@@ -1,17 +1,18 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import { ReducersType } from "../types";
 
 export default function RecordMenu() {
   const dispatch = useDispatch();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const audioSavedRef = useRef<HTMLAudioElement>(null);
   const [audioSrc, setAudioSrc] = useState<string | undefined>(undefined);
+  const audioSavedSrc = useSelector((state: ReducersType) => {
+    return state.nodeReducer.record;
+  });
   navigator.mediaDevices.getUserMedia({ audio: true });
-
-  const addNodes = (audioSrc: string) => {
-    dispatch(nodeActions.setRecord(audioSrc));
-  };
 
   const recorderControls = useAudioRecorder();
   const addAudioElement = (blob: Blob) => {
@@ -20,7 +21,7 @@ export default function RecordMenu() {
   };
 
   const audioComplete = async () => {
-    if (audioSrc !== undefined) addNodes(audioSrc);
+    if (audioSrc !== undefined) dispatch(nodeActions.setRecord(audioSrc));
     setAudioSrc(undefined);
   };
 
@@ -30,8 +31,11 @@ export default function RecordMenu() {
         onRecordingComplete={(blob) => addAudioElement(blob)}
         recorderControls={recorderControls}
       />
+      지금 녹음한 오디오
       <audio ref={audioRef} src={audioSrc} controls={true} />
-      <button onClick={audioComplete}>완성</button>
+      <button onClick={audioComplete}>확정</button>
+      기존 녹음 오디오
+      <audio ref={audioSavedRef} src={audioSavedSrc} controls={true} />
     </>
   );
 }

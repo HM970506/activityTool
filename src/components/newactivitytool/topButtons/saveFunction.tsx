@@ -1,6 +1,6 @@
 import { setSaveDate } from "../../firestore/setData";
 
-export const saveJson = async (canvas: any, record: null | string) => {
+export const saveJson = async (canvas: any, record: string | undefined) => {
   const json = JSON.stringify(canvas);
   await setSaveDate(json, record);
 

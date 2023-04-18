@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Background,
   Overlay,
@@ -13,12 +13,14 @@ import TopButtons from "./topButtons";
 import { getFirestoreData } from "../firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
+import nodeSlice, { nodeActions } from "../../store/common/nodeSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const [subButtonVisible, setSubButtonVisible] = useState<boolean>(false);
   const [activitytools, setActivitytools] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (activitytools) newActivityTool.current?.showModal();
@@ -46,6 +48,7 @@ export default function NewActivityTool() {
     const data = await getFirestoreData("saveData", href);
     if (data) {
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
+      dispatch(nodeActions.setRecord(data.record));
       activitytoolsStart();
     } else alert("저장된 데이터가 없습니다");
   };

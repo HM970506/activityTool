@@ -80,7 +80,7 @@ export interface nodeReducerType {
   isDrawing: boolean;
   isPanning: boolean;
   opacity: number;
-  record: string | null;
+  record: string | undefined;
   textareaContainer: HTMLDivElement;
 }
 

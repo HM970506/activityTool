@@ -7,7 +7,7 @@ const nodeSlice = createSlice({
     isDrawing: false,
     isPanning: false,
     textareaContainer: null,
-    record: null,
+    record: undefined,
     opacity: 0,
   },
 
