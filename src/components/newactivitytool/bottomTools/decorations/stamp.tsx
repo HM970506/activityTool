@@ -8,7 +8,7 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect, useState } from "react";
 import { functionRemover } from "../../commonFunction";
 import { useQueryClient } from "react-query";
-import { ReducersType } from "../../types";
+import { ReducersType, stickerOptionType } from "../../types";
 
 export default function Stamp() {
   const dispatch = useDispatch();
@@ -24,16 +24,17 @@ export default function Stamp() {
   const data = queryClient.getQueryData("decoration_stamp");
 
   useEffect(() => {
-    if (Array.isArray(data)) setStamps(data);
+    if (Array.isArray(data)) {
+      setStamps(data);
+      if (canvas.stamping == "") canvas.stamping = data[stamp.index];
+    }
   }, [data]);
 
   const stampStep_1 = () => {
-    console.log("머꼬");
     const pointer = canvas.getPointer();
     fabric.loadSVGFromString(
       canvas.stamping,
-      (objects: Object[], options: any) => {
-        console.log(objects, options);
+      (objects: Object[], options: stickerOptionType) => {
         const stamp = fabric.util.groupSVGElements(objects, options);
 
         stamp.fill = canvas.toolColor;
