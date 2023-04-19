@@ -9,50 +9,6 @@ export default function PhotoMenu() {
   const [photo, setPhoto] = useState<string>("");
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const inputRef = useRef<HTMLInputElement>(null);
-  const shapeChange = (shape: string) => {
-    const now = canvas.getActiveObject();
-
-    if (!now) return;
-
-    fabric.Image.fromURL(`/${shape}.png`, (frameImg: ImageType) => {
-      console.log(frameImg);
-      frameImg.erasable = false;
-      frameImg.selectable = true;
-      frameImg.crossOrigin = "Anonymous";
-      fabric.Image.fromURL(
-        now.type === "image" ? now.getSrc() : now.getObjects()[1].getSrc(),
-        function (innerImg: ImageType) {
-          innerImg.globalCompositeOperation = "source-atop";
-          innerImg.erasable = false;
-          innerImg.selectable = true;
-          innerImg.crossOrigin = "Anonymous";
-
-          innerImg.scaleX =
-            now.type === "image" ? now.scaleX : now.getObjects()[1].scaleX;
-          innerImg.scaleY =
-            now.type === "image" ? now.scaleY : now.getObjects()[1].scaleY;
-          innerImg.width =
-            now.type === "image" ? now.width : now.getObjects()[1].width;
-          innerImg.height =
-            now.type === "image" ? now.height : now.getObjects()[1].height;
-          innerImg.angle =
-            now.type === "image" ? now.rotate : now.getObjects()[1].rotate;
-
-          const group = new fabric.Group([frameImg, innerImg], {
-            selectable: true,
-            erasable: false,
-            left: now.left,
-            top: now.top,
-          });
-
-          canvas.add(group);
-          canvas.remove(now);
-          canvas.renderAll();
-          canvas.setActiveObject(group);
-        }
-      );
-    });
-  };
 
   useEffect(() => {
     if (canvas && photo !== "") {

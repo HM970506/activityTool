@@ -1,19 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Label, Slider, Toggle } from "../styles/zoomButtonStyle";
 import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { functionRemover } from "../commonFunction";
-import { ReducersType } from "../types";
 import { IEvent } from "fabric/fabric-impl";
 
-export default function PanningToggle() {
-  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const isPanning = useSelector(
-    (state: ReducersType) => state.nodeReducer.isPanning
-  );
-  const dispatch = useDispatch();
-
+export default function PanningToggle({
+  canvas,
+  isPanning,
+  setPan,
+  setDraw,
+}: {
+  canvas: any;
+  isPanning: boolean;
+  setPan: Function;
+  setDraw: Function;
+}) {
   useEffect(() => {
     if (canvas) {
       if (isPanning) panOn();
@@ -22,7 +24,7 @@ export default function PanningToggle() {
   }, [isPanning]);
 
   const panHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(nodeActions.setPan(e.target.checked));
+    setPan(e.target.checked);
   };
 
   const panStep_1 = (e: IEvent | any) => {
@@ -77,7 +79,7 @@ export default function PanningToggle() {
 
     canvas.selectable = false;
 
-    dispatch(nodeActions.setDraw(false));
+    setDraw(false);
 
     canvas.on({
       "mouse:down": panStep_1,
@@ -102,7 +104,7 @@ export default function PanningToggle() {
 
     canvas.selectable = true;
     canvas.panning = 0;
-    if (isPanning) dispatch(nodeActions.setPan(false));
+    if (isPanning) setPan(false);
 
     canvas.__eventListeners["mouse:down"] = functionRemover(
       canvas.__eventListeners["mouse:down"],

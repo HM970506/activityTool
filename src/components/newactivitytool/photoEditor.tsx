@@ -1,7 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ReducersType } from "./types";
+import { DEFAULT_CANVAS, ImageType, ReducersType } from "./types";
 import { photoEditorActions } from "../../store/common/photoEditorSlice";
+import { useEffect, useRef, useState } from "react";
+import { fabric } from "fabric-with-erasing";
+import PanningToggle from "./topButtons/panningButton";
 
 const PhotoEditorContainer = styled.div`
   width: 70%;
@@ -50,35 +53,111 @@ const PhotoEditorCutterContainer = styled.div``;
 const PhotoEditorCutter = styled.div`
   height: 10% impotant!;
 `;
+const test = ["heart", "star", "lightning", "bubble"];
 
 export default function PhotoEditor() {
   const view = useSelector((state: ReducersType) => {
     return state.photoEditorReducer.view;
   });
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const dispatch = useDispatch();
+  const photoEditorCanvasRef = useRef<HTMLCanvasElement>(null);
+  const [photoCanvas, setPhotoCanvas] = useState<any>(null);
+  const [isPanning, setIsPanning] = useState<boolean>(false);
+  const [isDrawing, setIsDrawing] = useState<boolean>(true);
 
-  //이 안에 검은 배경 캔버스를 하나 만들고, 거기에 사진 편집 기능을 넣자
-  //틀을 선택하면 틀 외는 검은 오버레이로 보이게 하고 틀을 자유롭게 조정 가능하게.
-  //그리고 확인을 누르면 현재 캔버스에 있는 모든 것들을 하나의 그룹화하여 원래 캔버스로 보내기.
-  //그룹화할때 오버레이 대신 겹친 영역만 보이게 하는 거 적용해서...
-  const test = [0, 1, 2, 3];
+  useEffect(() => {
+    const canvas = new fabric.Canvas(photoEditorCanvasRef.current, {
+      ...DEFAULT_CANVAS,
+      height: window.innerHeight / 2,
+      width: window.innerWidth / 2,
+      backgroundColor: "black",
+    });
+
+    fabric.Image.fromURL(`/test.jpg`, (Img: ImageType) => {
+      Img.scaleX = 0.5;
+      Img.scaleY = 0.5;
+      Img.originX = "center";
+      Img.originY = "center";
+      Img.left = canvas.width / 2;
+      Img.top = canvas.height / 2;
+
+      canvas.add(Img);
+      canvas.renderAll();
+    });
+
+    setPhotoCanvas(canvas);
+  }, []);
+
+  const panFunction = (set: boolean) => {
+    setIsPanning(set);
+  };
+
+  const drawFunction = (set: boolean) => {
+    setIsDrawing(set);
+  };
+
+  const shapeChange = (shape: string) => {
+    if (photoCanvas == null) return;
+
+    fabric.Image.fromURL(`/${shape}.png`, (frameImg: ImageType) => {
+      frameImg.selectable = true;
+      frameImg.globalCompositeOperation = "destination-atop";
+      photoCanvas.add(frameImg);
+      photoCanvas.renderAll();
+    });
+  };
+
+  const editComplete = () => {
+    if (photoCanvas == null) return;
+    canvas.discardActiveObject();
+    const objects = photoCanvas.getObjects();
+
+    const group = new fabric.Group(objects, {
+      left: 0,
+      top: 0,
+      selectable: true,
+      erasable: false,
+    });
+
+    canvas.add(group);
+    canvas.renderAll();
+    photoCanvas.remove(objects);
+    photoCanvas.renderAll();
+
+    dispatch(photoEditorActions.setView(false));
+  };
+
   return (
     <>
       {view && (
         <PhotoEditorOverlay>
           <PhotoEditorContainer>
             <PhotoEditorCutterContainer>
-              {test.map((value: any, key: number) => {
+              <PanningToggle
+                canvas={photoCanvas}
+                isPanning={isPanning}
+                setPan={panFunction}
+                setDraw={drawFunction}
+              />
+              {test.map((value: string, key: number) => {
                 return (
-                  <PhotoEditorCutter key={`cutter_${key}`}>
+                  <PhotoEditorCutter
+                    key={`cutter_${key}`}
+                    onClick={() => {
+                      shapeChange(value);
+                    }}
+                  >
                     {value}
                   </PhotoEditorCutter>
                 );
               })}
             </PhotoEditorCutterContainer>
-            <div>캔버스 들어갈 곳</div>
+            <div>
+              <canvas ref={photoEditorCanvasRef}></canvas>
+            </div>
             <PhotoEditorButtons>
-              <button>완성</button>
+              <button onClick={editComplete}>완성</button>
               <button>취소</button>
             </PhotoEditorButtons>
           </PhotoEditorContainer>
