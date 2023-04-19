@@ -1,8 +1,9 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Uploader } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
 import { ImageType, ReducersType } from "../types";
+import { photoEditorActions } from "../../../store/common/photoEditorSlice";
 
 const defaultX = 500;
 export default function PhotoMenu() {
@@ -52,7 +53,14 @@ export default function PhotoMenu() {
     if (inputRef.current !== null) inputRef.current?.click();
   };
 
-  const photoEdit = () => {};
+  const dispatch = useDispatch();
+  const photoEdit = () => {
+    const photo = canvas.getActiveObject();
+    if (photo) {
+      dispatch(photoEditorActions.setPhoto(photo));
+      dispatch(photoEditorActions.setIsEditing(true));
+    }
+  };
 
   return (
     <>

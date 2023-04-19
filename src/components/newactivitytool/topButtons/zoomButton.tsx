@@ -5,15 +5,23 @@ import { DefaultButton } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
 import { ReducersType } from "../types";
 
-export default function ZoomButton() {
-  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const { zoom, zoomView } = useSelector(
-    (state: ReducersType) => state.zoomReducer
-  );
-  const dispatch = useDispatch();
-
+export default function ZoomButton({
+  canvas,
+  zoom,
+  setZoom,
+  view,
+  setView,
+  reset,
+}: {
+  canvas: any;
+  zoom: number;
+  view: number;
+  setZoom: Function;
+  setView: Function;
+  reset: Function;
+}) {
   useEffect(() => {
-    if (canvas) dispatch(zoomActions.setZoom(canvas.getZoom()));
+    if (canvas) setZoom(canvas.getZoom());
   }, [canvas]);
 
   useEffect(() => {
@@ -27,8 +35,8 @@ export default function ZoomButton() {
     let state = zoom ? 0.1 : -0.1;
 
     const nowZoom = Math.round((canvas.getZoom() + state) * 100) / 100;
-    dispatch(zoomActions.setZoom(nowZoom));
-    dispatch(zoomActions.setView(nowZoom));
+    setZoom(nowZoom);
+    setView(nowZoom);
   };
 
   const zoomPlus = () => {
@@ -40,14 +48,14 @@ export default function ZoomButton() {
   };
 
   const restoration = () => {
-    dispatch(zoomActions.reset());
+    reset();
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
   };
 
   return (
     <>
       <DefaultButton onClick={zoomPlus}>확대</DefaultButton>
-      {zoomView}
+      {view}
       <DefaultButton onClick={zoomMinus}>축소</DefaultButton>
       <DefaultButton onClick={restoration}>원래대로</DefaultButton>
     </>

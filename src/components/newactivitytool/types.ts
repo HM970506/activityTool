@@ -91,7 +91,8 @@ export interface zoomReducerType {
 }
 
 export interface photoEditorReducerType {
-  view: boolean;
+  isEditing: boolean;
+  photo: any;
 }
 
 export interface ReducersType {

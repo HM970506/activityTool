@@ -5,8 +5,9 @@ import { photoEditorActions } from "../../store/common/photoEditorSlice";
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric-with-erasing";
 import PanningToggle from "./topButtons/panningButton";
+import ZoomButton from "./topButtons/zoomButton";
 
-const PhotoEditorContainer = styled.div`
+const PhotoEditorContainer = styled.div<{ view: number }>`
   width: 70%;
   height: 70%;
   position: absolute;
@@ -14,7 +15,7 @@ const PhotoEditorContainer = styled.div`
   left: 15%;
   background-color: white;
   z-index: 1001;
-  display: grid;
+  display: ${(props) => (props.view == 1 ? "grid" : "none")};
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 5fr 1fr;
   justify-content: center;
@@ -25,13 +26,14 @@ const PhotoEditorContainer = styled.div`
   }
 `;
 
-const PhotoEditorOverlay = styled.div`
+const PhotoEditorOverlay = styled.div<{ view: number }>`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1000;
+  display: ${(props) => (props.view == 1 ? "block" : "none")};
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
@@ -56,8 +58,8 @@ const PhotoEditorCutter = styled.div`
 const test = ["heart", "star", "lightning", "bubble"];
 
 export default function PhotoEditor() {
-  const view = useSelector((state: ReducersType) => {
-    return state.photoEditorReducer.view;
+  const { isEditing, photo } = useSelector((state: ReducersType) => {
+    return state.photoEditorReducer;
   });
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const dispatch = useDispatch();
@@ -65,6 +67,8 @@ export default function PhotoEditor() {
   const [photoCanvas, setPhotoCanvas] = useState<any>(null);
   const [isPanning, setIsPanning] = useState<boolean>(false);
   const [isDrawing, setIsDrawing] = useState<boolean>(true);
+  const [zoom, setZoom] = useState<number>(1);
+  const [view, setView] = useState<number>(1);
 
   useEffect(() => {
     const canvas = new fabric.Canvas(photoEditorCanvasRef.current, {
@@ -73,21 +77,28 @@ export default function PhotoEditor() {
       width: window.innerWidth / 2,
       backgroundColor: "black",
     });
-
-    fabric.Image.fromURL(`/test.jpg`, (Img: ImageType) => {
-      Img.scaleX = 0.5;
-      Img.scaleY = 0.5;
-      Img.originX = "center";
-      Img.originY = "center";
-      Img.left = canvas.width / 2;
-      Img.top = canvas.height / 2;
-
-      canvas.add(Img);
-      canvas.renderAll();
-    });
+    canvas.renderAll();
 
     setPhotoCanvas(canvas);
   }, []);
+
+  useEffect(() => {
+    if (photoCanvas) {
+      fabric.Image.fromURL(
+        photo.type === "image"
+          ? photo.getSrc()
+          : photo.getObjects()[1].getSrc(),
+        (Img: ImageType) => {
+          Img.originX = "center";
+          Img.originY = "center";
+          Img.left = photoCanvas.width / 2;
+          Img.top = photoCanvas.height / 2;
+          photoCanvas.add(Img);
+          photoCanvas.renderAll();
+        }
+      );
+    }
+  }, [photo]);
 
   const panFunction = (set: boolean) => {
     setIsPanning(set);
@@ -114,55 +125,81 @@ export default function PhotoEditor() {
     const objects = photoCanvas.getObjects();
 
     const group = new fabric.Group(objects, {
-      left: 0,
-      top: 0,
+      left: photo.left,
+      top: photo.top,
       selectable: true,
       erasable: false,
     });
 
     canvas.add(group);
+    canvas.remove(photo);
+
     canvas.renderAll();
     photoCanvas.remove(objects);
     photoCanvas.renderAll();
 
-    dispatch(photoEditorActions.setView(false));
+    dispatch(photoEditorActions.setIsEditing(false));
   };
+
+  const editCancle = () => {
+    const objects = photoCanvas.getObjects();
+    if (objects) photoCanvas.remove(objects);
+    photoCanvas.renderAll();
+
+    dispatch(photoEditorActions.setIsEditing(false));
+  };
+
+  const zoomFunction = (set: number) => {
+    setZoom(set);
+  };
+
+  const viewFucntion = (set: number) => {
+    setView(set);
+  };
+
+  const resetFunction = () => {};
 
   return (
     <>
-      {view && (
-        <PhotoEditorOverlay>
-          <PhotoEditorContainer>
-            <PhotoEditorCutterContainer>
-              <PanningToggle
-                canvas={photoCanvas}
-                isPanning={isPanning}
-                setPan={panFunction}
-                setDraw={drawFunction}
-              />
-              {test.map((value: string, key: number) => {
-                return (
-                  <PhotoEditorCutter
-                    key={`cutter_${key}`}
-                    onClick={() => {
-                      shapeChange(value);
-                    }}
-                  >
-                    {value}
-                  </PhotoEditorCutter>
-                );
-              })}
-            </PhotoEditorCutterContainer>
-            <div>
-              <canvas ref={photoEditorCanvasRef}></canvas>
-            </div>
-            <PhotoEditorButtons>
-              <button onClick={editComplete}>완성</button>
-              <button>취소</button>
-            </PhotoEditorButtons>
-          </PhotoEditorContainer>
-        </PhotoEditorOverlay>
-      )}
+      <PhotoEditorOverlay view={isEditing ? 1 : 0}>
+        <PhotoEditorContainer view={isEditing ? 1 : 0}>
+          <PhotoEditorCutterContainer>
+            <PanningToggle
+              canvas={photoCanvas}
+              isPanning={isPanning}
+              setPan={panFunction}
+              setDraw={drawFunction}
+            />
+            <ZoomButton
+              canvas={photoCanvas}
+              setZoom={zoomFunction}
+              setView={viewFucntion}
+              reset={resetFunction}
+              zoom={zoom}
+              view={view}
+            />
+            {test.map((value: string, key: number) => {
+              return (
+                <PhotoEditorCutter
+                  key={`cutter_${key}`}
+                  onClick={() => {
+                    shapeChange(value);
+                  }}
+                >
+                  {value}
+                </PhotoEditorCutter>
+              );
+            })}
+          </PhotoEditorCutterContainer>
+          <div>
+            <canvas ref={photoEditorCanvasRef}></canvas>
+          </div>
+          <PhotoEditorButtons>
+            <button onClick={editComplete}>완성</button>
+            <button onClick={editCancle}>취소</button>
+          </PhotoEditorButtons>
+        </PhotoEditorContainer>
+      </PhotoEditorOverlay>
     </>
   );
 }

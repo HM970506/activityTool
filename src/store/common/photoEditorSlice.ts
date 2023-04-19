@@ -2,11 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const photoEditorSlice = createSlice({
   name: "photoEditorReducer",
-  initialState: { view: true },
+  initialState: { isEditing: false, photo: null },
 
   reducers: {
-    setView: (state, action: PayloadAction<any>) => {
-      state.view = action.payload;
+    setIsEditing: (state, action: PayloadAction<any>) => {
+      state.isEditing = action.payload;
+    },
+
+    setPhoto: (state, action: PayloadAction<any>) => {
+      state.photo = action.payload;
     },
   },
 });
