@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { DEFAULT_CANVAS, ImageType, ReducersType } from "./types";
+import { DEFAULT_CANVAS, DEFAULT_X, ImageType, ReducersType } from "./types";
 import { photoEditorActions } from "../../store/common/photoEditorSlice";
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric-with-erasing";
@@ -84,15 +84,24 @@ export default function PhotoEditor() {
 
   useEffect(() => {
     if (photoCanvas) {
+      canvas.discardActiveObject();
+      photoCanvas.discardActiveObject();
       fabric.Image.fromURL(
         photo.type === "image"
           ? photo.getSrc()
-          : photo.getObjects()[1].getSrc(),
+          : photo.getObjects()[0].getSrc(),
         (Img: ImageType) => {
           Img.originX = "center";
           Img.originY = "center";
-          Img.left = photoCanvas.width / 2;
-          Img.top = photoCanvas.height / 2;
+          Img.left = Math.round(photoCanvas.width / 2);
+          Img.top = Math.round(photoCanvas.height / 2);
+
+          if (Img.width !== undefined) {
+            const scale = DEFAULT_X / Img.width;
+            Img.scaleX = scale;
+            Img.scaleY = scale;
+          }
+
           photoCanvas.add(Img);
           photoCanvas.renderAll();
         }
@@ -125,11 +134,12 @@ export default function PhotoEditor() {
     const objects = photoCanvas.getObjects();
 
     const group = new fabric.Group(objects, {
-      left: photo.left,
-      top: photo.top,
+      left: Math.round(photo.left),
+      top: Math.round(photo.top),
       selectable: true,
       erasable: false,
     });
+    console.log(group);
 
     canvas.add(group);
     canvas.remove(photo);
@@ -157,7 +167,10 @@ export default function PhotoEditor() {
     setView(set);
   };
 
-  const resetFunction = () => {};
+  const resetFunction = () => {
+    setZoom(1);
+    setView(1);
+  };
 
   return (
     <>

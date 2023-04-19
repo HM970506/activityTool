@@ -103,6 +103,7 @@ export interface ReducersType {
   photoEditorReducer: photoEditorReducerType;
 }
 
+export const DEFAULT_X = 500;
 export const DRAW_SIZE = 5;
 
 export const DEFAULT_CANVAS = {
