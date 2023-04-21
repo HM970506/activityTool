@@ -86,26 +86,21 @@ export default function PhotoEditor() {
     if (photoCanvas) {
       canvas.discardActiveObject();
       photoCanvas.discardActiveObject();
-      fabric.Image.fromURL(
-        photo.type === "image"
-          ? photo.getSrc()
-          : photo.getObjects()[0].getSrc(),
-        (Img: ImageType) => {
-          Img.originX = "center";
-          Img.originY = "center";
-          Img.left = Math.round(photoCanvas.width / 2);
-          Img.top = Math.round(photoCanvas.height / 2);
+      fabric.Image.fromURL(photo.getSrc(), (Img: ImageType) => {
+        Img.originX = "center";
+        Img.originY = "center";
+        Img.left = Math.round(photoCanvas.width / 2);
+        Img.top = Math.round(photoCanvas.height / 2);
 
-          if (Img.width !== undefined) {
-            const scale = DEFAULT_X / Img.width;
-            Img.scaleX = scale;
-            Img.scaleY = scale;
-          }
-
-          photoCanvas.add(Img);
-          photoCanvas.renderAll();
+        if (Img.width !== undefined) {
+          const scale = DEFAULT_X / Img.width;
+          Img.scaleX = scale;
+          Img.scaleY = scale;
         }
-      );
+
+        photoCanvas.add(Img);
+        photoCanvas.renderAll();
+      });
     }
   }, [photo]);
 
@@ -133,20 +128,26 @@ export default function PhotoEditor() {
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
 
-    const group = new fabric.Group(objects, {
-      left: Math.round(photo.left),
-      top: Math.round(photo.top),
-      selectable: true,
-      erasable: false,
-    });
-    console.log(group);
+    const frame = objects[1];
+    const image = objects[0];
 
-    canvas.add(group);
-    canvas.remove(photo);
+    const group = new fabric.Group(objects);
+    group.cloneAsImage((img: any) => {
+      img.set({
+        left: Math.round(photo.left),
+        top: Math.round(photo.top),
+        selectable: true,
+        erasable: false,
+        cropX: Math.abs(frame.getCoords()[0].x - image.getCoords()[0].x),
+        cropY: Math.abs(frame.getCoords()[0].y - image.getCoords()[0].y),
+        width: frame.width * frame.scaleX,
+        height: frame.height * frame.scaleY,
+      });
+      canvas.remove(photo);
+      canvas.add(img);
+    });
 
     canvas.renderAll();
-    photoCanvas.remove(objects);
-    photoCanvas.renderAll();
 
     dispatch(photoEditorActions.setIsEditing(false));
   };
