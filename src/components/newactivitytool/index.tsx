@@ -14,7 +14,7 @@ import { getFirestoreData, getStorageData } from "../firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
 import nodeSlice, { nodeActions } from "../../store/common/nodeSlice";
-import PhotoEditor from "./photoEditor";
+import PhotoEditor from "./photoEditor/photoEditor";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);

@@ -2,6 +2,7 @@ import { Image } from "fabric/fabric-impl";
 
 export interface ImageType extends Partial<Image> {
   erasable: boolean;
+  original?: string;
 }
 
 export const STICKER = "STICKER";
