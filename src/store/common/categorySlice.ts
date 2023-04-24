@@ -13,16 +13,16 @@ const categorySlice = createSlice({
   },
 
   reducers: {
-    categoryChange: (state, action: PayloadAction<any>) => {
+    categoryChange: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
-    templateChange: (state, action: PayloadAction<any>) => {
+    templateChange: (state, action: PayloadAction<number>) => {
       state.subcategory.template.index = action.payload;
     },
-    stampChange: (state, action: PayloadAction<any>) => {
+    stampChange: (state, action: PayloadAction<number>) => {
       state.subcategory.stamp.index = action.payload;
     },
-    tapeChange: (state, action: PayloadAction<any>) => {
+    tapeChange: (state, action: PayloadAction<number>) => {
       state.subcategory.tape.index = action.payload;
     },
     templateOn: (state) => {
@@ -43,7 +43,7 @@ const categorySlice = createSlice({
       state.subcategory.stamp.state = false;
     },
 
-    setView: (state, action: PayloadAction<any>) => {
+    setView: (state, action: PayloadAction<boolean>) => {
       state.view = action.payload;
     },
   },

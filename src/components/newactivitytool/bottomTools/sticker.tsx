@@ -19,7 +19,7 @@ import {
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
-  const [stickers, setStickers] = useState<any[]>([]);
+  const [stickers, setStickers] = useState<string[]>([]);
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const { data, isLoading } = useQuery(
     `sticker_${stickerCategory}`,
@@ -68,7 +68,7 @@ export default function StickerMenu() {
         {isLoading ? (
           <div>로딩중</div>
         ) : (
-          stickers.map((value, key) => (
+          stickers.map((value: string, key: number) => (
             <ObjectButton
               key={`sticker_${stickerCategory}_${key}`}
               onClick={() => {

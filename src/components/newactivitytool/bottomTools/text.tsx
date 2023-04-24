@@ -11,7 +11,7 @@ export default function TextMenu() {
   const textAreaContainer = useSelector(
     (state: ReducersType) => state.nodeReducer.textareaContainer
   );
-  const [texts, setTexts] = useState<any[]>([]);
+  const [texts, setTexts] = useState<textType[]>([]);
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData("text");
 

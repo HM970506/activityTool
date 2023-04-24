@@ -11,7 +11,7 @@ export default function CanvasOpacity() {
   const dispatch = useDispatch();
 
   const opacityHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(nodeActions.setOpacity(e.target.value));
+    dispatch(nodeActions.setOpacity(parseInt(e.target.value)));
   };
 
   useEffect(() => {

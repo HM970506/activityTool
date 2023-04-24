@@ -51,9 +51,9 @@ export default function NewActivityTool() {
     if (data) {
       if (data?.record) {
         const uint8Array = new Uint8Array(data.record);
-        console.log("get uint8Array", uint8Array);
+        //console.log("get uint8Array", uint8Array);
         const blob = new Blob([uint8Array], { type: "audio/webm" });
-        console.log("getblog", blob);
+        // console.log("getblog", blob);
         const url = URL.createObjectURL(blob);
         dispatch(nodeActions.setRecord(url));
       }

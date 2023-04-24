@@ -11,7 +11,7 @@ import { ImageType, ReducersType } from "../../types";
 
 export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const [templates, setTemplates] = useState<any[]>([]);
+  const [templates, setTemplates] = useState<string[]>([]);
   const dispatch = useDispatch();
   const { template } = useSelector(
     (state: ReducersType) => state.categoryReducer.subcategory

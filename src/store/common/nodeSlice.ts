@@ -19,14 +19,14 @@ const nodeSlice = createSlice({
       state.textareaContainer = action.payload;
     },
 
-    setOpacity: (state, action: PayloadAction<any>) => {
+    setOpacity: (state, action: PayloadAction<number>) => {
       state.opacity = action.payload;
     },
-    setDraw: (state, action: PayloadAction<any>) => {
+    setDraw: (state, action: PayloadAction<boolean>) => {
       state.isDrawing = action.payload;
     },
 
-    setPan: (state, action: PayloadAction<any>) => {
+    setPan: (state, action: PayloadAction<boolean>) => {
       state.isPanning = action.payload;
     },
 

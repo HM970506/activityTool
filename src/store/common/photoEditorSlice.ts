@@ -5,7 +5,7 @@ const photoEditorSlice = createSlice({
   initialState: { isEditing: false, photo: null },
 
   reducers: {
-    setIsEditing: (state, action: PayloadAction<any>) => {
+    setIsEditing: (state, action: PayloadAction<boolean>) => {
       state.isEditing = action.payload;
     },
 

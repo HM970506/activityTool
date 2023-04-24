@@ -6,13 +6,13 @@ const drawSlice = createSlice({
   initialState: { tool: "pencil", color: "black", size: 5 },
 
   reducers: {
-    toolChange: (state, action: PayloadAction<any>) => {
+    toolChange: (state, action: PayloadAction<string>) => {
       state.tool = action.payload;
     },
-    colorChange: (state, action: PayloadAction<any>) => {
+    colorChange: (state, action: PayloadAction<string>) => {
       state.color = action.payload;
     },
-    sizeChange: (state, action: PayloadAction<any>) => {
+    sizeChange: (state, action: PayloadAction<number>) => {
       state.size = action.payload;
     },
   },

@@ -154,3 +154,8 @@ export interface stickerOptionType {
 }
 
 export interface CanvasType {}
+
+export interface textType {
+  name: string;
+  url: string;
+}

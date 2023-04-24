@@ -47,10 +47,6 @@ export default function PhotoEditor() {
       canvas.discardActiveObject();
       photoCanvas.discardActiveObject();
       photoCanvas.clear();
-      console.log(
-        photo.getSrc().slice(0, 40),
-        photo.original ? photo.original.slice(0, 40) : photo.original
-      );
       fabric.Image.fromURL(
         photo.original ? photo.original : photo.getSrc(),
         (Img: ImageType) => {
@@ -95,9 +91,8 @@ export default function PhotoEditor() {
     if (photoCanvas == null) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
-
+    console.log(objects);
     const editImg = cropper(objects[0], objects[1]);
-    console.log(editImg);
 
     const group = new fabric.Group(objects);
     group.cloneAsImage((img: ImageType) => {
