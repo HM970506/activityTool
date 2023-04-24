@@ -47,11 +47,17 @@ export default function NewActivityTool() {
   const getCanvas = async () => {
     const href = window.location.href.replaceAll("/", "_");
     const data = await getFirestoreData("saveData", href);
-    const record = await getStorageData(
-      `bottomTools/record/${window.location.href.replaceAll("/", "_")}`
-    );
-    if (record) dispatch(nodeActions.setRecord(record));
+
     if (data) {
+      if (data?.record) {
+        const uint8Array = new Uint8Array(data.record);
+        console.log("get uint8Array", uint8Array);
+        const blob = new Blob([uint8Array], { type: "audio/webm" });
+        console.log("getblog", blob);
+        const url = URL.createObjectURL(blob);
+        dispatch(nodeActions.setRecord(url));
+      }
+
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
       activitytoolsStart();
     } else alert("저장된 데이터가 없습니다");

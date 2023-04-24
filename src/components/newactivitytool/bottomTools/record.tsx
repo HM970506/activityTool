@@ -39,7 +39,7 @@ export default function RecordMenu() {
       <audio ref={audioRef} src={audioSrc} controls={true} />
       <button onClick={audioComplete}>확정</button>
       기존 녹음 오디오
-      <audio ref={audioSavedRef} src={audioSavedRef + ""} controls={true} />
+      <audio ref={audioSavedRef} src={audioSavedSrc} controls={true} />
     </>
   );
 }

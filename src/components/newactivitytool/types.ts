@@ -81,7 +81,7 @@ export interface nodeReducerType {
   isDrawing: boolean;
   isPanning: boolean;
   opacity: number;
-  record: Blob | undefined;
+  record: any;
   textareaContainer: HTMLDivElement;
 }
 

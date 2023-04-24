@@ -4,7 +4,6 @@ import { DefaultButton } from "../styles/indexStyle";
 import { saveJson } from "./saveFunction";
 import { TempLink } from "../styles/saveButtonstyle";
 import { ReducersType } from "../types";
-import { setAudioDate } from "../../firestore/setData";
 
 const INTERVAL_TIME = 10000;
 
@@ -20,7 +19,7 @@ export default function CanvasSave() {
 
   const saveInterval = () => {
     setInterval(() => {
-      saveJson(canvas);
+      saveJson(canvas, record);
     }, INTERVAL_TIME);
   };
 
@@ -34,8 +33,7 @@ export default function CanvasSave() {
   };
 
   const saveTemporary = async () => {
-    if (record != undefined) await setAudioDate(record);
-    saveJson(canvas);
+    saveJson(canvas, record);
   };
 
   return (

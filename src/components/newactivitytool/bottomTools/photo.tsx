@@ -10,6 +10,9 @@ export default function PhotoMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // 프레임이 아예 사진 밖으로 이동했을 때를 대비한 조건도 추가하기~
+  //다시 자르기 작업 안 되는데? 왜 안 되냐? 로컬에선 되는데..?
+
   useEffect(() => {
     if (canvas && photo !== "") {
       new fabric.Image.fromURL(photo, (img: ImageType) => {
