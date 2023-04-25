@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { functionRemover } from "../commonFunction";
 import { IEvent } from "fabric/fabric-impl";
+import { canvasType } from "../types";
 
 export default function PanningToggle({
   canvas,
@@ -11,7 +12,7 @@ export default function PanningToggle({
   setPan,
   setDraw,
 }: {
-  canvas: any;
+  canvas: canvasType;
   isPanning: boolean;
   setPan: Function;
   setDraw: Function;
@@ -28,6 +29,7 @@ export default function PanningToggle({
   };
 
   const panStep_1 = (e: IEvent | any) => {
+    console.log("touchevent", e);
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;
@@ -71,6 +73,7 @@ export default function PanningToggle({
     canvas.defaultCursor = "move";
 
     canvas.forEachObject((object: any) => {
+      console.log(object);
       object.prevEvented = object.evented;
       object.prevSelectable = object.selectable;
       object.evented = false;
@@ -94,6 +97,7 @@ export default function PanningToggle({
     canvas.defaultCursor = "default";
 
     canvas.forEachObject((object: any) => {
+      console.log("objecttype", object);
       object.evented =
         object.prevEvented !== undefined ? object.prevEvented : object.evented;
       object.selectable =

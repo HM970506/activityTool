@@ -8,7 +8,7 @@ import { fabric } from "fabric-with-erasing";
 import { useEffect, useState } from "react";
 import { functionRemover } from "../../commonFunction";
 import { useQueryClient } from "react-query";
-import { ReducersType, stickerOptionType } from "../../types";
+import { ReducersType, canvasType, stickerOptionType } from "../../types";
 
 export default function Stamp() {
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export default function Stamp() {
     canvas.on({ "mouse:down": stampDown });
   };
 
-  const stampOff = (canvas: any) => {
+  const stampOff = (canvas: canvasType) => {
     canvas.__eventListeners["mouse:down"] = functionRemover(
       canvas.__eventListeners["mouse:down"],
       stampDown.name

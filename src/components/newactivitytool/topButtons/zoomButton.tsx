@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { DefaultButton } from "../styles/indexStyle";
 import { fabric } from "fabric-with-erasing";
-import { ReducersType } from "../types";
+import { ReducersType, canvasType } from "../types";
 
 export default function ZoomButton({
   canvas,
@@ -13,7 +13,7 @@ export default function ZoomButton({
   setView,
   reset,
 }: {
-  canvas: any;
+  canvas: canvasType;
   zoom: number;
   view: number;
   setZoom: Function;

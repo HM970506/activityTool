@@ -1,4 +1,7 @@
 export default function cropper(imageOrdy: any, frameOrdy: any) {
+  console.log("imageOrdytype", imageOrdy);
+  console.log("frameOrdytype", frameOrdy);
+
   let returning = null;
   const frame = frameOrdy.getCoords();
   const image = imageOrdy.getCoords();

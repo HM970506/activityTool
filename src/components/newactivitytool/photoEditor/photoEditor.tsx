@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { DEFAULT_CANVAS, DEFAULT_X, ImageType, ReducersType } from "../types";
+import {
+  DEFAULT_CANVAS,
+  DEFAULT_X,
+  ImageType,
+  ReducersType,
+  canvasType,
+} from "../types";
 import { photoEditorActions } from "../../../store/common/photoEditorSlice";
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric-with-erasing";
@@ -24,7 +30,7 @@ export default function PhotoEditor() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const dispatch = useDispatch();
   const photoEditorCanvasRef = useRef<HTMLCanvasElement>(null);
-  const [photoCanvas, setPhotoCanvas] = useState<any>(null);
+  const [photoCanvas, setPhotoCanvas] = useState<canvasType>(null);
   const [isPanning, setIsPanning] = useState<boolean>(false);
   const [isDrawing, setIsDrawing] = useState<boolean>(true);
   const [zoom, setZoom] = useState<number>(1);
@@ -43,7 +49,7 @@ export default function PhotoEditor() {
   }, []);
 
   useEffect(() => {
-    if (photoCanvas) {
+    if (photoCanvas && photo) {
       canvas.discardActiveObject();
       photoCanvas.discardActiveObject();
       photoCanvas.clear();

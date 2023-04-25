@@ -1,6 +1,20 @@
+import { Dispatch } from "@reduxjs/toolkit";
 import { zoomActions } from "../../../store/common/zoomSlice";
+import { canvasType } from "../types";
 
-export default function windowSetting(dispatch: any, canvas: any) {
+export default function windowSetting(
+  dispatch: Dispatch<
+    | {
+        payload: number;
+        type: "zoomReducer/setZoom";
+      }
+    | {
+        payload: number;
+        type: "zoomReducer/setScale";
+      }
+  >,
+  canvas: canvasType
+) {
   if (window.onresize === null) {
     const resizeHandler = () => {
       dispatch(zoomActions.setZoom(1));

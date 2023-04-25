@@ -69,15 +69,22 @@ export interface drawReducerType {
   tool: string;
 }
 
-export interface CanvasType extends Partial<any> {
-  taping: number;
-  stamping: string;
-  toolColor: string;
-  tapeState: any;
+export interface tapeStateType {
+  opacity: number;
+  size: number;
 }
 
+// export interface canvasType extends Partial<Canvas> {
+//   taping: number;
+//   stamping: string;
+//   toolColor: string;
+//   tapeState: tapeStateType;
+// }
+
+export type canvasType = any;
+
 export interface nodeReducerType {
-  canvas: any;
+  canvas: canvasType;
   isDrawing: boolean;
   isPanning: boolean;
   opacity: number;

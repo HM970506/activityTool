@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
 import { useEffect } from "react";
 import { functionRemover } from "../../commonFunction";
-import { CanvasType, ReducersType } from "../../types";
+import { CanvasType, ReducersType, canvasType } from "../../types";
 
 export default function Tape() {
   const { isPanning, isDrawing, canvas } = useSelector(
@@ -65,7 +65,7 @@ export default function Tape() {
     });
   };
 
-  const tapeOff = (canvas: any) => {
+  const tapeOff = (canvas: canvasType) => {
     canvas.__eventListeners["mouse:down"] = functionRemover(
       canvas.__eventListeners["mouse:down"],
       tapeDown.name
