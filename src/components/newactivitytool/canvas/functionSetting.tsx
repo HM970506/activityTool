@@ -114,7 +114,6 @@ export default function functionSetting(
       else if (canvas.panning === 2) panStep_3();
     },
     "selection:created": () => {
-      console.log("선택 으럅", canvas);
       if (dispatch != undefined) {
         dispatch(nodeActions.setDraw(false));
         dispatch(nodeActions.setPan(false));

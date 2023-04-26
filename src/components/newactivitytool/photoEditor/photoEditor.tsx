@@ -87,10 +87,22 @@ export default function PhotoEditor() {
   const shapeChange = (shape: string) => {
     if (photoCanvas === null) return;
 
+    const objects = photoCanvas.getObjects();
+    const beforeCoord = { top: null, left: null };
+    if (objects.length >= 2) {
+      beforeCoord.top = objects[1].top;
+      beforeCoord.left = objects[1].left;
+    }
+
+    setIsPanning(false);
+
     fabric.Image.fromURL(`/diary/${shape}.png`, (frameImg: ImageType) => {
       frameImg.selectable = true;
       frameImg.globalCompositeOperation = "destination-atop";
+      frameImg.top = beforeCoord.top ? beforeCoord.top : 0;
+      frameImg.left = beforeCoord.left ? beforeCoord.left : 0;
       photoCanvas.add(frameImg);
+      photoCanvas.remove(objects[1]);
       photoCanvas.renderAll();
     });
   };
@@ -99,28 +111,30 @@ export default function PhotoEditor() {
     if (photoCanvas == null) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
-    console.log(objects);
-    const editImg = cropper(objects[0], objects[1]);
 
-    const group = new fabric.Group(objects);
-    group.cloneAsImage((img: ImageType) => {
-      photo.original
-        ? (img.original = photo.original)
-        : (img.original = photo.getSrc());
-      img.left = Math.round(photo.left);
-      img.top = Math.round(photo.top);
-      img.selectable = true;
-      img.erasable = false;
-      img.cropX = editImg?.cropX;
-      img.cropY = editImg?.cropY;
-      img.width = editImg?.width;
-      img.height = editImg?.height;
+    if (objects.length >= 2) {
+      const editImg = cropper(objects[0], objects[1]);
 
-      canvas.remove(photo);
-      canvas.add(img);
-    });
+      const group = new fabric.Group(objects);
+      group.cloneAsImage((img: ImageType) => {
+        photo.original
+          ? (img.original = photo.original)
+          : (img.original = photo.getSrc());
+        img.left = Math.round(photo.left);
+        img.top = Math.round(photo.top);
+        img.selectable = true;
+        img.erasable = false;
+        img.cropX = editImg?.cropX;
+        img.cropY = editImg?.cropY;
+        img.width = editImg?.width;
+        img.height = editImg?.height;
 
-    canvas.renderAll();
+        canvas.remove(photo);
+        canvas.add(img);
+      });
+
+      canvas.renderAll();
+    }
 
     dispatch(photoEditorActions.setIsEditing(false));
   };
