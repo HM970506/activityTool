@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { canvasType } from "../../components/newactivitytool/types";
 
 const nodeSlice = createSlice({
   name: "nodeReducer",
@@ -12,7 +13,7 @@ const nodeSlice = createSlice({
   },
 
   reducers: {
-    setCanvas: (state, action: PayloadAction<any>) => {
+    setCanvas: (state, action: PayloadAction<canvasType>) => {
       state.canvas = action.payload;
     },
     setTextareaContainer: (state, action: PayloadAction<any>) => {

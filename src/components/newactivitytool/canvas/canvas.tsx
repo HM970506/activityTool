@@ -7,6 +7,16 @@ import { CanvasBackground } from "../styles/indexStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
 import { DEFAULT_CANVAS } from "../types";
+import {
+  panStep_1,
+  panStep_2,
+  panStep_3,
+  stampStep_1,
+  tapeStep_1,
+  tapeStep_2,
+  tapeStep_3,
+} from "./functionSetting";
+import { IEvent } from "fabric/fabric-impl";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -25,6 +35,30 @@ export default function Canvas() {
 
     fabricSetting();
     windowSetting(dispatch, canvas);
+
+    canvas.on({
+      "mouse:down": (e: IEvent | any) => {
+        if (canvas.taping === 1) tapeStep_1(canvas);
+        else if (canvas.stamping !== "") stampStep_1(canvas);
+        else if (canvas.panning === 1) panStep_1(e, canvas);
+      },
+      "mouse:move": (e: IEvent | any) => {
+        if (canvas.taping === 2) tapeStep_2(canvas);
+        else if (canvas.panning === 2) panStep_2(e, canvas);
+      },
+      "mouse:up": () => {
+        if (canvas.taping === 2) tapeStep_3(canvas);
+        else if (canvas.panning === 2) panStep_3(canvas);
+      },
+      "selectgion:created": () => {
+        if (canvas.isDrawing) canvas.isDrawingMode = false;
+        else if (canvas.panning > 0) canvas.panning = 0;
+      },
+      "selection:updated": () => {
+        if (canvas.isDrawing) canvas.isDrawingMode = false;
+        else if (canvas.panning > 0) canvas.panning = 0;
+      },
+    });
 
     canvas.renderAll();
     dispatch(nodeActions.setTextareaContainer(containerRef.current));

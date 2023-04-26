@@ -120,7 +120,7 @@ export const DEFAULT_CANVAS = {
   selection: false,
   taping: 0,
   panning: 0,
-  stamping: -1,
+  stamping: "",
   skipOffscreen: true,
   allowTouchScrolling: true,
   deltaX: 0,

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Label, Toggle, Slider } from "../styles/zoomButtonStyle";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { functionRemover } from "../commonFunction";
 import { ReducersType } from "../types";
 
 export default function DrawToggle() {
@@ -15,16 +14,11 @@ export default function DrawToggle() {
   const drawOn = () => {
     canvas.isDrawingMode = true;
     dispatch(nodeActions.setPan(false));
-    canvas.on({ "selection:created": drawOff, "selection:updated": drawOff });
     canvas.discardActiveObject().renderAll();
   };
 
   const drawOff = () => {
     canvas.isDrawingMode = false;
-    canvas.__eventListeners["selection:created"] = functionRemover(
-      canvas.__eventListeners["selection:created"],
-      "drawOff"
-    );
   };
 
   useEffect(() => {
