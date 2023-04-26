@@ -3,6 +3,7 @@ import { zoomActions } from "../../../store/common/zoomSlice";
 import { canvasType } from "../types";
 
 export default function windowSetting(
+  canvas: canvasType,
   dispatch: Dispatch<
     | {
         payload: number;
@@ -12,8 +13,7 @@ export default function windowSetting(
         payload: number;
         type: "zoomReducer/setScale";
       }
-  >,
-  canvas: canvasType
+  >
 ) {
   if (window.onresize === null) {
     const resizeHandler = () => {

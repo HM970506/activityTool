@@ -20,6 +20,7 @@ import {
   PhotoEditorCutterContainer,
   PhotoEditorOverlay,
 } from "./style";
+import functionSetting from "../canvas/functionSetting";
 
 const test = ["heart", "star", "lightning", "bubble"];
 
@@ -44,6 +45,7 @@ export default function PhotoEditor() {
       backgroundColor: "black",
     });
     canvas.renderAll();
+    functionSetting(canvas, undefined);
 
     setPhotoCanvas(canvas);
   }, []);
@@ -85,7 +87,7 @@ export default function PhotoEditor() {
   const shapeChange = (shape: string) => {
     if (photoCanvas === null) return;
 
-    fabric.Image.fromURL(`/${shape}.png`, (frameImg: ImageType) => {
+    fabric.Image.fromURL(`/diary/${shape}.png`, (frameImg: ImageType) => {
       frameImg.selectable = true;
       frameImg.globalCompositeOperation = "destination-atop";
       photoCanvas.add(frameImg);

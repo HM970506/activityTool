@@ -43,8 +43,8 @@ export default function StickerMenu() {
       img.hoverCursor = "auto";
 
       canvas.add(img);
-      canvas.renderAll();
       canvas.setActiveObject(img);
+      canvas.renderAll();
     });
   };
 

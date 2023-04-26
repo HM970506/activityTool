@@ -29,7 +29,7 @@ export default function DrawToolsButton() {
 
   const backgroundPatternMaker = () => {
     const img = new Image();
-    img.src = "./pattern.jpg";
+    img.src = "./diary/pattern.jpg";
     BackgroundBrush.source = img;
   };
 
