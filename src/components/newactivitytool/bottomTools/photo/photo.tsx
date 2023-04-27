@@ -1,36 +1,27 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Uploader } from "../styles/indexStyle";
-import { fabric } from "fabric-with-erasing";
-import { DEFAULT_X, ImageType, ReducersType } from "../types";
-import { photoEditorActions } from "../../../store/common/photoEditorSlice";
+import { Uploader } from "../../styles/indexStyle";
+import { ReducersType } from "../../types";
+import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
+import { imageCheck } from "./photoChecker";
+import { imageMake } from "./photoMaker";
 
 export default function PhotoMenu() {
   const [photo, setPhoto] = useState<string>("");
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // 프레임이 아예 사진 밖으로 이동했을 때를 대비한 조건도 추가하기~
-  //다시 자르기 작업 안 되는데? 왜 안 되냐? 로컬에선 되는데..?
-
   useEffect(() => {
-    if (canvas && photo !== "") {
-      new fabric.Image.fromURL(photo, (img: ImageType) => {
-        img.hoverCursor = "auto";
-        img.erasable = false;
-        img.selectable = true;
-
-        if (img.width !== undefined) {
-          const scale = DEFAULT_X / img.width;
-          img.scaleX = scale;
-          img.scaleY = scale;
+    const test = async () => {
+      if (canvas && photo !== "") {
+        if (await imageCheck(photo)) imageMake(photo, canvas, setPhoto);
+        else {
+          alert("적합한 이미지가 아닙니다");
         }
+      }
+    };
 
-        canvas.add(img);
-        canvas.setActiveObject(img);
-      });
-      setPhoto("");
-    }
+    test();
   }, [photo, canvas]);
 
   const onUploadImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -43,11 +34,7 @@ export default function PhotoMenu() {
           setPhoto(e.target.result);
       };
 
-      //해당 이미지를 서버에 저장하는 로직
-      //서버에 저장된 주소 가져옴
-      //서버에 저장된 주소로 setPhoto
-
-      e.target.value = ""; //같은 이름 파일을 넣어도 반응하도록 값 리셋해주기
+      e.target.value = "";
     }
   }, []);
 

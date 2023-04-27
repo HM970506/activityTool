@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { BottomContainer, ToolBox } from "../styles/indexStyle";
-import PhotoMenu from "./photo";
+import PhotoMenu from "./photo/photo";
 import RecordMenu from "./record";
 import StickerMenu from "./sticker";
 import DrawToolsMenu from "./drawTools";
