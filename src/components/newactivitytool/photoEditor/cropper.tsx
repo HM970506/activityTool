@@ -1,7 +1,9 @@
-export default function cropper(imageOrdy: any, frameOrdy: any) {
-  console.log("imageOrdytype", imageOrdy);
-  console.log("frameOrdytype", frameOrdy);
+import { fabricObjectType } from "../types";
 
+export default function cropper(
+  imageOrdy: fabricObjectType,
+  frameOrdy: fabricObjectType
+) {
   let returning = null;
   const frame = frameOrdy.getCoords();
   const image = imageOrdy.getCoords();
@@ -16,8 +18,14 @@ export default function cropper(imageOrdy: any, frameOrdy: any) {
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
-      width: frameOrdy.width * frameOrdy.scaleX,
-      height: frameOrdy.height * frameOrdy.scaleY,
+      width:
+        frameOrdy.width != undefined && frameOrdy.scaleX != undefined
+          ? frameOrdy.width * frameOrdy.scaleX
+          : 0,
+      height:
+        frameOrdy.height != undefined && frameOrdy.scaleY != undefined
+          ? frameOrdy.height * frameOrdy.scaleY
+          : 0,
     };
   } else if (
     //왼쪽위

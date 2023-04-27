@@ -1,4 +1,15 @@
-import { Image } from "fabric/fabric-impl";
+import { Image, Object, IEvent } from "fabric/fabric-impl";
+
+export type fabricObjectType = Object;
+
+export interface panObjectType extends Partial<Object> {
+  prevEvented: boolean | undefined;
+  prevSelectable: boolean | undefined;
+}
+
+export interface fabricEventType extends Partial<IEvent> {
+  e: Event;
+}
 
 export interface ImageType extends Partial<Image> {
   erasable: boolean;

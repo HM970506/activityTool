@@ -1,12 +1,23 @@
 import { fabric } from "fabric-with-erasing";
-import { canvasType, stickerOptionType } from "../types";
+import { canvasType, fabricObjectType, stickerOptionType } from "../types";
 import { IEvent } from "fabric/fabric-impl";
 import { Dispatch } from "react";
 import { nodeActions } from "../../../store/common/nodeSlice";
 
 export default function functionSetting(
   canvas: canvasType,
-  dispatch: Dispatch<any> | undefined
+  dispatch:
+    | Dispatch<
+        | {
+            payload: boolean;
+            type: "nodeReducer/setDraw";
+          }
+        | {
+            payload: boolean;
+            type: "nodeReducer/setPan";
+          }
+      >
+    | undefined
 ) {
   const tapeStep_1 = () => {
     const pointer = canvas.getPointer();
@@ -46,7 +57,7 @@ export default function functionSetting(
     const pointer = canvas.getPointer();
     fabric.loadSVGFromString(
       canvas.stamping,
-      (objects: Object[], options: stickerOptionType) => {
+      (objects: fabricObjectType[], options: stickerOptionType) => {
         const stamp = fabric.util.groupSVGElements(objects, options);
 
         stamp.fill = canvas.toolColor;
@@ -61,7 +72,7 @@ export default function functionSetting(
   };
 
   const panStep_1 = (e: IEvent | any) => {
-    console.log("touchevent", e);
+    console.log(typeof e.e, e.e);
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;

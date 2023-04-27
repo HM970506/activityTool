@@ -1,6 +1,6 @@
 import { Label, Slider, Toggle } from "../styles/zoomButtonStyle";
 import { useEffect } from "react";
-import { canvasType } from "../types";
+import { canvasType, panObjectType } from "../types";
 
 export default function PanningToggle({
   canvas,
@@ -27,8 +27,7 @@ export default function PanningToggle({
   const panOn = () => {
     canvas.defaultCursor = "move";
 
-    canvas.forEachObject((object: any) => {
-      console.log(typeof object);
+    canvas.forEachObject((object: panObjectType) => {
       object.prevEvented = object.evented;
       object.prevSelectable = object.selectable;
       object.evented = false;
@@ -44,8 +43,7 @@ export default function PanningToggle({
   const panOff = () => {
     canvas.defaultCursor = "default";
 
-    canvas.forEachObject((object: any) => {
-      console.log("objecttype", object);
+    canvas.forEachObject((object: panObjectType) => {
       object.evented =
         object.prevEvented !== undefined ? object.prevEvented : object.evented;
       object.selectable =
