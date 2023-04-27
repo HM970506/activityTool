@@ -8,6 +8,7 @@ import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
 import { DEFAULT_CANVAS } from "../types";
 import functionSetting from "./functionSetting";
+import canvasSetting from "./canvasSetting";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function Canvas() {
     canvas.freeDrawingBrush.inverted = true;
 
     fabricSetting();
+    canvasSetting(canvas);
     windowSetting(canvas, dispatch);
     functionSetting(canvas, dispatch);
 
