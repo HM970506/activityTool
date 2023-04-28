@@ -11,6 +11,7 @@ const upload = multer({
     filename: function (req, file, cb) {
       cb(null, file.originalname);
     },
+    s,
   }),
 });
 
@@ -20,6 +21,6 @@ app.post("/upload-audio", upload.single("audio"), (req, res) => {
   res.json({ message: "File uploaded successfully" });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(8080, () => {
+  console.log("Server is running on port 8080");
 });
