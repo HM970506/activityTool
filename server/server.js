@@ -1,26 +1,91 @@
-// const express = require("express");
-// const multer = require("multer");
-// const app = express();
+const express = require("express");
+const admin = require("firebase-admin");
+const { Storage } = require("@google-cloud/storage");
+const ffmpeg = require("fluent-ffmpeg");
+const bodyParser = require("body-parser");
+require("dotenv").config({ path: "/.env" });
+const cors = require("cors");
+const app = express();
 
-// // Set up multer middleware to handle file uploads
-// const upload = multer({
-//   storage: multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null, "uploads/");
-//     },
-//     filename: function (req, file, cb) {
-//       cb(null, file.originalname);
-//     },
-//     s,
-//   }),
-// });
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(bodyParser.json());
 
-// // Set up route to handle audio file uploads
-// app.post("/upload-audio", upload.single("audio"), (req, res) => {
-//   console.log(req.file);
-//   res.json({ message: "File uploaded successfully" });
-// });
+const serviceAccount = require(process.env.APIKEY);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: process.env.STORAGEBUCKET,
+});
+const bucket = admin.storage().bucket();
 
-// app.listen(8080, () => {
-//   console.log("Server is running on port 8080");
-// });
+const uploadBlobToStorage = (blob) => {
+  return new Promise((resolve, reject) => {
+    const filename = "audio.mp3";
+    const tempFilePath = `/tmp/${filename}`;
+    const tempFile = bucket.file(tempFilePath);
+
+    const writeStream = tempFile.createWriteStream();
+
+    ffmpeg(blob)
+      .toFormat("mp3")
+      .on("error", (error) => {
+        console.error(error);
+        reject("Error converting file");
+      })
+      .on("end", () => {
+        console.log(`File converted to ${filename}`);
+
+        const options = {
+          destination: `audio/${filename}`,
+        };
+        bucket.upload(tempFilePath, options, (err, file) => {
+          if (err) {
+            console.error(err);
+            reject("Error uploading file");
+          } else {
+            console.log(`File uploaded to ${file.name}`);
+            resolve(file);
+          }
+        });
+      })
+      .pipe(writeStream);
+  });
+};
+
+app.post("/diary", (req) => {
+  console.log(req.body);
+  uploadBlobToStorage(req.body.blob);
+});
+
+app.listen(3001, () => {
+  console.log("3001 server open");
+});
+
+// const FormData = require("form-data");
+// const fs = require("fs");
+// let data = new FormData();
+// data.append("dir", "/src/testing");
+// data.append(
+//   "file",
+//   fs.createReadStream("///thinkbig.co/Dfs/Users/19001590/Pictures/B.jpg")
+// );
+
+// let config = {
+//   method: "post",
+//   maxBodyLength: Infinity,
+//   url: "https://any-web-api.wjthinkbig.com/qpi/upload",
+//   headers: {
+//     "Content-Type": "application/json",
+//     ...data.getHeaders(),
+//   },
+//   data: data,
+// };
+
+// axios
+//   .request(config)
+//   .then((response) => {
+//     console.log(JSON.stringify(response.data));
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
