@@ -1,5 +1,5 @@
 import { fabric } from "fabric-with-erasing";
-import { deleteProps } from "../setting/deleteButton";
+import { deleteProps } from "../common/deleteButton";
 
 export default function fabricSetting() {
   fabric.Object.prototype.set({

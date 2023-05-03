@@ -21,17 +21,8 @@ export default function DrawToolsButton() {
   const draws = useSelector((state: ReducersType) => state.drawReducer);
 
   useEffect(() => {
-    backgroundPatternMaker();
-  }, []);
-  useEffect(() => {
     if (canvas) setDrawTools();
   }, [draws, isDrawing]);
-
-  const backgroundPatternMaker = () => {
-    const img = new Image();
-    img.src = "./diary/pattern.jpg";
-    BackgroundBrush.source = img;
-  };
 
   const setColor = (color: string) => {
     const now = canvas.getActiveObject();
@@ -61,6 +52,10 @@ export default function DrawToolsButton() {
   const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
   const Eraser = new fabric.EraserBrush(canvas);
   const BackgroundBrush = new fabric.PatternBrush(canvas);
+
+  const img = new Image();
+  img.src = "/diary/pattern.jpg";
+  BackgroundBrush.source = img;
 
   const drawToolButtonClick = () => {
     dispatch(categoryActions.categoryChange(DRAWTOOLS));

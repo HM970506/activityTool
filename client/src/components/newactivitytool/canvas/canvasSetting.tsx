@@ -27,7 +27,6 @@ export default function canvasSetting(canvas: canvasType) {
         now.scaleY =
           now.scaleY !== undefined ? Math.round(now.scaleY * 1000) / 1000 : 0;
       }
-      console.log(now);
     },
   });
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   BackgroundContainer,
   ListContainer,
@@ -11,6 +11,7 @@ import Tape from "./tape";
 import Stamp from "./stamp";
 import Template from "./template";
 import { ReducersType } from "../../types";
+import { selectable, unselectable } from "../../common/selectHandler";
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -22,15 +23,25 @@ export default function DecorationMenu() {
 
   useEffect(() => {
     if (tape.state) {
+      unselectable(canvas);
+
       canvas.taping = 1;
       dispatch(nodeActions.setDraw(false));
-    } else canvas.taping = 0;
-  }, [tape]);
+    } else {
+      if (!stamp.state) selectable(canvas);
+      canvas.taping = 0;
+    }
+  }, [tape.state]);
 
   useEffect(() => {
-    if (stamp.state) dispatch(nodeActions.setDraw(false));
-    else canvas.stamping = "";
-  }, [stamp]);
+    if (stamp.state) {
+      unselectable(canvas);
+      dispatch(nodeActions.setDraw(false));
+    } else {
+      if (!tape.state) selectable(canvas);
+      canvas.stamping = "";
+    }
+  }, [stamp.state]);
 
   return (
     <BackgroundContainer>

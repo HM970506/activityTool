@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ReducersType } from "../../types";
+import { selectable, unselectable } from "../../common/selectHandler";
 
 export default function Tape() {
   const { isPanning, isDrawing, canvas } = useSelector(
@@ -12,10 +13,15 @@ export default function Tape() {
 
   useEffect(() => {
     if (canvas) {
-      if (!isPanning && !isDrawing) canvas.taping = 1;
-      else canvas.taping = 0;
+      if (!isPanning && !isDrawing && tape.state) {
+        unselectable(canvas);
+        canvas.taping = 1;
+      }
+    } else {
+      selectable(canvas);
+      canvas.taping = 0;
     }
-  }, [isDrawing, isPanning]);
+  }, [isDrawing, isPanning, tape.state]);
 
   return (
     <>

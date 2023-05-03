@@ -1,12 +1,12 @@
 import { fabric } from "fabric-with-erasing";
 import "fabric-history";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef } from "react";
 import { CanvasBackground } from "../styles/indexStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import { DEFAULT_CANVAS } from "../types";
+import { DEFAULT_CANVAS, ReducersType } from "../types";
 import functionSetting from "./functionSetting";
 import canvasSetting from "./canvasSetting";
 

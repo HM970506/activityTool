@@ -7,6 +7,7 @@ import { categoryActions } from "../../../../store/common/categorySlice";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import { ReducersType } from "../../types";
+import { selectable, unselectable } from "../../common/selectHandler";
 
 export default function Stamp() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function Stamp() {
   const stampOn = () => {
     if (Array.isArray(data)) {
       setStamps(data);
+
       if (canvas.stamping == "") canvas.stamping = data[stamp.index];
     }
   };

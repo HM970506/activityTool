@@ -1,17 +1,18 @@
 const express = require("express");
 const admin = require("firebase-admin");
-const { Storage } = require("@google-cloud/storage");
+const storage = require("firebase-admin/storage");
 const ffmpeg = require("fluent-ffmpeg");
 const bodyParser = require("body-parser");
-require("dotenv").config({ path: "/.env" });
+const dotenv = require("dotenv");
 const cors = require("cors");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
+dotenv.config();
 
-const serviceAccount = require(process.env.APIKEY);
+const serviceAccount = require(`./${process.env.APIKEY}`);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: process.env.STORAGEBUCKET,
@@ -20,7 +21,7 @@ const bucket = admin.storage().bucket();
 
 const uploadBlobToStorage = (blob) => {
   return new Promise((resolve, reject) => {
-    const filename = "audio.mp3";
+    const filename = "test.mp3";
     const tempFilePath = `/tmp/${filename}`;
     const tempFile = bucket.file(tempFilePath);
 
@@ -36,7 +37,7 @@ const uploadBlobToStorage = (blob) => {
         console.log(`File converted to ${filename}`);
 
         const options = {
-          destination: `audio/${filename}`,
+          destination: `${filename}`,
         };
         bucket.upload(tempFilePath, options, (err, file) => {
           if (err) {
