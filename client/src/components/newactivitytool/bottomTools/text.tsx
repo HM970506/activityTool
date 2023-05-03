@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
-import { deleteProps } from "../setting/deleteButton";
+import { deleteProps } from "../common/deleteButton";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { FontButton } from "../styles/bottomToolstyle";
@@ -36,6 +36,7 @@ export default function TextMenu() {
       fontFamily: font,
     });
     canvas.add(textbox);
+    canvas.setActiveObject(textbox);
     canvas.renderAll();
   };
 
