@@ -123,6 +123,7 @@ export default function functionSetting(
     "mouse:up": () => {
       if (canvas.taping === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
+      else if (canvas.eraserTest) canvas.fire("object:modified");
     },
     "selection:created": () => {
       if (dispatch != undefined) {
@@ -137,6 +138,7 @@ export default function functionSetting(
         dispatch(nodeActions.setDraw(false));
         dispatch(nodeActions.setPan(false));
       }
+
       canvas.isDrawing = false;
       canvas.panning = 0;
     },

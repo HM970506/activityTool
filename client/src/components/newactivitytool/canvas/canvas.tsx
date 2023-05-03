@@ -31,6 +31,7 @@ export default function Canvas() {
     functionSetting(canvas, dispatch);
 
     canvas.renderAll();
+
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
     dispatch(nodeActions.setCanvas(canvas));
   }, []);

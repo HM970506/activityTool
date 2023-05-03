@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../styles/indexStyle";
 import { drawActions } from "../../../store/common/drawSlice";
+import { fabric } from "fabric-with-erasing";
 import { DrawSample } from "../styles/bottomToolstyle";
 import {
   BACKGROUND_BRUSH,
@@ -10,10 +11,12 @@ import {
   ReducersType,
   SPRAY,
 } from "../types";
+import { useEffect } from "react";
 
 export default function DrawToolsMenu() {
   const dispatch = useDispatch();
   const draws = useSelector((state: ReducersType) => state.drawReducer);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
 
   const toolChange = (tool: string) => {
     dispatch(drawActions.toolChange(tool));
@@ -29,6 +32,14 @@ export default function DrawToolsMenu() {
   const sizeDown = () => {
     sizeChange(draws.size > 5 ? draws.size - DRAW_SIZE : draws.size);
   };
+
+  useEffect(() => {
+    if (canvas) {
+      if (draws.tool === ERASER) canvas.eraserTest = true;
+      else canvas.eraserTest = false;
+    }
+  }, [draws.tool]);
+
   return (
     <>
       <BottomButton
