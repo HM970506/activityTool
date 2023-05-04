@@ -29,6 +29,7 @@ export default function TextMenu() {
 
   const TextMaker = (font: string) => {
     const textbox = new fabric.Textbox("텍스트를 입력하세요", {
+      erasable: false,
       left: window.innerWidth / 2,
       top: window.innerHeight / 2,
       ...DEFUALT_TEXTBOX,
