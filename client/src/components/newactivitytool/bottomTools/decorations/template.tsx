@@ -34,7 +34,7 @@ export default function Template() {
           scaleY: scale,
           erasable: false,
         });
-
+        img.crossOrigin = "Anonymous";
         canvas.setHeight(img.height * scale);
         canvas.renderAll();
       }

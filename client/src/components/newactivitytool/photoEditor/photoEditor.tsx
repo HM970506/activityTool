@@ -58,6 +58,7 @@ export default function PhotoEditor() {
       fabric.Image.fromURL(
         photo.original ? photo.original : photo.getSrc(),
         (Img: ImageType) => {
+          Img.crossOrigin = "Anonymous";
           Img.originX = "center";
           Img.originY = "center";
           Img.left = Math.round(photoCanvas.width / 2);
@@ -97,6 +98,7 @@ export default function PhotoEditor() {
     setIsPanning(false);
 
     fabric.Image.fromURL(`/diary/${shape}.png`, (frameImg: ImageType) => {
+      frameImg.crossOrigin = "Anonymous";
       frameImg.selectable = true;
       frameImg.globalCompositeOperation = "destination-atop";
       frameImg.top = beforeCoord.top ? beforeCoord.top : 0;
@@ -128,6 +130,7 @@ export default function PhotoEditor() {
         img.cropY = editImg?.cropY;
         img.width = editImg?.width;
         img.height = editImg?.height;
+        img.crossOrigin = "Anonymous";
 
         canvas.remove(photo);
         canvas.add(img);

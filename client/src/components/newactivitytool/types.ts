@@ -160,7 +160,7 @@ export interface textType {
 }
 
 export interface stickerOptionType {
-  crossOrigin: undefined | string;
+  CrossOrigin: undefined | string;
   height: number;
   minX: number;
   minY: number;

@@ -10,6 +10,7 @@ export const imageMake = (
     img.hoverCursor = "auto";
     img.erasable = false;
     img.selectable = true;
+    img.crossOrigin = "Anonymous";
 
     if (img.width !== undefined) {
       const scale = DEFAULT_X / img.width;

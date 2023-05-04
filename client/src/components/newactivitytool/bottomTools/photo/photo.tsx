@@ -56,7 +56,7 @@ export default function PhotoMenu() {
       <Uploader
         ref={inputRef}
         type="file"
-        accept="imgae/*"
+        accept="image/*"
         onChange={onUploadImage}
       />
       <button onClick={photoUpload}>사진 가져오기</button>

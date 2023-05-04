@@ -41,6 +41,7 @@ export default function StickerMenu() {
       img.selectable = true;
       img.erasable = false;
       img.hoverCursor = "auto";
+      img.crossOrigin = "Anonymous";
 
       canvas.add(img);
       canvas.setActiveObject(img);

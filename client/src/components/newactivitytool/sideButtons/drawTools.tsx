@@ -55,6 +55,7 @@ export default function DrawToolsButton() {
 
   const img = new Image();
   img.src = "/diary/pattern.jpg";
+  img.crossOrigin = "Anonymous";
   BackgroundBrush.source = img;
 
   const drawToolButtonClick = () => {

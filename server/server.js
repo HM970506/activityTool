@@ -12,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 dotenv.config();
 
+//왜 키를 json으로 넣어야하지...
 const serviceAccount = require(`./${process.env.APIKEY}`);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -39,6 +40,7 @@ const uploadBlobToStorage = (blob) => {
         const options = {
           destination: `${filename}`,
         };
+        ㄴㄴ;
         bucket.upload(tempFilePath, options, (err, file) => {
           if (err) {
             console.error(err);
