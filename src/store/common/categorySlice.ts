@@ -13,6 +13,17 @@ const categorySlice = createSlice({
   },
 
   reducers: {
+    reset: (state) => {
+      state = {
+        category: "DRAWTOOLS",
+        view: true,
+        subcategory: {
+          template: { index: -1, state: true },
+          stamp: { index: 0, state: false },
+          tape: { index: 0, state: false },
+        },
+      };
+    },
     categoryChange: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },

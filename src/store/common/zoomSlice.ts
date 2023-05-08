@@ -5,12 +5,11 @@ const zoomSlice = createSlice({
   initialState: { zoom: 1, zoomView: 1, scale: 1 },
 
   reducers: {
+    reset: (state) => {
+      state = { zoom: 1, zoomView: 1, scale: 1 };
+    },
     setZoom: (state, action: PayloadAction<number>) => {
       state.zoom = action.payload;
-    },
-    reset: (state) => {
-      state.zoom = state.scale;
-      state.zoomView = 1;
     },
     setView: (state, action: PayloadAction<number>) => {
       state.zoomView = action.payload;

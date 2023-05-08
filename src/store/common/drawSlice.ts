@@ -6,6 +6,9 @@ const drawSlice = createSlice({
   initialState: { tool: "pencil", color: "black", size: 5 },
 
   reducers: {
+    reset: (state) => {
+      state = { tool: "pencil", color: "black", size: 5 };
+    },
     toolChange: (state, action: PayloadAction<string>) => {
       state.tool = action.payload;
     },

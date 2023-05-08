@@ -13,6 +13,16 @@ const nodeSlice = createSlice({
   },
 
   reducers: {
+    reset: (state) => {
+      state = {
+        canvas: null,
+        isDrawing: false,
+        isPanning: false,
+        textareaContainer: null,
+        record: undefined,
+        opacity: 0,
+      };
+    },
     setCanvas: (state, action: PayloadAction<canvasType>) => {
       state.canvas = action.payload;
     },
