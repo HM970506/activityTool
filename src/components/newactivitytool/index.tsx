@@ -47,13 +47,12 @@ export default function NewActivityTool() {
   const getCanvas = async () => {
     const href = window.location.href.replaceAll("/", "_");
     const data = await getFirestoreData("saveData", href);
+    const record = await getStorageData("test");
 
     if (data) {
-      if (data?.record) {
-        const uint8Array = new Uint8Array(data.record);
-        //console.log("get uint8Array", uint8Array);
-        const blob = new Blob([uint8Array], { type: "audio/webm" });
-        // console.log("getblog", blob);
+      if (record) {
+        console.log(record);
+        const blob = new Blob([record], { type: "audio/webm" });
         const url = URL.createObjectURL(blob);
         dispatch(nodeActions.setRecord(url));
       }

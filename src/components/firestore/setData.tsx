@@ -14,11 +14,13 @@ export const setSaveData = async (data: string, record: string | null) => {
     window.location.href.replaceAll("/", "_")
   );
   const timestamp = new Date();
+  const storageRef = ref(storage, "/test");
 
   if (record != null) {
     const url = await fetch(record);
     const blob = await url.blob();
-    await setSaveRecoder(blob);
+    const file = new File([blob], "recordingFile.webm");
+    await uploadBytes(storageRef, file).catch((err) => console.log(err));
   }
 
   await setDoc(savePath, {
