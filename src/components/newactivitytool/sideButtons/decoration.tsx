@@ -3,7 +3,10 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { Button } from "../styles/indexStyle";
 import { DECORATION } from "../types";
 import { useQuery } from "react-query";
-import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
+import {
+  getFirestoreData,
+  getStorageDataAll,
+} from "../../api/firestore/getData";
 
 export default function DecorationButton() {
   const dispatch = useDispatch();

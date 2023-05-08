@@ -3,7 +3,7 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { STICKER } from "../types";
 import { Button } from "../styles/indexStyle";
 import { useQuery } from "react-query";
-import { getStorageDataAll } from "../../firestore/getData";
+import { getStorageDataAll } from "../../api/firestore/getData";
 
 export default function StickerButton() {
   const dispatch = useDispatch();

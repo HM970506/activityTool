@@ -8,7 +8,7 @@ import {
   SubCategoryContainer,
   Thumbnail,
 } from "../styles/bottomToolstyle";
-import { getStorageDataAll } from "../../firestore/getData";
+import { getStorageDataAll } from "../../api/firestore/getData";
 import { useQuery } from "react-query";
 import {
   ImageType,

@@ -4,7 +4,7 @@ export default async function greenEye(url: string) {
   // console.log(process.env.REACT_APP_GREENEYE_KEY);
   const response = await axios
     .post(
-      `https://clovagreeneye.apigw.ntruss.com/custom/v1/48/dc97fd5000624c757f581ef217381c7c71647537b428a1ef27629e621fa2be94/predict`,
+      `https://cors-anywhere.herokuapp.com/https://clovagreeneye.apigw.ntruss.com/custom/v1/48/dc97fd5000624c757f581ef217381c7c71647537b428a1ef27629e621fa2be94/predict`,
       {
         body: {
           version: "V1",
@@ -18,7 +18,6 @@ export default async function greenEye(url: string) {
             },
           ],
         },
-
         headers: {
           "Content-Type": "application/json",
           "X-GREEN-EYE-SECRET": `${process.env.REACT_APP_GREENEYE_KEY}`,

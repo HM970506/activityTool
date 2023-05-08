@@ -1,7 +1,7 @@
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import app from "./setting";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { setSaveRecoder } from "../api/nodejs";
+import { setSaveRecoder } from "../nodejs";
 
 const firestore = getFirestore(app);
 const storage = getStorage(app);

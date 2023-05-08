@@ -8,7 +8,10 @@ const nodeSlice = createSlice({
     isDrawing: false,
     isPanning: false,
     textareaContainer: null,
-    record: undefined,
+    record: {
+      old: undefined,
+      new: undefined,
+    },
     opacity: 0,
   },
 
@@ -19,7 +22,10 @@ const nodeSlice = createSlice({
         isDrawing: false,
         isPanning: false,
         textareaContainer: null,
-        record: undefined,
+        record: {
+          old: undefined,
+          new: undefined,
+        },
         opacity: 0,
       };
     },
@@ -41,8 +47,11 @@ const nodeSlice = createSlice({
       state.isPanning = action.payload;
     },
 
-    setRecord: (state, action: PayloadAction<any>) => {
-      state.record = action.payload;
+    setNewRecord: (state, action: PayloadAction<any>) => {
+      state.record.new = action.payload;
+    },
+    setOldRecord: (state, action: PayloadAction<any>) => {
+      state.record.old = action.payload;
     },
   },
 });

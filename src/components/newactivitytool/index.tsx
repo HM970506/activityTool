@@ -10,11 +10,15 @@ import {
 import SideButtons from "./sideButtons";
 import Canvas from "./canvas/canvas";
 import TopButtons from "./topButtons";
-import { getFirestoreData, getStorageData } from "../firestore/getData";
+import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
 import nodeSlice, { nodeActions } from "../../store/common/nodeSlice";
 import PhotoEditor from "./photoEditor/photoEditor";
+import { categoryActions } from "../../store/common/categorySlice";
+import { zoomActions } from "../../store/common/zoomSlice";
+import { photoEditorActions } from "../../store/common/photoEditorSlice";
+import { drawActions } from "../../store/common/drawSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -50,12 +54,7 @@ export default function NewActivityTool() {
     const record = await getStorageData("test");
 
     if (data) {
-      if (record) {
-        console.log(record);
-        const blob = new Blob([record], { type: "audio/webm" });
-        const url = URL.createObjectURL(blob);
-        dispatch(nodeActions.setRecord(url));
-      }
+      if (record) dispatch(nodeActions.setOldRecord(record));
 
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
       activitytoolsStart();
@@ -63,7 +62,16 @@ export default function NewActivityTool() {
   };
 
   const setCanvas = async () => {
+    //캔버스 리셋
     canvas.clear();
+
+    //리덕스 리셋
+    dispatch(nodeActions.reset());
+    dispatch(categoryActions.reset());
+    dispatch(zoomActions.reset());
+    dispatch(photoEditorActions.reset());
+    dispatch(drawActions.reset());
+
     activitytoolsStart();
   };
 

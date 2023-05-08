@@ -1,5 +1,5 @@
 import { setSaveRecoder } from "../../api/nodejs";
-import { setSaveData } from "../../firestore/setData";
+import { setSaveData } from "../../api/firestore/setData";
 import { canvasType } from "../types";
 
 export const saveJson = async (canvas: canvasType, record: string) => {

@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { ReducersType, TEXT } from "../types";
 import { useQuery, useQueryClient } from "react-query";
-import { getFirestoreData, getStorageDataAll } from "../../firestore/getData";
+import {
+  getFirestoreData,
+  getStorageDataAll,
+} from "../../api/firestore/getData";
 import { useEffect } from "react";
 
 export default function TextButton() {
