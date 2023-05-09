@@ -31,10 +31,14 @@ export const ToolNow = styled.div<{ state: number }>`
 `;
 
 export const OptionContainer = styled.div`
-  width: 288px;
-  height: 152px;
+  width: 264px;
+  height: 128px;
+  padding-top: 24px;
+  padding-left: 37px;
+
   background-color: white;
   border-radius: 32px;
-  positoin: absolute;
+  position: absolute;
+  bottom: 100px;
   overflow: hidden;
 `;

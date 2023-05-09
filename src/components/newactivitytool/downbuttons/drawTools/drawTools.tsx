@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { BottomButton } from "../../styles/commonStyle";
+import { fabric } from "fabric-with-erasing";
 import {
   BACKGROUND_BRUSH,
   ERASER,
@@ -9,7 +10,7 @@ import {
   drawType,
 } from "../../types";
 import { Dispatch, SetStateAction, useState } from "react";
-
+import DrawOption from "./drawOption";
 const DEFAULT = {
   pen: { tool: "pen", color: "black", size: 5 },
   pencil: { tool: PENCIL, color: "black", size: 5 },
@@ -22,50 +23,78 @@ export default function DrawToolsMenu({
   select,
   setSelect,
 }: {
-  select: drawType;
-  setSelect: Function;
+  select: string;
+  setSelect: Dispatch<React.SetStateAction<string>>;
 }) {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const [options, setOptions] = useState(DEFAULT); //옵션들. 이중에서 셀렉트가 결정됨
 
-  const toolChange = (select: {
-    tool: string;
-    size: number;
-    color: string;
-  }) => {
-    setSelect(select);
+  const PenBrush = new fabric.PencilBrush(canvas);
+  const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
+  const Eraser = new fabric.EraserBrush(canvas);
+  const BackgroundBrush = new fabric.PatternBrush(canvas);
+
+  const img = new Image();
+  img.src = "/diary/pattern.jpg";
+  img.crossOrigin = "Anonymous";
+  BackgroundBrush.source = img;
+
+  const reset = () => {
+    setSelect("");
+    canvas.isDrawingMode = false;
   };
 
   return (
     <>
+      <DrawOption />
       <BottomButton
-        select={select.tool === PENCIL ? 1 : 0}
+        select={select === PENCIL ? 1 : 0}
         onClick={() => {
-          toolChange(options.pencil);
+          if (select !== PENCIL) {
+            canvas.isDrawingMode = true;
+            setSelect(PENCIL);
+            canvas.freeDrawingBrush = PenBrush;
+          } else reset();
         }}
       >
         펜
       </BottomButton>
+
+      <DrawOption />
       <BottomButton
-        select={select.tool === BACKGROUND_BRUSH ? 1 : 0}
+        select={select === BACKGROUND_BRUSH ? 1 : 0}
         onClick={() => {
-          toolChange(options.magic);
+          if (select !== BACKGROUND_BRUSH) {
+            canvas.isDrawingMode = true;
+            setSelect(BACKGROUND_BRUSH);
+            canvas.freeDrawingBrush = BackgroundBrush;
+          } else reset();
         }}
       >
         패턴배경
       </BottomButton>
+      <DrawOption />
       <BottomButton
-        select={select.tool === SPRAY ? 1 : 0}
+        select={select === SPRAY ? 1 : 0}
         onClick={() => {
-          toolChange(options.spray);
+          if (select !== SPRAY) {
+            canvas.isDrawingMode = true;
+            setSelect(SPRAY);
+            canvas.freeDrawingBrush = SprayBrush;
+          } else reset();
         }}
       >
         스프레이
       </BottomButton>
-
+      <DrawOption />
       <BottomButton
-        select={select.tool === ERASER ? 1 : 0}
-        onClick={() => toolChange(options.eraser)}
+        select={select === ERASER ? 1 : 0}
+        onClick={() => {
+          if (select !== ERASER) {
+            canvas.isDrawingMode = true;
+            setSelect(ERASER);
+            canvas.freeDrawingBrush = Eraser;
+          } else reset();
+        }}
       >
         지우개
       </BottomButton>
