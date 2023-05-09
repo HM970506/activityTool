@@ -6,7 +6,6 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { photoEditorActions } from "../../../store/common/photoEditorSlice";
-import { drawActions } from "../../../store/common/drawSlice";
 import { TempLink } from "../styles/historyButtonstyle";
 
 export default function MeatballsMenu() {
@@ -22,7 +21,6 @@ export default function MeatballsMenu() {
     dispatch(categoryActions.reset());
     dispatch(zoomActions.reset());
     dispatch(photoEditorActions.reset());
-    dispatch(drawActions.reset());
 
     setView(false);
   };

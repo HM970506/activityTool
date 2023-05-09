@@ -1,83 +1,74 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { BottomButton } from "../../styles/commonStyle";
-import { drawActions } from "../../../../store/common/drawSlice";
-import { fabric } from "fabric-with-erasing";
-import { DrawSample } from "../../styles/bottomToolstyle";
 import {
   BACKGROUND_BRUSH,
-  DRAW_SIZE,
   ERASER,
   PENCIL,
   ReducersType,
   SPRAY,
+  drawType,
 } from "../../types";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export default function DrawToolsMenu() {
-  const dispatch = useDispatch();
-  const draws = useSelector((state: ReducersType) => state.drawReducer);
+const DEFAULT = {
+  pen: { tool: "pen", color: "black", size: 5 },
+  pencil: { tool: PENCIL, color: "black", size: 5 },
+  magic: { tool: BACKGROUND_BRUSH, color: "black", size: 5 },
+  spray: { tool: SPRAY, color: "black", size: 5 },
+  eraser: { tool: ERASER, color: "black", size: 5 },
+};
+
+export default function DrawToolsMenu({
+  select,
+  setSelect,
+}: {
+  select: drawType;
+  setSelect: Function;
+}) {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const [options, setOptions] = useState(DEFAULT); //옵션들. 이중에서 셀렉트가 결정됨
 
-  const toolChange = (tool: string) => {
-    dispatch(drawActions.toolChange(tool));
+  const toolChange = (select: {
+    tool: string;
+    size: number;
+    color: string;
+  }) => {
+    setSelect(select);
   };
-  const sizeChange = (size: number) => {
-    dispatch(drawActions.sizeChange(size));
-  };
-
-  const sizeUp = () => {
-    sizeChange(draws.size < 100 ? draws.size + DRAW_SIZE : draws.size);
-  };
-
-  const sizeDown = () => {
-    sizeChange(draws.size > 5 ? draws.size - DRAW_SIZE : draws.size);
-  };
-
-  useEffect(() => {
-    if (canvas) {
-      if (draws.tool === ERASER) canvas.eraserTest = true;
-      else canvas.eraserTest = false;
-    }
-  }, [draws.tool]);
 
   return (
     <>
       <BottomButton
-        select={draws.tool === PENCIL ? 1 : 0}
+        select={select.tool === PENCIL ? 1 : 0}
         onClick={() => {
-          toolChange("pencil");
+          toolChange(options.pencil);
         }}
       >
         펜
       </BottomButton>
       <BottomButton
-        select={draws.tool === BACKGROUND_BRUSH ? 1 : 0}
+        select={select.tool === BACKGROUND_BRUSH ? 1 : 0}
         onClick={() => {
-          toolChange(BACKGROUND_BRUSH);
+          toolChange(options.magic);
         }}
       >
         패턴배경
       </BottomButton>
       <BottomButton
-        select={draws.tool === SPRAY ? 1 : 0}
+        select={select.tool === SPRAY ? 1 : 0}
         onClick={() => {
-          toolChange(SPRAY);
+          toolChange(options.spray);
         }}
       >
         스프레이
       </BottomButton>
 
       <BottomButton
-        select={draws.tool === ERASER ? 1 : 0}
-        onClick={() => toolChange(ERASER)}
+        select={select.tool === ERASER ? 1 : 0}
+        onClick={() => toolChange(options.eraser)}
       >
         지우개
       </BottomButton>
-
-      <button onClick={sizeUp}>크게!</button>
-      <button onClick={sizeDown}>작게!</button>
-
-      <DrawSample size={draws.size} />
     </>
   );
 }

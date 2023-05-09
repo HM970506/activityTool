@@ -20,12 +20,21 @@ export const ToolNowBox = styled.div<{ state: number }>`
   align-items: center;
 `;
 
-export const ToolNow = styled.div<{ state: number; color: string }>`
+export const ToolNow = styled.div<{ state: number }>`
   width: ${(props) => (props.state == 1 ? "64px" : "32px")};
   height: ${(props) => (props.state == 1 ? "64px" : "32px")};
-  background-color: ${(props) => props.color};
+  background-color: #4ab859;
   border-radius: ${(props) => (props.state == 1 ? "28px" : "16px")};
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const OptionContainer = styled.div`
+  width: 288px;
+  height: 152px;
+  background-color: white;
+  border-radius: 32px;
+  positoin: absolute;
+  overflow: hidden;
 `;

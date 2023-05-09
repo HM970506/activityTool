@@ -1,4 +1,3 @@
-import BottomTools from "../bottomTools";
 import CanvasHistory from "./historyButton";
 import CanvasOpacity from "./opacityBar";
 import DrawToggle from "./drawingButton";
@@ -43,7 +42,6 @@ export default function TopButtons() {
   return (
     <TopButtonContainer>
       <DrawToggle />
-      <BottomTools />
       <CanvasHistory />
       <ZoomButton
         canvas={canvas}
