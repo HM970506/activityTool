@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
-import { Button } from "../styles/indexStyle";
+import { Button } from "../styles/commonStyle";
 import { DECORATION } from "../types";
 import { useQuery } from "react-query";
 import {

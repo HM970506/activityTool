@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Uploader } from "../../styles/indexStyle";
+import { Uploader } from "../../styles/commonStyle";
 import { ReducersType } from "../../types";
 import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { zoomActions } from "../../../store/common/zoomSlice";
-import { DefaultButton } from "../styles/indexStyle";
+import { DefaultButton } from "../styles/commonStyle";
 import { fabric } from "fabric-with-erasing";
 import { ReducersType, canvasType } from "../types";
 

@@ -74,12 +74,6 @@ export interface categoryReducerType {
   view: boolean;
 }
 
-export interface drawReducerType {
-  color: string;
-  size: number;
-  tool: string;
-}
-
 export interface tapeStateType {
   opacity: number;
   size: number;
@@ -116,7 +110,6 @@ export interface photoEditorReducerType {
 
 export interface ReducersType {
   categoryReducer: categoryReducerType;
-  drawReducer: drawReducerType;
   nodeReducer: nodeReducerType;
   zoomReducer: zoomReducerType;
   photoEditorReducer: photoEditorReducerType;
@@ -176,4 +169,10 @@ export interface CanvasType {}
 export interface textType {
   name: string;
   url: string;
+}
+
+export interface drawType {
+  tool: string;
+  color: string;
+  size: number;
 }
