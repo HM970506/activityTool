@@ -33,9 +33,8 @@ export const ToolNow = styled.div<{ state: number }>`
 export const OptionContainer = styled.div`
   width: 264px;
   height: 128px;
-  padding-top: 24px;
-  padding-left: 37px;
-
+  padding-top: 20px;
+  padding-left: 24px;
   background-color: white;
   border-radius: 32px;
   position: absolute;

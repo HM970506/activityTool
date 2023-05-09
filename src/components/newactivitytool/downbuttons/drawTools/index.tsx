@@ -1,22 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import {
-  BACKGROUND_BRUSH,
-  DRAWTOOLS,
-  ERASER,
-  PENCIL,
-  ReducersType,
-  SPRAY,
-  drawType,
-} from "../../types";
+import { DRAWTOOLS, ReducersType } from "../../types";
 import { ToolNow, ToolNowBox, ToolsContatiner } from "./style";
-import { fabric } from "fabric-with-erasing";
-import DrawToolsMenu from "./drawTools";
-import DrawOption from "./drawOption";
 
-//색, 사이즈 클릭시 옵션이 바뀐다.
-//바뀐 옵션에 맞춰 셀렉트가 재설정된다.
+import DrawToolsMenu from "./drawTools";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();

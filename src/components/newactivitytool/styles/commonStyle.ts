@@ -66,6 +66,9 @@ export const BottomButton = styled.button<{ select: number }>`
   background-color: ${(props) => {
     return props.select === 1 ? "red" : "white";
   }};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const MainButton = styled(DefaultButton)`

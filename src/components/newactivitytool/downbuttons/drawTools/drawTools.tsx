@@ -45,7 +45,6 @@ export default function DrawToolsMenu({
 
   return (
     <>
-      <DrawOption />
       <BottomButton
         select={select === PENCIL ? 1 : 0}
         onClick={() => {
@@ -56,10 +55,10 @@ export default function DrawToolsMenu({
           } else reset();
         }}
       >
-        펜
+        {select === PENCIL && <DrawOption keyName={PENCIL} />}
+        <p> 펜</p>
       </BottomButton>
 
-      <DrawOption />
       <BottomButton
         select={select === BACKGROUND_BRUSH ? 1 : 0}
         onClick={() => {
@@ -71,8 +70,11 @@ export default function DrawToolsMenu({
         }}
       >
         패턴배경
+        {select === BACKGROUND_BRUSH && (
+          <DrawOption keyName={BACKGROUND_BRUSH} />
+        )}
       </BottomButton>
-      <DrawOption />
+
       <BottomButton
         select={select === SPRAY ? 1 : 0}
         onClick={() => {
@@ -84,8 +86,9 @@ export default function DrawToolsMenu({
         }}
       >
         스프레이
+        {select === SPRAY && <DrawOption keyName={SPRAY} />}
       </BottomButton>
-      <DrawOption />
+
       <BottomButton
         select={select === ERASER ? 1 : 0}
         onClick={() => {
@@ -97,6 +100,7 @@ export default function DrawToolsMenu({
         }}
       >
         지우개
+        {select === ERASER && <DrawOption keyName={ERASER} />}
       </BottomButton>
     </>
   );

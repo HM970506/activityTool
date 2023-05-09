@@ -36,7 +36,13 @@ const Colorchip = style.div<{ color: string; select: number }>`
   }};
 `;
 
-export default function Colorbox({ colorChange }: { colorChange: Function }) {
+export default function Colorbox({
+  colorChange,
+  keyName,
+}: {
+  colorChange: Function;
+  keyName: string;
+}) {
   const [color, setColor] = useState<string>("black");
 
   useEffect(() => {}, [color]);
@@ -44,7 +50,11 @@ export default function Colorbox({ colorChange }: { colorChange: Function }) {
   return (
     <ColorContainer>
       {COLORS.map((value: string, key: number) => (
-        <ColorchipBox select={color === value ? 1 : 0} color={value}>
+        <ColorchipBox
+          select={color === value ? 1 : 0}
+          key={`${keyName}color${key}`}
+          color={value}
+        >
           <Colorchip
             select={color === value ? 1 : 0}
             color={value}
