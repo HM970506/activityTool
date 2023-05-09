@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { BottomButton } from "../styles/indexStyle";
-import { drawActions } from "../../../store/common/drawSlice";
+import { BottomButton } from "../../styles/commonStyle";
+import { drawActions } from "../../../../store/common/drawSlice";
 import { fabric } from "fabric-with-erasing";
-import { DrawSample } from "../styles/bottomToolstyle";
+import { DrawSample } from "../../styles/bottomToolstyle";
 import {
   BACKGROUND_BRUSH,
   DRAW_SIZE,
@@ -10,7 +10,7 @@ import {
   PENCIL,
   ReducersType,
   SPRAY,
-} from "../types";
+} from "../../types";
 import { useEffect } from "react";
 
 export default function DrawToolsMenu() {

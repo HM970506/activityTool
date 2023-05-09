@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DefaultButton = styled.button`
+export const DefaultButton = styled.div`
   -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -10,11 +10,54 @@ export const DefaultButton = styled.button`
 
 export const Button = styled(DefaultButton)`
   border: none;
-  width: 100%;
-  height: 20%;
+  width: 72px;
+  height: 72px;
+  border-radius: 32px;
   background-color: white;
-  border: 1px solid black;
-  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MeatballsMenuButton = styled(Button)`
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+`;
+
+export const Menus = styled.div`
+  width: 272px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-radius: 32px;
+  background-color: white;
+  position: absolute;
+  right: 8px;
+  bottom: 88px;
+`;
+
+export const Menu = styled.div`
+  padding: 15px 24px 15px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const BackButton = styled(Button)`
+  position: absolute;
+  top: 8px;
+  left: 8px;
+`;
+
+export const DownButtonsContainer = styled.div`
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  gap: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const BottomButton = styled.button<{ select: number }>`
@@ -36,26 +79,6 @@ export const MainButton = styled(DefaultButton)`
   border: 1px solid black;
   background-color: white;
   transition-property: top-layer;
-`;
-
-export const SubButton = styled(Button)`
-  position: absolute;
-  margin: 20px;
-  width: 80px;
-  height: 80px;
-  background-color: blue;
-  color: white;
-  z-index: 1001;
-`;
-
-export const NewButton = styled(SubButton)`
-  right: 80px;
-  bottom: 30px;
-`;
-
-export const LoadButton = styled(SubButton)`
-  right: 30px;
-  bottom: 80px;
 `;
 
 export const Background = styled.dialog`

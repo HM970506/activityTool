@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Button, ButtonBox } from "../styles/indexStyle";
-import PhotoButton from "./photo";
-import RecordButton from "./record";
-import StickerButton from "./sticker";
-import TextButton from "./text";
-import DrawToolsButton from "./drawTools";
-import DecorationButton from "./decoration";
+import { Button, ButtonBox } from "../styles/commonStyle";
+import PhotoButton from "../downbuttons/photo";
+import RecordButton from "../downbuttons/record";
+import StickerButton from "../downbuttons/sticker";
+import TextButton from "../downbuttons/text";
+import DrawToolsButton from "../downbuttons/drawTools";
+import DecorationButton from "../downbuttons/decoration";
 import { DECORATION, ReducersType } from "../types";
 
 export default function SideButtons({

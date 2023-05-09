@@ -3,7 +3,7 @@ import { PEN } from "../../components/newactivitytool/types";
 
 const drawSlice = createSlice({
   name: "drawReducer",
-  initialState: { tool: "pencil", color: "black", size: 5 },
+  initialState: { tool: "pencil", color: "green", size: 5 },
 
   reducers: {
     reset: (state) => {

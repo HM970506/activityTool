@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { PHOTO } from "../types";
-import { Button } from "../styles/indexStyle";
+import { Button } from "../styles/commonStyle";
 
 export default function PhotoButton() {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { Button } from "../styles/indexStyle";
+import { Button } from "../styles/commonStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { ReducersType, TEXT } from "../types";
@@ -53,5 +53,9 @@ export default function TextButton() {
     if (nowCategory) dispatch(categoryActions.categoryChange(TEXT));
   };
 
-  return <Button onClick={textButtonClick}>글상자</Button>;
+  return nowCategory == TEXT ? (
+    <div>test</div>
+  ) : (
+    <Button onClick={textButtonClick}>글상자</Button>
+  );
 }

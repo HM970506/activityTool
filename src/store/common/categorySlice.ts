@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const categorySlice = createSlice({
   name: "categoryReducer",
   initialState: {
-    category: "DRAWTOOLS",
+    category: "",
     view: true,
     subcategory: {
       template: { index: -1, state: true },
@@ -15,7 +15,7 @@ const categorySlice = createSlice({
   reducers: {
     reset: (state) => {
       state = {
-        category: "DRAWTOOLS",
+        category: "",
         view: true,
         subcategory: {
           template: { index: -1, state: true },
