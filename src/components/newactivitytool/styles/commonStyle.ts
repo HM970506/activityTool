@@ -71,14 +71,11 @@ export const BottomButton = styled.button<{ select: number }>`
   align-items: center;
 `;
 
-export const MainButton = styled(DefaultButton)`
+export const MainButton = styled(Button)`
   position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 20px;
+  bottom: 8px;
+  right: 8px;
   z-index: 1000;
-  width: 10%;
-  height: 8%;
   border: 1px solid black;
   background-color: white;
   transition-property: top-layer;
