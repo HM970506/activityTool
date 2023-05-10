@@ -60,11 +60,14 @@ export const DownButtonsContainer = styled.div`
   align-items: center;
 `;
 
-export const BottomButton = styled.button<{ select: number }>`
+export const BottomButton = styled.button<{ select: number; color: string }>`
   width: 70px;
   height: 50px;
   background-color: ${(props) => {
-    return props.select === 1 ? "red" : "white";
+    return props.select === 1 ? props.color : "white";
+  }};
+  color: ${(props) => {
+    return props.select === 1 ? "white" : "black";
   }};
   display: flex;
   justify-content: center;

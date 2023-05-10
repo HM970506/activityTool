@@ -1,106 +1,131 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BottomButton } from "../../styles/commonStyle";
-import { fabric } from "fabric-with-erasing";
 import {
   BACKGROUND_BRUSH,
   ERASER,
   PENCIL,
   ReducersType,
   SPRAY,
-  drawType,
 } from "../../types";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import DrawOption from "./drawOption";
-const DEFAULT = {
-  pen: { tool: "pen", color: "black", size: 5 },
-  pencil: { tool: PENCIL, color: "black", size: 5 },
-  magic: { tool: BACKGROUND_BRUSH, color: "black", size: 5 },
-  spray: { tool: SPRAY, color: "black", size: 5 },
-  eraser: { tool: ERASER, color: "black", size: 5 },
-};
 
 export default function DrawToolsMenu({
   select,
   setSelect,
+  brushes,
 }: {
   select: string;
+  brushes: Map<string, any>;
   setSelect: Dispatch<React.SetStateAction<string>>;
 }) {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const { pencil, back, spray, eraser } = useSelector(
+    (state: ReducersType) => state.drawReducer
+  );
+  const [option, setOption] = useState<boolean>(false);
 
-  const PenBrush = new fabric.PencilBrush(canvas);
-  const SprayBrush = new fabric.SprayBrush(canvas, { density: 1 });
-  const Eraser = new fabric.EraserBrush(canvas);
-  const BackgroundBrush = new fabric.PatternBrush(canvas);
+  const optionChange = (name: string, option: any) => {
+    const brush = brushes.get(name);
+    brush.color = option.color;
+    brush.width = option.size;
+    canvas.freeDrawingBrush = brush;
+    brushes.set(name, brush);
+  };
 
-  const img = new Image();
-  img.src = "/diary/pattern.jpg";
-  img.crossOrigin = "Anonymous";
-  BackgroundBrush.source = img;
+  useEffect(() => {
+    optionChange(PENCIL, pencil);
+  }, [pencil]);
 
-  const reset = () => {
-    setSelect("");
-    canvas.isDrawingMode = false;
+  useEffect(() => {
+    optionChange(BACKGROUND_BRUSH, back);
+  }, [back]);
+
+  useEffect(() => {
+    optionChange(SPRAY, spray);
+  }, [spray]);
+
+  useEffect(() => {
+    optionChange(ERASER, eraser);
+  }, [eraser]);
+
+  useEffect(() => {
+    if (select != "")
+      optionChange(
+        select,
+        select === PENCIL
+          ? pencil
+          : select === SPRAY
+          ? spray
+          : select === ERASER
+          ? eraser
+          : back
+      );
+  }, [select]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", (e: MouseEvent) => {
+      if (e.target) {
+        const target = e.target as Element;
+        if (!target.classList.contains("option")) setOption(false);
+      }
+    });
+  }, []);
+
+  const setting = (name: string) => {
+    if (select !== name) {
+      setSelect(name);
+      canvas.freeDrawingBrush = brushes.get(name);
+    } else if (!option) setOption(true);
+    else if (select === name && option) setOption(false);
   };
 
   return (
     <>
       <BottomButton
+        color={pencil.color}
         select={select === PENCIL ? 1 : 0}
         onClick={() => {
-          if (select !== PENCIL) {
-            canvas.isDrawingMode = true;
-            setSelect(PENCIL);
-            canvas.freeDrawingBrush = PenBrush;
-          } else reset();
+          setting(PENCIL);
         }}
       >
-        {select === PENCIL && <DrawOption keyName={PENCIL} />}
+        {select === PENCIL && option && <DrawOption keyName={PENCIL} />}
         <p> 펜</p>
       </BottomButton>
 
       <BottomButton
+        color={back.color}
         select={select === BACKGROUND_BRUSH ? 1 : 0}
         onClick={() => {
-          if (select !== BACKGROUND_BRUSH) {
-            canvas.isDrawingMode = true;
-            setSelect(BACKGROUND_BRUSH);
-            canvas.freeDrawingBrush = BackgroundBrush;
-          } else reset();
+          setting(BACKGROUND_BRUSH);
         }}
       >
         패턴배경
-        {select === BACKGROUND_BRUSH && (
+        {select === BACKGROUND_BRUSH && option && (
           <DrawOption keyName={BACKGROUND_BRUSH} />
         )}
       </BottomButton>
 
       <BottomButton
+        color={spray.color}
         select={select === SPRAY ? 1 : 0}
         onClick={() => {
-          if (select !== SPRAY) {
-            canvas.isDrawingMode = true;
-            setSelect(SPRAY);
-            canvas.freeDrawingBrush = SprayBrush;
-          } else reset();
+          setting(SPRAY);
         }}
       >
         스프레이
-        {select === SPRAY && <DrawOption keyName={SPRAY} />}
+        {select === SPRAY && option && <DrawOption keyName={SPRAY} />}
       </BottomButton>
 
       <BottomButton
+        color={eraser.color}
         select={select === ERASER ? 1 : 0}
         onClick={() => {
-          if (select !== ERASER) {
-            canvas.isDrawingMode = true;
-            setSelect(ERASER);
-            canvas.freeDrawingBrush = Eraser;
-          } else reset();
+          setting(ERASER);
         }}
       >
         지우개
-        {select === ERASER && <DrawOption keyName={ERASER} />}
+        {select === ERASER && option && <DrawOption keyName={ERASER} />}
       </BottomButton>
     </>
   );

@@ -7,23 +7,23 @@ const ColorContainer = style.div`
   justify-content: left;
   align-items: center;
   gap: 8px;
-  overflow-x: scroll; 
+  overflow-x: scroll;
 
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const ColorchipBox = style.button<{ color: string; select: number }>`
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 16px;
-  background-color: ${(props) => (props.select === 1 ? props.color : "white")};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const ColorchipBox = style.div<{ color: string; select: number }>`
+width: 40px;
+height: 40px;
+border: none;
+border-radius: 16px;
+background-color: ${(props) => (props.select === 1 ? props.color : "white")};
+display: flex;
+margin:4px 4px 4px 0px;
+justify-content: center;
+align-items: center;`;
 
 const Colorchip = style.div<{ color: string; select: number }>`
   width: 22px;
@@ -37,25 +37,26 @@ const Colorchip = style.div<{ color: string; select: number }>`
 `;
 
 export default function Colorbox({
-  colorChange,
+  setColor,
   keyName,
+  option,
 }: {
-  colorChange: Function;
+  setColor: Function;
+  option: { color: string; size: number };
   keyName: string;
 }) {
-  const [color, setColor] = useState<string>("black");
-
-  useEffect(() => {}, [color]);
-
+  const { color } = option;
   return (
-    <ColorContainer>
+    <ColorContainer className={"option"}>
       {COLORS.map((value: string, key: number) => (
         <ColorchipBox
+          className={"option"}
           select={color === value ? 1 : 0}
           key={`${keyName}color${key}`}
           color={value}
         >
           <Colorchip
+            className={"option"}
             select={color === value ? 1 : 0}
             color={value}
             onClick={() => {

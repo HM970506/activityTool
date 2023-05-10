@@ -10,8 +10,10 @@ gap:4px;
 ::-webkit-scrollbar {
   display: none;
 }`;
-const Sizechip = style.div``;
-const SizechipBox = style.button<{ color: string; select: number }>`
+const Sizechip = style.div<{ select: number }>`
+color: ${(props) => (props.select === 1 ? "white" : "black")};
+`;
+const SizechipBox = style.div<{ color: string; select: number }>`
 width: 40px;
 height: 40px;
 border: none;
@@ -22,27 +24,31 @@ margin:4px 4px 4px 0px;
 justify-content: center;
 align-items: center;`;
 
-const SIZES = [1, 2, 3, 4, 5];
+const SIZES = [1, 5, 10, 20, 50];
 
 export default function SizeBox({
-  sizeChange,
+  setSize,
+  option,
   keyName,
 }: {
-  sizeChange: Function;
+  setSize: Function;
+  option: { color: string; size: number };
   keyName: string;
 }) {
-  const [size, setSize] = useState<number>(1);
-  const color = "black";
+  const { color, size } = option;
+
   return (
-    <SizeContainer>
+    <SizeContainer className={"option"}>
       {SIZES.map((value: number, key: number) => (
         <SizechipBox
+          className={"option"}
           select={size === value ? 1 : 0}
           key={`${keyName}size${key}`}
           color={color}
         >
           <Sizechip
-            color={color}
+            className={"option"}
+            select={size === value ? 1 : 0}
             onClick={() => {
               setSize(value);
             }}

@@ -113,6 +113,19 @@ export interface ReducersType {
   nodeReducer: nodeReducerType;
   zoomReducer: zoomReducerType;
   photoEditorReducer: photoEditorReducerType;
+  drawReducer: drawReducerType;
+}
+
+export interface drawDefault {
+  color: string;
+  size: number;
+}
+
+export interface drawReducerType {
+  pencil: drawDefault;
+  back: drawDefault;
+  spray: drawDefault;
+  eraser: drawDefault;
 }
 
 export const DEFAULT_X = 500;
