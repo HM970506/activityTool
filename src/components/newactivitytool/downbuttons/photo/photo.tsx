@@ -5,6 +5,7 @@ import { ReducersType } from "../../types";
 import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";
 import { imageMake } from "./photoMaker";
+import { Button } from "./style";
 
 export default function PhotoMenu() {
   const [photo, setPhoto] = useState<string>("");
@@ -59,8 +60,8 @@ export default function PhotoMenu() {
         accept="image/*"
         onChange={onUploadImage}
       />
-      <button onClick={photoUpload}>사진 가져오기</button>
-      <button onClick={photoEdit}>선택한 사진 편집하기</button>
+      <Button onClick={photoUpload}>앨범</Button>
+      <Button>사진 찍기</Button>
     </>
   );
 }
