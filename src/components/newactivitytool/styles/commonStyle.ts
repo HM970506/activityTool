@@ -188,7 +188,10 @@ export const SelectButton = styled.button<{ color: string; select: number }>`
   border-radius: 16px;
   background-color: ${(props) => (props.select === 1 ? props.color : "white")};
   fill: ${(props) => (props.select === 1 ? "white" : props.color)};
+  color: ${(props) => (props.select === 1 ? "white" : props.color)};
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 40px;
+  height: 40px;
 `;

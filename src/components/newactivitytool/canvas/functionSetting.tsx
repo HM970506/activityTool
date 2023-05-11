@@ -24,8 +24,8 @@ export default function functionSetting(
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
 
     const line = new fabric.Line(points, {
-      strokeWidth: canvas.tapeState.size,
-      opacity: canvas.tapeState.opacity,
+      strokeWidth: canvas.tape.size,
+      opacity: 0.5,
       fill: canvas.tape.color,
       stroke: canvas.tape.color,
       originX: "center",

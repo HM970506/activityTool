@@ -17,7 +17,6 @@ const ColorContainer = style.div`
 const Colorchip = style.div<{ color: string; select: number }>`
   width: 22px;
   height: 22px;
-  margin: 9px;
   border: ${(props) => (props.select === 1 ? "2px solid white" : "none")};
   bottom: ${(props) => (props.select === 1 ? "15px" : "0px")};
   border-radius: 100%;

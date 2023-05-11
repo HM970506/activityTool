@@ -5,7 +5,7 @@ import { ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import Colorbox from "../../bottomTools/colorbox";
 import { SelectButton } from "../../styles/commonStyle";
-import { StampOptionContainer, StampsContainer } from "./style";
+import { Button, DecoOptionContainer2, StampsContainer } from "./style";
 import SVG from "react-inlinesvg";
 
 export default function Stamp() {
@@ -37,11 +37,11 @@ export default function Stamp() {
   };
 
   return (
-    <StampOptionContainer onClick={(e) => e.stopPropagation()}>
+    <DecoOptionContainer2 onClick={(e) => e.stopPropagation()}>
       <StampsContainer>
         {data ? (
           stamps.map((value: string, key: number) => (
-            <SelectButton
+            <Button
               select={stamp.index === key ? 1 : 0}
               color={color}
               key={`stamp_${key}`}
@@ -51,7 +51,7 @@ export default function Stamp() {
               }}
             >
               <SVG src={value} />
-            </SelectButton>
+            </Button>
           ))
         ) : (
           <div>로딩중</div>
@@ -65,6 +65,6 @@ export default function Stamp() {
         }}
         keyName={"stamp"}
       />
-    </StampOptionContainer>
+    </DecoOptionContainer2>
   );
 }

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ButtonInnerBox, ButtonsContainer, OptionContainer } from "../style";
+import { SelectButton } from "../../styles/commonStyle";
 
 export const DecoContatiner = styled(ButtonsContainer)<{ state: number }>`
   width: ${(props) => (props.state == 1 ? "348px" : "72px")};
@@ -55,10 +56,15 @@ export const StampsContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-export const StampOptionContainer = styled(OptionContainer)`
+export const DecoOptionContainer2 = styled(OptionContainer)`
   width: 262px;
   height: 98px;
   padding-top: 28px;
   padding-left: 32px;
   padding-bottom: 24px;
+`;
+
+export const Button = styled(SelectButton)`
+  width: 40px;
+  height: 40px;
 `;

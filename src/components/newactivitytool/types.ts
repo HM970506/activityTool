@@ -128,10 +128,6 @@ export const DEFAULT_CANVAS = {
   deltaY: 0,
   lastClientX: 0,
   lastClientY: 0,
-  tapeState: {
-    size: 20,
-    opacity: 0.5,
-  },
 };
 
 export const DEFUALT_TEXTBOX = {
