@@ -48,7 +48,8 @@ export default function DecorationMenu({
     <>
       <DecoCategoryButton
         onClick={() => {
-          dispatch(categoryActions.templateOn());
+          if (!template.state) dispatch(categoryActions.templateOn());
+          else dispatch(categoryActions.templateOff());
         }}
       >
         {template.state && <Template />}
@@ -56,7 +57,8 @@ export default function DecorationMenu({
       </DecoCategoryButton>
       <DecoCategoryButton
         onClick={() => {
-          dispatch(categoryActions.stampOn());
+          if (!stamp.state) dispatch(categoryActions.stampOn());
+          else dispatch(categoryActions.stampOff());
         }}
       >
         {stamp.state && <Stamp />}
@@ -64,7 +66,8 @@ export default function DecorationMenu({
       </DecoCategoryButton>
       <DecoCategoryButton
         onClick={() => {
-          dispatch(categoryActions.tapeOn());
+          if (!tape.state) dispatch(categoryActions.tapeOn());
+          else dispatch(categoryActions.tapeOff());
         }}
       >
         {tape.state && <Tape />}

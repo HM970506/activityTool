@@ -18,7 +18,7 @@ const categorySlice = createSlice({
         category: "",
         view: true,
         subcategory: {
-          template: { index: -1, state: true },
+          template: { index: -1, state: false },
           stamp: { index: 0, state: false, color: "black" },
           tape: { index: 0, state: false, color: "black" },
         },
@@ -47,17 +47,26 @@ const categorySlice = createSlice({
       state.subcategory.stamp.state = false;
       state.subcategory.tape.state = false;
     },
+    templateOff: (state) => {
+      state.subcategory.template.state = false;
+    },
 
     stampOn: (state) => {
       state.subcategory.stamp.state = true;
       state.subcategory.template.state = false;
       state.subcategory.tape.state = false;
     },
+    stampOff: (state) => {
+      state.subcategory.stamp.state = false;
+    },
 
     tapeOn: (state) => {
       state.subcategory.tape.state = true;
       state.subcategory.template.state = false;
       state.subcategory.stamp.state = false;
+    },
+    tapeOff: (state) => {
+      state.subcategory.tape.state = false;
     },
 
     setView: (state, action: PayloadAction<boolean>) => {

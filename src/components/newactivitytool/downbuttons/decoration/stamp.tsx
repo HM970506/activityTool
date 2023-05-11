@@ -3,10 +3,9 @@ import { Dispatch, useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import { ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { OptionContainer } from "../style";
 import Colorbox from "../../bottomTools/colorbox";
 import { SelectButton } from "../../styles/commonStyle";
-import { StampsContainer, Thumbnail } from "./style";
+import { StampOptionContainer, StampsContainer } from "./style";
 import SVG from "react-inlinesvg";
 
 export default function Stamp() {
@@ -28,6 +27,7 @@ export default function Stamp() {
     if (Array.isArray(data)) {
       setStamps(data);
       canvas.stamp.state = 1;
+      canvas.stamp.shape = data[stamp.index];
     }
   }, [data]);
 
@@ -37,7 +37,7 @@ export default function Stamp() {
   };
 
   return (
-    <OptionContainer>
+    <StampOptionContainer onClick={(e) => e.stopPropagation()}>
       <StampsContainer>
         {data ? (
           stamps.map((value: string, key: number) => (
@@ -65,6 +65,6 @@ export default function Stamp() {
         }}
         keyName={"stamp"}
       />
-    </OptionContainer>
+    </StampOptionContainer>
   );
 }

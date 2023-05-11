@@ -17,12 +17,18 @@ export const Thumbnail = styled.img`
 
 export const ThumbnailBox = styled.div`
   margin: 8px;
+  text-align: center;
+
+  p {
+    margin-top: 10px;
+  }
 `;
 
-export const DecoCategoryButton = styled.button`
+export const DecoCategoryButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px;
 `;
 
 export const DecoOptionContainer = styled(OptionContainer)`
@@ -46,4 +52,13 @@ export const StampsContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  margin-bottom: 10px;
+`;
+
+export const StampOptionContainer = styled(OptionContainer)`
+  width: 262px;
+  height: 98px;
+  padding-top: 28px;
+  padding-left: 32px;
+  padding-bottom: 24px;
 `;
