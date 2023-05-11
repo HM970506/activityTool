@@ -15,6 +15,9 @@ import DrawToolsMenu from "./drawTools";
 
 export default function DrawToolsButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
   const BRUSHES = new Map([
     [PENCIL, new fabric.PencilBrush(canvas)],
     [SPRAY, new fabric.SprayBrush(canvas, { density: 1 })],
@@ -29,9 +32,6 @@ export default function DrawToolsButton() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<number>(0);
   const [select, setSelect] = useState<string>("");
-  const category = useSelector(
-    (state: ReducersType) => state.categoryReducer.category
-  );
 
   useEffect(() => {
     if (canvas) {

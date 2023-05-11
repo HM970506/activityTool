@@ -6,16 +6,23 @@ import {
   ListContainer,
   ObjectButton,
   SubCategoryContainer,
-} from "../styles/bottomToolstyle";
-import { getStorageDataAll } from "../../api/firestore/getData";
+} from "../../styles/bottomToolstyle";
+import { getStorageDataAll } from "../../../api/firestore/getData";
 import { useQuery } from "react-query";
 import {
   ImageType,
   ReducersType,
   STICKER_CATEGORY,
   stickerCategoryType,
-} from "../types";
-import { Thumbnail } from "../downbuttons/decoration/style";
+} from "../../types";
+import { Thumbnail } from "../decoration/style";
+import {
+  StickerBox,
+  StickerCategory,
+  StickerCategoryContainer,
+  StickerListConatiner,
+  StickerOptionContainer,
+} from "./style";
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
@@ -50,37 +57,38 @@ export default function StickerMenu() {
   };
 
   return (
-    <BackgroundContainer>
-      <SubCategoryContainer>
+    <StickerOptionContainer onClick={(e) => e.stopPropagation()}>
+      <StickerCategoryContainer>
         {STICKER_CATEGORY.map((value: stickerCategoryType, key: number) => {
           return (
-            <button
+            <StickerCategory
+              state={stickerCategory === value.id ? 1 : 0}
               key={`sticker_${key}`}
               onClick={() => {
                 setStickerCategory(value.id);
               }}
             >
               {value.name}
-            </button>
+            </StickerCategory>
           );
         })}
-      </SubCategoryContainer>
-      <ListContainer>
+      </StickerCategoryContainer>
+      <StickerListConatiner>
         {isLoading ? (
           <div>로딩중</div>
         ) : (
           stickers.map((value: string, key: number) => (
-            <ObjectButton
+            <StickerBox
               key={`sticker_${stickerCategory}_${key}`}
               onClick={() => {
                 addNodes(value);
               }}
             >
               <Thumbnail src={value} />
-            </ObjectButton>
+            </StickerBox>
           ))
         )}
-      </ListContainer>
-    </BackgroundContainer>
+      </StickerListConatiner>
+    </StickerOptionContainer>
   );
 }
