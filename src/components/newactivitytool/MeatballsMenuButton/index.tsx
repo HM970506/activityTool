@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MeatballsMenuButton, Menu, Menus } from "../styles/commonStyle";
+import { MeatballsMenuButton, Menu, Menus } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";
 import { categoryActions } from "../../../store/common/categorySlice";

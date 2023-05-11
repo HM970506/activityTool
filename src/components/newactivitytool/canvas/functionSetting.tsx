@@ -26,14 +26,14 @@ export default function functionSetting(
     const line = new fabric.Line(points, {
       strokeWidth: canvas.tapeState.size,
       opacity: canvas.tapeState.opacity,
-      fill: canvas.toolColor,
-      stroke: canvas.toolColor,
+      fill: canvas.tape.color,
+      stroke: canvas.tape.color,
       originX: "center",
       originY: "center",
     });
 
     canvas.add(line);
-    canvas.taping = 2;
+    canvas.tape.state = 2;
   };
 
   const tapeStep_2 = () => {
@@ -50,17 +50,17 @@ export default function functionSetting(
   const tapeStep_3 = () => {
     const now = canvas.getObjects()[canvas.getObjects().length - 1];
     now.setCoords();
-    canvas.taping = 1;
+    canvas.tape.state = 1;
   };
 
   const stampStep_1 = () => {
     const pointer = canvas.getPointer();
     fabric.loadSVGFromString(
-      canvas.stamping,
+      canvas.stamp.shape,
       (objects: fabricObjectType[], options: stickerOptionType) => {
         const stamp = fabric.util.groupSVGElements(objects, options);
 
-        stamp.fill = canvas.toolColor;
+        stamp.fill = canvas.stamp.color;
 
         stamp.left = pointer.x;
         stamp.top = pointer.y;
@@ -112,16 +112,16 @@ export default function functionSetting(
 
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
-      if (canvas.taping === 1) tapeStep_1();
-      else if (canvas.stamping !== "") stampStep_1();
+      if (canvas.tape.state === 1) tapeStep_1();
+      else if (canvas.stamp.state === 1) stampStep_1();
       else if (canvas.panning === 1) panStep_1(e);
     },
     "mouse:move": (e: IEvent | any) => {
-      if (canvas.taping === 2) tapeStep_2();
+      if (canvas.tape.state === 2) tapeStep_2();
       else if (canvas.panning === 2) panStep_2(e);
     },
     "mouse:up": () => {
-      if (canvas.taping === 2) tapeStep_3();
+      if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
       else if (canvas.eraserTest) canvas.fire("object:modified");
     },

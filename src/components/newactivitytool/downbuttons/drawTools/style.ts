@@ -1,14 +1,8 @@
 import styled from "styled-components";
-import { Button } from "../../styles/commonStyle";
+import { ButtonsContainer, OptionContainer } from "../style";
 
-export const ToolsContatiner = styled(Button)<{ state: number }>`
+export const ToolsContatiner = styled(ButtonsContainer)<{ state: number }>`
   width: ${(props) => (props.state == 1 ? "420px" : "72px")};
-  height: 72px;
-  background-color: white;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  overflow: hidden;
 `;
 
 export const ToolNowBox = styled.div<{ state: number }>`
@@ -17,6 +11,7 @@ export const ToolNowBox = styled.div<{ state: number }>`
   height: 64px;
   display: flex;
   justify-content: center;
+
   align-items: center;
 `;
 
@@ -24,20 +19,16 @@ export const ToolNow = styled.div<{ state: number }>`
   width: ${(props) => (props.state == 1 ? "64px" : "32px")};
   height: ${(props) => (props.state == 1 ? "64px" : "32px")};
   background-color: #4ab859;
+  overflow: hidden;
   border-radius: ${(props) => (props.state == 1 ? "28px" : "16px")};
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const OptionContainer = styled.div`
+export const DrawOptionContainer = styled(OptionContainer)`
   width: 264px;
   height: 128px;
   padding-top: 20px;
   padding-left: 24px;
-  background-color: white;
-  border-radius: 32px;
-  position: absolute;
-  bottom: 100px;
-  overflow: hidden;
 `;

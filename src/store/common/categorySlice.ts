@@ -6,9 +6,9 @@ const categorySlice = createSlice({
     category: "",
     view: true,
     subcategory: {
-      template: { index: -1, state: true },
-      stamp: { index: 0, state: false },
-      tape: { index: 0, state: false },
+      template: { index: -1, state: false },
+      stamp: { index: 0, state: false, color: "black" },
+      tape: { index: 0, state: false, color: "black" },
     },
   },
 
@@ -19,8 +19,8 @@ const categorySlice = createSlice({
         view: true,
         subcategory: {
           template: { index: -1, state: true },
-          stamp: { index: 0, state: false },
-          tape: { index: 0, state: false },
+          stamp: { index: 0, state: false, color: "black" },
+          tape: { index: 0, state: false, color: "black" },
         },
       };
     },
@@ -35,6 +35,12 @@ const categorySlice = createSlice({
     },
     tapeChange: (state, action: PayloadAction<number>) => {
       state.subcategory.tape.index = action.payload;
+    },
+    stampColorChange: (state, action: PayloadAction<string>) => {
+      state.subcategory.stamp.color = action.payload;
+    },
+    tapeColorChange: (state, action: PayloadAction<string>) => {
+      state.subcategory.tape.color = action.payload;
     },
     templateOn: (state) => {
       state.subcategory.template.state = true;

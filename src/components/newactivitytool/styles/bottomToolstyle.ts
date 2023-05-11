@@ -45,10 +45,6 @@ export const SelectableObjectButton = style(ObjectButton)<{ select: number }>`
   }};
 `;
 
-export const Thumbnail = style.img`
-  height: 100%;
-`;
-
 export const FontButton = style.button<{ font: string; url: string }>`
 @font-face{
   font-family: ${(props) => {

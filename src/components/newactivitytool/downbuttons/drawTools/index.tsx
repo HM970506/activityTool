@@ -34,22 +34,24 @@ export default function DrawToolsButton() {
   );
 
   useEffect(() => {
-    if (category === DRAWTOOLS) setIsOpen(1);
-    else setIsOpen(0);
+    if (canvas) {
+      if (category === DRAWTOOLS) {
+        setIsOpen(1);
+        canvas.isDrawingMode = true;
+      } else {
+        setIsOpen(0);
+        canvas.isDrawingMode = false;
+      }
+    }
   }, [category]);
 
   const drawToolStart = () => {
-    if (category !== DRAWTOOLS) {
+    if (category !== DRAWTOOLS)
       dispatch(categoryActions.categoryChange(DRAWTOOLS));
-      canvas.isDrawingMode = true;
-    }
   };
 
   const drawToolsEnd = () => {
-    if (category === DRAWTOOLS) {
-      dispatch(categoryActions.categoryChange(""));
-      canvas.isDrawingMode = false;
-    }
+    if (category === DRAWTOOLS) dispatch(categoryActions.categoryChange(""));
   };
 
   return (

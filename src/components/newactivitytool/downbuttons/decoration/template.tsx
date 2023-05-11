@@ -1,13 +1,10 @@
 import { fabric } from "fabric-with-erasing";
-import {
-  SelectableObjectButton,
-  Thumbnail,
-} from "../../styles/bottomToolstyle";
-import { categoryActions } from "../../../../store/common/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { ImageType, ReducersType } from "../../types";
+import { categoryActions } from "../../../../store/common/categorySlice";
+import { DecoOptionContainer, Thumbnail, ThumbnailBox } from "./style";
 
 export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -42,12 +39,11 @@ export default function Template() {
   };
 
   return (
-    <>
+    <DecoOptionContainer>
       {data ? (
         templates.map((value: string, key: number) => {
           return (
-            <SelectableObjectButton
-              select={template.index === key ? 1 : 0}
+            <ThumbnailBox
               key={`template_${key}`}
               onClick={() => {
                 templating(value);
@@ -55,12 +51,13 @@ export default function Template() {
               }}
             >
               <Thumbnail src={value} />
-            </SelectableObjectButton>
+              <p>제목</p>
+            </ThumbnailBox>
           );
         })
       ) : (
         <div>로딩중</div>
       )}
-    </>
+    </DecoOptionContainer>
   );
 }

@@ -1,19 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import {
-  BackgroundContainer,
-  ListContainer,
-  SubCategoryContainer,
-} from "../../styles/bottomToolstyle";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { nodeActions } from "../../../../store/common/nodeSlice";
-import Tape from "./tape";
-import Stamp from "./stamp";
-import Template from "./template";
 import { ReducersType } from "../../types";
 import { selectable, unselectable } from "../../common/selectHandler";
+import Template from "./template";
+import Stamp from "./stamp";
+import Tape from "./tape";
+import { DecoCategoryButton } from "./style";
 
-export default function DecorationMenu() {
+export default function DecorationMenu({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: number;
+  setIsOpen: Dispatch<SetStateAction<number>>;
+}) {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const { template, stamp, tape } = useSelector(
     (state: ReducersType) => state.categoryReducer.subcategory
@@ -24,12 +26,11 @@ export default function DecorationMenu() {
   useEffect(() => {
     if (tape.state) {
       unselectable(canvas);
-
-      canvas.taping = 1;
+      canvas.tape.state = 1;
       dispatch(nodeActions.setDraw(false));
     } else {
       if (!stamp.state) selectable(canvas);
-      canvas.taping = 0;
+      canvas.tape.state = 0;
     }
   }, [tape.state]);
 
@@ -39,40 +40,36 @@ export default function DecorationMenu() {
       dispatch(nodeActions.setDraw(false));
     } else {
       if (!tape.state) selectable(canvas);
-      canvas.stamping = "";
+      canvas.stamp.state = 0;
     }
   }, [stamp.state]);
 
   return (
-    <BackgroundContainer>
-      <SubCategoryContainer>
-        <button
-          onClick={() => {
-            dispatch(categoryActions.templateOn());
-          }}
-        >
-          템플릿
-        </button>
-        <button
-          onClick={() => {
-            dispatch(categoryActions.stampOn());
-          }}
-        >
-          도장
-        </button>
-        <button
-          onClick={() => {
-            dispatch(categoryActions.tapeOn());
-          }}
-        >
-          마스킹테이프
-        </button>
-      </SubCategoryContainer>
-      <ListContainer>
+    <>
+      <DecoCategoryButton
+        onClick={() => {
+          dispatch(categoryActions.templateOn());
+        }}
+      >
         {template.state && <Template />}
+        <p> 템플릿</p>
+      </DecoCategoryButton>
+      <DecoCategoryButton
+        onClick={() => {
+          dispatch(categoryActions.stampOn());
+        }}
+      >
         {stamp.state && <Stamp />}
+        <p> 도장</p>
+      </DecoCategoryButton>
+      <DecoCategoryButton
+        onClick={() => {
+          dispatch(categoryActions.tapeOn());
+        }}
+      >
         {tape.state && <Tape />}
-      </ListContainer>
-    </BackgroundContainer>
+        <p> 마스킹테이프</p>
+      </DecoCategoryButton>
+    </>
   );
 }

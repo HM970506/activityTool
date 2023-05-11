@@ -22,8 +22,8 @@ export default function SideButtons({
   useEffect(() => {
     if (canvas) {
       if (category !== DECORATION) {
-        canvas.taping = 0;
-        canvas.stamping = "";
+        canvas.tape.state = 0;
+        canvas.stamp.state = 0;
       }
     }
   }, [category]);

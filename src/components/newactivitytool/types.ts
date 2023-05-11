@@ -53,19 +53,10 @@ export interface stickerCategoryType {
   name: string;
 }
 
-export interface subcategoryInnerType {
-  index: number;
-  state: boolean;
-}
-
-export interface tapeType extends Partial<subcategoryInnerType> {
-  opacity: 0;
-}
-
 export interface subcategoryType {
-  template: subcategoryInnerType;
-  tape: tapeType;
-  stamp: subcategoryInnerType;
+  template: { index: number; state: boolean };
+  tape: { index: number; state: boolean; color: string };
+  stamp: { index: number; state: boolean; color: string };
 }
 
 export interface categoryReducerType {
@@ -78,13 +69,6 @@ export interface tapeStateType {
   opacity: number;
   size: number;
 }
-
-// export interface canvasType extends Partial<Canvas> {
-//   taping: number;
-//   stamping: string;
-//   toolColor: string;
-//   tapeState: tapeStateType;
-// }
 
 export type canvasType = any;
 
@@ -135,9 +119,9 @@ export const DEFAULT_CANVAS = {
   backgroundColor: "rgba(255,255,255,0)",
   preserveObjectStacking: true,
   selection: false,
-  taping: 0,
+  tape: { state: 0, size: 10, color: "black" },
   panning: 0,
-  stamping: "",
+  stamp: { state: 0, shape: "", color: "black" },
   skipOffscreen: true,
   allowTouchScrolling: true,
   deltaX: 0,
@@ -148,7 +132,6 @@ export const DEFAULT_CANVAS = {
     size: 20,
     opacity: 0.5,
   },
-  toolColor: "black",
 };
 
 export const DEFUALT_TEXTBOX = {

@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
 import Colorbox from "../../bottomTools/colorbox";
 import SizeBox from "../../bottomTools/sizebox";
-import { OptionContainer } from "./style";
+import { DrawOptionContainer } from "./style";
 import {
   BACKGROUND_BRUSH,
   ERASER,
@@ -51,9 +50,12 @@ export default function DrawOption({ keyName }: { keyName: string }) {
       : eraser;
 
   return (
-    <OptionContainer className={"option"} onClick={(e) => e.stopPropagation()}>
+    <DrawOptionContainer
+      className={"option"}
+      onClick={(e) => e.stopPropagation()}
+    >
       <SizeBox setSize={sizeChange} option={option} keyName={keyName} />
       <Colorbox setColor={colorChange} option={option} keyName={keyName} />
-    </OptionContainer>
+    </DrawOptionContainer>
   );
 }

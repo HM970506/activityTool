@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ReducersType } from "../../types";
 import { selectable, unselectable } from "../../common/selectHandler";
+import { DecoOptionContainer } from "./style";
 
 export default function Tape() {
   const { isPanning, isDrawing, canvas } = useSelector(
@@ -15,30 +16,16 @@ export default function Tape() {
     if (canvas) {
       if (!isPanning && !isDrawing && tape.state) {
         unselectable(canvas);
-        canvas.taping = 1;
+        canvas.tape.state = 1;
       }
     } else {
       selectable(canvas);
-      canvas.taping = 0;
+      canvas.tape.state = 0;
     }
   }, [isDrawing, isPanning, tape.state]);
 
   return (
-    <>
-      투명도
-      <input
-        type="range"
-        min="0"
-        max="100"
-        defaultValue={(tape.opacity * 100).toString()}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          canvas.tapeState = {
-            ...canvas.tapeState,
-            opacity:
-              e.target.value === "0" ? 0 : parseInt(e.target.value) / 100,
-          };
-        }}
-      />
+    <DecoOptionContainer>
       크기
       <button
         onClick={() =>
@@ -70,6 +57,6 @@ export default function Tape() {
       >
         10
       </button>
-    </>
+    </DecoOptionContainer>
   );
 }

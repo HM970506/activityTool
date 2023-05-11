@@ -6,7 +6,6 @@ import {
   ListContainer,
   ObjectButton,
   SubCategoryContainer,
-  Thumbnail,
 } from "../styles/bottomToolstyle";
 import { getStorageDataAll } from "../../api/firestore/getData";
 import { useQuery } from "react-query";
@@ -16,6 +15,7 @@ import {
   STICKER_CATEGORY,
   stickerCategoryType,
 } from "../types";
+import { Thumbnail } from "../downbuttons/decoration/style";
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");
