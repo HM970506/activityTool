@@ -10,6 +10,7 @@ import BackButton from "./backButton";
 import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
 import { saveJson } from "./topButtons/saveFunction";
+import TopButtons from "./topButtons";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
@@ -53,6 +54,7 @@ export default function NewActivityTool() {
       <Background ref={newActivityTool}>
         <Overlay>
           <Canvas />
+          <TopButtons />
           <BackButton onClick={activityEnd} />
           <DownButtons />
           <MeatballsMenu />
