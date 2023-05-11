@@ -25,11 +25,20 @@ export const ThumbnailBox = styled.div`
   }
 `;
 
-export const DecoCategoryButton = styled.div`
+export const DecoCategoryButton = styled.div<{ state: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px;
+  background-color: ${(props) => (props.state == 1 ? "red" : "white")};
+`;
+
+export const StampCategoryButton = styled(DecoCategoryButton)<{
+  color: string;
+}>`
+  fill: ${(props) => {
+    return props.color;
+  }};
 `;
 
 export const DecoOptionContainer = styled(OptionContainer)`

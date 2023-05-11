@@ -74,7 +74,7 @@ export default function DecorationButton() {
       >
         <p>아이콘</p>
       </DecoInnerBox>
-      {isOpen ? <DecorationMenu setIsOpen={setIsOpen} isOpen={isOpen} /> : null}
+      {isOpen ? <DecorationMenu /> : null}
     </DecoContatiner>
   );
 }
