@@ -7,16 +7,10 @@ import { nodeActions } from "../../../store/common/nodeSlice";
 export default function functionSetting(
   canvas: canvasType,
   dispatch:
-    | Dispatch<
-        | {
-            payload: boolean;
-            type: "nodeReducer/setDraw";
-          }
-        | {
-            payload: boolean;
-            type: "nodeReducer/setPan";
-          }
-      >
+    | Dispatch<{
+        payload: boolean;
+        type: "nodeReducer/setPan";
+      }>
     | undefined
 ) {
   const tapeStep_1 = () => {
@@ -127,7 +121,6 @@ export default function functionSetting(
     },
     "selection:created": () => {
       if (dispatch != undefined) {
-        dispatch(nodeActions.setDraw(false));
         dispatch(nodeActions.setPan(false));
       }
       canvas.isDrawingMode = false;
@@ -135,7 +128,6 @@ export default function functionSetting(
     },
     "selection:updated": () => {
       if (dispatch != undefined) {
-        dispatch(nodeActions.setDraw(false));
         dispatch(nodeActions.setPan(false));
       }
 

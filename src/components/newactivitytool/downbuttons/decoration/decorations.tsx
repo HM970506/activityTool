@@ -23,7 +23,6 @@ export default function DecorationMenu() {
     if (tape.state) {
       unselectable(canvas);
       canvas.tape.state = 1;
-      dispatch(nodeActions.setDraw(false));
     } else {
       if (!stamp.state) selectable(canvas);
       canvas.tape.state = 0;
@@ -34,7 +33,6 @@ export default function DecorationMenu() {
     if (stamp.state) {
       unselectable(canvas);
       canvas.stamp.state = 1;
-      dispatch(nodeActions.setDraw(false));
     } else {
       if (!tape.state) selectable(canvas);
       canvas.stamp.state = 0;

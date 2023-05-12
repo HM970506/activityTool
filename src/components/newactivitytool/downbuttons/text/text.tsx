@@ -19,14 +19,6 @@ export default function TextMenu() {
     if (Array.isArray(data)) setTexts(data);
   }, [data]);
 
-  fabric.Textbox.prototype.set({
-    cornerColor: "black",
-    selectionBorderColor: "black",
-  });
-  fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
-    ...deleteProps,
-  });
-
   const TextMaker = (font: string) => {
     const textbox = new fabric.Textbox("텍스트를 입력하세요", {
       erasable: false,

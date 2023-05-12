@@ -168,20 +168,6 @@ export default function PhotoEditor() {
       <PhotoEditorOverlay view={isEditing ? 1 : 0}>
         <PhotoEditorContainer view={isEditing ? 1 : 0}>
           <PhotoEditorCutterContainer>
-            <PanningToggle
-              canvas={photoCanvas}
-              isPanning={isPanning}
-              setPan={panFunction}
-              setDraw={drawFunction}
-            />
-            <ZoomButton
-              canvas={photoCanvas}
-              setZoom={zoomFunction}
-              setView={viewFucntion}
-              reset={resetFunction}
-              zoom={zoom}
-              view={view}
-            />
             {test.map((value: string, key: number) => {
               return (
                 <PhotoEditorCutter

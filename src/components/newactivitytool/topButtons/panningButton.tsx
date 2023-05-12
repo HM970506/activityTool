@@ -7,12 +7,10 @@ export default function PanningToggle({
   canvas,
   isPanning,
   setPan,
-  setDraw,
 }: {
   canvas: canvasType;
   isPanning: boolean;
   setPan: Function;
-  setDraw: Function;
 }) {
   useEffect(() => {
     if (canvas) {
@@ -30,7 +28,6 @@ export default function PanningToggle({
 
     unselectable(canvas);
 
-    setDraw(false);
     canvas.panning = 1;
     canvas.discardActiveObject().renderAll();
   };

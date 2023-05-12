@@ -5,7 +5,7 @@ const nodeSlice = createSlice({
   name: "nodeReducer",
   initialState: {
     canvas: null,
-    isDrawing: false,
+    isEditing: false,
     isPanning: false,
     textareaContainer: null,
     record: {
@@ -19,7 +19,7 @@ const nodeSlice = createSlice({
     reset: (state) => {
       state = {
         canvas: null,
-        isDrawing: false,
+        isEditing: false,
         isPanning: false,
         textareaContainer: null,
         record: {
@@ -39,8 +39,9 @@ const nodeSlice = createSlice({
     setOpacity: (state, action: PayloadAction<number>) => {
       state.opacity = action.payload;
     },
-    setDraw: (state, action: PayloadAction<boolean>) => {
-      state.isDrawing = action.payload;
+
+    setEditing: (state, action: PayloadAction<boolean>) => {
+      state.isEditing = action.payload;
     },
 
     setPan: (state, action: PayloadAction<boolean>) => {
