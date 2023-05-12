@@ -11,14 +11,16 @@ import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
 import { saveJson } from "./topButtons/saveFunction";
 import TopButtons from "./topButtons";
+import CheckButton from "./checkButton";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { canvas, record } = useSelector(
+  const { canvas, record, isEditing } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
+
   const saveToJson = async () => {
     await saveJson(canvas, record);
   };
@@ -54,11 +56,17 @@ export default function NewActivityTool() {
       <Background ref={newActivityTool}>
         <Overlay>
           <Canvas />
-          <TopButtons />
-          <BackButton onClick={activityEnd} />
-          <DownButtons />
-          <MeatballsMenu />
-          <ReactQueryDevtools />
+          {isEditing ? (
+            <CheckButton onClick={activityEnd} />
+          ) : (
+            <>
+              <TopButtons />
+              <BackButton onClick={activityEnd} />
+              <DownButtons />
+              <MeatballsMenu />
+              <ReactQueryDevtools />
+            </>
+          )}
         </Overlay>
       </Background>
       {!activitytools && (

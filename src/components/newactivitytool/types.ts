@@ -74,7 +74,7 @@ export type canvasType = any;
 
 export interface nodeReducerType {
   canvas: canvasType;
-  isDrawing: boolean;
+  isEditing: boolean;
   isPanning: boolean;
   opacity: number;
   record: any;

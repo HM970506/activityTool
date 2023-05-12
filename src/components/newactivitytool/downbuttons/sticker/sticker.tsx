@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
-import {
-  BackgroundContainer,
-  ListContainer,
-  ObjectButton,
-  SubCategoryContainer,
-} from "../../styles/bottomToolstyle";
 import { getStorageDataAll } from "../../../api/firestore/getData";
 import { useQuery } from "react-query";
 import {

@@ -1,6 +1,6 @@
 import { Transform } from "fabric/fabric-impl";
 
-const deleteIcon = "./diary/deleteButton.svg";
+const deleteIcon = "./diary/deleteButton.png";
 const deleteObject = (e: MouseEvent, transform: Transform) => {
   const target = transform.target;
   const canvas = target.canvas;
@@ -15,7 +15,7 @@ const renderIcon = (
   left: number,
   top: number
 ) => {
-  const size = 30;
+  const size = 48;
   ctx.save();
   ctx.translate(left, top);
   const img = document.createElement("img");
@@ -25,8 +25,8 @@ const renderIcon = (
 };
 
 export const deleteProps = {
-  x: 0.55,
-  y: -0.55,
+  x: 0.4,
+  y: -0.4,
   cursorStyle: "pointer",
   mouseUpHandler: deleteObject,
   render: renderIcon,
