@@ -29,15 +29,6 @@ export const BackButton = styled(Button)`
   color: white;
 `;
 
-export const CheckButton = styled(Button)`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background-color: #2ae859;
-  fill: white;
-  color: white;
-`;
-
 export const DownButtonsContainer = styled.div`
   position: absolute;
   bottom: 8px;

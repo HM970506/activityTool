@@ -60,10 +60,10 @@ export default function TextButton() {
     console.log("클릭");
     if (category !== TEXT) {
       dispatch(categoryActions.categoryChange(TEXT));
-      setIsOpen(0);
+      setIsOpen(1);
     } else {
       dispatch(categoryActions.categoryChange(""));
-      setIsOpen(1);
+      setIsOpen(0);
     }
   };
 

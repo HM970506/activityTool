@@ -1,4 +1,4 @@
-import { fabricObjectType } from "../types";
+import { fabricObjectType } from "../../../types";
 
 export default function cropper(
   imageOrdy: fabricObjectType,

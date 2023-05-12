@@ -9,21 +9,19 @@ import { nodeActions } from "../../store/common/nodeSlice";
 import BackButton from "./backButton";
 import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
-import { saveJson } from "./topButtons/saveFunction";
 import TopButtons from "./topButtons";
-import CheckButton from "./checkButton";
+import PhotoEditor from "./downbuttons/photo/photoEditor/photoEditor";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { canvas, record, isEditing } = useSelector(
+  const isEditing = useSelector(
+    (state: ReducersType) => state.photoEditorReducer.isEditing
+  );
+  const { canvas, record } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
-
-  const saveToJson = async () => {
-    await saveJson(canvas, record);
-  };
 
   useEffect(() => {
     if (activitytools) newActivityTool.current?.showModal();
@@ -32,11 +30,6 @@ export default function NewActivityTool() {
 
   const activityStart = () => {
     setActivitytools(true);
-  };
-
-  const activityEnd = () => {
-    setActivitytools(false);
-    saveToJson();
   };
 
   const getCanvas = async () => {
@@ -57,11 +50,11 @@ export default function NewActivityTool() {
         <Overlay>
           <Canvas />
           {isEditing ? (
-            <CheckButton onClick={activityEnd} />
+            <PhotoEditor />
           ) : (
             <>
               <TopButtons />
-              <BackButton onClick={activityEnd} />
+              <BackButton setActivitytools={setActivitytools} />
               <DownButtons />
               <MeatballsMenu />
               <ReactQueryDevtools />

@@ -7,6 +7,7 @@ import { imageCheck } from "./photoChecker";
 import { Button } from "./style";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
+import { nodeActions } from "../../../../store/common/nodeSlice";
 
 const editIcon = "./diary/editButton.png";
 const renderIcon = (
@@ -28,46 +29,20 @@ export default function PhotoMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const isEditing = useSelector(
+    (state: ReducersType) => state.nodeReducer.isEditing
+  );
 
   const editObject = (e: MouseEvent, transform: Transform) => {
     const target = transform.target;
     const canvas = target.canvas;
-    const overlay = new fabric.Rect({
-      left: 0,
-      top: 0,
-      fill: "rgba(0,0,0,0.5)",
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-    console.log("target: ", target);
-
-    const cropper = new fabric.Rect({
-      left: target.left,
-      top: target.top,
-      fill: "black",
-      selectable: true,
-      width: target.width && target.scaleX ? target.width * target.scaleX : 1,
-      height:
-        target.height && target.scaleY ? target.height * target.scaleY : 1,
-    });
-
-    cropper.setControlVisible("deleteControl", false);
-    cropper.setControlVisible("editControl", false);
-    target.selectable = false;
-    target.globalCompositeOperation = "source-atop";
 
     if (canvas !== undefined) {
       canvas.remove(target);
-      canvas.add(overlay);
-
-      canvas.add(cropper);
-      canvas.add(target);
-      canvas.setActiveObject(cropper);
       canvas.renderAll();
     }
-
-    dispatch(photoEditorActions.setPhoto(photo));
     dispatch(photoEditorActions.setIsEditing(true));
+    dispatch(photoEditorActions.setPhoto(target));
   };
 
   useEffect(() => {
