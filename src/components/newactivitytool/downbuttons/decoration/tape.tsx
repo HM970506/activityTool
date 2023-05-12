@@ -4,7 +4,7 @@ import { ReducersType } from "../../types";
 import { selectable, unselectable } from "../../common/selectHandler";
 import { Button, DecoOptionContainer2, StampsContainer } from "./style";
 import { SelectButton } from "../../styles/commonStyle";
-import Colorbox from "../../bottomTools/colorbox";
+import Colorbox from "../../common/colorbox";
 import { categoryActions } from "../../../../store/common/categorySlice";
 
 export default function Tape() {

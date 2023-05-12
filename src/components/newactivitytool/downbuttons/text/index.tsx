@@ -1,17 +1,24 @@
-import { Button } from "../styles/commonStyle";
+import { Button } from "../../styles/commonStyle";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryActions } from "../../../store/common/categorySlice";
-import { ReducersType, TEXT } from "../types";
+import { categoryActions } from "../../../../store/common/categorySlice";
+import { ReducersType, TEXT } from "../../types";
 import { useQuery, useQueryClient } from "react-query";
 import {
   getFirestoreData,
   getStorageDataAll,
-} from "../../api/firestore/getData";
-import { useEffect } from "react";
+} from "../../../api/firestore/getData";
+import { useEffect, useState } from "react";
+import TextMenu from "./text";
+import { TextInnerBox } from "./style";
+import otherClick from "../../common/otherClick";
 
 export default function TextButton() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState<number>(0);
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
 
   const nowCategory = useSelector(
     (state: ReducersType) => state.categoryReducer.category
@@ -50,12 +57,22 @@ export default function TextButton() {
   }, [fontLoading, fontNameLoading]);
 
   const textButtonClick = () => {
-    if (nowCategory) dispatch(categoryActions.categoryChange(TEXT));
+    console.log("클릭");
+    if (category !== TEXT) {
+      dispatch(categoryActions.categoryChange(TEXT));
+      setIsOpen(0);
+    } else {
+      dispatch(categoryActions.categoryChange(""));
+      setIsOpen(1);
+    }
   };
 
-  return nowCategory == TEXT ? (
-    <div>test</div>
-  ) : (
-    <Button onClick={textButtonClick}>글상자</Button>
+  return (
+    <>
+      <Button onClick={textButtonClick}>
+        {category === TEXT && <TextMenu />}
+        <TextInnerBox state={isOpen}>글상자</TextInnerBox>
+      </Button>
+    </>
   );
 }

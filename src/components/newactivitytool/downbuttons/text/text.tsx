@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
-import { deleteProps } from "../common/deleteButton";
+import { deleteProps } from "../../common/deleteButton";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
-import { FontButton } from "../styles/bottomToolstyle";
-import { DEFUALT_TEXTBOX, ReducersType, textType } from "../types";
+import { DEFUALT_TEXTBOX, ReducersType, textType } from "../../types";
+import { FontButton, TextOptionContainer } from "./style";
 
 export default function TextMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -42,7 +42,7 @@ export default function TextMenu() {
   };
 
   return (
-    <>
+    <TextOptionContainer onClick={(e) => e.stopPropagation()}>
       {data ? (
         texts.map((value: textType, key: number) => {
           return (
@@ -61,6 +61,6 @@ export default function TextMenu() {
       ) : (
         <div>로딩중</div>
       )}
-    </>
+    </TextOptionContainer>
   );
 }

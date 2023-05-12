@@ -45,24 +45,6 @@ export const SelectableObjectButton = style(ObjectButton)<{ select: number }>`
   }};
 `;
 
-export const FontButton = style.button<{ font: string; url: string }>`
-@font-face{
-  font-family: ${(props) => {
-    return props.font;
-  }};
-  src: url(${(props) => {
-    return props.url;
-  }});
-}
-
-  font-family: ${(props) => {
-    return props.font;
-  }};
-  border: none;
-  background-color: inherit;
-  font-size: 20px;
-`;
-
 export const DrawSample = style.div<{ size: number }>`
   border: 1px solid black;
   backgound-color: inherit;

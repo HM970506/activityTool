@@ -3,7 +3,7 @@ import { Dispatch, useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import { ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import Colorbox from "../../bottomTools/colorbox";
+import Colorbox from "../../common/colorbox";
 import { SelectButton } from "../../styles/commonStyle";
 import { Button, DecoOptionContainer2, StampsContainer } from "./style";
 import SVG from "react-inlinesvg";

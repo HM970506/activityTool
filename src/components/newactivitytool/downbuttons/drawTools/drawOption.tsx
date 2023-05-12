@@ -1,5 +1,5 @@
-import Colorbox from "../../bottomTools/colorbox";
-import SizeBox from "../../bottomTools/sizebox";
+import Colorbox from "../../common/colorbox";
+import SizeBox from "../../common/sizebox";
 import { DrawOptionContainer } from "./style";
 import {
   BACKGROUND_BRUSH,

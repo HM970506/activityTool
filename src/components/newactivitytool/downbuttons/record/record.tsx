@@ -3,7 +3,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
-import Record from "./record";
+import Record from "./recorder";
 
 export default function RecordMenu() {
   const dispatch = useDispatch();
