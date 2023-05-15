@@ -8,8 +8,8 @@ import { nodeActions } from "../../../../store/common/nodeSlice";
 export default function Record() {
   const dispatch = useDispatch();
   const [recorder, setRecorder] = useState<RecordRTCPromisesHandler>();
-  const [stream, setStream] = useState<MediaStream>();
   const [state, setState] = useState<string>("");
+  const [test, setTest] = useState<string>("");
   const recorderRef = useRef<HTMLAudioElement | null>(null);
 
   const setting = async () => {
@@ -18,7 +18,6 @@ export default function Record() {
       type: "audio",
       mimeType: "audio/webm",
     });
-    setStream(stream);
     setRecorder(recorder);
   };
 
@@ -26,43 +25,48 @@ export default function Record() {
     setting();
   }, []);
 
+  const pauseHandler = async () => {
+    if (recorder) {
+      await recorder.pauseRecording();
+      setState("pause");
+    }
+  };
+
+  const startHandler = async () => {
+    if (recorder) {
+      await recorder.startRecording();
+      if (state == "") setState("start");
+      else setState("goon");
+    }
+  };
+
+  const endHandler = async () => {
+    if (recorder) {
+      await recorder.stopRecording();
+      setState("end");
+      const url = await recorder.getDataURL();
+      setTest(url);
+      const blob = (await recorder?.getBlob()) as Blob;
+      console.log(blob);
+      dispatch(nodeActions.setRecord(blob));
+    }
+  };
+
   return recorder ? (
-    <>
-      <Recorder ref={recorderRef} />
-      <RecorderTime>{}</RecorderTime>
-      {state == "start" ? (
-        <RecorderButton
-          onClick={async () => {
-            await recorder.pauseRecording();
-            setState("pause");
-          }}
-        >
-          ⏸
-        </RecorderButton>
-      ) : (
-        <RecorderButton
-          onClick={async () => {
-            await recorder.startRecording();
-            if (state == "") setState("start");
-            else setState("goon");
-          }}
-        >
-          ▶
-        </RecorderButton>
-      )}
-
-      <RecorderButton
-        onClick={async () => {
-          await recorder.stopRecording();
-          setState("end");
-
-          const blob = (await recorder?.getBlob()) as Blob;
-          dispatch(nodeActions.setRecord(blob));
-        }}
-      >
-        ⏹
-      </RecorderButton>
-    </>
+    state == "end" ? (
+      <audio src={test} />
+    ) : (
+      <>
+        <Recorder ref={recorderRef} />
+        <RecorderTime>{"0:00"}</RecorderTime>
+        {state === "start" ? (
+          <RecorderButton onClick={pauseHandler}>⏸</RecorderButton>
+        ) : (
+          <RecorderButton onClick={startHandler}>▶</RecorderButton>
+        )}
+        <RecorderButton onClick={endHandler}>⏹</RecorderButton>
+      </>
+    )
   ) : (
     <></>
   );
