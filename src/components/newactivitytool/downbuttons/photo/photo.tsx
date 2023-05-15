@@ -29,9 +29,6 @@ export default function PhotoMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const isEditing = useSelector(
-    (state: ReducersType) => state.nodeReducer.isEditing
-  );
 
   const editObject = (e: MouseEvent, transform: Transform) => {
     const target = transform.target;
@@ -55,6 +52,7 @@ export default function PhotoMenu() {
             img.selectable = true;
             img.crossOrigin = "Anonymous";
             if (img.controls) {
+              //프로토타입에 넣은것도 아닌데 왜 전부 생기냐고요
               img.controls.editControl = new fabric.Control({
                 x: -0.45,
                 y: -0.45,

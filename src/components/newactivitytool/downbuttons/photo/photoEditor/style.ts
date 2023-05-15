@@ -57,6 +57,9 @@ export const PhotoOption1 = styled(OptionContainer)`
   height: 88px;
   border-radius: 32px;
   padding-left: 24px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 `;
 
 export const PhotoOption2 = styled(OptionContainer)`
@@ -83,4 +86,12 @@ export const FilterComponent = styled.div`
   p {
     margin-bottom: 6px;
   }
+`;
+
+export const OptionComponent = styled.div`
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -19,10 +19,10 @@ import {
   PhotoOption1,
   PhotoOption2,
   FilterComponent,
+  OptionComponent,
 } from "./style";
-import functionSetting from "../../../canvas/functionSetting";
+
 import { DownButtonsContainer } from "../../../styles/commonStyle";
-import { OptionContainer } from "../../style";
 
 const test = ["heart", "star", "lightning", "bubble"];
 
@@ -37,28 +37,25 @@ export default function PhotoEditor() {
   const [option, setOption] = useState<string>("");
 
   useEffect(() => {
-    const canvas = new fabric.Canvas(photoEditorCanvasRef.current, {
+    const photoCanvas = new fabric.Canvas(photoEditorCanvasRef.current, {
       ...DEFAULT_CANVAS,
       height: window.innerHeight,
       width: window.innerWidth,
       backgroundColor: "rgba(0,0,0,0)",
     });
-    canvas.renderAll();
-    functionSetting(canvas, undefined);
+    //패닝, 확대 기능 추가
+    setPhotoCanvas(photoCanvas);
+    canvas.discardActiveObject();
+    photoCanvas.discardActiveObject();
+    photoCanvas.clear();
 
-    setPhotoCanvas(canvas);
-  }, []);
-
-  useEffect(() => {
-    if (photoCanvas && photo) {
-      canvas.discardActiveObject();
-      photoCanvas.discardActiveObject();
-      photoCanvas.clear();
+    if (photo) {
       photo.selectable = false;
       photoCanvas.add(photo);
-      photoCanvas.renderAll();
     }
-  }, [photoCanvas, photo]);
+
+    photoCanvas.renderAll();
+  }, []);
 
   const shapeChange = (shape: string) => {
     if (photoCanvas === null) return;
@@ -76,42 +73,29 @@ export default function PhotoEditor() {
       frameImg.globalCompositeOperation = "destination-atop";
       frameImg.top = beforeCoord.top ? beforeCoord.top : 0;
       frameImg.left = beforeCoord.left ? beforeCoord.left : 0;
+
       photoCanvas.add(frameImg);
       photoCanvas.remove(objects[1]);
       photoCanvas.renderAll();
     });
   };
 
-  // const cropper = new fabric.Rect({
-  //   left: target.left,
-  //   top: target.top,
-  //   fill: "black",
-  //   selectable: true,
-  //   width: target.width && target.scaleX ? target.width * target.scaleX : 1,
-  //   height:
-  //     target.height && target.scaleY ? target.height * target.scaleY : 1,
-  // });
-
-  // cropper.setControlVisible("deleteControl", false);
-  // cropper.setControlVisible("editControl", false);
-  // target.selectable = false;
-  // target.globalCompositeOperation = "source-atop";
-
   const editComplete = () => {
     if (photoCanvas == null) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
+    console.log(objects);
 
     if (objects.length >= 2) {
-      const editImg = cropper(objects[0], objects[1]);
+      const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
 
       const group = new fabric.Group(objects);
       group.cloneAsImage((img: ImageType) => {
         photo.original
           ? (img.original = photo.original)
           : (img.original = photo.getSrc());
-        img.left = Math.round(photo.left);
-        img.top = Math.round(photo.top);
+        img.left = Math.round(objects[1].oCoords.tl.y);
+        img.top = Math.round(objects[1].oCoords.tl.x);
         img.selectable = true;
         img.erasable = false;
         img.cropX = editImg?.cropX;
@@ -121,29 +105,37 @@ export default function PhotoEditor() {
         img.crossOrigin = "Anonymous";
 
         canvas.remove(photo);
+        console.log(img);
         canvas.add(img);
+
+        console.log(canvas.getObjects());
       });
 
+      canvas.renderAll();
+    } else {
+      const objects = photoCanvas.getObjects();
+      if (objects) photoCanvas.remove(objects);
+      photoCanvas.renderAll();
+      photo.selectable = true;
+      canvas.add(photo);
       canvas.renderAll();
     }
 
     dispatch(photoEditorActions.setIsEditing(false));
   };
 
-  const editCancle = () => {
-    const objects = photoCanvas.getObjects();
-    if (objects) photoCanvas.remove(objects);
-    photoCanvas.renderAll();
-
-    dispatch(photoEditorActions.setIsEditing(false));
-  };
+  // useEffect(() => {
+  //   document.addEventListener("mouseup", (e: MouseEvent) => {
+  //     if (e.target) setOption("");
+  //   });
+  // }, []);
 
   return (
     <>
       <PhotoEditorOverlay view={isEditing ? 1 : 0}>
         <canvas ref={photoEditorCanvasRef}></canvas>
 
-        <CheckButton onClick={editCancle}>체크</CheckButton>
+        <CheckButton onClick={editComplete}>체크</CheckButton>
         <DownButtonsContainer>
           <OptionButton
             onClick={() => {
@@ -161,14 +153,14 @@ export default function PhotoEditor() {
               <PhotoOption1>
                 {test.map((value: string, key: number) => {
                   return (
-                    <PhotoEditorCutter
+                    <OptionComponent
                       key={`cutter_${key}`}
                       onClick={() => {
                         shapeChange(value);
                       }}
                     >
                       {value}
-                    </PhotoEditorCutter>
+                    </OptionComponent>
                   );
                 })}
               </PhotoOption1>
