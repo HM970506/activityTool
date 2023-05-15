@@ -1,14 +1,33 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { RECORD } from "../../types";
-import { Button } from "../../styles/commonStyle";
+import { RECORD, ReducersType } from "../../types";
+import { Button, RecordContatiner, RecordInnerBox } from "./style";
+import { useEffect, useState } from "react";
+import Record from "./record";
 
 export default function RecordButton() {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState<number>(0);
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
+
+  useEffect(() => {
+    if (category !== RECORD) setIsOpen(0);
+    else setIsOpen(1);
+  }, [category]);
 
   const recordButtonClick = () => {
-    dispatch(categoryActions.categoryChange(RECORD));
+    if (category !== RECORD) dispatch(categoryActions.categoryChange(RECORD));
+    else dispatch(categoryActions.categoryChange(""));
   };
 
-  return <Button onClick={recordButtonClick}>녹음</Button>;
+  return (
+    <RecordContatiner state={isOpen}>
+      <RecordInnerBox state={isOpen} onClick={recordButtonClick}>
+        녹음
+      </RecordInnerBox>
+      {isOpen == 1 ? <Record /> : null}
+    </RecordContatiner>
+  );
 }

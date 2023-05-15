@@ -1,50 +1,60 @@
 import { useEffect, useRef, useState } from "react";
-import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import { useDispatch, useSelector } from "react-redux";
-import { nodeActions } from "../../../../store/common/nodeSlice";
-import { ReducersType } from "../../types";
-import Record from "./recorder";
+import { Button, Recorder, RecorderButton, RecorderTime } from "./style";
+import { RecordRTCPromisesHandler } from "recordrtc";
 
-export default function RecordMenu() {
-  const dispatch = useDispatch();
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const audioSavedRef = useRef<HTMLAudioElement>(null);
-  const newRecord = useSelector((state: ReducersType) => {
-    return state.nodeReducer.record.new;
-  });
-  const oldRecord = useSelector((state: ReducersType) => {
-    return state.nodeReducer.record.old;
-  });
-  navigator.mediaDevices.getUserMedia({ audio: true });
+export default function Record() {
+  const [recorder, setRecorder] = useState<any>();
+  const [blob, setBlob] = useState(null);
+  const [state, setState] = useState<string>("");
+  const refVideo = useRef(null);
+  const recorderRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    console.log(newRecord);
-  }, [newRecord]);
+  const setting = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const recorder = new RecordRTCPromisesHandler(stream, {
+      type: "audio",
+      mimeType: "audio/webm",
+    });
 
-  const recorderControls = useAudioRecorder();
-  const addAudioElement = (blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    dispatch(nodeActions.setNewRecord(url));
+    setRecorder(recorder);
   };
-
-  const audioComplete = async () => {
-    if (newRecord !== undefined) dispatch(nodeActions.setOldRecord(newRecord));
-    dispatch(nodeActions.setNewRecord(undefined));
-  };
-
-  //src가 undefined인데 왜 재생이 되는가.
 
   return (
     <>
-      <AudioRecorder
-        onRecordingComplete={(blob) => addAudioElement(blob)}
-        recorderControls={recorderControls}
-      />
-      지금 녹음한 오디오
-      <Record audioref={audioRef} src={newRecord} controls={true} />
-      <button onClick={audioComplete}>확정</button>
-      기존 녹음 오디오
-      <Record audioref={audioSavedRef} src={oldRecord} controls={true} />
+      <Recorder ref={recorderRef} />
+      <RecorderTime>{}</RecorderTime>
+      {state == "start" ? (
+        <RecorderButton
+          onClick={async () => {
+            setState("pause");
+            if (recorder) await recorder.pausetRecording();
+          }}
+        >
+          ⏸
+        </RecorderButton>
+      ) : (
+        <RecorderButton
+          onClick={async () => {
+            if (state == "") {
+              setting();
+              setState("start");
+            } else setState("goon");
+            if (recorder) await recorder.startRecording();
+          }}
+        >
+          ▶
+        </RecorderButton>
+      )}
+
+      <RecorderButton
+        onClick={async () => {
+          setState("end");
+          if (recorder) await recorder.stopRecording();
+        }}
+      >
+        ⏹
+      </RecorderButton>
     </>
   );
 }
