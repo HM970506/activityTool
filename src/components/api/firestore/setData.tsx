@@ -7,7 +7,7 @@ const firestore = getFirestore(app);
 const storage = getStorage(app);
 const fileReader = new FileReader();
 
-export const setSaveData = async (data: string, record: string | undefined) => {
+export const setSaveData = async (data: string, record: Blob | undefined) => {
   const savePath = doc(
     firestore,
     "saveData",
@@ -17,9 +17,7 @@ export const setSaveData = async (data: string, record: string | undefined) => {
   const storageRef = ref(storage, "/test");
 
   if (record != undefined) {
-    const url = await fetch(record);
-    const blob = await url.blob();
-    const file = new File([blob], "test");
+    const file = new File([record], "test");
     await uploadBytes(storageRef, file).catch((err) => console.log(err));
   }
 

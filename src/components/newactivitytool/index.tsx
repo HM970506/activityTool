@@ -37,6 +37,7 @@ export default function NewActivityTool() {
 
   const activityStart = () => {
     setActivitytools(true);
+    setSubMenu(false);
   };
 
   const getCanvas = async () => {
@@ -49,6 +50,7 @@ export default function NewActivityTool() {
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
     }
     setActivitytools(true);
+    setSubMenu(false);
   };
 
   return (

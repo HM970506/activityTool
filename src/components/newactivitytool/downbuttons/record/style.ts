@@ -39,6 +39,4 @@ export const RecorderTime = styled.span`
   margin-right: 51px;
 `;
 
-export const Recorder = styled.audio`
-  display: none;
-`;
+export const Recorder = styled.audio``;
