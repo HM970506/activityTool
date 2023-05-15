@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Background, Overlay, MainButton } from "./styles/commonStyle";
+import {
+  Background,
+  Overlay,
+  MainButton,
+  SubButtonContainer,
+  SubButton,
+} from "./styles/commonStyle";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -15,6 +21,7 @@ import PhotoEditor from "./downbuttons/photo/photoEditor/photoEditor";
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [activitytools, setActivitytools] = useState<boolean>(false);
+  const [subMenu, setSubMenu] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isEditing = useSelector(
     (state: ReducersType) => state.photoEditorReducer.isEditing
@@ -38,10 +45,10 @@ export default function NewActivityTool() {
     const record = await getStorageData("test");
 
     if (data) {
-      if (record) dispatch(nodeActions.setOldRecord(record));
-
+      if (record) dispatch(nodeActions.setRecord(record));
       canvas.loadFromJSON(data?.data, () => canvas.renderAll());
-    } else alert("저장된 데이터가 없습니다");
+    }
+    setActivitytools(true);
   };
 
   return (
@@ -63,7 +70,21 @@ export default function NewActivityTool() {
         </Overlay>
       </Background>
       {!activitytools && (
-        <MainButton onClick={activityStart}>활동툴</MainButton>
+        <>
+          {subMenu && (
+            <SubButtonContainer>
+              <SubButton onClick={activityStart}>새로하기</SubButton>
+              <SubButton onClick={getCanvas}>불러오기</SubButton>
+            </SubButtonContainer>
+          )}
+          <MainButton
+            onClick={() => {
+              setSubMenu((x) => !x);
+            }}
+          >
+            활동툴
+          </MainButton>
+        </>
       )}
     </>
   );

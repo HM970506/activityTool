@@ -63,6 +63,24 @@ export const MainButton = styled(Button)`
   transition-property: top-layer;
 `;
 
+export const SubButtonContainer = styled(MainButton)`
+  display: block;
+  width: 128px;
+  height: 112px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-radius: 32px;
+  bottom: 88px;
+  right: 8px;
+`;
+
+export const SubButton = styled.div`
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Background = styled.dialog`
   transition-property: top-layer;
   -ms-user-select: none;
