@@ -29,6 +29,5 @@ export default function canvasSetting(canvas: canvasType) {
       }
     },
   });
-
   return canvas;
 }

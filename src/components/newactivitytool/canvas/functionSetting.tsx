@@ -66,7 +66,7 @@ export default function functionSetting(
   };
 
   const panStep_1 = (e: IEvent | any) => {
-    console.log(typeof e.e, e.e);
+    console.log("팬켜짐:", typeof e.e, e.e);
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;
@@ -108,7 +108,8 @@ export default function functionSetting(
     "mouse:down": (e: IEvent | any) => {
       if (canvas.tape.state === 1) tapeStep_1();
       else if (canvas.stamp.state === 1) stampStep_1();
-      else if (canvas.panning === 1) panStep_1(e);
+      else if (!canvas.isDrawingMode && canvas.getActiveObject() === null)
+        panStep_1(e);
     },
     "mouse:move": (e: IEvent | any) => {
       if (canvas.tape.state === 2) tapeStep_2();
