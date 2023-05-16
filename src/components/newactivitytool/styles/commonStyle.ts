@@ -31,8 +31,9 @@ export const BackButton = styled(Button)`
 
 export const DownButtonsContainer = styled.div`
   position: absolute;
+  left: 50%;
+  transform: translate(-50%);
   bottom: 8px;
-  width: 100%;
   gap: 8px;
   display: flex;
   justify-content: center;

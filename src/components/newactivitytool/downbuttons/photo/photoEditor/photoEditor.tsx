@@ -9,11 +9,8 @@ import {
 import { photoEditorActions } from "../../../../../store/common/photoEditorSlice";
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric-with-erasing";
-import cropper from "./cropper";
 import {
   CheckButton,
-  PhotoEditorCutter,
-  PhotoEditorCutterContainer,
   PhotoEditorOverlay,
   OptionButton,
   PhotoOption1,
@@ -86,13 +83,6 @@ export default function PhotoEditor() {
     if (photoCanvas == null) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
-    console.log(
-      objects[0].top,
-      objects[0].left,
-      objects[1].top,
-      objects[1].left
-    );
-
     if (objects.length >= 2) {
       // const editImg = cropper(objects[0], objects[1]);
 
