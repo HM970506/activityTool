@@ -66,7 +66,7 @@ export default function functionSetting(
   };
 
   const panStep_1 = (e: IEvent | any) => {
-    console.log("팬켜짐:", typeof e.e, e.e);
+    //console.log("팬켜짐:", typeof e.e, e.e);
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;
@@ -119,21 +119,6 @@ export default function functionSetting(
       if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
       else if (canvas.eraserTest) canvas.fire("object:modified");
-    },
-    "selection:created": () => {
-      if (dispatch != undefined) {
-        dispatch(nodeActions.setPan(false));
-      }
-      canvas.isDrawingMode = false;
-      canvas.panning = 0;
-    },
-    "selection:updated": () => {
-      if (dispatch != undefined) {
-        dispatch(nodeActions.setPan(false));
-      }
-
-      canvas.isDrawing = false;
-      canvas.panning = 0;
     },
   });
 }

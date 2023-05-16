@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { BackButton } from "../styles/commonStyle";
-import { saveJson } from "../topButtons/saveFunction";
+import { saveJson } from "../common/saveFunction";
 import { ReducersType } from "../types";
 import { Dispatch, SetStateAction } from "react";
 
