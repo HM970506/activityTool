@@ -49,30 +49,32 @@ export default function PhotoEditor() {
     photoCanvas.discardActiveObject();
     photoCanvas.clear();
 
-    if (photo) {
-      photo.selectable = false;
-      photoCanvas.add(photo);
-    }
-
-    photoCanvas.renderAll();
+    photoReady(photo, photoCanvas);
   }, []);
+
+  const photoReady = (photo: any, photoCanvas: canvasType) => {
+    if (photo.type == "group") {
+      photoCanvas.add(photo);
+      photoCanvas.setActiveObject(photo);
+      photoCanvas.getActiveObject().toActiveSelection();
+      photoCanvas.requestRenderAll();
+      photoCanvas.getActiveObjects()[0].selectable = false;
+      photoCanvas.discardActiveObject();
+    } else {
+      photoCanvas.add(photo);
+      photoCanvas.renderAll();
+    }
+  };
 
   const shapeChange = (shape: string) => {
     if (photoCanvas === null) return;
 
     const objects = photoCanvas.getObjects();
-    const beforeCoord = { top: null, left: null };
-    if (objects.length >= 2) {
-      beforeCoord.top = objects[1].top;
-      beforeCoord.left = objects[1].left;
-    }
 
     fabric.Image.fromURL(`/diary/${shape}.png`, (frameImg: ImageType) => {
       frameImg.crossOrigin = "Anonymous";
       frameImg.selectable = true;
       frameImg.globalCompositeOperation = "destination-atop";
-      frameImg.top = beforeCoord.top ? beforeCoord.top : 0;
-      frameImg.left = beforeCoord.left ? beforeCoord.left : 0;
 
       photoCanvas.add(frameImg);
       photoCanvas.remove(objects[1]);
@@ -84,39 +86,30 @@ export default function PhotoEditor() {
     if (photoCanvas == null) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
-    console.log(objects);
+    console.log(
+      objects[0].top,
+      objects[0].left,
+      objects[1].top,
+      objects[1].left
+    );
 
     if (objects.length >= 2) {
-      const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
+      // const editImg = cropper(objects[0], objects[1]);
 
-      const group = new fabric.Group(objects);
-      group.cloneAsImage((img: ImageType) => {
-        photo.original
-          ? (img.original = photo.original)
-          : (img.original = photo.getSrc());
-        img.left = Math.round(objects[1].oCoords.tl.y);
-        img.top = Math.round(objects[1].oCoords.tl.x);
-        img.selectable = true;
-        img.erasable = false;
-        img.cropX = editImg?.cropX;
-        img.cropY = editImg?.cropY;
-        img.width = editImg?.width;
-        img.height = editImg?.height;
-        img.crossOrigin = "Anonymous";
-
-        canvas.remove(photo);
-        console.log(img);
-        canvas.add(img);
-
-        console.log(canvas.getObjects());
+      const group = new fabric.Group(objects, {
+        selectable: true,
+        erasable: false,
       });
-
+      canvas.remove(photo);
+      canvas.add(group);
       canvas.renderAll();
     } else {
       const objects = photoCanvas.getObjects();
-      if (objects) photoCanvas.remove(objects);
-      photoCanvas.renderAll();
       photo.selectable = true;
+
+      photoCanvas.remove(objects);
+      photoCanvas.renderAll();
+
       canvas.add(photo);
       canvas.renderAll();
     }
