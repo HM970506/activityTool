@@ -6,19 +6,25 @@ import {
   MainButton,
   SubButtonContainer,
   SubButton,
+  ModalOverlay,
 } from "./styles/commonStyle";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { ReducersType } from "./types";
+import { DRAWTOOLS, ReducersType } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
 import BackButton from "./backButton";
 import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
 import TopButtons from "./topButtons";
 import PhotoEditor from "./downbuttons/photo/photoEditor/photoEditor";
+import { categoryActions } from "../../store/common/categorySlice";
 
 export default function NewActivityTool() {
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
+  );
+
   const newActivityTool = useRef<HTMLDialogElement>(null);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [subMenu, setSubMenu] = useState<boolean>(false);
@@ -64,9 +70,17 @@ export default function NewActivityTool() {
             <>
               <TopButtons />
               <BackButton setActivitytools={setActivitytools} />
-              <DownButtons />
+
               <MeatballsMenu />
               <ReactQueryDevtools />
+              {option && (
+                <ModalOverlay
+                  onClick={() => {
+                    dispatch(categoryActions.optionChange(false));
+                  }}
+                />
+              )}
+              <DownButtons />
             </>
           )}
         </Overlay>

@@ -63,6 +63,7 @@ export interface categoryReducerType {
   category: string;
   subcategory: subcategoryType;
   view: boolean;
+  option: boolean;
 }
 
 export interface tapeStateType {

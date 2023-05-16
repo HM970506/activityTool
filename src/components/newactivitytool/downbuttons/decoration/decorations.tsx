@@ -15,7 +15,9 @@ export default function DecorationMenu() {
   const { template, stamp, tape } = useSelector(
     (state: ReducersType) => state.categoryReducer.subcategory
   );
-  const [option, setOption] = useState<boolean>(false);
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
+  );
 
   const dispatch = useDispatch();
 
@@ -67,8 +69,8 @@ export default function DecorationMenu() {
         state={stamp.state ? 1 : 0}
         onClick={() => {
           if (!stamp.state) dispatch(categoryActions.stampOn());
-          else if (!option) setOption(true);
-          else if (option) setOption(false);
+          else if (!option) dispatch(categoryActions.optionChange(true));
+          else if (option) dispatch(categoryActions.optionChange(false));
           else dispatch(categoryActions.stampOff());
         }}
       >
@@ -80,8 +82,8 @@ export default function DecorationMenu() {
         state={tape.state ? 1 : 0}
         onClick={() => {
           if (!tape.state) dispatch(categoryActions.tapeOn());
-          else if (!option) setOption(true);
-          else if (option) setOption(false);
+          else if (!option) dispatch(categoryActions.optionChange(true));
+          else if (option) dispatch(categoryActions.optionChange(false));
           else dispatch(categoryActions.tapeOff());
         }}
       >

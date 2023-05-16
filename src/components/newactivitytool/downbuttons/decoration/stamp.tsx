@@ -10,6 +10,9 @@ import SVG from "react-inlinesvg";
 
 export default function Stamp() {
   const dispatch = useDispatch();
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
+  );
   const [stamps, setStamps] = useState<string[]>([]);
   const { color } = useSelector(
     (state: ReducersType) => state.categoryReducer.subcategory.stamp

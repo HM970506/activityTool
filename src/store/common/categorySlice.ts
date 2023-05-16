@@ -5,6 +5,7 @@ const categorySlice = createSlice({
   initialState: {
     category: "",
     view: true,
+    option: false,
     subcategory: {
       template: { index: -1, state: false },
       stamp: { index: 0, state: false, color: "black" },
@@ -17,12 +18,16 @@ const categorySlice = createSlice({
       state = {
         category: "",
         view: true,
+        option: false,
         subcategory: {
           template: { index: -1, state: false },
           stamp: { index: 0, state: false, color: "black" },
           tape: { index: 0, state: false, color: "black" },
         },
       };
+    },
+    optionChange: (state, action: PayloadAction<boolean>) => {
+      state.option = action.payload;
     },
     categoryChange: (state, action: PayloadAction<string>) => {
       state.category = action.payload;

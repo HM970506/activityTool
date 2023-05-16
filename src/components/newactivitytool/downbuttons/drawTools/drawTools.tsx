@@ -9,6 +9,7 @@ import {
 } from "../../types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import DrawOption from "./drawOption";
+import { categoryActions } from "../../../../store/common/categorySlice";
 
 export default function DrawToolsMenu({
   select,
@@ -23,7 +24,9 @@ export default function DrawToolsMenu({
   const { pencil, back, spray, eraser } = useSelector(
     (state: ReducersType) => state.drawReducer
   );
-  const [option, setOption] = useState<boolean>(false);
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
+  );
 
   const optionChange = (name: string, option: any) => {
     const brush = brushes.get(name);
@@ -63,21 +66,14 @@ export default function DrawToolsMenu({
       );
   }, [select]);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", (e: MouseEvent) => {
-      if (e.target) {
-        const target = e.target as Element;
-        if (!target.classList.contains("option")) setOption(false);
-      }
-    });
-  }, []);
-
+  const dispatch = useDispatch();
   const setting = (name: string) => {
     if (select !== name) {
       setSelect(name);
       canvas.freeDrawingBrush = brushes.get(name);
-    } else if (!option) setOption(true);
-    else if (select === name && option) setOption(false);
+    } else if (!option) dispatch(categoryActions.optionChange(true));
+    else if (select === name && option)
+      dispatch(categoryActions.optionChange(false));
   };
 
   return (
