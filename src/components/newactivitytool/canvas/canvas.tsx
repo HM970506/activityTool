@@ -33,13 +33,16 @@ export default function Canvas() {
     onPinch: ({ da, origin, offset }) => {
       // [d,a] 두 포인터의 절대 거리 및 각도
       // 두 터치 이벤트 사이의 중심 좌표
+      // 스케일, 각도
       console.log(da, offset, origin);
 
       canvas.setZoom(
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },
-        Math.round(da[0]) / 10
+        Math.round(da[0]) / 100
       );
-      setZoom(`절대거리: ${Math.round(da[0])} 스케일: ${offset}`);
+      setZoom(
+        `절대거리: ${Math.round(da[0])} 스케일: ${Math.round(offset[0])}`
+      );
     },
   });
 
