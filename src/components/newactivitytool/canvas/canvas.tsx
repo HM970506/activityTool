@@ -14,8 +14,8 @@ import styled from "styled-components";
 
 const Test = styled.div`
   position: absolute;
-  width: 50%;
-  height: 50%;
+  width: 25%;
+  height: 25%;
 `;
 
 export default function Canvas() {
@@ -37,7 +37,7 @@ export default function Canvas() {
 
       canvas.setZoom(
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },
-        1 + offset[0] == 0 ? 1 : offset[0]
+        Math.round(da[0]) / 10
       );
       setZoom(`절대거리: ${Math.round(da[0])} 스케일: ${offset}`);
     },
