@@ -35,8 +35,11 @@ export default function Canvas() {
       // 두 터치 이벤트 사이의 중심 좌표
       console.log(da, offset, origin);
 
-      canvas.setZoom(origin, 1 + offset[0] == 0 ? 1 : offset[0]);
-      setZoom(`중심점: ${origin} 절대거리,각도: ${da} 스케일: ${offset}`);
+      canvas.setZoom(
+        { x: Math.round(origin[0]), y: Math.round(origin[1]) },
+        1 + offset[0] == 0 ? 1 : offset[0]
+      );
+      setZoom(`절대거리: ${Math.round(da[0])} 스케일: ${offset}`);
     },
   });
 
