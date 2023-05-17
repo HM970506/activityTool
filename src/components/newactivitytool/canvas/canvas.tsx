@@ -10,6 +10,7 @@ import { DEFAULT_CANVAS, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
+import functionSetting from "./functionSetting";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export default function Canvas() {
     canvas.freeDrawingBrush.inverted = true;
 
     fabricSetting();
+    functionSetting(canvas);
     canvasSetting(canvas);
     windowSetting(canvas, dispatch);
 

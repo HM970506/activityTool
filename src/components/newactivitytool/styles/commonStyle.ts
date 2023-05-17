@@ -147,7 +147,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalOverlay = styled(Overlay)`
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0);
 `;
 
 export const Canvas = styled.canvas`

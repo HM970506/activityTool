@@ -1,7 +1,7 @@
 import { fabric } from "fabric-with-erasing";
 import { canvasType, fabricObjectType, stickerOptionType } from "../types";
 import { IEvent } from "fabric/fabric-impl";
-import { Dispatch } from "react";
+
 export default function functionSetting(canvas: canvasType) {
   const tapeStep_1 = () => {
     const pointer = canvas.getPointer();
