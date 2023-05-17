@@ -10,33 +10,31 @@ import { DEFAULT_CANVAS, ReducersType } from "../types";
 import functionSetting from "./functionSetting";
 import canvasSetting from "./canvasSetting";
 import { useGesture, usePinch } from "@use-gesture/react";
+import styled from "styled-components";
+
+const Test = styled.div`
+  position: absolute;
+  width: 50%;
+  height: 50%;
+`;
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [zoom, setZoom] = useState("test");
+  const [zoom, setZoom] = useState<any>("test");
 
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const bind = useGesture({
     onDrag: (state) => {
+      console.log("drag");
       setZoom("drag");
     },
-    onPinch: ({
-      canceled,
-      origin: [ox, oy],
-      first,
-      movement: [ms, m2],
-      memo,
-    }) => {
-      console.log("pinch");
-      setZoom("pinch");
-      // if (canceled) return;
-      // const nowZoom = memo[0] * ms;
+    onPinch: ({ da, origin, offset }) => {
+      console.log(da, offset);
 
-      //
-      // canvas.zoomToPoint({ x: ox, y: oy }, nowZoom);
-      // return memo;
+      canvas.setZoom(da, 1 + offset[0] == 0 ? 1 : offset[0]);
+      setZoom(canvas.getZoom());
     },
   });
 
@@ -66,7 +64,7 @@ export default function Canvas() {
   return (
     <CanvasBackground ref={containerRef} {...bind()}>
       <canvas ref={canvasRef}></canvas>
-      <div>{zoom}</div>
+      <Test>{zoom}</Test>
     </CanvasBackground>
   );
 }
