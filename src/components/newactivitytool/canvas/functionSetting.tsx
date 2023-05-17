@@ -104,18 +104,63 @@ export default function functionSetting(
     canvas.panning = 1;
   };
 
+  const pinchZoomStep_1 = (e: any) => {
+    //터치1, 터치2 를 각각 가져와서 그 중앙점을 찾는다.
+    const touch_1 = {
+      x: e.e.changedTouches[0].clientX,
+      y: e.e.changedTouches[0].clientY,
+    };
+    const touch_2 = {
+      x: e.e.changedTouches[1].clientX,
+      y: e.e.changedTouches[1].clientY,
+    };
+
+    const center = {
+      x: (touch_1.x + touch_2.x) / 2,
+      y: (touch_1.y + touch_2.y) / 2,
+    };
+
+    //중앙점을 캔버스에 넣어둔다.
+    canvas.pinchzoom = { state: 1, coord: center };
+  };
+
+  const pinchZoomStep_2 = (e: any) => {
+    const touch_1 = {
+      x: e.e.changedTouches[0].clientX,
+      y: e.e.changedTouches[0].clientY,
+    };
+    const touch_2 = {
+      x: e.e.changedTouches[1].clientX,
+      y: e.e.changedTouches[1].clientY,
+    };
+
+    //두 점 사이 거리만큼 줌 조절.
+
+    const zoom =
+      Math.sqrt(
+        Math.pow(touch_1.x - touch_2.x, 2) + Math.pow(touch_1.y - touch_2.y, 2)
+      ) / 10;
+    canvas.zoom(canvas.pinchZoom.coord, zoom);
+  };
+
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
-      if (canvas.tape.state === 1) tapeStep_1();
+      console.log(e.e.type);
+      if (e.e.type == "touchstart" && e.e.changedTouches.length > 1)
+        pinchZoomStep_1(e);
+      else if (canvas.tape.state === 1) tapeStep_1();
       else if (canvas.stamp.state === 1) stampStep_1();
       else if (!canvas.isDrawingMode && canvas.getActiveObject() === null)
         panStep_1(e);
     },
     "mouse:move": (e: IEvent | any) => {
-      if (canvas.tape.state === 2) tapeStep_2();
+      if (canvas.pinchZoom.state === 1 && e.e.changedTouches.length > 1)
+        pinchZoomStep_2(e);
+      else if (canvas.tape.state === 2) tapeStep_2();
       else if (canvas.panning === 2) panStep_2(e);
     },
-    "mouse:up": () => {
+    "mouse:up": (e: any) => {
+      console.log(e.e.type);
       if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
       else if (canvas.eraserTest) canvas.fire("object:modified");

@@ -46,6 +46,8 @@ export default function Canvas() {
       width: window.innerWidth,
       left: window.innerWidth / 2,
       top: window.innerHeight / 2,
+
+      pinchZoom: { state: 0, coord: { x: 0, y: 0 } },
     });
     canvas.freeDrawingBrush.inverted = true;
 
