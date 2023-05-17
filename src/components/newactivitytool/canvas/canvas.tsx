@@ -2,7 +2,7 @@ import { fabric } from "fabric-with-erasing";
 import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CanvasBackground } from "../styles/commonStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
@@ -15,11 +15,12 @@ export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [zoom, setZoom] = useState("test");
 
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const bind = useGesture({
     onDrag: (state) => {
-      console.log("drag");
+      setZoom("drag");
     },
     onPinch: ({
       canceled,
@@ -28,10 +29,11 @@ export default function Canvas() {
       movement: [ms, m2],
       memo,
     }) => {
+      console.log("pinch");
       if (canceled) return;
       const nowZoom = memo[0] * ms;
 
-      //setZoom(nowZoom);
+      setZoom("pinch");
       canvas.zoomToPoint({ x: ox, y: oy }, nowZoom);
       return memo;
     },
@@ -61,6 +63,7 @@ export default function Canvas() {
   return (
     <CanvasBackground ref={containerRef} {...bind()}>
       <canvas ref={canvasRef}></canvas>
+      <div>{zoom}</div>
     </CanvasBackground>
   );
 }
