@@ -31,10 +31,12 @@ export default function Canvas() {
       setZoom("drag");
     },
     onPinch: ({ da, origin, offset }) => {
-      console.log(da, offset);
+      // [d,a] 두 포인터의 절대 거리 및 각도
+      // 두 터치 이벤트 사이의 중심 좌표
+      console.log(da, offset, origin);
 
-      canvas.setZoom(da, 1 + offset[0] == 0 ? 1 : offset[0]);
-      setZoom(canvas.getZoom());
+      canvas.setZoom(origin, 1 + offset[0] == 0 ? 1 : offset[0]);
+      setZoom(`중심점: ${origin} 절대거리,각도: ${da} 스케일: ${offset}`);
     },
   });
 
