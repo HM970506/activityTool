@@ -12,12 +12,6 @@ import canvasSetting from "./canvasSetting";
 import { useGesture, usePinch } from "@use-gesture/react";
 import styled from "styled-components";
 
-const Test = styled.div`
-  position: absolute;
-  width: 25%;
-  height: 25%;
-`;
-
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -74,7 +68,6 @@ export default function Canvas() {
   return (
     <CanvasBackground ref={containerRef} {...bind()}>
       <canvas ref={canvasRef}></canvas>
-      <Test>{zoom}</Test>
     </CanvasBackground>
   );
 }
