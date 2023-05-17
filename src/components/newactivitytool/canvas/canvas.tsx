@@ -30,12 +30,13 @@ export default function Canvas() {
       memo,
     }) => {
       console.log("pinch");
-      if (canceled) return;
-      const nowZoom = memo[0] * ms;
-
       setZoom("pinch");
-      canvas.zoomToPoint({ x: ox, y: oy }, nowZoom);
-      return memo;
+      // if (canceled) return;
+      // const nowZoom = memo[0] * ms;
+
+      //
+      // canvas.zoomToPoint({ x: ox, y: oy }, nowZoom);
+      // return memo;
     },
   });
 
