@@ -34,11 +34,11 @@ export default function Canvas() {
       // [d,a] 두 포인터의 절대 거리 및 각도
       // 두 터치 이벤트 사이의 중심 좌표
       // 스케일, 각도
-      console.log(da, offset, origin);
-
-      canvas.setZoom(
+      console.log(Math.round(offset[0] * 10) / 10, canvas.getZoom());
+      const nowZoom = Math.round(offset[0] * 10) / 10;
+      canvas.zoomToPoint(
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },
-        Math.round(offset[0] * 10) / 10
+        nowZoom != 0 ? nowZoom : 1
       );
       setZoom(
         `줌: ${canvas.getZoom()} 절대거리: ${Math.round(

@@ -15,7 +15,7 @@ export default function TopButtons() {
         <CanvasHistory />
         <div
           onClick={() => {
-            canvas.setZoom({ x: 0, y: 0 }, 1);
+            canvas.zoomToPoint({ x: 0, y: 0 }, 1);
           }}
         >
           zoom
