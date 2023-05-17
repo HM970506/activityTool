@@ -8,7 +8,6 @@ export const unselectable = (canvas: canvasType) => {
     object.prevSelectable = object.selectable;
     object.evented = false;
     object.selectable = false;
-    console.log("언셀렉", object.prevSelectable, object.selectable);
   });
 };
 
@@ -23,6 +22,5 @@ export const selectable = (canvas: canvasType) => {
         : object.selectable;
     object.prevEvented = undefined;
     object.prevSelectable = undefined;
-    console.log("셀렉", object.prevSelectable, object.selectable);
   });
 };

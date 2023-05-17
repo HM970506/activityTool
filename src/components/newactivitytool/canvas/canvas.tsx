@@ -10,7 +10,6 @@ import { DEFAULT_CANVAS, ReducersType } from "../types";
 import functionSetting from "./functionSetting";
 import canvasSetting from "./canvasSetting";
 import { useGesture, usePinch } from "@use-gesture/react";
-import styled from "styled-components";
 import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function Canvas() {
@@ -19,6 +18,8 @@ export default function Canvas() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+
+  //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
     onPinch: ({ da, origin, offset }) => {
       const nowZoom = Math.round(offset[0] * 10) / 10;
