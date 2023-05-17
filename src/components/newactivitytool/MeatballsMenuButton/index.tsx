@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { MeatballsMenuButton, Menu, Menus } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";

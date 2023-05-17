@@ -1,4 +1,3 @@
-import { usePinch } from "@use-gesture/react";
 import CanvasHistory from "./historyButton";
 
 import { TopArea, TopButtonContainer } from "./style";

@@ -85,6 +85,7 @@ export default function PhotoEditor() {
     const objects = photoCanvas.getObjects();
     if (objects.length >= 2) {
       // const editImg = cropper(objects[0], objects[1]);
+      // 크로퍼가 필요할 시 해당 부분에서 자르게 하기..
 
       const group = new fabric.Group(objects, {
         selectable: true,

@@ -7,7 +7,6 @@ import { imageCheck } from "./photoChecker";
 import { Button } from "./style";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
-import { nodeActions } from "../../../../store/common/nodeSlice";
 
 const editIcon = "./diary/editButton.png";
 const renderIcon = (

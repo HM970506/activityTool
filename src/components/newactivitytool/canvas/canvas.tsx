@@ -2,16 +2,11 @@ import { fabric } from "fabric-with-erasing";
 import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { CanvasBackground } from "../styles/commonStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import {
-  DEFAULT_CANVAS,
-  ReducersType,
-  fabricObjectType,
-  stickerOptionType,
-} from "../types";
+import { DEFAULT_CANVAS, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
@@ -25,8 +20,7 @@ export default function Canvas() {
 
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
-    onDrag: (state) => {},
-    onPinch: ({ da, origin, offset }) => {
+    onPinch: ({ origin, offset }) => {
       const nowZoom = Math.round(offset[0] * 10) / 10;
       canvas.zoomToPoint(
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },

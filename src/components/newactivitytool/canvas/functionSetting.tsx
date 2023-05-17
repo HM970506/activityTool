@@ -2,17 +2,7 @@ import { fabric } from "fabric-with-erasing";
 import { canvasType, fabricObjectType, stickerOptionType } from "../types";
 import { IEvent } from "fabric/fabric-impl";
 import { Dispatch } from "react";
-import { nodeActions } from "../../../store/common/nodeSlice";
-
-export default function functionSetting(
-  canvas: canvasType,
-  dispatch:
-    | Dispatch<{
-        payload: boolean;
-        type: "nodeReducer/setPan";
-      }>
-    | undefined
-) {
+export default function functionSetting(canvas: canvasType) {
   const tapeStep_1 = () => {
     const pointer = canvas.getPointer();
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
@@ -106,7 +96,6 @@ export default function functionSetting(
 
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
-      console.log(canvas.isDrawingMode);
       if (canvas.tape.state === 1) {
         //  console.log("tape");
         tapeStep_1();

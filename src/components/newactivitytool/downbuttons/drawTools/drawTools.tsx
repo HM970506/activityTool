@@ -7,7 +7,7 @@ import {
   ReducersType,
   SPRAY,
 } from "../../types";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, useEffect } from "react";
 import DrawOption from "./drawOption";
 import { categoryActions } from "../../../../store/common/categorySlice";
 

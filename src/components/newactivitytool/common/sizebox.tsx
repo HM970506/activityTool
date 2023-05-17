@@ -1,4 +1,3 @@
-import { useState } from "react";
 import style from "styled-components";
 
 const SizeContainer = style.div`  display: flex;

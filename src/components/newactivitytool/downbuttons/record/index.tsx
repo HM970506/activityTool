@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { RECORD, ReducersType } from "../../types";
-import { Button, RecordContatiner, RecordInnerBox } from "./style";
+import { RecordContatiner, RecordInnerBox } from "./style";
 import { useEffect, useState } from "react";
 import Record from "./record";
 

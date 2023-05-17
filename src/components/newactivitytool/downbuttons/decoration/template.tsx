@@ -10,10 +10,6 @@ export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const [templates, setTemplates] = useState<string[]>([]);
   const dispatch = useDispatch();
-  const { template } = useSelector(
-    (state: ReducersType) => state.categoryReducer.subcategory
-  );
-
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData("decoration_template");
 

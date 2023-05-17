@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-import { Button, Recorder, RecorderButton, RecorderTime } from "./style";
+import { Recorder, RecorderButton, RecorderTime } from "./style";
 import { RecordRTCPromisesHandler } from "recordrtc";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../../store/common/nodeSlice";

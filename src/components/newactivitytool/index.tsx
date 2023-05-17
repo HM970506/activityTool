@@ -11,7 +11,7 @@ import {
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { DRAWTOOLS, ReducersType } from "./types";
+import { ReducersType } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
 import BackButton from "./backButton";
 import MeatballsMenu from "./MeatballsMenuButton";
