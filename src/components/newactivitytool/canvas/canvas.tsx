@@ -38,10 +38,12 @@ export default function Canvas() {
 
       canvas.setZoom(
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },
-        Math.round(da[0]) / 100
+        Math.round(offset[0] * 10) / 10
       );
       setZoom(
-        `절대거리: ${Math.round(da[0])} 스케일: ${Math.round(offset[0])}`
+        `줌: ${canvas.getZoom()} 절대거리: ${Math.round(
+          da[0]
+        )} 스케일: ${Math.round(offset[0])}`
       );
     },
   });
