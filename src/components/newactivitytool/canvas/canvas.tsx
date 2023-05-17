@@ -22,6 +22,8 @@ export default function Canvas() {
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
     onPinch: ({ origin, offset }) => {
+      let test = false;
+      if (canvas.isDrawingMode) test = true;
       canvas.isDrawingMode = false;
 
       const nowZoom = Math.round(offset[0] * 10) / 10;
@@ -31,7 +33,7 @@ export default function Canvas() {
       );
       dispatch(zoomActions.setZoom(canvas.getZoom()));
 
-      canvas.isDrawingMode = true;
+      canvas.isDrawingMode = test;
     },
   });
 
