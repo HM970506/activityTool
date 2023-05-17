@@ -11,19 +11,16 @@ import functionSetting from "./functionSetting";
 import canvasSetting from "./canvasSetting";
 import { useGesture, usePinch } from "@use-gesture/react";
 import styled from "styled-components";
+import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [zoom, setZoom] = useState<any>("test");
 
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const bind = useGesture({
-    onDrag: (state) => {
-      console.log("drag");
-      setZoom("drag");
-    },
+    onDrag: (state) => {},
     onPinch: ({ da, origin, offset }) => {
       // [d,a] 두 포인터의 절대 거리 및 각도
       // 두 터치 이벤트 사이의 중심 좌표
@@ -34,11 +31,7 @@ export default function Canvas() {
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },
         nowZoom != 0 ? nowZoom : 1
       );
-      setZoom(
-        `줌: ${canvas.getZoom()} 절대거리: ${Math.round(
-          da[0]
-        )} 스케일: ${Math.round(offset[0])}`
-      );
+      dispatch(zoomActions.setZoom(canvas.getZoom()));
     },
   });
 

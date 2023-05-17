@@ -2,24 +2,14 @@ import { usePinch } from "@use-gesture/react";
 import CanvasHistory from "./historyButton";
 
 import { TopArea, TopButtonContainer } from "./style";
-import { useState } from "react";
-import { ReducersType } from "../types";
-import { useSelector } from "react-redux";
+import ZoomButton from "./zoomButton";
 
 export default function TopButtons() {
-  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-
   return (
     <TopArea>
       <TopButtonContainer>
         <CanvasHistory />
-        <div
-          onClick={() => {
-            canvas.zoomToPoint({ x: 0, y: 0 }, 1);
-          }}
-        >
-          zoom
-        </div>
+        <ZoomButton />
       </TopButtonContainer>
     </TopArea>
   );
