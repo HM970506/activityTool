@@ -59,8 +59,13 @@ export default function DrawToolsButton() {
 
   return (
     <ToolsContatiner onClick={drawToolStart} state={isOpen}>
-      <ToolNowBox onClick={drawToolsEnd} state={isOpen}>
-        <ToolNow state={isOpen}>
+      <ToolNowBox onClick={drawToolsEnd}>
+        <ToolNow
+          state={isOpen}
+          transition={{ type: "spring", delay: 0.5 }}
+          initial={{ width: 32, height: 32, borderRadius: 16 }}
+          variants={{ click: { width: 64, height: 64, borderRadius: 28 } }}
+        >
           <p>{select}</p>
         </ToolNow>
       </ToolNowBox>

@@ -9,11 +9,24 @@ import windowSetting from "./windowSetting";
 import { DEFAULT_CANVAS, ReducersType } from "../types";
 import functionSetting from "./functionSetting";
 import canvasSetting from "./canvasSetting";
+import { usePinch } from "@use-gesture/react";
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const bind = usePinch(
+    ({ canceled, origin: [ox, oy], first, movement: [ms, m2], memo }) => {
+      if (canceled) return;
+      const nowZoom = memo[0] * ms;
+
+      //setZoom(nowZoom);
+      canvas.zoomToPoint({ x: ox, y: oy }, nowZoom);
+      return memo;
+    }
+  );
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -38,7 +51,7 @@ export default function Canvas() {
 
   return (
     <CanvasBackground ref={containerRef}>
-      <canvas ref={canvasRef}></canvas>
+      <canvas ref={canvasRef} {...bind()}></canvas>
     </CanvasBackground>
   );
 }
