@@ -106,10 +106,17 @@ export default function functionSetting(
 
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
-      if (canvas.tape.state === 1) tapeStep_1();
-      else if (canvas.stamp.state === 1) stampStep_1();
-      else if (!canvas.isDrawingMode && canvas.getActiveObject() === null)
+      console.log(canvas.isDrawingMode, canvas.getActiveObject());
+      if (canvas.tape.state === 1) {
+        //  console.log("tape");
+        tapeStep_1();
+      } else if (canvas.stamp.state === 1) {
+        // console.log("stamp");
+        stampStep_1();
+      } else if (!canvas.isDrawingMode && !canvas.getActiveObject()) {
+        // console.log("pan");
         panStep_1(e);
+      }
     },
     "mouse:move": (e: IEvent | any) => {
       if (canvas.tape.state === 2) tapeStep_2();
@@ -118,7 +125,6 @@ export default function functionSetting(
     "mouse:up": (e: any) => {
       if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
-      else if (canvas.eraserTest) canvas.fire("object:modified");
     },
   });
 }
