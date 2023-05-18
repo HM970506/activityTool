@@ -2,7 +2,7 @@ import { fabric } from "fabric-with-erasing";
 import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CanvasBackground } from "../styles/commonStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
@@ -11,6 +11,7 @@ import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
+import { debounce } from "lodash";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -19,9 +20,16 @@ export default function Canvas() {
 
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
 
+  let flag: null | boolean = null;
+
+  const debounceOnChange = debounce(() => {
+    canvas.isDrawingMode = flag;
+  }, 500);
+
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
     onPinch: ({ origin, offset }) => {
+      if (flag == null) flag = canvas.isDrawingMode;
       canvas.isDrawingMode = false;
 
       const nowZoom = Math.round(offset[0] * 10) / 10;
@@ -30,8 +38,12 @@ export default function Canvas() {
         nowZoom != 0 ? nowZoom : 1
       );
       dispatch(zoomActions.setZoom(canvas.getZoom()));
+
+      debounceOnChange();
     },
   });
+
+  //핀치줌이 on 되면 0.5초정도를 세어서 그 직후에 드로우모드를 원래 상태로 돌려놓기..? 는 어떨까나. 디바운싱으로..
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
