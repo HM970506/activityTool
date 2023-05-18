@@ -50,17 +50,27 @@ export default function PhotoMenu() {
             img.erasable = false;
             img.selectable = true;
             img.crossOrigin = "Anonymous";
+
+            img.objectType = "photo";
             if (img.controls) {
               //프로토타입에 넣은것도 아닌데 왜 전부 생기냐고요
+              //프로토타입에 추가하는 것 외에는 방법이 없다면...
+              //visible에 custom control도 추가할 수 있는지를 알아보자.
+              //뭘 엄청 많이 건드려야 되네..
+              //클릭시마다 타입을 확인해서 컨트롤을 줬다뺐다 할까?
+              //setControlVisible, setControlsVisibility은 undifined에러..
+              //  img.setControlVisible("mtr", false);
+              //  img.setControlsVisibility({"mtr": false});
               img.controls.editControl = new fabric.Control({
-                x: -0.45,
-                y: -0.45,
+                x: 0.4,
+                y: -0.4,
                 cursorStyle: "pointer",
                 mouseUpHandler: editObject,
                 render: renderIcon,
                 cornerSize: 30,
               });
             }
+
             if (img.width !== undefined) {
               const scale = DEFAULT_X / img.width;
               img.scaleX = scale;

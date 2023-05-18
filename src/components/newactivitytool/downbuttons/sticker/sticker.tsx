@@ -43,6 +43,7 @@ export default function StickerMenu() {
       img.erasable = false;
       img.hoverCursor = "auto";
       img.crossOrigin = "Anonymous";
+      if (img.controls) img.controls.editControl.visible = false;
 
       canvas.add(img);
       canvas.setActiveObject(img);

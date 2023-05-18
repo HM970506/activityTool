@@ -94,6 +94,13 @@ export default function functionSetting(canvas: canvasType) {
     canvas.panning = 1;
   };
 
+  const editControlHandler = () => {
+    const now = canvas.getActiveObject();
+    if (now.objectType == "photo") {
+      now.controls.editControl.visible = true;
+    } else now.controls.editControl.visible = false;
+  };
+
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
       if (canvas.tape.state === 1) {
@@ -114,6 +121,12 @@ export default function functionSetting(canvas: canvasType) {
     "mouse:up": (e: any) => {
       if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
+    },
+    "selection:updated": () => {
+      editControlHandler();
+    },
+    "selection:created": () => {
+      editControlHandler();
     },
   });
 }
