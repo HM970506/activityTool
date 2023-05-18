@@ -96,12 +96,14 @@ export default function PhotoEditor() {
       canvas.renderAll();
     } else {
       const objects = photoCanvas.getObjects();
-      photo.selectable = true;
 
       photoCanvas.remove(objects);
       photoCanvas.renderAll();
 
-      canvas.add(photo);
+      if (photo) {
+        photo.selectable = true;
+        canvas.add(photo);
+      }
       canvas.renderAll();
     }
 

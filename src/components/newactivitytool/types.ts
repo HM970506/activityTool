@@ -90,7 +90,7 @@ export interface zoomReducerType {
 
 export interface photoEditorReducerType {
   isEditing: boolean;
-  photo: any;
+  photo: null | ImageType;
 }
 
 export interface ReducersType {

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ImageType } from "../../components/newactivitytool/types";
 
 const photoEditorSlice = createSlice({
   name: "photoEditorReducer",
