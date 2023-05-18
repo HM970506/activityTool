@@ -21,3 +21,8 @@ export const TopArea = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const ReturnButton = styled.button`
+  background-color: inherit;
+  border: none;
+`;
