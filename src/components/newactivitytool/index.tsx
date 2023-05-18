@@ -7,7 +7,7 @@ import {
   SubButtonContainer,
   SubButton,
   ModalOverlay,
-} from "./styles/commonStyle";
+} from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";

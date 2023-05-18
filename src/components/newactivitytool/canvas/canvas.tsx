@@ -3,7 +3,7 @@ import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef, useState } from "react";
-import { CanvasBackground } from "../styles/commonStyle";
+import { CanvasBackground } from "../style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
 import { DEFAULT_CANVAS, DRAWTOOLS, ReducersType } from "../types";

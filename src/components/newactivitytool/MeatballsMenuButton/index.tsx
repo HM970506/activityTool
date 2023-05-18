@@ -6,7 +6,7 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { photoEditorActions } from "../../../store/common/photoEditorSlice";
-import { TempLink } from "../styles/historyButtonstyle";
+import { TempLink } from "../style";
 
 export default function MeatballsMenu() {
   const [view, setView] = useState<boolean>(false);

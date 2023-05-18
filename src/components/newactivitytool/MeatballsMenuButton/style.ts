@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../styles/commonStyle";
+import { Button } from "../style";
 
 export const MeatballsMenuButton = styled(Button)`
   position: absolute;

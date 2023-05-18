@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { PHOTO, ReducersType } from "../../types";
-import { Button } from "../../styles/commonStyle";
+import { Button } from "../../style";
 import { useEffect, useState } from "react";
 import PhotoMenu from "./photo";
 import { PhotoContatiner, PhotoInnerBox } from "./style";

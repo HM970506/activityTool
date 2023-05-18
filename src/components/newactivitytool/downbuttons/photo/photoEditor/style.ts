@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Button, DownButtonsContainer } from "../../../styles/commonStyle";
-import { ButtonsContainer, OptionContainer } from "../../style";
+import { Button } from "../../../style";
+import { OptionContainer } from "../../style";
 
 export const PhotoEditorContainer = styled.div<{ view: number }>`
   width: 100%;

@@ -25,3 +25,7 @@ export const Button = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Uploader = styled.input`
+  display: none;
+`;

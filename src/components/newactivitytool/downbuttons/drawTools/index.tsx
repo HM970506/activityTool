@@ -12,6 +12,7 @@ import {
 import { ToolNow, ToolNowBox, ToolsContatiner } from "./style";
 import { fabric } from "fabric-with-erasing";
 import DrawToolsMenu from "./drawTools";
+import { useSpring } from "react-spring";
 
 export default function DrawToolsButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -58,15 +59,21 @@ export default function DrawToolsButton() {
     if (category === DRAWTOOLS) dispatch(categoryActions.categoryChange(""));
   };
 
+  const ToolNow_ = useSpring({
+    from: isOpen
+      ? { width: 32, height: 32, borderRadius: 16 }
+      : { width: 64, height: 64, borderRadius: 28 },
+    to: isOpen
+      ? { width: 64, height: 64, borderRadius: 28 }
+      : { width: 32, height: 32, borderRadius: 16 },
+  });
+
+  const ToolsContatiner_ = useSpring({});
+
   return (
     <ToolsContatiner onClick={drawToolStart} state={isOpen}>
       <ToolNowBox onClick={drawToolsEnd}>
-        <ToolNow
-          state={isOpen}
-          transition={{ type: "spring", delay: 0.5 }}
-          initial={{ width: 32, height: 32, borderRadius: 16 }}
-          variants={{ click: { width: 64, height: 64, borderRadius: 28 } }}
-        >
+        <ToolNow style={ToolNow_}>
           <p>{select}</p>
         </ToolNow>
       </ToolNowBox>

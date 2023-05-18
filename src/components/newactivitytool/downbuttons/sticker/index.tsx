@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { ReducersType, STICKER } from "../../types";
-import { Button } from "../../styles/commonStyle";
+import { Button } from "../../style";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../api/firestore/getData";
 import StickerMenu from "./sticker";

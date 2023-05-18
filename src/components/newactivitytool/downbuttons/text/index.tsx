@@ -1,4 +1,4 @@
-import { Button } from "../../styles/commonStyle";
+import { Button } from "../../style";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { ReducersType, TEXT } from "../../types";

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonInnerBox, ButtonsContainer, OptionContainer } from "../style";
-import { SelectButton } from "../../styles/commonStyle";
+import { SelectButton } from "../../style";
 
 export const DecoContatiner = styled(ButtonsContainer)<{ state: number }>`
   width: ${(props) => (props.state == 1 ? "348px" : "72px")};

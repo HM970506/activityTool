@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { animated } from "react-spring";
 
-export const DefaultButton = styled.div`
+export const DefaultButton = styled(animated.div)`
   -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -20,15 +21,6 @@ export const Button = styled(DefaultButton)`
   align-items: center;
 `;
 
-export const BackButton = styled(Button)`
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: #292825;
-  fill: white;
-  color: white;
-`;
-
 export const DownButtonsContainer = styled.div`
   position: absolute;
   left: 50%;
@@ -40,19 +32,7 @@ export const DownButtonsContainer = styled.div`
   align-items: center;
 `;
 
-export const BottomButton = styled.button<{ select: number; color: string }>`
-  width: 70px;
-  height: 50px;
-  background-color: ${(props) => {
-    return props.select === 1 ? props.color : "white";
-  }};
-  color: ${(props) => {
-    return props.select === 1 ? "white" : "black";
-  }};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+//인덱스에서 쓰이는 css
 
 export const MainButton = styled(Button)`
   position: absolute;
@@ -100,42 +80,6 @@ export const Background = styled.dialog`
   background-color: rgba(0, 0, 0, 0);
 `;
 
-export const Box = styled.div`
-  position: absolute;
-  margin: 20px;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-`;
-
-export const ButtonBox = styled(Box)<{ view: number }>`
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 10%;
-  height: 60%;
-
-  right: ${(props) => `${props.view === 1 ? 0 : -200}px`};
-`;
-
-export const BottomContainer = styled(Box)<{ view: number }>`
-  width: 90%;
-  bottom: ${(props) => `${props.view === 1 ? 0 : -200}px`};
-`;
-
-export const ToolBox = styled.div`
-  height: 100px;
-  background-color: white;
-  overflow: auto;
-  padding-right: 100px;
-  padding-left: 12px;
-  gap: 10px;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-`;
-
 export const Overlay = styled.div`
   width: 100%;
   height: 100%;
@@ -160,43 +104,8 @@ export const Canvas = styled.canvas`
   background-color: rgba(0, 0, 0, 0);
 `;
 
-export const SideButtonBox = styled.div`
-  position: absolute;
-  top: 0;
-  right: 100px;
-`;
-
-export const SideButton = styled.button<{ font: string }>`
-  width: 120px;
-  font-family: ${(props) => props.font};
-  font-size: 30px;
-  border: none;
-  background-color: inherit;
-`;
-
-export const TextEditor = styled.textarea<{ size: number; line: number }>`
-  border: 0;
-  background-color: white;
-  font-size: ${(props) => props.size + "px"};
-  height: ${(props) => props.line * 1.2 + "em"};
-  padding: 5px;
-  margin: 0;
-  resize: none;
-  overflow: hidden;
-  outline: none;
-`;
-
 export const Uploader = styled.input`
   display: none;
-`;
-
-export const OffsetBarX = styled.input<{ length: number }>`
-  width: ${(props) => props.length};
-`;
-
-export const OffsetBarY = styled.input<{ length: number }>`
-  width: ${(props) => props.length};
-  transform: rotate(270deg);
 `;
 
 export const CanvasBackground = styled.div`
@@ -220,4 +129,8 @@ export const SelectButton = styled.button<{ color: string; select: number }>`
   align-items: center;
   width: 40px;
   height: 40px;
+`;
+
+export const TempLink = styled.a`
+  display: none;
 `;

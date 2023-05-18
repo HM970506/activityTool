@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import "fabric-history";
-import { DefaultButton } from "../styles/commonStyle";
+import { DefaultButton } from "../style";
 import { ReducersType } from "../types";
 
 export default function CanvasHistory() {

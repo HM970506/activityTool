@@ -4,7 +4,7 @@ import PhotoButton from "./photo";
 import RecordButton from "./record";
 import StickerButton from "./sticker";
 import TextButton from "./text";
-import { DownButtonsContainer } from "../styles/commonStyle";
+import { DownButtonsContainer } from "../style";
 
 export default function DownButtons() {
   return (

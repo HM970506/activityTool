@@ -19,7 +19,7 @@ import {
   OptionComponent,
 } from "./style";
 
-import { DownButtonsContainer } from "../../../styles/commonStyle";
+import { DownButtonsContainer } from "../../../style";
 
 const test = ["heart", "star", "lightning", "bubble"];
 

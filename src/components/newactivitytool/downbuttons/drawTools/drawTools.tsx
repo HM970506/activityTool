@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { BottomButton } from "../../styles/commonStyle";
 import {
   BACKGROUND_BRUSH,
   ERASER,
@@ -10,6 +9,7 @@ import {
 import { Dispatch, useEffect } from "react";
 import DrawOption from "./drawOption";
 import { categoryActions } from "../../../../store/common/categorySlice";
+import { BottomButton } from "./style";
 
 export default function DrawToolsMenu({
   select,
