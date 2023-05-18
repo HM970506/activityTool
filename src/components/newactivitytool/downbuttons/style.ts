@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../style";
+import { animated } from "react-spring";
 
 export const ButtonsContainer = styled(Button)`
   background-color: white;
@@ -10,7 +11,7 @@ export const ButtonsContainer = styled(Button)`
   height: 72px;
 `;
 
-export const ButtonInnerBox = styled.div`
+export const ButtonInnerBox = styled(animated.div)`
   margin: 4px;
   width: 64px;
   height: 64px;

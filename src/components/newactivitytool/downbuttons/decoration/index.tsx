@@ -9,9 +9,13 @@ import {
 import { useEffect, useState } from "react";
 import { DecoContatiner, DecoInnerBox } from "./style";
 import DecorationMenu from "./decorations";
+import { useSpring } from "react-spring";
 
 export default function DecorationButton() {
   const dispatch = useDispatch();
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   useQuery(
     `decoration_stamp`,
@@ -41,17 +45,6 @@ export default function DecorationButton() {
 
   const [isOpen, setIsOpen] = useState<number>(0);
 
-  const category = useSelector(
-    (state: ReducersType) => state.categoryReducer.category
-  );
-  const decorationStart = () => {
-    dispatch(categoryActions.categoryChange(DECORATION));
-  };
-
-  const decorationEnd = () => {
-    dispatch(categoryActions.categoryChange(""));
-  };
-
   useEffect(() => {
     if (canvas) {
       if (category === DECORATION) setIsOpen(1);
@@ -63,18 +56,30 @@ export default function DecorationButton() {
     }
   }, [category]);
 
+  const openHandler = () => {
+    if (category !== DECORATION)
+      dispatch(categoryActions.categoryChange(DECORATION));
+    else dispatch(categoryActions.categoryChange(""));
+  };
+
+  const innerBox = useSpring({
+    from: isOpen
+      ? { backgroundColor: "white" }
+      : { backgroundColor: "#EE5859" },
+    to: isOpen ? { backgroundColor: "#EE5859" } : { backgroundColor: "white" },
+  });
+
+  const outterBox = useSpring({
+    from: isOpen ? { width: 72 } : { width: 348 },
+    to: isOpen ? { width: 348 } : { width: 72 },
+  });
+
   return (
-    <DecoContatiner state={isOpen}>
-      <DecoInnerBox
-        onClick={(e) => {
-          if (category !== DECORATION) decorationStart();
-          else decorationEnd();
-        }}
-        state={isOpen}
-      >
+    <DecoContatiner style={outterBox}>
+      <DecoInnerBox onClick={openHandler} style={innerBox}>
         <p>아이콘</p>
       </DecoInnerBox>
-      {isOpen ? <DecorationMenu /> : null}
+      {canvas && <DecorationMenu />}
     </DecoContatiner>
   );
 }

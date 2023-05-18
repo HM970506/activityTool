@@ -21,7 +21,7 @@ export const Button = styled(DefaultButton)`
   align-items: center;
 `;
 
-export const DownButtonsContainer = styled.div`
+export const DownButtonsContainer = styled(animated.div)`
   position: absolute;
   left: 50%;
   transform: translate(-50%);

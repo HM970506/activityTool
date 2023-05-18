@@ -2,13 +2,9 @@ import styled from "styled-components";
 import { ButtonInnerBox, ButtonsContainer, OptionContainer } from "../style";
 import { SelectButton } from "../../style";
 
-export const DecoContatiner = styled(ButtonsContainer)<{ state: number }>`
-  width: ${(props) => (props.state == 1 ? "348px" : "72px")};
-`;
+export const DecoContatiner = styled(ButtonsContainer)``;
 
-export const DecoInnerBox = styled(ButtonInnerBox)<{ state: number }>`
-  background-color: ${(props) => (props.state == 1 ? "#EE5859" : "white")};
-`;
+export const DecoInnerBox = styled(ButtonInnerBox)``;
 export const Thumbnail = styled.img`
   width: 132px;
   height: 96px;

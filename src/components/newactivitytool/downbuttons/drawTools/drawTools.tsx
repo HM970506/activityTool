@@ -32,7 +32,7 @@ export default function DrawToolsMenu({
     const brush = brushes.get(name);
     brush.color = option.color;
     brush.width = option.size;
-    canvas.freeDrawingBrush = brush;
+    if (canvas) canvas.freeDrawingBrush = brush;
     brushes.set(name, brush);
   };
 

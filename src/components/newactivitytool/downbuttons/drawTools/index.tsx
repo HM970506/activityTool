@@ -15,6 +15,7 @@ import DrawToolsMenu from "./drawTools";
 import { useSpring } from "react-spring";
 
 export default function DrawToolsButton() {
+  const dispatch = useDispatch();
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
@@ -30,7 +31,6 @@ export default function DrawToolsButton() {
   img.crossOrigin = "Anonymous";
   BRUSHES.get(BACKGROUND_BRUSH).source = img;
 
-  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<number>(0);
   const [select, setSelect] = useState<string>("");
 
@@ -50,40 +50,52 @@ export default function DrawToolsButton() {
     if (select !== "") canvas.isDrawingMode = true;
   }, [select]);
 
-  const drawToolStart = () => {
+  const openHandler = () => {
     if (category !== DRAWTOOLS)
       dispatch(categoryActions.categoryChange(DRAWTOOLS));
+    else dispatch(categoryActions.categoryChange(""));
   };
 
-  const drawToolsEnd = () => {
-    if (category === DRAWTOOLS) dispatch(categoryActions.categoryChange(""));
-  };
-
-  const ToolNow_ = useSpring({
+  const innerBox = useSpring({
     from: isOpen
-      ? { width: 32, height: 32, borderRadius: 16 }
-      : { width: 64, height: 64, borderRadius: 28 },
+      ? {
+          width: 32,
+          height: 32,
+          borderRadius: 16,
+          marginLeft: 20,
+          marginRight: 20,
+        }
+      : { width: 64, height: 64, borderRadius: 28, margin: 0 },
     to: isOpen
-      ? { width: 64, height: 64, borderRadius: 28 }
-      : { width: 32, height: 32, borderRadius: 16 },
+      ? { width: 64, height: 64, borderRadius: 28, margin: 0 }
+      : {
+          width: 32,
+          height: 32,
+          borderRadius: 16,
+          marginLeft: 20,
+          marginRight: 20,
+        },
   });
 
-  const ToolsContatiner_ = useSpring({});
+  const outterBox = useSpring({
+    from: isOpen ? { width: 72 } : { width: 420 },
+    to: isOpen ? { width: 420 } : { width: 72 },
+  });
 
   return (
-    <ToolsContatiner onClick={drawToolStart} state={isOpen}>
-      <ToolNowBox onClick={drawToolsEnd}>
-        <ToolNow style={ToolNow_}>
+    <ToolsContatiner style={outterBox}>
+      <ToolNowBox onClick={openHandler}>
+        <ToolNow style={innerBox}>
           <p>{select}</p>
         </ToolNow>
       </ToolNowBox>
-      {isOpen ? (
+      {canvas && (
         <DrawToolsMenu
           setSelect={setSelect}
           select={select}
           brushes={BRUSHES}
         />
-      ) : null}
+      )}
     </ToolsContatiner>
   );
 }

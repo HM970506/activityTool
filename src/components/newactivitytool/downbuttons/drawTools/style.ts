@@ -2,14 +2,10 @@ import styled from "styled-components";
 import { ButtonsContainer, OptionContainer } from "../style";
 import { animated } from "react-spring";
 
-export const ToolsContatiner = styled(ButtonsContainer)<{ state: number }>`
-  width: ${(props) => (props.state == 1 ? "420px" : "72px")};
-`;
+export const ToolsContatiner = styled(ButtonsContainer)``;
 
 export const ToolNowBox = styled.div`
   margin: 4px;
-  width: 64px;
-  height: 64px;
   display: flex;
   justify-content: center;
 
