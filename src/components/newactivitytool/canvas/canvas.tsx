@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { CanvasBackground } from "../styles/commonStyle";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import { DEFAULT_CANVAS, ReducersType } from "../types";
+import { DEFAULT_CANVAS, DRAWTOOLS, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
@@ -17,19 +17,18 @@ export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
 
-  let flag: null | boolean = null;
-
   const debounceOnChange = debounce(() => {
-    canvas.isDrawingMode = flag;
+    if (category == DRAWTOOLS) canvas.isDrawingMode = true;
   }, 500);
 
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
     onPinch: ({ origin, offset }) => {
-      if (flag == null) flag = canvas.isDrawingMode;
       canvas.isDrawingMode = false;
 
       const nowZoom = Math.round(offset[0] * 10) / 10;
