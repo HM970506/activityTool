@@ -9,10 +9,13 @@ import { StickerInnerBox } from "./style";
 import { useEffect, useState } from "react";
 
 export default function StickerButton() {
-  const [isOpen, setIsOpen] = useState<number>(0);
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
+  );
+
   const dispatch = useDispatch();
   useQuery(
     `sticker_fluffy`,
@@ -36,20 +39,20 @@ export default function StickerButton() {
   );
 
   const stickerButtonClick = () => {
-    if (category !== STICKER) dispatch(categoryActions.categoryChange(STICKER));
-    else dispatch(categoryActions.categoryChange(""));
+    if (category !== STICKER) {
+      dispatch(categoryActions.categoryChange(STICKER));
+      dispatch(categoryActions.optionChange(true));
+    } else {
+      dispatch(categoryActions.categoryChange(""));
+      dispatch(categoryActions.optionChange(false));
+    }
   };
-
-  useEffect(() => {
-    if (category !== STICKER) setIsOpen(0);
-    else setIsOpen(1);
-  }, [category]);
 
   return (
     <>
       <Button onClick={stickerButtonClick}>
-        {category === STICKER && <StickerMenu />}
-        <StickerInnerBox state={isOpen}>스티커</StickerInnerBox>
+        {category === STICKER && option && <StickerMenu />}
+        <StickerInnerBox state={option ? 1 : 0}>스티커</StickerInnerBox>
       </Button>
     </>
   );

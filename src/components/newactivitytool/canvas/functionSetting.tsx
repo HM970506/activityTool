@@ -96,9 +96,11 @@ export default function functionSetting(canvas: canvasType) {
 
   const editControlHandler = () => {
     const now = canvas.getActiveObject();
-    if (now.objectType == "photo") {
-      now.controls.editControl.visible = true;
-    } else now.controls.editControl.visible = false;
+    if (now.controls.editControl) {
+      if (now.objectType == "photo") {
+        now.controls.editControl.visible = true;
+      } else now.controls.editControl.visible = false;
+    }
   };
 
   canvas.on({

@@ -15,12 +15,10 @@ import otherClick from "../../common/otherClick";
 export default function TextButton() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [isOpen, setIsOpen] = useState<number>(0);
-  const category = useSelector(
-    (state: ReducersType) => state.categoryReducer.category
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
   );
-
-  const nowCategory = useSelector(
+  const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
 
@@ -57,21 +55,20 @@ export default function TextButton() {
   }, [fontLoading, fontNameLoading]);
 
   const textButtonClick = () => {
-    console.log("클릭");
     if (category !== TEXT) {
       dispatch(categoryActions.categoryChange(TEXT));
-      setIsOpen(1);
+      dispatch(categoryActions.optionChange(true));
     } else {
       dispatch(categoryActions.categoryChange(""));
-      setIsOpen(0);
+      dispatch(categoryActions.optionChange(false));
     }
   };
 
   return (
     <>
       <Button onClick={textButtonClick}>
-        {category === TEXT && <TextMenu />}
-        <TextInnerBox state={isOpen}>글상자</TextInnerBox>
+        {category === TEXT && option && <TextMenu />}
+        <TextInnerBox state={option ? 1 : 0}>글상자</TextInnerBox>
       </Button>
     </>
   );

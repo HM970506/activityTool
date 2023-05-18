@@ -61,6 +61,7 @@ export default function PhotoMenu() {
               //setControlVisible, setControlsVisibility은 undifined에러..
               //  img.setControlVisible("mtr", false);
               //  img.setControlsVisibility({"mtr": false});
+              // useDispatch를 써야 하니까 에딧컨트롤은 계속 여기서 생성하는 게 좋을듯.
               img.controls.editControl = new fabric.Control({
                 x: 0.4,
                 y: -0.4,
