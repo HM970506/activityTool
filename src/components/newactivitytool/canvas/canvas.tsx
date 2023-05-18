@@ -24,7 +24,7 @@ export default function Canvas() {
 
   const debounceOnChange = debounce(() => {
     if (category == DRAWTOOLS) canvas.isDrawingMode = true;
-  }, 500);
+  }, 100);
 
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
