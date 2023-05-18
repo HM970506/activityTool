@@ -4,6 +4,7 @@ import { RecordRTCPromisesHandler } from "recordrtc";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
+import { useStopwatch } from "react-timer-hook";
 
 export default function Record() {
   const dispatch = useDispatch();
@@ -14,6 +15,10 @@ export default function Record() {
   const oldRecorder = useSelector(
     (state: ReducersType) => state.nodeReducer.record
   );
+
+  const { seconds, minutes, start, pause, reset } = useStopwatch({
+    autoStart: true,
+  });
 
   const setting = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -33,6 +38,7 @@ export default function Record() {
     if (recorder) {
       await recorder.pauseRecording();
       setState("pause");
+      pause();
     }
   };
 
@@ -41,6 +47,8 @@ export default function Record() {
       await recorder.startRecording();
       if (state == "") setState("start");
       else setState("goon");
+
+      start();
     }
   };
 
@@ -52,6 +60,8 @@ export default function Record() {
       const url = URL.createObjectURL(blob);
       setOldRecord(url);
       dispatch(nodeActions.setRecord(blob));
+
+      reset();
     }
   };
 
@@ -64,6 +74,11 @@ export default function Record() {
     setState("");
   };
 
+  useEffect(() => {
+    console.log(oldRecord);
+    pause();
+  }, [oldRecord]);
+
   return (
     <>
       <Recorder src={oldRecord} ref={recorderRef} />
@@ -75,12 +90,17 @@ export default function Record() {
       ) : (
         state !== "end" && (
           <>
-            <RecorderTime>{"0:00"}</RecorderTime>
-            {state === "start" ? (
+            <RecorderTime>
+              <span>{minutes}</span>:
+              <span>{seconds < 10 ? "0" + seconds : seconds}</span>
+            </RecorderTime>
+
+            {state === "start" || state == "goon" ? (
               <RecorderButton onClick={pauseHandler}>⏸</RecorderButton>
             ) : (
               <RecorderButton onClick={startHandler}>▶</RecorderButton>
             )}
+
             <RecorderButton onClick={endHandler}>⏹</RecorderButton>
           </>
         )

@@ -7,7 +7,7 @@ const nodeSlice = createSlice({
     canvas: null,
     isPanning: false,
     textareaContainer: null,
-    record: undefined,
+    record: "",
     opacity: 0,
   },
 
@@ -17,7 +17,7 @@ const nodeSlice = createSlice({
         canvas: null,
         isPanning: false,
         textareaContainer: null,
-        record: undefined,
+        record: "",
         opacity: 0,
       };
     },
