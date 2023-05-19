@@ -27,7 +27,7 @@ export default function Canvas() {
   }, 100);
 
   const zoomSetting = (zoom: number) => {
-    const nowZoom = parseInt(zoom.toFixed(2));
+    const nowZoom = Math.round(zoom * 10) / 10;
 
     if (nowZoom > 10) return 10;
     else if (nowZoom < 0.1) return 0.1;
