@@ -9,4 +9,9 @@ export const BackButton = styled(Button)`
   fill: white;
   stroke: white;
   color: white;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;

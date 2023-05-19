@@ -21,6 +21,16 @@ export const Button = styled(DefaultButton)`
   align-items: center;
 `;
 
+export const ButtonInner = styled(animated.div)`
+  margin: 4px;
+  width: 64px;
+  height: 64px;
+  border-radius: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const DownButtonsContainer = styled(animated.div)`
   position: absolute;
   left: 50%;
@@ -30,6 +40,11 @@ export const DownButtonsContainer = styled(animated.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Icon = styled.img`
+  width: 32px;
+  height: 32px;
 `;
 
 //인덱스에서 쓰이는 css
@@ -133,9 +148,4 @@ export const SelectButton = styled.button<{ color: string; select: number }>`
 
 export const TempLink = styled.a`
   display: none;
-`;
-
-export const MainButtonImg = styled.img`
-  width: 30px;
-  height: 30px;
 `;

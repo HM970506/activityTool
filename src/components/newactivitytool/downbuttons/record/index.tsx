@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { RECORD, ReducersType } from "../../types";
-import { RecordContatiner, RecordInnerBox } from "./style";
+import { RecordContatiner } from "./style";
 import { useEffect, useState } from "react";
 import Record from "./record";
 import { useSpring } from "react-spring";
+import { ButtonInner, Icon } from "../../style";
 
 export default function RecordButton() {
   const dispatch = useDispatch();
@@ -42,13 +43,13 @@ export default function RecordButton() {
 
   return (
     <RecordContatiner style={outterBox}>
-      <RecordInnerBox style={props} onClick={recordButtonClick}>
+      <ButtonInner style={props} onClick={recordButtonClick}>
         {state === "start" || state == "goon" ? (
-          <img src={"/diary/recorder/voiceon.png"} />
+          <Icon src={"/diary/recorder/voiceon.png"} />
         ) : (
-          <img src={"/diary/recorder/voiceoff.png"} />
+          <Icon src={"/diary/recorder/voiceoff.png"} />
         )}
-      </RecordInnerBox>
+      </ButtonInner>
       {isOpen == 1 ? <Record state={state} setState={setState} /> : null}
     </RecordContatiner>
   );

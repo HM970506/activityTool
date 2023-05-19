@@ -1,17 +1,7 @@
 import styled from "styled-components";
-import { ButtonInnerBox, ButtonsContainer } from "../style";
+import { ButtonsContainer } from "../style";
 
 export const RecordContatiner = styled(ButtonsContainer)``;
-
-export const RecordInnerBox = styled(ButtonInnerBox)`
-  margin: 4px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 64px;
-  height: 64px;
-`;
 
 export const Button = styled.div`
   width: 80px;

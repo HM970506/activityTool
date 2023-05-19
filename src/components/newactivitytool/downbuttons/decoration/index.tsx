@@ -7,9 +7,10 @@ import {
   getStorageDataAll,
 } from "../../../api/firestore/getData";
 import { useEffect, useState } from "react";
-import { DecoContatiner, DecoInnerBox, Icon } from "./style";
+import { DecoContatiner } from "./style";
 import DecorationMenu from "./decorations";
 import { useSpring } from "react-spring";
+import { ButtonInner, Icon } from "../../style";
 
 export default function DecorationButton() {
   const dispatch = useDispatch();
@@ -64,9 +65,11 @@ export default function DecorationButton() {
 
   const innerBox = useSpring({
     from: isOpen
-      ? { backgroundColor: "white" }
-      : { backgroundColor: "#EE5859" },
-    to: isOpen ? { backgroundColor: "#EE5859" } : { backgroundColor: "white" },
+      ? { backgroundColor: "white", margin: 20 }
+      : { backgroundColor: "#EE5859", margin: 4 },
+    to: isOpen
+      ? { backgroundColor: "#EE5859", margin: 4 }
+      : { backgroundColor: "white", margin: 20 },
   });
 
   const outterBox = useSpring({
@@ -76,9 +79,9 @@ export default function DecorationButton() {
 
   return (
     <DecoContatiner style={outterBox}>
-      <DecoInnerBox onClick={openHandler} style={innerBox}>
+      <ButtonInner onClick={openHandler} style={innerBox}>
         <Icon src={"/diary/decoration/decorate.png"} />
-      </DecoInnerBox>
+      </ButtonInner>
       {canvas && <DecorationMenu />}
     </DecoContatiner>
   );

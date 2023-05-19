@@ -1,16 +1,5 @@
 import styled from "styled-components";
-import { ButtonInnerBox, ButtonsContainer, OptionContainer } from "../style";
-
-export const StickerInnerBox = styled(ButtonInnerBox)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Icon = styled.img`
-  width: 50px;
-  height: 50px;
-`;
+import { OptionContainer } from "../style";
 
 export const StickerOptionContainer = styled(OptionContainer)`
   width: 332px;

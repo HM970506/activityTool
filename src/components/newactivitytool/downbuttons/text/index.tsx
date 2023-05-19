@@ -1,4 +1,4 @@
-import { Button } from "../../style";
+import { Button, ButtonInner, Icon } from "../../style";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { ReducersType, TEXT } from "../../types";
@@ -7,10 +7,8 @@ import {
   getFirestoreData,
   getStorageDataAll,
 } from "../../../api/firestore/getData";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TextMenu from "./text";
-import { Icon, TextInnerBox } from "./style";
-import otherClick from "../../common/otherClick";
 import { useSpring } from "react-spring";
 
 export default function TextButton() {
@@ -80,9 +78,9 @@ export default function TextButton() {
     <>
       <Button onClick={textButtonClick}>
         {category === TEXT && option && <TextMenu />}
-        <TextInnerBox style={props}>
+        <ButtonInner style={props}>
           <Icon src="/diary/text/bubble.png" />
-        </TextInnerBox>
+        </ButtonInner>
       </Button>
     </>
   );

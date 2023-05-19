@@ -62,18 +62,16 @@ export default function DrawToolsButton() {
           width: 32,
           height: 32,
           borderRadius: 16,
-          marginLeft: 20,
-          marginRight: 20,
+          margin: 17,
         }
-      : { width: 64, height: 64, borderRadius: 28, margin: 0 },
+      : { width: 64, height: 64, borderRadius: 28, margin: 4 },
     to: isOpen
-      ? { width: 64, height: 64, borderRadius: 28, margin: 0 }
+      ? { width: 64, height: 64, borderRadius: 28, margin: 4 }
       : {
           width: 32,
           height: 32,
           borderRadius: 16,
-          marginLeft: 20,
-          marginRight: 20,
+          margin: 17,
         },
   });
 

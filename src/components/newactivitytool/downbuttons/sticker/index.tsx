@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { ReducersType, STICKER } from "../../types";
-import { Button } from "../../style";
+import { Button, ButtonInner, Icon } from "../../style";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../api/firestore/getData";
 import StickerMenu from "./sticker";
-import { Icon, StickerInnerBox } from "./style";
 import { useSpring } from "react-spring";
 
 export default function StickerButton() {
@@ -63,9 +62,9 @@ export default function StickerButton() {
     <>
       <Button onClick={stickerButtonClick}>
         {category === STICKER && option && <StickerMenu />}
-        <StickerInnerBox style={props}>
+        <ButtonInner style={props}>
           <Icon src="/diary/sticker/sticker.png" />
-        </StickerInnerBox>
+        </ButtonInner>
       </Button>
     </>
   );

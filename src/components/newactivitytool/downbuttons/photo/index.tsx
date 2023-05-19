@@ -3,8 +3,9 @@ import { categoryActions } from "../../../../store/common/categorySlice";
 import { PHOTO, ReducersType } from "../../types";
 import { useEffect, useState } from "react";
 import PhotoMenu from "./photo";
-import { Icon, PhotoContatiner, PhotoInnerBox } from "./style";
+import { PhotoContatiner } from "./style";
 import { useSpring } from "react-spring";
+import { ButtonInner, Icon } from "../../style";
 
 export default function PhotoButton() {
   const dispatch = useDispatch();
@@ -42,9 +43,9 @@ export default function PhotoButton() {
   return (
     <>
       <PhotoContatiner style={outterBox}>
-        <PhotoInnerBox onClick={photoButtonClick} style={props}>
+        <ButtonInner onClick={photoButtonClick} style={props}>
           <Icon src={"/diary/photo/photo.png"} />
-        </PhotoInnerBox>
+        </ButtonInner>
         {category === PHOTO && <PhotoMenu />}
       </PhotoContatiner>
     </>

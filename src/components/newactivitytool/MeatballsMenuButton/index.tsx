@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { Inner, MeatballsMenuButton, Menu, Menus } from "./style";
+import { MeatballsMenuButton, Menu, Menus } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { photoEditorActions } from "../../../store/common/photoEditorSlice";
-import { TempLink } from "../style";
+import { ButtonInner, TempLink } from "../style";
 import { ReactComponent as More } from "./svg/more.svg";
 import { ReactComponent as Download } from "./svg/download.svg";
 import { ReactComponent as Refrash } from "./svg/refrash.svg";
@@ -80,9 +80,9 @@ export default function MeatballsMenu() {
           });
         }}
       >
-        <Inner style={props}>
+        <ButtonInner style={props}>
           <More />
-        </Inner>
+        </ButtonInner>
       </MeatballsMenuButton>
     </>
   );

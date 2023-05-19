@@ -4,12 +4,6 @@ import { SelectButton } from "../../style";
 
 export const DecoContatiner = styled(ButtonsContainer)``;
 
-export const DecoInnerBox = styled(ButtonInnerBox)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Thumbnail = styled.img`
   width: 132px;
   height: 96px;

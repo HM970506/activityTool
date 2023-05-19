@@ -7,7 +7,7 @@ import {
   SubButtonContainer,
   SubButton,
   ModalOverlay,
-  MainButtonImg,
+  Icon,
 } from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
@@ -20,6 +20,8 @@ import DownButtons from "./downbuttons";
 import TopButtons from "./topButtons";
 import PhotoEditor from "./downbuttons/photo/photoEditor/photoEditor";
 import { categoryActions } from "../../store/common/categorySlice";
+import { zoomActions } from "../../store/common/zoomSlice";
+import { photoEditorActions } from "../../store/common/photoEditorSlice";
 
 export default function NewActivityTool() {
   const option = useSelector(
@@ -43,6 +45,13 @@ export default function NewActivityTool() {
   }, [activitytools]);
 
   const activityStart = () => {
+    canvas.clear();
+
+    dispatch(nodeActions.reset());
+    dispatch(categoryActions.reset());
+    dispatch(zoomActions.reset());
+    dispatch(photoEditorActions.reset());
+
     setActivitytools(true);
     setSubMenu(false);
   };
@@ -99,7 +108,7 @@ export default function NewActivityTool() {
               setSubMenu((x) => !x);
             }}
           >
-            <MainButtonImg src={"/diary/index/document.png"} />
+            <Icon src={"/diary/index/document.png"} />
           </MainButton>
         </>
       )}
