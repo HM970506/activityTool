@@ -20,7 +20,7 @@ export const Button = styled(DefaultButton)`
   height: 72px;
   border-radius: 32px;
   background-color: white;
-
+  flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,6 +50,11 @@ export const DownButtonsContainer = styled(animated.div)`
 export const Icon = styled.img`
   width: 32px;
   height: 32px;
+`;
+
+export const CategoryButton = styled(Button)`
+  width: 80px;
+  height: 72px;
 `;
 
 //인덱스에서 쓰이는 css

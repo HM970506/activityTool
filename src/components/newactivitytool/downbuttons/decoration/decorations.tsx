@@ -6,8 +6,9 @@ import { selectable, unselectable } from "../../common/selectHandler";
 import Template from "./template";
 import Stamp from "./stamp";
 import Tape from "./tape";
-import { DecoCategoryButton, Icon, StampCategoryButton } from "./style";
 import SVG from "react-inlinesvg";
+import { CategoryButton, Icon } from "../../style";
+import { StampCategoryButton } from "./style";
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -44,8 +45,7 @@ export default function DecorationMenu() {
 
   return (
     <>
-      <DecoCategoryButton
-        state={template.state ? 1 : 0}
+      <CategoryButton
         onClick={() => {
           if (!template.state) dispatch(categoryActions.templateOn());
           else dispatch(categoryActions.templateOff());
@@ -54,10 +54,9 @@ export default function DecorationMenu() {
         {category === DECORATION && template.state && <Template />}
         <Icon src={"/diary/decoration/template.png"} />
         <p>템플릿</p>
-      </DecoCategoryButton>
+      </CategoryButton>
       <StampCategoryButton
         color={canvas.stamp.color}
-        state={stamp.state ? 1 : 0}
         onClick={() => {
           if (!stamp.state) dispatch(categoryActions.stampOn());
           else if (!option) dispatch(categoryActions.optionChange(true));
@@ -74,8 +73,7 @@ export default function DecorationMenu() {
         )}
         <p>스탬프</p>
       </StampCategoryButton>
-      <DecoCategoryButton
-        state={tape.state ? 1 : 0}
+      <CategoryButton
         onClick={() => {
           if (!tape.state) dispatch(categoryActions.tapeOn());
           else if (!option) dispatch(categoryActions.optionChange(true));
@@ -86,7 +84,7 @@ export default function DecorationMenu() {
         {category === DECORATION && tape.state && option && <Tape />}
         <Icon src={"/diary/decoration/tape.png"} />
         <p>테이프</p>
-      </DecoCategoryButton>
+      </CategoryButton>
     </>
   );
 }

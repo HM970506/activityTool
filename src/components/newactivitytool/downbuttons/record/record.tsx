@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
 import { useStopwatch } from "react-timer-hook";
+import { CategoryButton, Icon } from "../../style";
 
 export default function Record({
   state,
@@ -84,10 +85,10 @@ export default function Record({
   const reRecord = () => {
     setOldRecord("");
     setState("");
+    reset();
   };
 
   useEffect(() => {
-    console.log(oldRecord);
     pause();
   }, [oldRecord]);
 
@@ -96,8 +97,14 @@ export default function Record({
       <Recorder src={oldRecord} ref={recorderRef} />
       {oldRecord !== "" ? (
         <>
-          <RecorderButton onClick={playButton}>재생</RecorderButton>
-          <RecorderButton onClick={reRecord}>다시녹음</RecorderButton>
+          <CategoryButton onClick={playButton}>
+            <Icon src={"/diary/recorder/record.png"} />
+            <p>재생</p>
+          </CategoryButton>
+          <CategoryButton onClick={reRecord}>
+            <Icon src={"/diary/recorder/player.png"} />
+            다시녹음
+          </CategoryButton>
         </>
       ) : (
         state !== "end" && (
@@ -108,12 +115,18 @@ export default function Record({
             </RecorderTime>
 
             {state === "start" || state == "goon" ? (
-              <RecorderButton onClick={pauseHandler}>⏸</RecorderButton>
+              <RecorderButton onClick={pauseHandler}>
+                <Icon src={"/diary/recorder/pause.png"} />
+              </RecorderButton>
             ) : (
-              <RecorderButton onClick={startHandler}>▶</RecorderButton>
+              <RecorderButton onClick={startHandler}>
+                <Icon src={"/diary/recorder/play.png"} />
+              </RecorderButton>
             )}
 
-            <RecorderButton onClick={endHandler}>⏹</RecorderButton>
+            <RecorderButton onClick={endHandler}>
+              <Icon src={"/diary/recorder/stop.png"} />
+            </RecorderButton>
           </>
         )
       )}

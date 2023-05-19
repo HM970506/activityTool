@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ButtonsContainer } from "../style";
+import { CategoryButton } from "../../style";
 
 export const RecordContatiner = styled(ButtonsContainer)``;
 
@@ -11,19 +12,24 @@ export const Button = styled.div`
   align-items: center;
 `;
 
-export const RecorderButton = styled.button`
+export const RecorderButton = styled(CategoryButton)`
   width: 48px;
-  heihgt: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
   border: none;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export const RecorderTime = styled.span`
   margin-left: 24px;
-  margin-right: 51px;
+  margin-right: 43px;
 `;
 
 export const Recorder = styled.audio``;

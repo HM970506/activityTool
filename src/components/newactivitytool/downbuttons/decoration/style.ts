@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonsContainer, OptionContainer } from "../style";
-import { Button, SelectButton } from "../../style";
+import { Button, CategoryButton, SelectButton } from "../../style";
 
 export const DecoContatiner = styled(ButtonsContainer)``;
 
@@ -20,21 +20,22 @@ export const ThumbnailBox = styled.div`
   }
 `;
 
-export const DecoCategoryButton = styled(Button)<{ state: number }>`
-  display: block;
-  background-color: ${(props) => (props.state == 1 ? "red" : "white")};
-
-  width: 80px;
-  font-size: 14px;
-`;
-
-export const StampCategoryButton = styled(DecoCategoryButton)<{
+export const StampCategoryButton = styled(CategoryButton)<{
   color: string;
 }>`
   display: block;
   fill: ${(props) => {
     return props.color;
   }};
+
+  display: flex;
+  justify-content: ceneter;
+  align-items: center;
+
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 export const DecoOptionContainer = styled(OptionContainer)`
