@@ -125,7 +125,7 @@ export const DEFAULT_CANVAS = {
   selection: false,
   tape: { state: 0, size: 10, color: "black" },
   panning: 0,
-  stamp: { state: 0, shape: DEFAULT_STAMP, color: "black" },
+  stamp: { state: 0, shape: "", color: "black" },
   skipOffscreen: true,
   allowTouchScrolling: true,
   deltaX: 0,

@@ -4,7 +4,7 @@ import { useQueryClient } from "react-query";
 import { ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import Colorbox from "../../common/colorbox";
-import { Button, DecoOptionContainer2, StampsContainer } from "./style";
+import { ListButton, DecoOptionContainer2, StampsContainer } from "./style";
 import SVG from "react-inlinesvg";
 
 export default function Stamp() {
@@ -40,7 +40,7 @@ export default function Stamp() {
       <StampsContainer>
         {data ? (
           stamps.map((value: string, key: number) => (
-            <Button
+            <ListButton
               select={stamp.index === key ? 1 : 0}
               color={color}
               key={`stamp_${key}`}
@@ -50,7 +50,7 @@ export default function Stamp() {
               }}
             >
               <SVG src={value} />
-            </Button>
+            </ListButton>
           ))
         ) : (
           <div>로딩중</div>

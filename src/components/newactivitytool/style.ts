@@ -10,6 +10,11 @@ export const DefaultButton = styled(animated.div)`
 `;
 
 export const Button = styled(DefaultButton)`
+  text-align: center;
+  p {
+    margin-bottom: 6px;
+  }
+
   border: none;
   width: 72px;
   height: 72px;

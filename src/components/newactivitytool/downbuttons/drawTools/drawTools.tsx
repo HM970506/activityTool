@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   BACKGROUND_BRUSH,
+  DRAWTOOLS,
   ERASER,
   PENCIL,
   ReducersType,
@@ -75,7 +76,9 @@ export default function DrawToolsMenu({
     else if (select === name && option)
       dispatch(categoryActions.optionChange(false));
   };
-
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
   return (
     <>
       <BottomButton
@@ -85,7 +88,9 @@ export default function DrawToolsMenu({
           setting(PENCIL);
         }}
       >
-        {select === PENCIL && option && <DrawOption keyName={PENCIL} />}
+        {category === DRAWTOOLS && select === PENCIL && option && (
+          <DrawOption keyName={PENCIL} />
+        )}
         <p> 펜</p>
       </BottomButton>
 
@@ -97,7 +102,7 @@ export default function DrawToolsMenu({
         }}
       >
         패턴배경
-        {select === BACKGROUND_BRUSH && option && (
+        {category === DRAWTOOLS && select === BACKGROUND_BRUSH && option && (
           <DrawOption keyName={BACKGROUND_BRUSH} />
         )}
       </BottomButton>
@@ -110,7 +115,9 @@ export default function DrawToolsMenu({
         }}
       >
         스프레이
-        {select === SPRAY && option && <DrawOption keyName={SPRAY} />}
+        {category === DRAWTOOLS && select === SPRAY && option && (
+          <DrawOption keyName={SPRAY} />
+        )}
       </BottomButton>
 
       <BottomButton
@@ -121,7 +128,9 @@ export default function DrawToolsMenu({
         }}
       >
         지우개
-        {select === ERASER && option && <DrawOption keyName={ERASER} />}
+        {category === DRAWTOOLS && select === ERASER && option && (
+          <DrawOption keyName={ERASER} />
+        )}
       </BottomButton>
     </>
   );

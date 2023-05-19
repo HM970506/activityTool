@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Uploader } from "../../style";
+import { Icon, Uploader } from "../../style";
 import { DEFAULT_X, ImageType, ReducersType } from "../../types";
 import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";
@@ -117,8 +117,14 @@ export default function PhotoMenu() {
         accept="image/*"
         onChange={onUploadImage}
       />
-      <Button onClick={photoUpload}>앨범</Button>
-      <Button>사진 찍기</Button>
+      <Button onClick={photoUpload}>
+        <Icon src={"/diary/photo/gallery.png"} />
+        <p>앨범</p>
+      </Button>
+      <Button>
+        <Icon src={"/diary/photo/camera.png"} />
+        <p>사진 찍기</p>
+      </Button>
     </>
   );
 }

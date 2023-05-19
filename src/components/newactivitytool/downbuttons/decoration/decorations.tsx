@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { ReducersType } from "../../types";
+import { DECORATION, ReducersType } from "../../types";
 import { selectable, unselectable } from "../../common/selectHandler";
 import Template from "./template";
 import Stamp from "./stamp";
 import Tape from "./tape";
-import { DecoCategoryButton, StampCategoryButton } from "./style";
+import { DecoCategoryButton, Icon, StampCategoryButton } from "./style";
 import SVG from "react-inlinesvg";
 
 export default function DecorationMenu() {
@@ -17,7 +17,9 @@ export default function DecorationMenu() {
   const option = useSelector(
     (state: ReducersType) => state.categoryReducer.option
   );
-
+  const category = useSelector(
+    (state: ReducersType) => state.categoryReducer.category
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,8 +51,9 @@ export default function DecorationMenu() {
           else dispatch(categoryActions.templateOff());
         }}
       >
-        {template.state && <Template />}
-        <p> 템플릿</p>
+        {category === DECORATION && template.state && <Template />}
+        <Icon src={"/diary/decoration/template.png"} />
+        <p>템플릿</p>
       </DecoCategoryButton>
       <StampCategoryButton
         color={canvas.stamp.color}
@@ -62,9 +65,14 @@ export default function DecorationMenu() {
           else dispatch(categoryActions.stampOff());
         }}
       >
-        {stamp.state && option && <Stamp />}
+        {category === DECORATION && stamp.state && option && <Stamp />}
 
-        {canvas.stamp.shape != "" ? <SVG src={canvas.stamp.shape} /> : "스탬프"}
+        {canvas.stamp.shape != "" ? (
+          <SVG src={canvas.stamp.shape} />
+        ) : (
+          <Icon src={"/diary/decoration/stamp.png"} />
+        )}
+        <p>스탬프</p>
       </StampCategoryButton>
       <DecoCategoryButton
         state={tape.state ? 1 : 0}
@@ -75,8 +83,9 @@ export default function DecorationMenu() {
           else dispatch(categoryActions.tapeOff());
         }}
       >
-        {tape.state && option && <Tape />}
-        <p> 마스킹테이프</p>
+        {category === DECORATION && tape.state && option && <Tape />}
+        <Icon src={"/diary/decoration/tape.png"} />
+        <p>테이프</p>
       </DecoCategoryButton>
     </>
   );

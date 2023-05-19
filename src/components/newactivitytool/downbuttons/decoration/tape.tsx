@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ReducersType } from "../../types";
 import { selectable, unselectable } from "../../common/selectHandler";
-import { Button, DecoOptionContainer2, StampsContainer } from "./style";
+import { ListButton, DecoOptionContainer2, StampsContainer } from "./style";
 import Colorbox from "../../common/colorbox";
 import { categoryActions } from "../../../../store/common/categorySlice";
 
@@ -34,7 +34,7 @@ export default function Tape() {
       <StampsContainer>
         {SIZE.map((value: number, key: number) => {
           return (
-            <Button
+            <ListButton
               select={tape.index === key ? 1 : 0}
               color={tape.color}
               onClick={() => {
@@ -44,7 +44,7 @@ export default function Tape() {
               key={`tape${key}`}
             >
               {value}
-            </Button>
+            </ListButton>
           );
         })}
       </StampsContainer>
