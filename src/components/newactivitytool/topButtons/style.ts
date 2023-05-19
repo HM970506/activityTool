@@ -22,7 +22,10 @@ export const TopArea = styled.div`
   align-items: center;
 `;
 
-export const ReturnButton = styled.button`
+export const TopButton = styled.button`
   background-color: inherit;
   border: none;
+  stroke: white;
+  fill: white;
+  color: white;
 `;

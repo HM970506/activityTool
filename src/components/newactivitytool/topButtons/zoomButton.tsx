@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";
 import { zoomActions } from "../../../store/common/zoomSlice";
-import { ReturnButton } from "./style";
+import { TopButton } from "./style";
+import { ReactComponent as Refrash } from "./refrash.svg";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -11,7 +12,7 @@ export default function ZoomButton() {
   return (
     <>
       <span> x{zoom}</span>
-      <ReturnButton
+      <TopButton
         onClick={() => {
           if (zoom != 1) {
             canvas.zoomToPoint(
@@ -23,8 +24,8 @@ export default function ZoomButton() {
           canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
         }}
       >
-        🔄
-      </ReturnButton>
+        <Refrash />
+      </TopButton>
     </>
   );
 }

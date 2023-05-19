@@ -7,7 +7,7 @@ import {
   getStorageDataAll,
 } from "../../../api/firestore/getData";
 import { useEffect, useState } from "react";
-import { DecoContatiner, DecoInnerBox } from "./style";
+import { DecoContatiner, DecoInnerBox, Icon } from "./style";
 import DecorationMenu from "./decorations";
 import { useSpring } from "react-spring";
 
@@ -77,7 +77,7 @@ export default function DecorationButton() {
   return (
     <DecoContatiner style={outterBox}>
       <DecoInnerBox onClick={openHandler} style={innerBox}>
-        <p>아이콘</p>
+        <Icon src={"/diary/decoration/decorate.png"} />
       </DecoInnerBox>
       {canvas && <DecorationMenu />}
     </DecoContatiner>

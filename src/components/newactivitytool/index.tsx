@@ -7,6 +7,7 @@ import {
   SubButtonContainer,
   SubButton,
   ModalOverlay,
+  MainButtonImg,
 } from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
@@ -98,7 +99,7 @@ export default function NewActivityTool() {
               setSubMenu((x) => !x);
             }}
           >
-            활동툴
+            <MainButtonImg src={"/diary/index/document.png"} />
           </MainButton>
         </>
       )}

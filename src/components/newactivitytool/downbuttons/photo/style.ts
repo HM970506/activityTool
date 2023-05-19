@@ -29,3 +29,8 @@ export const Button = styled.div`
 export const Uploader = styled.input`
   display: none;
 `;
+
+export const Icon = styled.img`
+  width: 50px;
+  height: 50px;
+`;

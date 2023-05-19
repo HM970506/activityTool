@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import "fabric-history";
-import { DefaultButton } from "../style";
 import { ReducersType } from "../types";
+import { ReactComponent as Next } from "./next.svg";
+import { ReactComponent as Prev } from "./prev.svg";
+import { TopButton } from "./style";
 
 export default function CanvasHistory() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -16,8 +18,12 @@ export default function CanvasHistory() {
 
   return (
     <>
-      <DefaultButton onClick={undoHandler}>undo</DefaultButton>
-      <DefaultButton onClick={redoHandler}>redo</DefaultButton>
+      <TopButton onClick={undoHandler}>
+        <Prev />
+      </TopButton>
+      <TopButton onClick={redoHandler}>
+        <Next />
+      </TopButton>
     </>
   );
 }

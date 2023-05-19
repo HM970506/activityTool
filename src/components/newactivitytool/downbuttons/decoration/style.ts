@@ -4,7 +4,12 @@ import { SelectButton } from "../../style";
 
 export const DecoContatiner = styled(ButtonsContainer)``;
 
-export const DecoInnerBox = styled(ButtonInnerBox)``;
+export const DecoInnerBox = styled(ButtonInnerBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Thumbnail = styled.img`
   width: 132px;
   height: 96px;
@@ -72,4 +77,9 @@ export const DecoOptionContainer2 = styled(OptionContainer)`
 export const Button = styled(SelectButton)`
   width: 40px;
   height: 40px;
+`;
+
+export const Icon = styled.img`
+  width: 50px;
+  height: 50px;
 `;

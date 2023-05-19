@@ -4,7 +4,7 @@ import { PHOTO, ReducersType } from "../../types";
 import { Button } from "../../style";
 import { useEffect, useState } from "react";
 import PhotoMenu from "./photo";
-import { PhotoContatiner, PhotoInnerBox } from "./style";
+import { Icon, PhotoContatiner, PhotoInnerBox } from "./style";
 
 export default function PhotoButton() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export default function PhotoButton() {
     <>
       <PhotoContatiner state={isOpen}>
         <PhotoInnerBox onClick={photoButtonClick} state={isOpen}>
-          사진
+          <Icon src={"/diary/photo/photo.png"} />
         </PhotoInnerBox>
         {category === PHOTO && <PhotoMenu />}
       </PhotoContatiner>

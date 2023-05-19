@@ -7,5 +7,6 @@ export const BackButton = styled(Button)`
   left: 8px;
   background-color: #292825;
   fill: white;
+  stroke: white;
   color: white;
 `;

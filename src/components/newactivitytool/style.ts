@@ -134,3 +134,8 @@ export const SelectButton = styled.button<{ color: string; select: number }>`
 export const TempLink = styled.a`
   display: none;
 `;
+
+export const MainButtonImg = styled.img`
+  width: 30px;
+  height: 30px;
+`;

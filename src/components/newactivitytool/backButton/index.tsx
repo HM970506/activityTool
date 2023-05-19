@@ -3,6 +3,7 @@ import { BackButton } from "./style";
 import { saveJson } from "../common/saveFunction";
 import { ReducersType } from "../types";
 import { Dispatch, SetStateAction } from "react";
+import { ReactComponent as X } from "./close.svg";
 
 export default function Back({
   setActivitytools,
@@ -21,5 +22,9 @@ export default function Back({
     await saveJson(canvas, record);
   };
 
-  return <BackButton onClick={activityEnd}>백버튼</BackButton>;
+  return (
+    <BackButton onClick={activityEnd}>
+      <X />
+    </BackButton>
+  );
 }
