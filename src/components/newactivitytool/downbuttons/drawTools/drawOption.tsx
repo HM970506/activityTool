@@ -1,5 +1,10 @@
 import Colorbox from "../../common/colorbox";
-import SizeBox from "../../common/sizebox";
+import {
+  SIZES,
+  SizeContainer,
+  Sizechip,
+  SizechipBox,
+} from "../../common/sizebox";
 import { DrawOptionContainer } from "./style";
 import {
   BACKGROUND_BRUSH,
@@ -10,6 +15,16 @@ import {
 } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../store/common/drawSlice";
+import { ReactComponent as Line1 } from "./svg/line/line1.svg";
+import { ReactComponent as Line2 } from "./svg/line/line2.svg";
+import { ReactComponent as Line3 } from "./svg/line/line3.svg";
+import { ReactComponent as Line4 } from "./svg/line/line4.svg";
+import { ReactComponent as Line5 } from "./svg/line/line5.svg";
+import { ReactComponent as Spray1 } from "./svg/spray/spray1.svg";
+import { ReactComponent as Spray2 } from "./svg/spray/spray2.svg";
+import { ReactComponent as Spray3 } from "./svg/spray/spray3.svg";
+import { ReactComponent as Spray4 } from "./svg/spray/spray4.svg";
+import { ReactComponent as Spray5 } from "./svg/spray/spray5.svg";
 
 export default function DrawOption({ keyName }: { keyName: string }) {
   const { pencil, back, spray, eraser } = useSelector(
@@ -50,11 +65,60 @@ export default function DrawOption({ keyName }: { keyName: string }) {
       : eraser;
 
   return (
-    <DrawOptionContainer
-      className={"option"}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <SizeBox setSize={sizeChange} option={option} keyName={keyName} />
+    <DrawOptionContainer onClick={(e) => e.stopPropagation()}>
+      <SizeContainer>
+        <SizechipBox select={option.size === 1 ? 1 : 0} color={option.color}>
+          <Sizechip
+            color={option.size !== 1 ? option.color : ""}
+            onClick={() => {
+              sizeChange(1);
+            }}
+          >
+            {keyName == SPRAY ? <Spray1 /> : <Line1 />}
+          </Sizechip>
+        </SizechipBox>
+        <SizechipBox select={option.size === 5 ? 1 : 0} color={option.color}>
+          <Sizechip
+            color={option.size !== 5 ? option.color : ""}
+            onClick={() => {
+              sizeChange(5);
+            }}
+          >
+            {keyName == SPRAY ? <Spray2 /> : <Line2 />}
+          </Sizechip>
+        </SizechipBox>
+        <SizechipBox select={option.size === 10 ? 1 : 0} color={option.color}>
+          <Sizechip
+            color={option.size !== 10 ? option.color : ""}
+            onClick={() => {
+              sizeChange(10);
+            }}
+          >
+            {keyName == SPRAY ? <Spray3 /> : <Line3 />}
+          </Sizechip>
+        </SizechipBox>
+        <SizechipBox select={option.size === 15 ? 1 : 0} color={option.color}>
+          <Sizechip
+            color={option.size !== 15 ? option.color : ""}
+            onClick={() => {
+              sizeChange(15);
+            }}
+          >
+            {keyName == SPRAY ? <Spray4 /> : <Line4 />}
+          </Sizechip>
+        </SizechipBox>
+        <SizechipBox select={option.size === 20 ? 1 : 0} color={option.color}>
+          <Sizechip
+            color={option.size !== 20 ? option.color : ""}
+            onClick={() => {
+              sizeChange(20);
+            }}
+          >
+            {keyName == SPRAY ? <Spray5 /> : <Line5 />}
+          </Sizechip>
+        </SizechipBox>
+      </SizeContainer>
+
       <Colorbox setColor={colorChange} option={option} keyName={keyName} />
     </DrawOptionContainer>
   );
