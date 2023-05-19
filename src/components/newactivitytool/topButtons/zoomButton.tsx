@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { TopButton } from "./style";
-import { ReactComponent as Refrash } from "./refrash.svg";
+import { ReactComponent as Rotato } from "./rotato.svg";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -24,7 +24,7 @@ export default function ZoomButton() {
           canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
         }}
       >
-        <Refrash />
+        <Rotato />
       </TopButton>
     </>
   );

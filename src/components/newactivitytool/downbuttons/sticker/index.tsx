@@ -5,8 +5,8 @@ import { Button } from "../../style";
 import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../api/firestore/getData";
 import StickerMenu from "./sticker";
-import { StickerInnerBox } from "./style";
-import { useEffect, useState } from "react";
+import { Icon, StickerInnerBox } from "./style";
+import { useSpring } from "react-spring";
 
 export default function StickerButton() {
   const category = useSelector(
@@ -48,11 +48,24 @@ export default function StickerButton() {
     }
   };
 
+  const props = useSpring({
+    from:
+      category === STICKER && option
+        ? { backgroundColor: "white", fill: "#FFAB44" }
+        : { backgroundColor: "#FFAB44", fill: "white" },
+    to:
+      category === STICKER && option
+        ? { backgroundColor: "#FFAB44", fill: "white" }
+        : { backgroundColor: "white", fill: "#FFAB44" },
+  });
+
   return (
     <>
       <Button onClick={stickerButtonClick}>
         {category === STICKER && option && <StickerMenu />}
-        <StickerInnerBox state={option ? 1 : 0}>스티커</StickerInnerBox>
+        <StickerInnerBox style={props}>
+          <Icon src="/diary/sticker/sticker.png" />
+        </StickerInnerBox>
       </Button>
     </>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Recorder, RecorderButton, RecorderTime } from "./style";
 import { RecordRTCPromisesHandler } from "recordrtc";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,10 +6,18 @@ import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
 import { useStopwatch } from "react-timer-hook";
 
-export default function Record() {
+export default function Record({
+  state,
+  setState,
+}: {
+  state: string;
+  setState: Dispatch<SetStateAction<string>>;
+}) {
   const dispatch = useDispatch();
-  const [recorder, setRecorder] = useState<RecordRTCPromisesHandler>();
-  const [state, setState] = useState<string>("");
+  const [recorder, setRecorder] = useState<RecordRTCPromisesHandler | null>(
+    null
+  );
+
   const [oldRecord, setOldRecord] = useState<string>("");
   const recorderRef = useRef<HTMLAudioElement | null>(null);
   const oldRecorder = useSelector(
@@ -27,10 +35,10 @@ export default function Record() {
       mimeType: "audio/webm",
     });
     setRecorder(recorder);
+    await recorder.startRecording();
   };
 
   useEffect(() => {
-    setting();
     setOldRecord(oldRecorder);
   }, []);
 
@@ -43,13 +51,15 @@ export default function Record() {
   };
 
   const startHandler = async () => {
-    if (recorder) {
-      await recorder.startRecording();
-      if (state == "") setState("start");
-      else setState("goon");
-
-      start();
+    if (state == "") {
+      await setting();
+      setState("start");
+    } else {
+      if (recorder) await recorder.startRecording();
+      setState("goon");
     }
+
+    start();
   };
 
   const endHandler = async () => {
@@ -61,6 +71,8 @@ export default function Record() {
       setOldRecord(url);
       dispatch(nodeActions.setRecord(blob));
 
+      setRecorder(null);
+      await navigator.mediaDevices.getUserMedia({ audio: false });
       reset();
     }
   };

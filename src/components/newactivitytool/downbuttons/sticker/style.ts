@@ -1,9 +1,17 @@
 import styled from "styled-components";
 import { ButtonInnerBox, ButtonsContainer, OptionContainer } from "../style";
 
-export const StickerInnerBox = styled(ButtonInnerBox)<{ state: number }>`
-  background-color: ${(props) => (props.state == 1 ? "#FFAB44" : "white")};
+export const StickerInnerBox = styled(ButtonInnerBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
+
+export const Icon = styled.img`
+  width: 50px;
+  height: 50px;
+`;
+
 export const StickerOptionContainer = styled(OptionContainer)`
   width: 332px;
   height: 144px;

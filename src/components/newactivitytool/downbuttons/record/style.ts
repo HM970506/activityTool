@@ -1,17 +1,14 @@
 import styled from "styled-components";
-import { ButtonInnerBox, ButtonsContainer, OptionContainer } from "../style";
+import { ButtonInnerBox, ButtonsContainer } from "../style";
 
-export const RecordContatiner = styled(ButtonsContainer)<{ state: number }>`
-  width: ${(props) => (props.state == 1 ? "268px" : "72px")};
-`;
+export const RecordContatiner = styled(ButtonsContainer)``;
 
-export const RecordInnerBox = styled(ButtonInnerBox)<{ state: number }>`
+export const RecordInnerBox = styled(ButtonInnerBox)`
   margin: 4px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.state == 1 ? "#2895AB" : "white")};
   width: 64px;
   height: 64px;
 `;

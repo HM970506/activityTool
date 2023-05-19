@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Button } from "../style";
 import { animated } from "react-spring";
 
-export const ButtonsContainer = styled(Button)`
+export const ButtonsContainer = styled(animated.div)`
   background-color: white;
+  border-radius: 32px;
   display: flex;
   justify-content: left;
   align-items: center;

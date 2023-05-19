@@ -4,10 +4,12 @@ import { RECORD, ReducersType } from "../../types";
 import { RecordContatiner, RecordInnerBox } from "./style";
 import { useEffect, useState } from "react";
 import Record from "./record";
+import { useSpring } from "react-spring";
 
 export default function RecordButton() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<number>(0);
+  const [state, setState] = useState<string>("");
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
@@ -22,12 +24,32 @@ export default function RecordButton() {
     else dispatch(categoryActions.categoryChange(""));
   };
 
+  const props = useSpring({
+    from:
+      category === RECORD
+        ? { backgroundColor: "white", fill: "#2895AB" }
+        : { backgroundColor: "#22E895", fill: "white" },
+    to:
+      category === RECORD
+        ? { backgroundColor: "#22E895", fill: "white" }
+        : { backgroundColor: "white", fill: "#2895AB" },
+  });
+
+  const outterBox = useSpring({
+    from: isOpen ? { width: 72 } : { width: 268 },
+    to: isOpen ? { width: 268 } : { width: 72 },
+  });
+
   return (
-    <RecordContatiner state={isOpen}>
-      <RecordInnerBox state={isOpen} onClick={recordButtonClick}>
-        녹음
+    <RecordContatiner style={outterBox}>
+      <RecordInnerBox style={props} onClick={recordButtonClick}>
+        {state === "start" || state == "goon" ? (
+          <img src={"/diary/recorder/voiceon.png"} />
+        ) : (
+          <img src={"/diary/recorder/voiceoff.png"} />
+        )}
       </RecordInnerBox>
-      {isOpen == 1 ? <Record /> : null}
+      {isOpen == 1 ? <Record state={state} setState={setState} /> : null}
     </RecordContatiner>
   );
 }

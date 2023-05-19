@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { ButtonInnerBox, OptionContainer } from "../style";
 
-export const TextInnerBox = styled(ButtonInnerBox)<{ state: number }>`
-  background-color: ${(props) => (props.state == 1 ? "#8959AB" : "white")};
+export const TextInnerBox = styled(ButtonInnerBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const TextOptionContainer = styled(OptionContainer)`
   width: 488px;
@@ -67,4 +69,8 @@ export const TextBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+export const Icon = styled.img`
+  width: 40px;
+  height: 40px;
 `;

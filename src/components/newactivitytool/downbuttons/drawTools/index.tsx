@@ -27,7 +27,7 @@ export default function DrawToolsButton() {
     [BACKGROUND_BRUSH, new fabric.PatternBrush(canvas)],
   ]);
   const img = new Image();
-  img.src = "/diary/pattern.jpg";
+  img.src = "/diary/DRAWTOOLS/pattern.jpg";
   img.crossOrigin = "Anonymous";
   BRUSHES.get(BACKGROUND_BRUSH).source = img;
 

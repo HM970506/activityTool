@@ -3,7 +3,7 @@ import { BackButton } from "./style";
 import { saveJson } from "../common/saveFunction";
 import { ReducersType } from "../types";
 import { Dispatch, SetStateAction } from "react";
-import { ReactComponent as X } from "./close.svg";
+import { ReactComponent as X } from "./svg/close.svg";
 
 export default function Back({
   setActivitytools,

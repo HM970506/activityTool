@@ -9,8 +9,9 @@ import {
 } from "../../../api/firestore/getData";
 import { useEffect, useState } from "react";
 import TextMenu from "./text";
-import { TextInnerBox } from "./style";
+import { Icon, TextInnerBox } from "./style";
 import otherClick from "../../common/otherClick";
+import { useSpring } from "react-spring";
 
 export default function TextButton() {
   const dispatch = useDispatch();
@@ -64,11 +65,24 @@ export default function TextButton() {
     }
   };
 
+  const props = useSpring({
+    from:
+      category === TEXT && option
+        ? { backgroundColor: "white", fill: "#8959AB" }
+        : { backgroundColor: "#8959AB", fill: "white" },
+    to:
+      category === TEXT && option
+        ? { backgroundColor: "#8959AB", fill: "white" }
+        : { backgroundColor: "white", fill: "#8959AB" },
+  });
+
   return (
     <>
       <Button onClick={textButtonClick}>
         {category === TEXT && option && <TextMenu />}
-        <TextInnerBox state={option ? 1 : 0}>글상자</TextInnerBox>
+        <TextInnerBox style={props}>
+          <Icon src="/diary/text/bubble.png" />
+        </TextInnerBox>
       </Button>
     </>
   );
