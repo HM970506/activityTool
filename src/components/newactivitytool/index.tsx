@@ -46,6 +46,7 @@ export default function NewActivityTool() {
 
   const activityStart = () => {
     canvas.clear();
+    canvas.clearHistory();
 
     dispatch(nodeActions.reset());
     dispatch(categoryActions.reset());
@@ -57,6 +58,8 @@ export default function NewActivityTool() {
   };
 
   const getCanvas = async () => {
+    canvas.clearHistory();
+
     const href = window.location.href.replaceAll("/", "_");
     const data = await getFirestoreData("saveData", href);
     const record = await getStorageData("test");
