@@ -22,27 +22,33 @@ export default function Canvas() {
   );
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
 
-  const debounceOnChange = debounce(() => {
+  const drawModeDebounce = debounce(() => {
     if (category == DRAWTOOLS) canvas.isDrawingMode = true;
   }, 100);
+
+  const zoomSetting = (zoom: number) => {
+    const nowZoom = parseInt(zoom.toFixed(2));
+
+    if (nowZoom > 10) return 10;
+    else if (nowZoom < 0.1) return 0.1;
+    else return 1;
+  };
 
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
   const bind = useGesture({
     onPinch: ({ origin, offset }) => {
       canvas.isDrawingMode = false;
 
-      const nowZoom = Math.round(offset[0] * 10) / 10;
+      const nowZoom = zoomSetting(offset[0]);
       canvas.zoomToPoint(
         { x: Math.round(origin[0]), y: Math.round(origin[1]) },
-        nowZoom != 0 ? nowZoom : 1
+        nowZoom
       );
       dispatch(zoomActions.setZoom(canvas.getZoom()));
 
-      debounceOnChange();
+      drawModeDebounce();
     },
   });
-
-  //핀치줌이 on 되면 0.5초정도를 세어서 그 직후에 드로우모드를 원래 상태로 돌려놓기..? 는 어떨까나. 디바운싱으로..
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
