@@ -31,7 +31,7 @@ export default function Canvas() {
 
     if (nowZoom > 10) return 10;
     else if (nowZoom < 0.1) return 0.1;
-    else return 1;
+    else return nowZoom;
   };
 
   //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
