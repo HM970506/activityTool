@@ -19,6 +19,7 @@ export default function Record({
     null
   );
 
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [oldRecord, setOldRecord] = useState<string>("");
   const recorderRef = useRef<HTMLAudioElement | null>(null);
   const oldRecorder = useSelector(
@@ -30,8 +31,12 @@ export default function Record({
   });
 
   const setting = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const recorder = new RecordRTCPromisesHandler(stream, {
+    const getstream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+    });
+
+    setStream(stream);
+    const recorder = new RecordRTCPromisesHandler(getstream, {
       type: "audio",
       mimeType: "audio/webm",
     });
@@ -71,6 +76,8 @@ export default function Record({
       const url = URL.createObjectURL(blob);
       setOldRecord(url);
       dispatch(nodeActions.setRecord(blob));
+
+      if (stream) stream.getAudioTracks()[0].enabled = false;
 
       setRecorder(null);
       await navigator.mediaDevices.getUserMedia({ audio: false });
