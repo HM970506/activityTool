@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";
 import { zoomActions } from "../../../store/common/zoomSlice";
-import { TopButton } from "./style";
-import { ReactComponent as Rotato } from "./rotato.svg";
+import { ZoomContainer } from "./style";
+import { ReactComponent as Rotato } from "./svg/rotato.svg";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -10,9 +10,9 @@ export default function ZoomButton() {
   const dispath = useDispatch();
 
   return (
-    <>
-      <span> x{zoom}</span>
-      <TopButton
+    <ZoomContainer>
+      <span> x{zoom.toFixed(2)}</span>
+      <span
         onClick={() => {
           if (zoom != 1) {
             canvas.zoomToPoint(
@@ -25,7 +25,7 @@ export default function ZoomButton() {
         }}
       >
         <Rotato />
-      </TopButton>
-    </>
+      </span>
+    </ZoomContainer>
   );
 }

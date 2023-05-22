@@ -90,7 +90,7 @@ export default function PhotoMenu() {
     test();
   }, [photo, canvas]);
 
-  const onUploadImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const reader = new FileReader();
@@ -102,7 +102,7 @@ export default function PhotoMenu() {
 
       e.target.value = "";
     }
-  }, []);
+  };
 
   const photoUpload = () => {
     if (inputRef.current !== null) inputRef.current?.click();
@@ -114,6 +114,8 @@ export default function PhotoMenu() {
         ref={inputRef}
         type="file"
         accept="image/*"
+        //파일 선택 안하고 취소 누르면 컴포넌트 전부 에러남.
+        //onChange는 작동 안 함.
         onChange={onUploadImage}
       />
       <CategoryButton onClick={photoUpload}>

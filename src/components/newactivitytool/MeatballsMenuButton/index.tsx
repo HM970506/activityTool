@@ -21,6 +21,7 @@ export default function MeatballsMenu() {
 
   const reset = () => {
     canvas.clear();
+    canvas.clearHistory();
 
     dispatch(nodeActions.reset());
     dispatch(categoryActions.reset());
