@@ -28,21 +28,19 @@ export default function NewActivityTool() {
     (state: ReducersType) => state.categoryReducer.option
   );
 
-  const newActivityTool = useRef<HTMLDialogElement>(null);
+  const newActivityTool = useRef<HTMLDivElement>(null);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [subMenu, setSubMenu] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isEditing = useSelector(
     (state: ReducersType) => state.photoEditorReducer.isEditing
   );
-  const { canvas, record } = useSelector(
-    (state: ReducersType) => state.nodeReducer
-  );
+  const { canvas } = useSelector((state: ReducersType) => state.nodeReducer);
 
   useEffect(() => {
-    if (activitytools) newActivityTool.current?.showModal();
-    else newActivityTool.current?.close();
-  }, [activitytools]);
+    if (newActivityTool.current)
+      dispatch(nodeActions.setDialogContainer(newActivityTool.current));
+  }, [newActivityTool.current]);
 
   const activityStart = () => {
     canvas.clear();
@@ -72,9 +70,22 @@ export default function NewActivityTool() {
     setSubMenu(false);
   };
 
+  const getMaxZIndex = () => {
+    return Math.max(
+      ...Array.from(document.querySelectorAll("body *"), (el) =>
+        parseFloat(window.getComputedStyle(el).zIndex)
+      ).filter((zIndex) => !Number.isNaN(zIndex)),
+      0
+    );
+  };
+
   return (
     <>
-      <Background ref={newActivityTool}>
+      <Background
+        ref={newActivityTool}
+        z={getMaxZIndex() + 1}
+        view={activitytools ? 1 : 0}
+      >
         <Overlay>
           <Canvas />
           {isEditing ? (

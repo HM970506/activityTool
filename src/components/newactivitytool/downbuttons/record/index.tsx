@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { RECORD, ReducersType } from "../../types";
-import { RecordContatiner } from "./style";
+import { Icon2, RecordContatiner } from "./style";
 import { useEffect, useState } from "react";
 import Record from "./record";
 import { useSpring } from "react-spring";
@@ -45,7 +45,7 @@ export default function RecordButton() {
     <RecordContatiner style={outterBox}>
       <ButtonInner style={props} onClick={recordButtonClick}>
         {state === "start" || state == "goon" ? (
-          <Icon src={"/diary/recorder/voiceon.png"} />
+          <Icon2 src={"/diary/recorder/voiceon.png"} />
         ) : (
           <Icon src={"/diary/recorder/voiceoff.png"} />
         )}

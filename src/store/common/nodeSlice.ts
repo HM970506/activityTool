@@ -5,6 +5,7 @@ const DEFAULT = {
   canvas: null,
   isPanning: false,
   textareaContainer: null,
+  dialogContainer: null,
   record: "",
   opacity: 0,
 };
@@ -21,6 +22,9 @@ const nodeSlice = createSlice({
     },
     setTextareaContainer: (state, action: PayloadAction<any>) => {
       state.textareaContainer = action.payload;
+    },
+    setDialogContainer: (state, action: PayloadAction<any>) => {
+      state.dialogContainer = action.payload;
     },
 
     setOpacity: (state, action: PayloadAction<number>) => {

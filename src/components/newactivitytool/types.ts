@@ -80,6 +80,7 @@ export interface nodeReducerType {
   opacity: number;
   record: any;
   textareaContainer: HTMLDivElement;
+  dialogContainer: HTMLDialogElement;
 }
 
 export interface zoomReducerType {

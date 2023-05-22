@@ -87,8 +87,12 @@ export const SubButton = styled.div`
   align-items: center;
 `;
 
-export const Background = styled.dialog`
+export const Background = styled.div<{ z: number; view: number }>`
   transition-property: top-layer;
+  display: ${(props) => (props.view === 1 ? "absolute" : "none")};
+  top: 0;
+  left: 0;
+  z-index: ${(props) => props.z};
   -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;

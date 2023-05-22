@@ -16,7 +16,6 @@ export default function TextMenu() {
   const data = queryClient.getQueryData("text");
 
   useEffect(() => {
-    console.log(data);
     if (Array.isArray(data)) setTexts(data);
   }, [data]);
 

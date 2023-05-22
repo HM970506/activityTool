@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonsContainer } from "../style";
-import { CategoryButton } from "../../style";
+import { CategoryButton, Icon } from "../../style";
 
 export const RecordContatiner = styled(ButtonsContainer)``;
 
@@ -33,3 +33,10 @@ export const RecorderTime = styled.span`
 `;
 
 export const Recorder = styled.audio``;
+
+export const Icon2 = styled(Icon)`
+  width: 64px;
+  height: 64px;
+  position: relative;
+  bottom: 5px;
+`;
