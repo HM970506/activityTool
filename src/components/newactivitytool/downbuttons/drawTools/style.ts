@@ -25,18 +25,32 @@ export const DrawOptionContainer = styled(OptionContainer)`
   height: 128px;
   padding-top: 20px;
   padding-left: 24px;
+  position: block;
 `;
 
 export const BottomButton = styled.button<{ select: number; color: string }>`
-  width: 70px;
-  height: 50px;
-  background-color: ${(props) => {
-    return props.select === 1 ? props.color : "white";
-  }};
-  color: ${(props) => {
-    return props.select === 1 ? "white" : "black";
-  }};
+  width: 56px;
+  height: 72px;
+  position: relative;
+  z-index: 1;
+  bottom: ${(props) => (props.select === 1 ? "0px" : "-20px")};
+  background-color: ${(props) => (props.color !== "" ? props.color : "white")};
+
+  margin: 2px 0px;
+  border: none;
+
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
+export const Tool = styled.img`
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+`;
+
+export const ToolColor = styled.div<{ color: string }>``;

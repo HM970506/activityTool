@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CategoryButton, Icon, Uploader } from "../../style";
 import { DEFAULT_X, ImageType, ReducersType } from "../../types";
@@ -7,7 +7,7 @@ import { imageCheck } from "./photoChecker";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
 
-const editIcon = "./diary/editButton.png";
+const editIcon = "./diary/object/editButton.png";
 const renderIcon = (
   ctx: CanvasRenderingContext2D,
   left: number,

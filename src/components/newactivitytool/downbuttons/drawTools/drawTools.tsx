@@ -10,7 +10,7 @@ import {
 import { Dispatch, useEffect } from "react";
 import DrawOption from "./drawOption";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { BottomButton } from "./style";
+import { BottomButton, Tool, ToolColor } from "./style";
 
 export default function DrawToolsMenu({
   select,
@@ -68,6 +68,7 @@ export default function DrawToolsMenu({
   }, [select]);
 
   const dispatch = useDispatch();
+
   const setting = (name: string) => {
     if (select !== name) {
       setSelect(name);
@@ -79,6 +80,10 @@ export default function DrawToolsMenu({
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
+
+  const path = (name: string) => {
+    return `/diary/drawtools/${name}.png`;
+  };
   return (
     <>
       <BottomButton
@@ -91,7 +96,8 @@ export default function DrawToolsMenu({
         {category === DRAWTOOLS && select === PENCIL && option && (
           <DrawOption keyName={PENCIL} />
         )}
-        <p> 펜</p>
+
+        <Tool src={path("feltpen")} />
       </BottomButton>
 
       <BottomButton
@@ -101,7 +107,8 @@ export default function DrawToolsMenu({
           setting(BACKGROUND_BRUSH);
         }}
       >
-        패턴배경
+        <Tool src={path("crayon")} />
+
         {category === DRAWTOOLS && select === BACKGROUND_BRUSH && option && (
           <DrawOption keyName={BACKGROUND_BRUSH} />
         )}
@@ -114,7 +121,8 @@ export default function DrawToolsMenu({
           setting(SPRAY);
         }}
       >
-        스프레이
+        <Tool src={path("spray")} />
+
         {category === DRAWTOOLS && select === SPRAY && option && (
           <DrawOption keyName={SPRAY} />
         )}
@@ -127,7 +135,8 @@ export default function DrawToolsMenu({
           setting(ERASER);
         }}
       >
-        지우개
+        <Tool src={path("eraser")} />
+
         {category === DRAWTOOLS && select === ERASER && option && (
           <DrawOption keyName={ERASER} />
         )}

@@ -1,6 +1,6 @@
 import { Transform } from "fabric/fabric-impl";
 
-const deleteIcon = "./diary/deleteButton.png";
+const deleteIcon = "./diary/object/deleteButton.png";
 const deleteObject = (e: MouseEvent, transform: Transform) => {
   const target = transform.target;
   const canvas = target.canvas;
