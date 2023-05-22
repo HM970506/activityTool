@@ -1,15 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const DEFAULT = {
+  pencil: { color: "black", size: 1 },
+  back: { color: "black", size: 1 },
+  spray: { color: "black", size: 1 },
+  eraser: { size: 1 },
+};
+
 const drawSlice = createSlice({
   name: "drawReducer",
-  initialState: {
-    pencil: { color: "black", size: 1 },
-    back: { color: "black", size: 1 },
-    spray: { color: "black", size: 1 },
-    eraser: { size: 1 },
-  },
+  initialState: DEFAULT,
 
   reducers: {
+    reset: (state) => {
+      state = DEFAULT;
+    },
     setPencil: (
       state,
       action: PayloadAction<{ color: string; size: number }>

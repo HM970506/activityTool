@@ -66,7 +66,7 @@ export default function DecorationMenu() {
       >
         {category === DECORATION && stamp.state && option && <Stamp />}
 
-        {canvas.stamp.shape != "" ? (
+        {canvas.stamp.shape !== "" ? (
           <SVG src={canvas.stamp.shape} />
         ) : (
           <Icon src={"/diary/decoration/stamp.png"} />

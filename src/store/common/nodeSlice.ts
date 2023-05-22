@@ -1,25 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { canvasType } from "../../components/newactivitytool/types";
 
+const DEFAULT = {
+  canvas: null,
+  isPanning: false,
+  textareaContainer: null,
+  record: "",
+  opacity: 0,
+};
 const nodeSlice = createSlice({
   name: "nodeReducer",
-  initialState: {
-    canvas: null,
-    isPanning: false,
-    textareaContainer: null,
-    record: "",
-    opacity: 0,
-  },
+  initialState: DEFAULT,
 
   reducers: {
     reset: (state) => {
-      state = {
-        canvas: null,
-        isPanning: false,
-        textareaContainer: null,
-        record: "",
-        opacity: 0,
-      };
+      state = DEFAULT;
     },
     setCanvas: (state, action: PayloadAction<canvasType>) => {
       state.canvas = action.payload;

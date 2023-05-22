@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ImageType } from "../../components/newactivitytool/types";
 
+const DEFAULT = { isEditing: false, photo: null };
 const photoEditorSlice = createSlice({
   name: "photoEditorReducer",
-  initialState: { isEditing: false, photo: null },
+  initialState: DEFAULT,
 
   reducers: {
     reset: (state) => {
-      state = { isEditing: false, photo: null };
+      state = DEFAULT;
     },
     setIsEditing: (state, action: PayloadAction<boolean>) => {
       state.isEditing = action.payload;

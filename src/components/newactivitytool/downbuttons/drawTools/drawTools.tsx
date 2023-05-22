@@ -54,7 +54,7 @@ export default function DrawToolsMenu({
   }, [eraser]);
 
   useEffect(() => {
-    if (select != "")
+    if (select !== "")
       optionChange(
         select,
         select === PENCIL

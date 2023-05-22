@@ -19,11 +19,11 @@ export default function cropper(
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
       width:
-        frameOrdy.width != undefined && frameOrdy.scaleX != undefined
+        frameOrdy.width !== undefined && frameOrdy.scaleX !== undefined
           ? frameOrdy.width * frameOrdy.scaleX
           : 0,
       height:
-        frameOrdy.height != undefined && frameOrdy.scaleY != undefined
+        frameOrdy.height !== undefined && frameOrdy.scaleY !== undefined
           ? frameOrdy.height * frameOrdy.scaleY
           : 0,
     };

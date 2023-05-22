@@ -1,30 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const DEFAULT = {
+  category: "",
+  view: true,
+  option: false,
+  subcategory: {
+    template: { index: -1, state: false },
+    stamp: { index: 0, state: false, color: "black" },
+    tape: { index: 0, state: false, color: "black" },
+  },
+};
+
 const categorySlice = createSlice({
   name: "categoryReducer",
-  initialState: {
-    category: "",
-    view: true,
-    option: false,
-    subcategory: {
-      template: { index: -1, state: false },
-      stamp: { index: 0, state: false, color: "black" },
-      tape: { index: 0, state: false, color: "black" },
-    },
-  },
+  initialState: DEFAULT,
 
   reducers: {
     reset: (state) => {
-      state = {
-        category: "",
-        view: true,
-        option: false,
-        subcategory: {
-          template: { index: -1, state: false },
-          stamp: { index: 0, state: false, color: "black" },
-          tape: { index: 0, state: false, color: "black" },
-        },
-      };
+      state = DEFAULT;
     },
     optionChange: (state, action: PayloadAction<boolean>) => {
       state.option = action.payload;

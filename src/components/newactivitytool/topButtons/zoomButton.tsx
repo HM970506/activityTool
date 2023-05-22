@@ -14,7 +14,7 @@ export default function ZoomButton() {
       <span> x{zoom.toFixed(2)}</span>
       <span
         onClick={() => {
-          if (zoom != 1) {
+          if (zoom !== 1) {
             canvas.zoomToPoint(
               { x: window.innerWidth / 2, y: window.innerHeight / 2 },
               1
