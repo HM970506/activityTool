@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import {
   BACKGROUND_BRUSH,
+  CRAYON,
   DRAWTOOLS,
   ERASER,
+  HIGHLIGHTER,
   PENCIL,
   ReducersType,
   SPRAY,
@@ -20,11 +22,14 @@ export default function DrawToolsButton() {
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
+
   const BRUSHES = new Map([
-    [PENCIL, new fabric.PencilBrush(canvas)],
+    [PENCIL, new fabric.PencilBrush()],
     [SPRAY, new fabric.SprayBrush(canvas, { density: 1 })],
     [ERASER, new fabric.EraserBrush(canvas)],
     [BACKGROUND_BRUSH, new fabric.PatternBrush(canvas)],
+    [HIGHLIGHTER, new fabric.PencilBrush(canvas)],
+    [CRAYON, ""],
   ]);
   const img = new Image();
   img.src = "/diary/drawtools/pattern.jpg";

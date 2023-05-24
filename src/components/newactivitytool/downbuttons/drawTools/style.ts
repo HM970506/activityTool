@@ -22,26 +22,27 @@ export const ToolNow = styled(animated.div)`
 
 export const DrawOptionContainer = styled(OptionContainer)`
   width: 264px;
-  height: 128px;
-  padding-top: 20px;
-  padding-left: 24px;
+  padding: 20px 0px 30px 24px;
   position: block;
 `;
 
-export const BottomButton = styled.button<{ select: number; color: string }>`
-  width: 56px;
-  height: 72px;
-  position: relative;
-  z-index: 1;
-  bottom: ${(props) => (props.select === 1 ? "0px" : "-20px")};
+export const BottomButton = styled.button<{ color: string }>`
   background-color: ${(props) => (props.color !== "" ? props.color : "white")};
 
-  margin: 2px 0px;
+  margin: 20px 2px 0px 2px;
   border: none;
 
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const ToolBox = styled.div<{ select: number }>`
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 72px;
+  bottom: ${(props) => (props.select === 1 ? "0px" : "-20px")};
 `;
 
 export const Tool = styled.img`

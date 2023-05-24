@@ -10,7 +10,7 @@ import {
 import { Dispatch, useEffect } from "react";
 import DrawOption from "./drawOption";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { BottomButton, Tool, ToolColor } from "./style";
+import { BottomButton, Tool, ToolBox } from "./style";
 
 export default function DrawToolsMenu({
   select,
@@ -21,6 +21,7 @@ export default function DrawToolsMenu({
   brushes: Map<string, any>;
   setSelect: Dispatch<React.SetStateAction<string>>;
 }) {
+  const dispatch = useDispatch();
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const { pencil, back, spray, eraser } = useSelector(
     (state: ReducersType) => state.drawReducer
@@ -67,8 +68,6 @@ export default function DrawToolsMenu({
       );
   }, [select]);
 
-  const dispatch = useDispatch();
-
   const setting = (name: string) => {
     if (select !== name) {
       setSelect(name);
@@ -81,14 +80,13 @@ export default function DrawToolsMenu({
     (state: ReducersType) => state.categoryReducer.category
   );
 
-  const path = (name: string) => {
+  const getPath = (name: string) => {
     return `/diary/drawtools/${name}.png`;
   };
   return (
     <>
       <BottomButton
         color={pencil.color}
-        select={select === PENCIL ? 1 : 0}
         onClick={() => {
           setting(PENCIL);
         }}
@@ -96,50 +94,51 @@ export default function DrawToolsMenu({
         {category === DRAWTOOLS && select === PENCIL && option && (
           <DrawOption keyName={PENCIL} />
         )}
-
-        <Tool src={path("feltpen")} />
+        <ToolBox select={select === PENCIL ? 1 : 0}>
+          <Tool src={getPath("feltpen")} />
+        </ToolBox>
       </BottomButton>
 
       <BottomButton
         color={back.color}
-        select={select === BACKGROUND_BRUSH ? 1 : 0}
         onClick={() => {
           setting(BACKGROUND_BRUSH);
         }}
       >
-        <Tool src={path("crayon")} />
-
         {category === DRAWTOOLS && select === BACKGROUND_BRUSH && option && (
           <DrawOption keyName={BACKGROUND_BRUSH} />
         )}
+        <ToolBox select={select === BACKGROUND_BRUSH ? 1 : 0}>
+          <Tool src={getPath("crayon")} />
+        </ToolBox>
       </BottomButton>
 
       <BottomButton
         color={spray.color}
-        select={select === SPRAY ? 1 : 0}
         onClick={() => {
           setting(SPRAY);
         }}
       >
-        <Tool src={path("spray")} />
-
         {category === DRAWTOOLS && select === SPRAY && option && (
           <DrawOption keyName={SPRAY} />
         )}
+        <ToolBox select={select === SPRAY ? 1 : 0}>
+          <Tool src={getPath("spray")} />
+        </ToolBox>
       </BottomButton>
 
       <BottomButton
-        color={eraser.color}
-        select={select === ERASER ? 1 : 0}
+        color={""}
         onClick={() => {
           setting(ERASER);
         }}
       >
-        <Tool src={path("eraser")} />
-
         {category === DRAWTOOLS && select === ERASER && option && (
           <DrawOption keyName={ERASER} />
         )}
+        <ToolBox select={select === ERASER ? 1 : 0}>
+          <Tool src={getPath("eraser")} />
+        </ToolBox>
       </BottomButton>
     </>
   );

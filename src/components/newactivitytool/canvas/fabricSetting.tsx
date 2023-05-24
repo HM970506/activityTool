@@ -23,4 +23,14 @@ export default function fabricSetting() {
   fabric.Textbox.prototype.controls.deleteControl = new fabric.Control({
     ...deleteProps,
   });
+
+  fabric.util.getRandom = function (max: number, min: number) {
+    min = min ? min : 0;
+    return Math.random() * ((max ? max : 1) - min) + min;
+  };
+
+  fabric.util.clamp = function (n: number, max: number, min: number) {
+    if (typeof min !== "number") min = 0;
+    return n > max ? max : n < min ? min : n;
+  };
 }

@@ -13,5 +13,5 @@ export const imageCheck = async (photo: string) => {
     )
       return false;
     else return true;
-  }
+  } else return true; //나중에 지워주기
 };

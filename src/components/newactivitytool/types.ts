@@ -28,7 +28,9 @@ export const DECORATION = "DECORATION";
 
 export const PENCIL = "pencil";
 export const BACKGROUND_BRUSH = "backgroundBrush";
+export const CRAYON = "crayon";
 export const SPRAY = "spray";
+export const HIGHLIGHTER = "highlighter";
 
 export const COLORS = [
   "black",
@@ -108,6 +110,7 @@ export interface drawDefault {
 }
 
 export interface drawReducerType {
+  now: any;
   pencil: drawDefault;
   back: drawDefault;
   spray: drawDefault;
