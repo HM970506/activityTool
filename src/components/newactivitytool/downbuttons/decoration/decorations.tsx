@@ -7,7 +7,7 @@ import Template from "./template";
 import Stamp from "./stamp";
 import Tape from "./tape";
 import SVG from "react-inlinesvg";
-import { CategoryButton, Icon } from "../../style";
+import { CategoryButton, CategoryButtonText, Icon } from "../../style";
 import { StampCategoryButton } from "./style";
 
 export default function DecorationMenu() {
@@ -53,7 +53,7 @@ export default function DecorationMenu() {
       >
         {category === DECORATION && template.state && <Template />}
         <Icon src={"/diary/decoration/template.png"} />
-        <p>템플릿</p>
+        <span>템플릿</span>
       </CategoryButton>
       <StampCategoryButton
         color={canvas.stamp.color}
@@ -71,7 +71,7 @@ export default function DecorationMenu() {
         ) : (
           <Icon src={"/diary/decoration/stamp.png"} />
         )}
-        <p>스탬프</p>
+        <span>스탬프</span>
       </StampCategoryButton>
       <CategoryButton
         onClick={() => {
@@ -83,7 +83,7 @@ export default function DecorationMenu() {
       >
         {category === DECORATION && tape.state && option && <Tape />}
         <Icon src={"/diary/decoration/tape.png"} />
-        <p>테이프</p>
+        <span>테이프</span>
       </CategoryButton>
     </>
   );

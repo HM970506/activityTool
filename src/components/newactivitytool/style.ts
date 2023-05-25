@@ -57,6 +57,10 @@ export const CategoryButton = styled(Button)`
   height: 72px;
 `;
 
+export const CategoryButtonText = styled.p`
+  margin-bottom: 6px;
+`;
+
 //인덱스에서 쓰이는 css
 
 export const MainButton = styled(Button)`

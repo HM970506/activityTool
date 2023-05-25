@@ -1,9 +1,4 @@
-/**
- * InkBrush class
- * @class fabric.InkBrush
- * @extends fabric.BaseBrush
- */
-(function (fabric) {
+export default function InkMaker(fabric) {
   fabric.InkBrush = fabric.util.createClass(fabric.BaseBrush, {
     color: "#000000",
     opacity: 1,
@@ -156,6 +151,7 @@
       this._strokeNum = this.size;
       this._range = this.size / 2;
 
+      //여기 에러 납니다요
       for (i = 0, len = this._strokeNum; i < len; i++) {
         strokes[i] = new fabric.Stroke(
           this.canvas.contextTop,
@@ -168,4 +164,4 @@
       }
     },
   });
-})(fabric);
+}

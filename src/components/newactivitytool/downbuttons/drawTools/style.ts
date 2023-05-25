@@ -31,7 +31,7 @@ export const DrawOptionContainer = styled(OptionContainer)`
   position: block;
 `;
 
-export const BottomButton = styled.button`
+export const BottomButton = styled.div`
   margin: 20px 2px 0px 2px;
   border: none;
   background-color: white;
@@ -59,7 +59,8 @@ export const Tool = styled.img`
 
 export const ToolBackground = styled.div<{ color: string }>`
   background-color: ${(props) => (props.color !== "" ? props.color : "white")};
-
+  width: inherit;
+  height: inherit;
   position: absolute;
   z-index: 1;
 

@@ -47,6 +47,13 @@ export default function CrayonMaker(fabric) {
       this.canvas.add(img);
 
       this.canvas.renderAll();
+      this.canvas.contextTop.clearRect(
+        0,
+        0,
+        this.canvas.width,
+        this.canvas.height
+      );
+      console.log(this.canvas.contextTop);
     },
 
     set: function (p) {

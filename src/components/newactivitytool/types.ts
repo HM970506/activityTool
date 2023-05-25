@@ -40,6 +40,7 @@ export const CRAYON = "crayon";
 export const SPRAY = "spray";
 export const HIGHLIGHTER = "highlighter";
 export const ERASER = "eraser";
+export const INK = "ink";
 
 export const COLORS = [
   "black",
@@ -110,17 +111,7 @@ export interface ReducersType {
   nodeReducer: nodeReducerType;
   zoomReducer: zoomReducerType;
   photoEditorReducer: photoEditorReducerType;
-  drawReducer: drawReducerType;
-}
-
-export interface drawReducerType {
-  now: null | string;
-  feltpen: null | PencilBrush;
-  crayon: null | PencilBrush;
-  backgroundBrush: null | PatternBrush;
-  highlighter: null | PencilBrush;
-  spray: null | SprayBrush;
-  eraser: any;
+  drawReducer: any;
 }
 
 export const DEFAULT_X = 500;

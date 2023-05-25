@@ -14,6 +14,7 @@ import {
   ERASER,
   FELTPEN,
   HIGHLIGHTER,
+  INK,
   ReducersType,
   SPRAY,
 } from "../types";
@@ -26,6 +27,7 @@ import { drawActions } from "../../../store/common/drawSlice";
 import CrayonMaker from "./brushes/crayon_brush";
 import BrushFunctions from "./util/point.extend";
 import HighlighterMaker from "./brushes/marker_brush";
+import InkMaker from "./brushes/ink_brush";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -84,6 +86,7 @@ export default function Canvas() {
     BrushFunctions(fabric);
     CrayonMaker(fabric);
     HighlighterMaker(fabric);
+    InkMaker(fabric);
 
     canvas.renderAll();
 
@@ -103,7 +106,7 @@ export default function Canvas() {
         brush: new fabric.CrayonBrush(canvas, {
           color: "black",
           width: 1,
-          opacity: 0.6,
+          opacity: 0.1,
         }),
       })
     );
@@ -130,6 +133,12 @@ export default function Canvas() {
       drawActions.setting({
         name: HIGHLIGHTER,
         brush: new fabric.MarkerBrush(canvas, { color: "black", width: 1 }),
+      })
+    );
+    dispatch(
+      drawActions.setting({
+        name: INK,
+        brush: new fabric.InkBrush(canvas, { color: "black", width: 1 }),
       })
     );
     dispatch(

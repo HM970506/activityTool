@@ -123,11 +123,11 @@ export default function PhotoMenu() {
       />
       <CategoryButton onClick={photoUpload}>
         <Icon src={"/diary/photo/gallery.png"} />
-        <p>앨범</p>
+        <span>앨범</span>
       </CategoryButton>
       <CategoryButton>
         <Icon src={"/diary/photo/camera.png"} />
-        <p>사진 찍기</p>
+        <span>사진 찍기</span>
       </CategoryButton>
     </>
   );

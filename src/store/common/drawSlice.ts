@@ -8,6 +8,7 @@ const DEFAULT = {
   highlighter: null,
   spray: null,
   eraser: null,
+  ink: null,
 };
 
 const drawSlice = createSlice({

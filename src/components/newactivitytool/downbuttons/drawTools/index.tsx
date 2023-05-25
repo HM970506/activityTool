@@ -76,7 +76,13 @@ export default function DrawToolsButton() {
       <ToolNowBox onClick={openHandler}>
         <ToolNow style={innerBox}>
           {select ? (
-            <ThumbnailBox color={(brushes as any)[select].color}>
+            <ThumbnailBox
+              color={
+                (brushes as any)[select]
+                  ? (brushes as any)[select].color
+                  : "white"
+              }
+            >
               <Thumbnail src={getPath(select)} />
             </ThumbnailBox>
           ) : null}

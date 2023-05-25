@@ -6,6 +6,7 @@ import {
   ERASER,
   FELTPEN,
   HIGHLIGHTER,
+  INK,
   ReducersType,
   SPRAY,
 } from "../../types";
@@ -20,8 +21,6 @@ export default function DrawToolsMenu() {
   const dispatch = useDispatch();
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const brushes = useSelector((state: ReducersType) => state.drawReducer);
-  const { feltpen, crayon, backgroundBrush, highlighter, spray, eraser } =
-    brushes;
   const option = useSelector(
     (state: ReducersType) => state.categoryReducer.option
   );
@@ -42,78 +41,38 @@ export default function DrawToolsMenu() {
       dispatch(categoryActions.optionChange(false));
   };
 
+  const ToolButton = ({ keyName }: { keyName: string }) => {
+    return (
+      <BottomButton
+        onClick={() => {
+          modalHandler(keyName);
+        }}
+      >
+        {category === DRAWTOOLS && select === keyName && option && (
+          <DrawOption keyName={keyName} />
+        )}
+
+        <ToolBox select={select === keyName ? 1 : 0}>
+          <Tool src={getPath(keyName)} />
+          <ToolBackground
+            color={
+              keyName === FELTPEN || keyName === ERASER
+                ? "white"
+                : (brushes as any)[keyName].color
+            }
+          />
+        </ToolBox>
+      </BottomButton>
+    );
+  };
+
   return (
     <>
-      <BottomButton
-        onClick={() => {
-          modalHandler(FELTPEN);
-        }}
-      >
-        {category === DRAWTOOLS && select === FELTPEN && option && (
-          <DrawOption keyName={FELTPEN} />
-        )}
-
-        <ToolBox select={select === FELTPEN ? 1 : 0}>
-          <Tool src={getPath("feltpen")} />
-          <ToolBackground color={feltpen ? feltpen.color : "red"} />
-        </ToolBox>
-      </BottomButton>
-
-      <BottomButton
-        onClick={() => {
-          modalHandler(CRAYON);
-        }}
-      >
-        {category === DRAWTOOLS && select === CRAYON && option && (
-          <DrawOption keyName={CRAYON} />
-        )}
-        <ToolBox select={select === CRAYON ? 1 : 0}>
-          <Tool src={getPath("crayon")} />
-          <ToolBackground color={crayon ? crayon.color : "red"} />
-        </ToolBox>
-      </BottomButton>
-
-      <BottomButton
-        onClick={() => {
-          modalHandler(HIGHLIGHTER);
-        }}
-      >
-        {category === DRAWTOOLS && select === HIGHLIGHTER && option && (
-          <DrawOption keyName={HIGHLIGHTER} />
-        )}
-        <ToolBox select={select === HIGHLIGHTER ? 1 : 0}>
-          <Tool src={getPath(HIGHLIGHTER)} />
-          <ToolBackground color={highlighter ? highlighter.color : "red"} />
-        </ToolBox>
-      </BottomButton>
-
-      <BottomButton
-        onClick={() => {
-          modalHandler(SPRAY);
-        }}
-      >
-        {category === DRAWTOOLS && select === SPRAY && option && (
-          <DrawOption keyName={SPRAY} />
-        )}
-        <ToolBox select={select === SPRAY ? 1 : 0}>
-          <Tool src={getPath("spray")} />
-          <ToolBackground color={spray ? spray.color : "red"} />
-        </ToolBox>
-      </BottomButton>
-
-      <BottomButton
-        onClick={() => {
-          modalHandler(ERASER);
-        }}
-      >
-        {category === DRAWTOOLS && select === ERASER && option && (
-          <DrawOption keyName={ERASER} />
-        )}
-        <ToolBox select={select === ERASER ? 1 : 0}>
-          <Tool src={getPath("eraser")} />
-          <ToolBackground color={""} />
-        </ToolBox>
-      </BottomButton>
+      <ToolButton keyName={FELTPEN} />
+      <ToolButton keyName={CRAYON} />
+      <ToolButton keyName={HIGHLIGHTER} />
+      <ToolButton keyName={SPRAY} />
+      <ToolButton keyName={ERASER} />
     </>
   );
 }
