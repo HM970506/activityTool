@@ -80,7 +80,11 @@ export default function Record({
       if (stream) stream.getAudioTracks()[0].enabled = false;
 
       setRecorder(null);
-      await navigator.mediaDevices.getUserMedia({ audio: false });
+      await navigator.mediaDevices
+        .getUserMedia({ audio: false })
+        .catch((err) => {
+          alert("녹음장치가 없습니다!");
+        });
       reset();
     }
   };
@@ -106,11 +110,11 @@ export default function Record({
         <>
           <CategoryButton onClick={playButton}>
             <Icon src={"/diary/recorder/record.png"} />
-            <p>재생</p>
+            <span>재생</span>
           </CategoryButton>
           <CategoryButton onClick={reRecord}>
             <Icon src={"/diary/recorder/player.png"} />
-            다시녹음
+            <span>다시녹음</span>
           </CategoryButton>
         </>
       ) : (
