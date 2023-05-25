@@ -24,7 +24,7 @@ import { ReactComponent as Diagram } from "./svg/diagram.svg";
 import { ReactComponent as Filter } from "./svg/filter.svg";
 import { ReactComponent as Frame } from "./svg/frame.svg";
 
-import { ButtonInner, DownButtonsContainer } from "../../../style";
+import { DownButtonsContainer } from "../../../style";
 import cropper from "./cropper";
 import { useSpring } from "react-spring";
 import editControlHandler from "../../../common/editControlHandler";
@@ -78,6 +78,7 @@ export default function PhotoEditor() {
     // } else {
 
     photo.selectable = false;
+    photo.original = photo.original ? photo.original : photo.getSrc();
     photoCanvas.add(photo);
     photoCanvas.renderAll();
     //}
@@ -104,19 +105,32 @@ export default function PhotoEditor() {
     if (photoCanvas == null) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
-    if (objects.length >= 2) {
-      const editImg = cropper(objects[0], objects[1]);
-
+    if (objects.length >= 2 && photo) {
       // const group = new fabric.Group(objects, {
       //   selectable: true,
       //   erasable: false,
       // });
       // canvas.remove(photo);
       // canvas.add(group);
-      console.log(editImg);
+      const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
 
-      canvas.add(editImg);
-      canvas.renderAll();
+      const group = new fabric.Group(objects);
+      group.cloneAsImage((img: ImageType) => {
+        img.original = photo.original;
+        img.left = Math.round(objects[1].oCoords.tl.y);
+        img.top = Math.round(objects[1].oCoords.tl.x);
+        img.selectable = true;
+        img.erasable = false;
+        img.cropX = editImg?.cropX;
+        img.cropY = editImg?.cropY;
+        img.width = editImg?.width;
+        img.height = editImg?.height;
+        img.crossOrigin = "Anonymous";
+        img.objectType = "photo";
+
+        canvas.remove(photo);
+        canvas.add(img);
+      });
     } else {
       const objects = photoCanvas.getObjects();
 
@@ -132,8 +146,6 @@ export default function PhotoEditor() {
 
     dispatch(photoEditorActions.setIsEditing(false));
   };
-
-  //
 
   const prop1 = useSpring({
     from:

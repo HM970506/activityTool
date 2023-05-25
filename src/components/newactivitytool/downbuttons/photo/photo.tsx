@@ -98,6 +98,13 @@ export default function PhotoMenu() {
   const photoUpload = () => {
     if (inputRef.current !== null) inputRef.current?.click();
   };
+  const isEditing = useSelector((state: ReducersType) => {
+    return state.photoEditorReducer.isEditing;
+  });
+
+  useEffect(() => {
+    canvas.isDrawingMode = false;
+  }, [isEditing]);
 
   return (
     <>

@@ -22,6 +22,7 @@ export interface fabricEventType extends Partial<IEvent> {
 export interface ImageType extends Partial<Image> {
   erasable: boolean;
   objectType?: string;
+  original?: string;
 }
 
 export const STICKER = "STICKER";
