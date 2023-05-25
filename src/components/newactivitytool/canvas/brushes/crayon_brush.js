@@ -29,21 +29,49 @@ export default function CrayonMaker(fabric) {
       this.opacity = value;
     },
 
-    onMouseDown: function (pointer) {
+    onMouseDown: function (p) {
+      const pointer = {
+        x: this.canvas.vptCoords ? p.x - this.canvas.vptCoords.tl.x : p.x,
+        y: this.canvas.vptCoords ? p.y - this.canvas.vptCoords.tl.y : p.y,
+      };
+      // console.log("보정전:", p, "보정후:", pointer);
+      this.canvas.clearContext(this.canvas.contextTop);
       this.canvas.contextTop.globalAlpha = this.opacity;
       this._size = this.width / 2 + this._baseWidth;
+
       this.set(pointer);
     },
 
-    onMouseMove: function (pointer) {
-      this.update(pointer);
+    onMouseMove: function (p) {
+      const pointer = {
+        x: this.canvas.vptCoords ? p.x - this.canvas.vptCoords.tl.x : p.x,
+        y: this.canvas.vptCoords ? p.y - this.canvas.vptCoords.tl.y : p.y,
+      };
+      if (this._latest) this._latest.setFromPoint(this._point);
+      else this._latest = new fabric.Point(pointer.x, pointer.y);
+
+      fabric.Point.prototype.setFromPoint.call(this._point, pointer);
+
+      this._latestStrokeLength = this._point
+        .subtract(this._latest)
+        .distanceFrom({ x: 0, y: 0 });
+
       this.draw(this.canvas.contextTop);
     },
 
-    onMouseUp: function (pointer) {
-      var c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
-      var img = new fabric.Image(c);
+    onMouseUp: function () {
+      const c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
+      const img = new fabric.Image(c);
+      console.log(img);
       this.canvas.contextTopDirty = true;
+
+      const pointer = {
+        x: this.canvas.vptCoords ? img.x - this.canvas.vptCoords.tl.x : img.x,
+        y: this.canvas.vptCoords ? img.y - this.canvas.vptCoords.tl.y : img.y,
+      };
+
+      img.x = 0;
+      img.y = 0;
       this.canvas.add(img);
 
       this.canvas.renderAll();
@@ -53,15 +81,12 @@ export default function CrayonMaker(fabric) {
         this.canvas.width,
         this.canvas.height
       );
-      console.log(this.canvas.contextTop);
     },
 
     set: function (p) {
-      if (this._latest) {
-        this._latest.setFromPoint(this._point);
-      } else {
-        this._latest = new fabric.Point(p.x, p.y);
-      }
+      if (this._latest) this._latest.setFromPoint(this._point);
+      else this._latest = new fabric.Point(p.x, p.y);
+
       fabric.Point.prototype.setFromPoint.call(this._point, p);
     },
 

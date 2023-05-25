@@ -98,6 +98,7 @@ export default function functionSetting(canvas: canvasType) {
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
       //console.log(canvas.getPointer());
+      if (canvas.isDrawingMode) canvas.test = 1;
       if (canvas.tape.state === 1) {
         //  console.log("tape");
         tapeStep_1();
@@ -114,6 +115,7 @@ export default function functionSetting(canvas: canvasType) {
       else if (canvas.panning === 2) panStep_2(e);
     },
     "mouse:up": (e: IEvent | any) => {
+      canvas.test = 0;
       if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
     },
