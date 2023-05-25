@@ -17,9 +17,16 @@ import {
   PhotoOption2,
   FilterComponent,
   OptionComponent,
+  PhotoEditButtonInner,
 } from "./style";
+import { ReactComponent as Cut } from "./svg/cut.svg";
+import { ReactComponent as Diagram } from "./svg/diagram.svg";
+import { ReactComponent as Filter } from "./svg/filter.svg";
+import { ReactComponent as Frame } from "./svg/frame.svg";
 
-import { DownButtonsContainer } from "../../../style";
+import { ButtonInner, DownButtonsContainer } from "../../../style";
+import cropper from "./cropper";
+import { useSpring } from "react-spring";
 
 const test = ["heart", "star", "lightning", "bubble"];
 
@@ -31,7 +38,8 @@ export default function PhotoEditor() {
   const dispatch = useDispatch();
   const photoEditorCanvasRef = useRef<HTMLCanvasElement>(null);
   const [photoCanvas, setPhotoCanvas] = useState<canvasType>(null);
-  const [option, setOption] = useState<string>("");
+  const [option, setOption] = useState<boolean>(false);
+  const [category, setCategory] = useState<string>("");
 
   useEffect(() => {
     const photoCanvas = new fabric.Canvas(photoEditorCanvasRef.current, {
@@ -40,7 +48,7 @@ export default function PhotoEditor() {
       width: window.innerWidth,
       backgroundColor: "rgba(0,0,0,0)",
     });
-    //패닝, 확대 기능 추가
+
     setPhotoCanvas(photoCanvas);
     canvas.discardActiveObject();
     photoCanvas.discardActiveObject();
@@ -68,7 +76,7 @@ export default function PhotoEditor() {
 
     const objects = photoCanvas.getObjects();
 
-    fabric.Image.fromURL(`/diary/${shape}.png`, (frameImg: ImageType) => {
+    fabric.Image.fromURL(`/diary/frame/${shape}.png`, (frameImg: ImageType) => {
       frameImg.crossOrigin = "Anonymous";
       frameImg.selectable = true;
       frameImg.globalCompositeOperation = "destination-atop";
@@ -84,15 +92,17 @@ export default function PhotoEditor() {
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
     if (objects.length >= 2) {
-      // const editImg = cropper(objects[0], objects[1]);
-      // 크로퍼가 필요할 시 해당 부분에서 자르게 하기..
+      const editImg = cropper(objects[0], objects[1]);
 
-      const group = new fabric.Group(objects, {
-        selectable: true,
-        erasable: false,
-      });
-      canvas.remove(photo);
-      canvas.add(group);
+      // const group = new fabric.Group(objects, {
+      //   selectable: true,
+      //   erasable: false,
+      // });
+      // canvas.remove(photo);
+      // canvas.add(group);
+      console.log(editImg);
+
+      canvas.add(editImg);
       canvas.renderAll();
     } else {
       const objects = photoCanvas.getObjects();
@@ -110,11 +120,48 @@ export default function PhotoEditor() {
     dispatch(photoEditorActions.setIsEditing(false));
   };
 
-  // useEffect(() => {
-  //   document.addEventListener("mouseup", (e: MouseEvent) => {
-  //     if (e.target) setOption("");
-  //   });
-  // }, []);
+  //
+
+  const prop1 = useSpring({
+    from:
+      option && category === "비율"
+        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
+        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
+    to:
+      option && category === "비율"
+        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
+        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+  });
+  const prop2 = useSpring({
+    from:
+      option && category === "도형"
+        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
+        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
+    to:
+      option && category === "도형"
+        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
+        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+  });
+  const prop3 = useSpring({
+    from:
+      option && category === "보정"
+        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
+        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
+    to:
+      option && category === "보정"
+        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
+        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+  });
+  const prop4 = useSpring({
+    from:
+      option && category === "액자"
+        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
+        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
+    to:
+      option && category === "액자"
+        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
+        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+  });
 
   return (
     <>
@@ -125,17 +172,33 @@ export default function PhotoEditor() {
         <DownButtonsContainer>
           <OptionButton
             onClick={() => {
-              setOption("비율");
+              if (category !== "비율") {
+                setCategory("비율");
+                setOption(true);
+              } else {
+                setCategory("");
+                setOption(false);
+              }
             }}
           >
-            {option === "비율" && <PhotoOption1>test</PhotoOption1>}비율
+            {option && category === "비율" && <PhotoOption1>test</PhotoOption1>}
+            <PhotoEditButtonInner style={prop1}>
+              <Cut />
+              비율
+            </PhotoEditButtonInner>
           </OptionButton>
           <OptionButton
             onClick={() => {
-              setOption("도형");
+              if (category !== "도형") {
+                setCategory("도형");
+                setOption(true);
+              } else {
+                setCategory("");
+                setOption(false);
+              }
             }}
           >
-            {option === "도형" && (
+            {option && category === "도형" && (
               <PhotoOption1>
                 {test.map((value: string, key: number) => {
                   return (
@@ -151,14 +214,23 @@ export default function PhotoEditor() {
                 })}
               </PhotoOption1>
             )}
-            도형
+            <PhotoEditButtonInner style={prop2}>
+              <Diagram />
+              도형
+            </PhotoEditButtonInner>
           </OptionButton>
           <OptionButton
             onClick={() => {
-              setOption("보정");
+              if (category !== "보정") {
+                setCategory("보정");
+                setOption(true);
+              } else {
+                setCategory("");
+                setOption(false);
+              }
             }}
           >
-            {option === "보정" && (
+            {option && category === "보정" && (
               <PhotoOption2>
                 <FilterComponent>
                   <p>원본</p>
@@ -183,14 +255,26 @@ export default function PhotoEditor() {
                 </FilterComponent>
               </PhotoOption2>
             )}
-            보정
+            <PhotoEditButtonInner style={prop3}>
+              <Filter />
+              보정
+            </PhotoEditButtonInner>
           </OptionButton>
           <OptionButton
             onClick={() => {
-              setOption("액자");
+              if (category !== "액자") {
+                setCategory("액자");
+                setOption(true);
+              } else {
+                setCategory("");
+                setOption(false);
+              }
             }}
           >
-            액자
+            <PhotoEditButtonInner style={prop4}>
+              <Frame />
+              액자
+            </PhotoEditButtonInner>
           </OptionButton>
         </DownButtonsContainer>
       </PhotoEditorOverlay>

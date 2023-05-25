@@ -25,8 +25,8 @@ const renderIcon = (
 };
 
 export const deleteProps = {
-  x: -0.4,
-  y: -0.4,
+  x: -0.5,
+  y: -0.5,
   cursorStyle: "pointer",
   mouseUpHandler: deleteObject,
   render: renderIcon,

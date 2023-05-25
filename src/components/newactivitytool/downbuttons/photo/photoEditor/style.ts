@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../../../style";
+import { Button, ButtonInner } from "../../../style";
 import { OptionContainer } from "../../style";
 
 export const PhotoEditorContainer = styled.div<{ view: number }>`
@@ -94,4 +94,9 @@ export const OptionComponent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const PhotoEditButtonInner = styled(ButtonInner)`
+  color: #898885;
+  flex-direction: column;
 `;

@@ -55,18 +55,9 @@ export default function PhotoMenu() {
 
             img.objectType = "photo";
             if (img.controls) {
-              //프로토타입에 넣은것도 아닌데 왜 전부 생기냐고요
-              //프로토타입에 추가하는 것 외에는 방법이 없다면...
-              //visible에 custom control도 추가할 수 있는지를 알아보자.
-              //뭘 엄청 많이 건드려야 되네..
-              //클릭시마다 타입을 확인해서 컨트롤을 줬다뺐다 할까?
-              //setControlVisible, setControlsVisibility은 undifined에러..
-              //  img.setControlVisible("mtr", false);
-              //  img.setControlsVisibility({"mtr": false});
-              // useDispatch를 써야 하니까 에딧컨트롤은 계속 여기서 생성하는 게 좋을듯.
               img.controls.editControl = new fabric.Control({
-                x: 0.4,
-                y: -0.4,
+                x: 0.5,
+                y: -0.5,
                 cursorStyle: "pointer",
                 mouseUpHandler: editObject,
                 render: renderIcon,
@@ -117,8 +108,6 @@ export default function PhotoMenu() {
         ref={inputRef}
         type="file"
         accept="image/*"
-        //파일 선택 안하고 취소 누르면 컴포넌트 전부 에러남.
-        //onChange는 작동 안 함.
         onChange={onUploadImage}
       />
       <CategoryButton onClick={photoUpload}>
