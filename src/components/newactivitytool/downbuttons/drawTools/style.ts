@@ -18,6 +18,11 @@ export const ToolNow = styled(animated.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const DrawOptionContainer = styled(OptionContainer)`

@@ -28,6 +28,9 @@ export default function canvasSetting(canvas: canvasType) {
           now.scaleY !== undefined ? Math.round(now.scaleY * 1000) / 1000 : 0;
       }
     },
+    "mouse:up": () => {
+      console.log(canvas._objects);
+    },
   });
   return canvas;
 }

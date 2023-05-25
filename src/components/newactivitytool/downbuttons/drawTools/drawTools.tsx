@@ -75,6 +75,20 @@ export default function DrawToolsMenu() {
 
       <BottomButton
         onClick={() => {
+          modalHandler(HIGHLIGHTER);
+        }}
+      >
+        {category === DRAWTOOLS && select === HIGHLIGHTER && option && (
+          <DrawOption keyName={HIGHLIGHTER} />
+        )}
+        <ToolBox select={select === HIGHLIGHTER ? 1 : 0}>
+          <Tool src={getPath(HIGHLIGHTER)} />
+          <ToolBackground color={highlighter ? highlighter.color : "red"} />
+        </ToolBox>
+      </BottomButton>
+
+      <BottomButton
+        onClick={() => {
           modalHandler(SPRAY);
         }}
       >

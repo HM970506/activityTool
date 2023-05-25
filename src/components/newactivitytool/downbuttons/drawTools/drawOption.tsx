@@ -1,7 +1,7 @@
 import Colorbox from "../../common/colorbox";
 import { SizeContainer, Sizechip, SizechipBox } from "../../common/sizebox";
 import { DrawOptionContainer } from "./style";
-import { ReducersType, SPRAY } from "../../types";
+import { ERASER, FELTPEN, ReducersType, SPRAY } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../store/common/drawSlice";
 import { ReactComponent as Line1 } from "./svg/line/line1.svg";
@@ -92,13 +92,15 @@ export default function DrawOption({ keyName }: { keyName: string }) {
         </SizechipBox>
       </SizeContainer>
 
-      <Colorbox
-        setColor={(color: string) => {
-          setColor(keyName, color);
-        }}
-        option={option}
-        keyName={keyName}
-      />
+      {keyName !== FELTPEN && keyName !== ERASER && (
+        <Colorbox
+          setColor={(color: string) => {
+            setColor(keyName, color);
+          }}
+          option={option}
+          keyName={keyName}
+        />
+      )}
     </DrawOptionContainer>
   );
 }

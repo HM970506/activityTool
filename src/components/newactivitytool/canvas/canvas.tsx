@@ -23,6 +23,9 @@ import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import { drawActions } from "../../../store/common/drawSlice";
+import CrayonMaker from "./brushes/crayon_brush";
+import BrushFunctions from "./util/point.extend";
+import HighlighterMaker from "./brushes/marker_brush";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -78,6 +81,10 @@ export default function Canvas() {
     canvasSetting(canvas);
     windowSetting(canvas, dispatch);
 
+    BrushFunctions(fabric);
+    CrayonMaker(fabric);
+    HighlighterMaker(fabric);
+
     canvas.renderAll();
 
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
@@ -93,7 +100,11 @@ export default function Canvas() {
     dispatch(
       drawActions.setting({
         name: CRAYON,
-        brush: new fabric.PencilBrush(canvas, { color: "black", width: 1 }),
+        brush: new fabric.CrayonBrush(canvas, {
+          color: "black",
+          width: 1,
+          opacity: 0.6,
+        }),
       })
     );
     dispatch(
@@ -118,7 +129,7 @@ export default function Canvas() {
     dispatch(
       drawActions.setting({
         name: HIGHLIGHTER,
-        brush: new fabric.PencilBrush(canvas, { color: "black", width: 1 }),
+        brush: new fabric.MarkerBrush(canvas, { color: "black", width: 1 }),
       })
     );
     dispatch(
