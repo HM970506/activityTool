@@ -12,7 +12,7 @@ import {
 import { useEffect } from "react";
 import DrawOption from "./drawOption";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { BottomButton, Tool, ToolBox } from "./style";
+import { BottomButton, Tool, ToolBackground, ToolBox } from "./style";
 import { getPath } from "./datas";
 import { drawActions } from "../../../../store/common/drawSlice";
 
@@ -52,8 +52,10 @@ export default function DrawToolsMenu() {
         {category === DRAWTOOLS && select === FELTPEN && option && (
           <DrawOption keyName={FELTPEN} />
         )}
-        <ToolBox select={select === FELTPEN ? 1 : 0} color={""}>
+
+        <ToolBox select={select === FELTPEN ? 1 : 0}>
           <Tool src={getPath("feltpen")} />
+          <ToolBackground color={feltpen ? feltpen.color : "red"} />
         </ToolBox>
       </BottomButton>
 
@@ -65,11 +67,9 @@ export default function DrawToolsMenu() {
         {category === DRAWTOOLS && select === CRAYON && option && (
           <DrawOption keyName={CRAYON} />
         )}
-        <ToolBox
-          select={select === CRAYON ? 1 : 0}
-          color={crayon ? crayon.color : "red"}
-        >
+        <ToolBox select={select === CRAYON ? 1 : 0}>
           <Tool src={getPath("crayon")} />
+          <ToolBackground color={crayon ? crayon.color : "red"} />
         </ToolBox>
       </BottomButton>
 
@@ -81,16 +81,13 @@ export default function DrawToolsMenu() {
         {category === DRAWTOOLS && select === SPRAY && option && (
           <DrawOption keyName={SPRAY} />
         )}
-        <ToolBox
-          select={select === SPRAY ? 1 : 0}
-          color={spray ? spray.color : "red"}
-        >
+        <ToolBox select={select === SPRAY ? 1 : 0}>
           <Tool src={getPath("spray")} />
+          <ToolBackground color={spray ? spray.color : "red"} />
         </ToolBox>
       </BottomButton>
 
       <BottomButton
-        color={""}
         onClick={() => {
           modalHandler(ERASER);
         }}
@@ -98,8 +95,9 @@ export default function DrawToolsMenu() {
         {category === DRAWTOOLS && select === ERASER && option && (
           <DrawOption keyName={ERASER} />
         )}
-        <ToolBox select={select === ERASER ? 1 : 0} color="white">
+        <ToolBox select={select === ERASER ? 1 : 0}>
           <Tool src={getPath("eraser")} />
+          <ToolBackground color={""} />
         </ToolBox>
       </BottomButton>
     </>

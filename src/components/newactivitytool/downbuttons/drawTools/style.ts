@@ -35,14 +35,11 @@ export const BottomButton = styled.button`
   align-items: center;
 `;
 
-export const ToolBox = styled.div<{ select: number; color: string }>`
-  position: relative;
-  z-index: 1;
-  background-color: ${(props) => (props.color !== "" ? props.color : "white")};
-
+export const ToolBox = styled.div<{ select: number }>`
   width: 56px;
   height: 72px;
   bottom: ${(props) => (props.select === 1 ? "0px" : "-20px")};
+  position: relative;
 `;
 
 export const Tool = styled.img`
@@ -50,6 +47,17 @@ export const Tool = styled.img`
   height: inherit;
   position: absolute;
   z-index: 2;
+
+  top: 0;
+  left: 0;
+`;
+
+export const ToolBackground = styled.div<{ color: string }>`
+  background-color: ${(props) => (props.color !== "" ? props.color : "white")};
+
+  position: absolute;
+  z-index: 1;
+
   top: 0;
   left: 0;
 `;
