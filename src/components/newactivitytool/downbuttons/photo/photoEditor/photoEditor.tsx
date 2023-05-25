@@ -27,6 +27,7 @@ import { ReactComponent as Frame } from "./svg/frame.svg";
 import { ButtonInner, DownButtonsContainer } from "../../../style";
 import cropper from "./cropper";
 import { useSpring } from "react-spring";
+import editControlHandler from "../../../common/editControlHandler";
 
 const test = ["heart", "star", "lightning", "bubble"];
 
@@ -54,21 +55,32 @@ export default function PhotoEditor() {
     photoCanvas.discardActiveObject();
     photoCanvas.clear();
 
+    photoCanvas.on({
+      "selection:updated": () => {
+        editControlHandler(photoCanvas);
+      },
+      "selection:created": () => {
+        editControlHandler(photoCanvas);
+      },
+    });
+
     photoReady(photo, photoCanvas);
   }, []);
 
   const photoReady = (photo: any, photoCanvas: canvasType) => {
-    if (photo.type == "group") {
-      photoCanvas.add(photo);
-      photoCanvas.setActiveObject(photo);
-      photoCanvas.getActiveObject().toActiveSelection();
-      photoCanvas.requestRenderAll();
-      photoCanvas.getActiveObjects()[0].selectable = false;
-      photoCanvas.discardActiveObject();
-    } else {
-      photoCanvas.add(photo);
-      photoCanvas.renderAll();
-    }
+    // if (photo.type == "group") {
+    //   photoCanvas.add(photo);
+    //   photoCanvas.setActiveObject(photo);
+    //   photoCanvas.getActiveObject().toActiveSelection();
+    //   photoCanvas.requestRenderAll();
+    //   photoCanvas.getActiveObjects()[0].selectable = false;
+    //   photoCanvas.discardActiveObject();
+    // } else {
+
+    photo.selectable = false;
+    photoCanvas.add(photo);
+    photoCanvas.renderAll();
+    //}
   };
 
   const shapeChange = (shape: string) => {
@@ -77,6 +89,7 @@ export default function PhotoEditor() {
     const objects = photoCanvas.getObjects();
 
     fabric.Image.fromURL(`/diary/frame/${shape}.png`, (frameImg: ImageType) => {
+      frameImg.objectType = "frame";
       frameImg.crossOrigin = "Anonymous";
       frameImg.selectable = true;
       frameImg.globalCompositeOperation = "destination-atop";

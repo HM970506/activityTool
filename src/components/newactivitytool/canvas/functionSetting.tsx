@@ -1,6 +1,7 @@
 import { fabric } from "fabric-with-erasing";
 import { canvasType, fabricObjectType, stickerOptionType } from "../types";
 import { IEvent } from "fabric/fabric-impl";
+import editControlHandler from "../common/editControlHandler";
 
 export default function functionSetting(canvas: canvasType) {
   const tapeStep_1 = () => {
@@ -94,15 +95,6 @@ export default function functionSetting(canvas: canvasType) {
     canvas.panning = 1;
   };
 
-  const editControlHandler = () => {
-    const now = canvas.getActiveObject();
-    if (now.controls.editControl) {
-      if (now.objectType == "photo") {
-        now.controls.editControl.visible = true;
-      } else now.controls.editControl.visible = false;
-    }
-  };
-
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
       //console.log(canvas.getPointer());
@@ -126,10 +118,10 @@ export default function functionSetting(canvas: canvasType) {
       else if (canvas.panning === 2) panStep_3();
     },
     "selection:updated": () => {
-      editControlHandler();
+      editControlHandler(canvas);
     },
     "selection:created": () => {
-      editControlHandler();
+      editControlHandler(canvas);
     },
   });
 }

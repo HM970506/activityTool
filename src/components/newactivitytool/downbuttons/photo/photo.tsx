@@ -25,9 +25,6 @@ const renderIcon = (
 export default function PhotoMenu() {
   const [photo, setPhoto] = useState<string>("");
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const dialog = useSelector(
-    (state: ReducersType) => state.nodeReducer.dialogContainer
-  );
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
