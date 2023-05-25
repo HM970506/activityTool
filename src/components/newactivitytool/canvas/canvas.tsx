@@ -6,12 +6,23 @@ import { useEffect, useRef, useState } from "react";
 import { CanvasBackground } from "../style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import { DEFAULT_CANVAS, DRAWTOOLS, ReducersType } from "../types";
+import {
+  BACKGROUND_BRUSH,
+  CRAYON,
+  DEFAULT_CANVAS,
+  DRAWTOOLS,
+  ERASER,
+  FELTPEN,
+  HIGHLIGHTER,
+  ReducersType,
+  SPRAY,
+} from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
+import { drawActions } from "../../../store/common/drawSlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -23,7 +34,7 @@ export default function Canvas() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
 
   const drawModeDebounce = debounce(() => {
-    if (category == DRAWTOOLS) canvas.isDrawingMode = true;
+    if (category == DRAWTOOLS && canvas) canvas.isDrawingMode = true;
   }, 100);
 
   const zoomSetting = (zoom: number) => {
@@ -71,6 +82,53 @@ export default function Canvas() {
 
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
     dispatch(nodeActions.setCanvas(canvas));
+
+    //브러쉬 초기세팅 관련 코드 시작
+    dispatch(
+      drawActions.setting({
+        name: FELTPEN,
+        brush: new fabric.PencilBrush(canvas, { color: "black", width: 1 }),
+      })
+    );
+    dispatch(
+      drawActions.setting({
+        name: CRAYON,
+        brush: new fabric.PencilBrush(canvas, { color: "black", width: 1 }),
+      })
+    );
+    dispatch(
+      drawActions.setting({
+        name: SPRAY,
+        brush: new fabric.SprayBrush(canvas, {
+          density: 2,
+          color: "black",
+          width: 1,
+        }),
+      })
+    );
+    dispatch(
+      drawActions.setting({
+        name: BACKGROUND_BRUSH,
+        brush: new fabric.PatternBrush(canvas, {
+          color: "black",
+          width: 1,
+        }),
+      })
+    );
+    dispatch(
+      drawActions.setting({
+        name: HIGHLIGHTER,
+        brush: new fabric.PencilBrush(canvas, { color: "black", width: 1 }),
+      })
+    );
+    dispatch(
+      drawActions.setting({
+        name: ERASER,
+        brush: new fabric.EraserBrush(canvas, { color: "black", width: 1 }),
+      })
+    );
+
+    //브러쉬 초기세팅 관련 코드 끝
   }, []);
 
   return (

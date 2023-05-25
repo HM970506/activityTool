@@ -1,4 +1,12 @@
-import { Image, Object, IEvent } from "fabric/fabric-impl";
+import {
+  Image,
+  Object,
+  IEvent,
+  PencilBrush,
+  SprayBrush,
+  PatternBrush,
+  BaseBrush,
+} from "fabric/fabric-impl";
 
 export type fabricObjectType = Object;
 
@@ -18,8 +26,7 @@ export interface ImageType extends Partial<Image> {
 
 export const STICKER = "STICKER";
 export const TEXT = "TEXT";
-export const PEN = "PEN";
-export const ERASER = "ERASER";
+
 export const BRUSH = "BRUSH";
 export const PHOTO = "PHOTO";
 export const RECORD = "RECORD";
@@ -27,10 +34,12 @@ export const DRAWTOOLS = "DRAWTOOLS";
 export const DECORATION = "DECORATION";
 
 export const PENCIL = "pencil";
+export const FELTPEN = "feltpen";
 export const BACKGROUND_BRUSH = "backgroundBrush";
 export const CRAYON = "crayon";
 export const SPRAY = "spray";
 export const HIGHLIGHTER = "highlighter";
+export const ERASER = "eraser";
 
 export const COLORS = [
   "black",
@@ -104,17 +113,14 @@ export interface ReducersType {
   drawReducer: drawReducerType;
 }
 
-export interface drawDefault {
-  color: string;
-  size: number;
-}
-
 export interface drawReducerType {
-  now: any;
-  pencil: drawDefault;
-  back: drawDefault;
-  spray: drawDefault;
-  eraser: drawDefault;
+  now: null | string;
+  feltpen: null | PencilBrush;
+  crayon: null | PencilBrush;
+  backgroundBrush: null | PatternBrush;
+  highlighter: null | PencilBrush;
+  spray: null | SprayBrush;
+  eraser: any;
 }
 
 export const DEFAULT_X = 500;

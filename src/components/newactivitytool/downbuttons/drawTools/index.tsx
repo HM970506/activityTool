@@ -1,43 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "../../../../store/common/categorySlice";
+import { DRAWTOOLS, ReducersType } from "../../types";
 import {
-  BACKGROUND_BRUSH,
-  CRAYON,
-  DRAWTOOLS,
-  ERASER,
-  HIGHLIGHTER,
-  PENCIL,
-  ReducersType,
-  SPRAY,
-} from "../../types";
-import { ToolNow, ToolNowBox, ToolsContatiner } from "./style";
-import { fabric } from "fabric-with-erasing";
+  Thumbnail,
+  ThumbnailBox,
+  ToolNow,
+  ToolNowBox,
+  ToolsContatiner,
+} from "./style";
 import DrawToolsMenu from "./drawTools";
 import { useSpring } from "react-spring";
+import { getPath } from "./datas";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();
+  const brushes = useSelector((state: ReducersType) => state.drawReducer);
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
-
-  const BRUSHES = new Map([
-    [PENCIL, new fabric.PencilBrush()],
-    [SPRAY, new fabric.SprayBrush(canvas, { density: 1 })],
-    [ERASER, new fabric.EraserBrush(canvas)],
-    [BACKGROUND_BRUSH, new fabric.PatternBrush(canvas)],
-    [HIGHLIGHTER, new fabric.PencilBrush(canvas)],
-    [CRAYON, ""],
-  ]);
-  const img = new Image();
-  img.src = "/diary/drawtools/pattern.jpg";
-  img.crossOrigin = "Anonymous";
-  BRUSHES.get(BACKGROUND_BRUSH).source = img;
-
+  const select = useSelector((state: ReducersType) => state.drawReducer.now);
   const [isOpen, setIsOpen] = useState<number>(0);
-  const [select, setSelect] = useState<string>("");
 
   useEffect(() => {
     if (canvas) {
@@ -52,7 +36,7 @@ export default function DrawToolsButton() {
   }, [category]);
 
   useEffect(() => {
-    if (select !== "") canvas.isDrawingMode = true;
+    if (select !== "" && canvas) canvas.isDrawingMode = true;
   }, [select]);
 
   const openHandler = () => {
@@ -61,6 +45,7 @@ export default function DrawToolsButton() {
     else dispatch(categoryActions.categoryChange(""));
   };
 
+  //애니메이션 관련 코드 시작
   const innerBox = useSpring({
     from: isOpen
       ? {
@@ -84,21 +69,20 @@ export default function DrawToolsButton() {
     from: isOpen ? { width: 72 } : { width: 420 },
     to: isOpen ? { width: 420 } : { width: 72 },
   });
+  //애니메이션 관련 코드 끝
 
   return (
     <ToolsContatiner style={outterBox}>
       <ToolNowBox onClick={openHandler}>
         <ToolNow style={innerBox}>
-          <p>{select}</p>
+          {select ? (
+            <ThumbnailBox color={(brushes as any)[select].color}>
+              <Thumbnail src={getPath(select)} />
+            </ThumbnailBox>
+          ) : null}
         </ToolNow>
       </ToolNowBox>
-      {canvas && (
-        <DrawToolsMenu
-          setSelect={setSelect}
-          select={select}
-          brushes={BRUSHES}
-        />
-      )}
+      {canvas && <DrawToolsMenu />}
     </ToolsContatiner>
   );
 }

@@ -1,18 +1,7 @@
 import Colorbox from "../../common/colorbox";
-import {
-  SIZES,
-  SizeContainer,
-  Sizechip,
-  SizechipBox,
-} from "../../common/sizebox";
+import { SizeContainer, Sizechip, SizechipBox } from "../../common/sizebox";
 import { DrawOptionContainer } from "./style";
-import {
-  BACKGROUND_BRUSH,
-  ERASER,
-  PENCIL,
-  ReducersType,
-  SPRAY,
-} from "../../types";
+import { ReducersType, SPRAY } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../store/common/drawSlice";
 import { ReactComponent as Line1 } from "./svg/line/line1.svg";
@@ -27,91 +16,75 @@ import { ReactComponent as Spray4 } from "./svg/spray/spray4.svg";
 import { ReactComponent as Spray5 } from "./svg/spray/spray5.svg";
 
 export default function DrawOption({ keyName }: { keyName: string }) {
-  const { pencil, back, spray, eraser } = useSelector(
-    (state: ReducersType) => state.drawReducer
-  );
+  const brushes = useSelector((state: ReducersType) => state.drawReducer);
+  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const dispatch = useDispatch();
+  const select = useSelector((state: ReducersType) => state.drawReducer.now);
 
-  const sizeChange = (size: number) => {
-    if (keyName === PENCIL)
-      dispatch(drawActions.setPencil({ color: pencil.color, size: size }));
-    else if (keyName === BACKGROUND_BRUSH)
-      dispatch(
-        drawActions.setBackgroundBrush({ color: back.color, size: size })
-      );
-    else if (keyName === SPRAY)
-      dispatch(drawActions.setSpray({ color: spray.color, size: size }));
-    else if (keyName === ERASER)
-      dispatch(drawActions.setEraser({ color: eraser.color, size: size }));
-  };
-  const colorChange = (color: string) => {
-    if (keyName === PENCIL)
-      dispatch(drawActions.setPencil({ color: color, size: pencil.size }));
-    else if (keyName === BACKGROUND_BRUSH)
-      dispatch(
-        drawActions.setBackgroundBrush({ color: color, size: back.size })
-      );
-    else if (keyName === SPRAY)
-      dispatch(drawActions.setSpray({ color: color, size: spray.size }));
+  const setColor = (keyname: string, color: string) => {
+    dispatch(
+      drawActions.setBrush({ name: keyName, color: color, width: undefined })
+    );
+    canvas.freeDrawingBrush.color = color;
   };
 
-  const option =
-    keyName === PENCIL
-      ? pencil
-      : keyName === SPRAY
-      ? spray
-      : keyName === BACKGROUND_BRUSH
-      ? back
-      : eraser;
+  const setSize = (width: number) => {
+    dispatch(
+      drawActions.setBrush({ name: keyName, color: undefined, width: width })
+    );
+    canvas.freeDrawingBrush.width = width;
+  };
+
+  const option = (brushes as any)[select ? select : "feltpen"];
 
   return (
     <DrawOptionContainer onClick={(e) => e.stopPropagation()}>
       <SizeContainer>
-        <SizechipBox select={option.size === 1 ? 1 : 0} color={option.color}>
+        <SizechipBox select={option.width === 1 ? 1 : 0} color={option.color}>
           <Sizechip
-            color={option.size !== 1 ? option.color : ""}
+            color={option.width !== 1 ? option.color : ""}
             onClick={() => {
-              sizeChange(1);
+              setSize(1);
             }}
           >
             {keyName == SPRAY ? <Spray1 /> : <Line1 />}
           </Sizechip>
         </SizechipBox>
-        <SizechipBox select={option.size === 5 ? 1 : 0} color={option.color}>
+        <SizechipBox select={option.width === 5 ? 1 : 0} color={option.color}>
           <Sizechip
-            color={option.size !== 5 ? option.color : ""}
+            color={option.width !== 5 ? option.color : ""}
             onClick={() => {
-              sizeChange(5);
+              setSize(5);
             }}
           >
             {keyName == SPRAY ? <Spray2 /> : <Line2 />}
           </Sizechip>
         </SizechipBox>
-        <SizechipBox select={option.size === 10 ? 1 : 0} color={option.color}>
+        <SizechipBox select={option.width === 10 ? 1 : 0} color={option.color}>
           <Sizechip
-            color={option.size !== 10 ? option.color : ""}
+            color={option.width !== 10 ? option.color : ""}
             onClick={() => {
-              sizeChange(10);
+              setSize(10);
             }}
           >
             {keyName == SPRAY ? <Spray3 /> : <Line3 />}
           </Sizechip>
         </SizechipBox>
-        <SizechipBox select={option.size === 15 ? 1 : 0} color={option.color}>
+        <SizechipBox select={option.width === 15 ? 1 : 0} color={option.color}>
           <Sizechip
-            color={option.size !== 15 ? option.color : ""}
+            color={option.width !== 15 ? option.color : ""}
             onClick={() => {
-              sizeChange(15);
+              setSize(15);
             }}
           >
             {keyName == SPRAY ? <Spray4 /> : <Line4 />}
           </Sizechip>
         </SizechipBox>
-        <SizechipBox select={option.size === 20 ? 1 : 0} color={option.color}>
+        <SizechipBox select={option.width === 20 ? 1 : 0} color={option.color}>
           <Sizechip
-            color={option.size !== 20 ? option.color : ""}
+            color={option.width !== 20 ? option.color : ""}
             onClick={() => {
-              sizeChange(20);
+              setSize(20);
             }}
           >
             {keyName == SPRAY ? <Spray5 /> : <Line5 />}
@@ -119,7 +92,13 @@ export default function DrawOption({ keyName }: { keyName: string }) {
         </SizechipBox>
       </SizeContainer>
 
-      <Colorbox setColor={colorChange} option={option} keyName={keyName} />
+      <Colorbox
+        setColor={(color: string) => {
+          setColor(keyName, color);
+        }}
+        option={option}
+        keyName={keyName}
+      />
     </DrawOptionContainer>
   );
 }

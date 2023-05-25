@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const DEFAULT = {
   now: null,
-  pencil: { color: "black", size: 1 },
-  back: { color: "black", size: 1 },
-  spray: { color: "black", size: 1 },
-  eraser: { size: 1 },
+  feltpen: null,
+  crayon: null,
+  backgroundBrush: null,
+  highlighter: null,
+  spray: null,
+  eraser: null,
 };
 
 const drawSlice = createSlice({
@@ -16,32 +18,24 @@ const drawSlice = createSlice({
     reset: (state) => {
       state = DEFAULT;
     },
+    setting: (state, action: PayloadAction<any>) => {
+      const { name, brush } = action.payload;
+      (state as any)[name] = { brush: brush, width: 1, color: "black" };
+    },
     setNow: (state, action: PayloadAction<any>) => {
       state.now = action.payload;
     },
-    setPencil: (
+    setBrush: (
       state,
-      action: PayloadAction<{ color: string; size: number }>
+      action: PayloadAction<{
+        name: string;
+        color: string | undefined;
+        width: number | undefined;
+      }>
     ) => {
-      state.pencil = action.payload;
-    },
-    setBackgroundBrush: (
-      state,
-      action: PayloadAction<{ color: string; size: number }>
-    ) => {
-      state.back = action.payload;
-    },
-    setSpray: (
-      state,
-      action: PayloadAction<{ color: string; size: number }>
-    ) => {
-      state.spray = action.payload;
-    },
-    setEraser: (
-      state,
-      action: PayloadAction<{ color: string; size: number }>
-    ) => {
-      state.eraser = action.payload;
+      const { name, color, width } = action.payload;
+      if (color) (state as any)[name].color = color;
+      if (width) (state as any)[name].width = width;
     },
   },
 });
