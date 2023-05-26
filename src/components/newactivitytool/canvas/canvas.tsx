@@ -36,6 +36,9 @@ export default function Canvas() {
     (state: ReducersType) => state.categoryReducer.category
   );
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const { undo, redo } = useSelector(
+    (state: ReducersType) => state.nodeReducer.history
+  );
 
   const drawModeDebounce = debounce(() => {
     if (category == DRAWTOOLS && canvas) canvas.isDrawingMode = true;
@@ -147,6 +150,16 @@ export default function Canvas() {
     );
 
     //브러쉬 초기세팅 관련 코드 끝
+
+    //히스토리 초기세팅 관련 코드 시작
+    canvas.on("mouse:up", () => {
+      dispatch(nodeActions.setUndo(canvas.historyUndo.length));
+      if (canvas.historyRedo.length > 0) {
+        canvas.historyRedo = [];
+        dispatch(nodeActions.setRedo(0));
+      }
+    });
+    //히스토리 초기세팅 관련코드 끝
   }, []);
 
   return (

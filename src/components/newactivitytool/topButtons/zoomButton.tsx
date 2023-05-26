@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ReducersType } from "../types";
 import { zoomActions } from "../../../store/common/zoomSlice";
-import { ZoomContainer } from "./style";
+import { SvgBox, ZoomContainer } from "./style";
 import { ReactComponent as Rotato } from "./svg/rotato.svg";
 
 export default function ZoomButton() {
@@ -11,7 +11,7 @@ export default function ZoomButton() {
 
   return (
     <ZoomContainer>
-      <span> x{zoom.toFixed(2)}</span>
+      <span> {parseInt(zoom.toFixed(2)) * 100}%</span>
       <span
         onClick={() => {
           if (zoom !== 1) {
@@ -24,7 +24,9 @@ export default function ZoomButton() {
           canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
         }}
       >
-        <Rotato />
+        <SvgBox>
+          <Rotato />
+        </SvgBox>
       </span>
     </ZoomContainer>
   );

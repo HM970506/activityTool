@@ -59,13 +59,13 @@ export const Tool = styled.img`
 
 export const ToolBackground = styled.div<{ color: string }>`
   background-color: ${(props) => (props.color !== "" ? props.color : "white")};
-  width: inherit;
-  height: inherit;
+  width: 50px;
+  height: 70px;
   position: absolute;
   z-index: 1;
 
-  top: 0;
-  left: 0;
+  top: 5px;
+  left: 5px;
 `;
 
 export const Thumbnail = styled.img`

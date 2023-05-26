@@ -116,6 +116,7 @@ export default function functionSetting(canvas: canvasType) {
     },
     "mouse:up": (e: IEvent | any) => {
       canvas.test = 0;
+
       if (canvas.tape.state === 2) tapeStep_3();
       else if (canvas.panning === 2) panStep_3();
     },

@@ -22,8 +22,15 @@ export default function Back({
     await saveJson(canvas, record);
   };
 
+  const flutterBack = () => {
+    // window.closeCurrent = () => {
+    //   sendToFlutterString("close_current_view");
+    //   ForJH.postMessage(message);
+    // };
+  };
+
   return (
-    <BackButton onClick={activityEnd}>
+    <BackButton onClick={flutterBack}>
       <X />
     </BackButton>
   );

@@ -8,6 +8,7 @@ const DEFAULT = {
   dialogContainer: null,
   record: "",
   opacity: 0,
+  history: { undo: 0, redo: 0 },
 };
 const nodeSlice = createSlice({
   name: "nodeReducer",
@@ -16,6 +17,12 @@ const nodeSlice = createSlice({
   reducers: {
     reset: (state) => {
       state = DEFAULT;
+    },
+    setUndo: (state, action: PayloadAction<number>) => {
+      state.history.undo = action.payload;
+    },
+    setRedo: (state, action: PayloadAction<number>) => {
+      state.history.redo = action.payload;
     },
     setCanvas: (state, action: PayloadAction<canvasType>) => {
       state.canvas = action.payload;

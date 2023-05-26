@@ -35,6 +35,15 @@ export const TopButton = styled(DefaultButton)`
   align-items: center;
 `;
 
+export const HistoryButton = styled(TopButton)<{ state: number }>`
+  stroke: ${(props) => {
+    return props.state ? "#f9f8f5" : "black";
+  }};
+  fill: ${(props) => {
+    return props.state ? "#f9f8f5" : "black";
+  }};
+`;
+
 export const HistoryContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -48,4 +57,12 @@ export const ZoomContainer = styled.div`
   align-items: center;
   width: 116px;
   margin-right: 16px;
+`;
+
+export const SvgBox = styled.span`
+  stroke: #f9f8f5;
+  margin-left: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

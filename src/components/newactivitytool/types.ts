@@ -94,6 +94,7 @@ export interface nodeReducerType {
   record: any;
   textareaContainer: HTMLDivElement;
   dialogContainer: HTMLDialogElement;
+  history: { undo: number; redo: number };
 }
 
 export interface zoomReducerType {
