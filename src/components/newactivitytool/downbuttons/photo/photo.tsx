@@ -6,8 +6,7 @@ import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
-
-const editIcon = "./diary/object/editButton.png";
+import editIcon from "./editButton.png";
 const renderIcon = (
   ctx: CanvasRenderingContext2D,
   left: number,
@@ -16,7 +15,7 @@ const renderIcon = (
   const size = 48;
   ctx.save();
   ctx.translate(left, top);
-  const img = document.createElement("img");
+  const img = new Image();
   img.src = editIcon;
   ctx.drawImage(img, -size / 2, -size / 2, size, size);
   ctx.restore();

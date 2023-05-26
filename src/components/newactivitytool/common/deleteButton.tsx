@@ -1,6 +1,6 @@
 import { Transform } from "fabric/fabric-impl";
+import deleteIcon from "./deleteButton.png";
 
-const deleteIcon = "./diary/object/deleteButton.png";
 const deleteObject = (e: MouseEvent, transform: Transform) => {
   const target = transform.target;
   const canvas = target.canvas;
@@ -20,8 +20,8 @@ const renderIcon = (
   ctx.translate(left, top);
   const img = new Image();
   img.src = deleteIcon;
-  console.log(img);
   ctx.drawImage(img, -size / 2, -size / 2, size, size);
+  //console.log(ctx);
   ctx.restore();
 };
 

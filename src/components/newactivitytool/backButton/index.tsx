@@ -22,11 +22,14 @@ export default function Back({
     await saveJson(canvas, record);
   };
 
+  const sendToFlutterString = (message: string) => {
+    //@ts-ignore
+    ForJH.postMessage(message);
+  };
+
   const flutterBack = () => {
-    // window.closeCurrent = () => {
-    //   sendToFlutterString("close_current_view");
-    //   ForJH.postMessage(message);
-    // };
+    //@ts-ignore
+    sendToFlutterString("close_current_view");
   };
 
   return (

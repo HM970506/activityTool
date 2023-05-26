@@ -80,7 +80,7 @@ export default function HighlighterMaker(fabric) {
       img.left = this.canvas.vptCoords.tl.x;
       img.top = this.canvas.vptCoords.tl.y;
 
-      this.canvas.add(img);
+      //this.canvas.add(img);
 
       this.canvas.renderAll();
 
