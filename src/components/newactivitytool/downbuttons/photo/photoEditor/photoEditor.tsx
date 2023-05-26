@@ -79,6 +79,8 @@ export default function PhotoEditor() {
 
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
+    photo.left = photo.left - canvas.vptCoords.tl.x;
+    photo.top = photo.top - canvas.vptCoords.tl.y;
     photoCanvas.add(photo);
     photoCanvas.renderAll();
     //}
@@ -114,11 +116,18 @@ export default function PhotoEditor() {
       // canvas.add(group);
       const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
 
+      //여기도 보정값을 줘야 한다..
+      console.log(objects[1]);
+      const left =
+        Math.round((objects[1].oCoords.tl.x + canvas.vptCoords.tl.x) * 10) / 10;
+      const top =
+        Math.round((objects[1].oCoords.tl.y + canvas.vptCoords.tl.y) * 10) / 10;
+
       const group = new fabric.Group(objects);
       group.cloneAsImage((img: ImageType) => {
         img.original = photo.original;
-        img.left = Math.round(objects[1].oCoords.tl.y);
-        img.top = Math.round(objects[1].oCoords.tl.x);
+        img.left = left;
+        img.top = top;
         img.selectable = true;
         img.erasable = false;
         img.cropX = editImg?.cropX;
