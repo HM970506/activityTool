@@ -30,10 +30,9 @@ export default function CrayonMaker(fabric) {
     },
 
     onMouseDown: function (p) {
-      const pointer = {
-        x: this.canvas.vptCoords ? p.x - this.canvas.vptCoords.tl.x : p.x,
-        y: this.canvas.vptCoords ? p.y - this.canvas.vptCoords.tl.y : p.y,
-      };
+      const pointer = this.canvas.vptCoords
+        ? fabric.util.getPosition(this.canvas.vptCoords, p)
+        : p;
       // console.log("보정전:", p, "보정후:", pointer);
       this.canvas.clearContext(this.canvas.contextTop);
       this.canvas.contextTop.globalAlpha = this.opacity;
@@ -43,10 +42,9 @@ export default function CrayonMaker(fabric) {
     },
 
     onMouseMove: function (p) {
-      const pointer = {
-        x: this.canvas.vptCoords ? p.x - this.canvas.vptCoords.tl.x : p.x,
-        y: this.canvas.vptCoords ? p.y - this.canvas.vptCoords.tl.y : p.y,
-      };
+      const pointer = this.canvas.vptCoords
+        ? fabric.util.getPosition(this.canvas.vptCoords, p)
+        : p;
       if (this._latest) this._latest.setFromPoint(this._point);
       else this._latest = new fabric.Point(pointer.x, pointer.y);
 
@@ -62,16 +60,12 @@ export default function CrayonMaker(fabric) {
     onMouseUp: function () {
       const c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
       const img = new fabric.Image(c);
-      console.log(img);
+
       this.canvas.contextTopDirty = true;
 
-      const pointer = {
-        x: this.canvas.vptCoords ? img.x - this.canvas.vptCoords.tl.x : img.x,
-        y: this.canvas.vptCoords ? img.y - this.canvas.vptCoords.tl.y : img.y,
-      };
+      img.left = this.canvas.vptCoords.tl.x;
+      img.top = this.canvas.vptCoords.tl.y;
 
-      img.x = 0;
-      img.y = 0;
       this.canvas.add(img);
 
       this.canvas.renderAll();

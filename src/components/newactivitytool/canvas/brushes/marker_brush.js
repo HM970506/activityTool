@@ -55,14 +55,17 @@ export default function HighlighterMaker(fabric) {
       this._lastPoint = new fabric.Point(pointer.x, pointer.y);
     },
 
-    onMouseDown: function (pointer) {
+    onMouseDown: function (p) {
+      const pointer = fabric.util.getPosition(this.canvas.vptCoords, p);
+
       this._lastPoint = pointer;
       this.canvas.contextTop.strokeStyle = this.color;
       this.canvas.contextTop.lineWidth = this._lineWidth;
       this._size = this.width + this._baseWidth;
     },
 
-    onMouseMove: function (pointer) {
+    onMouseMove: function (p) {
+      const pointer = fabric.util.getPosition(this.canvas.vptCoords, p);
       if (this.canvas._isCurrentlyDrawing) this._render(pointer);
     },
 
@@ -73,9 +76,20 @@ export default function HighlighterMaker(fabric) {
       var c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
       var img = new fabric.Image(c);
       this.canvas.contextTopDirty = true;
+
+      img.left = this.canvas.vptCoords.tl.x;
+      img.top = this.canvas.vptCoords.tl.y;
+
       this.canvas.add(img);
 
       this.canvas.renderAll();
+
+      this.canvas.contextTop.clearRect(
+        0,
+        0,
+        this.canvas.width,
+        this.canvas.height
+      );
     },
   });
 }

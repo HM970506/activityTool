@@ -33,4 +33,11 @@ export default function fabricSetting() {
     if (typeof min !== "number") min = 0;
     return n > max ? max : n < min ? min : n;
   };
+
+  fabric.util.getPosition = function (vptCoords: any, p: any) {
+    return {
+      x: p.x - vptCoords.tl.x,
+      y: p.y - vptCoords.tl.y,
+    };
+  };
 }
