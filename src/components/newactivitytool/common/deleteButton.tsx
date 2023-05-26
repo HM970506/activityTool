@@ -18,8 +18,9 @@ const renderIcon = (
   const size = 48;
   ctx.save();
   ctx.translate(left, top);
-  const img = document.createElement("img");
+  const img = new Image();
   img.src = deleteIcon;
+  console.log(img);
   ctx.drawImage(img, -size / 2, -size / 2, size, size);
   ctx.restore();
 };
