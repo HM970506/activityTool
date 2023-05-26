@@ -4,16 +4,7 @@ import { DrawOptionContainer } from "./style";
 import { ERASER, FELTPEN, ReducersType, SPRAY } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../store/common/drawSlice";
-import { ReactComponent as Line1 } from "./svg/line/line1.svg";
-import { ReactComponent as Line2 } from "./svg/line/line2.svg";
-import { ReactComponent as Line3 } from "./svg/line/line3.svg";
-import { ReactComponent as Line4 } from "./svg/line/line4.svg";
-import { ReactComponent as Line5 } from "./svg/line/line5.svg";
-import { ReactComponent as Spray1 } from "./svg/spray/spray1.svg";
-import { ReactComponent as Spray2 } from "./svg/spray/spray2.svg";
-import { ReactComponent as Spray3 } from "./svg/spray/spray3.svg";
-import { ReactComponent as Spray4 } from "./svg/spray/spray4.svg";
-import { ReactComponent as Spray5 } from "./svg/spray/spray5.svg";
+import { LineSize, SIZES, SpraySize } from "./datas";
 
 export default function DrawOption({ keyName }: { keyName: string }) {
   const brushes = useSelector((state: ReducersType) => state.drawReducer);
@@ -37,59 +28,27 @@ export default function DrawOption({ keyName }: { keyName: string }) {
 
   const option = (brushes as any)[select ? select : "feltpen"];
 
+  const OptionButton = ({ size, index }: { size: number; index: number }) => {
+    return (
+      <SizechipBox select={option.width === size ? 1 : 0} color={option.color}>
+        <Sizechip
+          color={option.width !== size ? option.color : ""}
+          onClick={() => {
+            setSize(size);
+          }}
+        >
+          {keyName == SPRAY ? SpraySize[index] : LineSize[index]}
+        </Sizechip>
+      </SizechipBox>
+    );
+  };
+
   return (
     <DrawOptionContainer onClick={(e) => e.stopPropagation()}>
       <SizeContainer>
-        <SizechipBox select={option.width === 1 ? 1 : 0} color={option.color}>
-          <Sizechip
-            color={option.width !== 1 ? option.color : ""}
-            onClick={() => {
-              setSize(1);
-            }}
-          >
-            {keyName == SPRAY ? <Spray1 /> : <Line1 />}
-          </Sizechip>
-        </SizechipBox>
-        <SizechipBox select={option.width === 5 ? 1 : 0} color={option.color}>
-          <Sizechip
-            color={option.width !== 5 ? option.color : ""}
-            onClick={() => {
-              setSize(5);
-            }}
-          >
-            {keyName == SPRAY ? <Spray2 /> : <Line2 />}
-          </Sizechip>
-        </SizechipBox>
-        <SizechipBox select={option.width === 10 ? 1 : 0} color={option.color}>
-          <Sizechip
-            color={option.width !== 10 ? option.color : ""}
-            onClick={() => {
-              setSize(10);
-            }}
-          >
-            {keyName == SPRAY ? <Spray3 /> : <Line3 />}
-          </Sizechip>
-        </SizechipBox>
-        <SizechipBox select={option.width === 15 ? 1 : 0} color={option.color}>
-          <Sizechip
-            color={option.width !== 15 ? option.color : ""}
-            onClick={() => {
-              setSize(15);
-            }}
-          >
-            {keyName == SPRAY ? <Spray4 /> : <Line4 />}
-          </Sizechip>
-        </SizechipBox>
-        <SizechipBox select={option.width === 20 ? 1 : 0} color={option.color}>
-          <Sizechip
-            color={option.width !== 20 ? option.color : ""}
-            onClick={() => {
-              setSize(20);
-            }}
-          >
-            {keyName == SPRAY ? <Spray5 /> : <Line5 />}
-          </Sizechip>
-        </SizechipBox>
+        {SIZES.map((value: number, key: number) => {
+          return <OptionButton size={value} index={key} />;
+        })}
       </SizeContainer>
 
       {keyName !== FELTPEN && keyName !== ERASER && (

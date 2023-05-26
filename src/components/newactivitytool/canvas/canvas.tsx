@@ -25,7 +25,6 @@ import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import { drawActions } from "../../../store/common/drawSlice";
 import CrayonMaker from "./brushes/crayon_brush";
-import BrushFunctions from "./util/point.extend";
 import HighlighterMaker from "./brushes/marker_brush";
 import InkMaker from "./brushes/ink_brush";
 
@@ -83,7 +82,6 @@ export default function Canvas() {
     canvasSetting(canvas);
     windowSetting(canvas, dispatch);
 
-    BrushFunctions(fabric);
     CrayonMaker(fabric);
     HighlighterMaker(fabric);
     InkMaker(fabric);
