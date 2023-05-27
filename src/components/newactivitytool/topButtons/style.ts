@@ -10,13 +10,17 @@ export const TopButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  position:relative;
+
+
 `;
 
 export const TopArea = styled.div`
-  width: 100%;
-  position: absolute;
-  top: 12px;
-  left: 0px;
+width:1px;
+position: absolute;
+top: 12px;
+  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
