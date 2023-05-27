@@ -83,7 +83,7 @@ export default function DrawToolsButton() {
                   : "white"
               }
             >
-              <Thumbnail src={getPath(select)} />
+              <Thumbnail src={getPath(`thumbnail_${select}`)} />
             </ThumbnailBox>
           ) : null}
         </ToolNow>
