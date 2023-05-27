@@ -80,11 +80,7 @@ export default function Record({
       if (stream) stream.getAudioTracks()[0].enabled = false;
 
       setRecorder(null);
-      await navigator.mediaDevices
-        .getUserMedia({ audio: false })
-        .catch((err) => {
-          alert("녹음장치가 없습니다!");
-        });
+      await navigator.mediaDevices.getUserMedia({ audio: false });
       reset();
     }
   };

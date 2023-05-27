@@ -1,7 +1,7 @@
 export default function CrayonMaker(fabric) {
   fabric.CrayonBrush = fabric.util.createClass(fabric.BaseBrush, {
     color: "#000000",
-    opacity: 0.6,
+    opacity: 0.1,
     width: 30,
 
     _baseWidth: 20,
@@ -10,6 +10,8 @@ export default function CrayonMaker(fabric) {
     _point: null,
     _sep: 5,
     _size: 0,
+    _latest: null,
+	_drawn: false,
 
     initialize: function (canvas, opt) {
       opt = opt || {};
@@ -25,19 +27,14 @@ export default function CrayonMaker(fabric) {
       this.color = color;
     },
 
-    changeOpacity: function (value) {
-      this.opacity = value;
-    },
-
     onMouseDown: function (p) {
       const pointer = this.canvas.vptCoords
         ? fabric.util.getPosition(this.canvas.vptCoords, p)
         : p;
-      // console.log("보정전:", p, "보정후:", pointer);
-      this.canvas.clearContext(this.canvas.contextTop);
-      this.canvas.contextTop.globalAlpha = this.opacity;
-      this._size = this.width / 2 + this._baseWidth;
 
+      this.canvas.clearContext(this.canvas.contextTop);
+      this._size = this.width / 2 + this._baseWidth;
+      this._drawn = false;
       this.set(pointer);
     },
 
@@ -45,36 +42,16 @@ export default function CrayonMaker(fabric) {
       const pointer = this.canvas.vptCoords
         ? fabric.util.getPosition(this.canvas.vptCoords, p)
         : p;
-      if (this._latest) this._latest.setFromPoint(this._point);
-      else this._latest = new fabric.Point(pointer.x, pointer.y);
-
-      fabric.Point.prototype.setFromPoint.call(this._point, pointer);
-
-      this._latestStrokeLength = this._point
-        .subtract(this._latest)
-        .distanceFrom({ x: 0, y: 0 });
-
-      this.draw(this.canvas.contextTop);
+      	this.update(pointer);
+		    this.draw(this.canvas.contextTop);
     },
 
     onMouseUp: function () {
-      const c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
-      const img = new fabric.Image(c);
-
-      this.canvas.contextTopDirty = true;
-
-      img.left = this.canvas.vptCoords.tl.x;
-      img.top = this.canvas.vptCoords.tl.y;
-
-      //this.canvas.add(img);
-
-      this.canvas.renderAll();
-      this.canvas.contextTop.clearRect(
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
+      if (this._drawn) this.convertToImg();
+      
+      this._latest = null;
+      this._latestStrokeLength = 0;
+      this.canvas.contextTop.globalAlpha = 1;
     },
 
     set: function (p) {
@@ -127,6 +104,7 @@ export default function CrayonMaker(fabric) {
       }
       ctx.fill();
       ctx.restore();
+      this._drawn = true;
     },
   });
 }

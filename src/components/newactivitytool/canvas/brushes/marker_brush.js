@@ -70,26 +70,9 @@ export default function HighlighterMaker(fabric) {
     },
 
     onMouseUp: function () {
-      var ctx = this.canvas.contextTop;
-      ctx.globalAlpha = this.opacity;
-
-      var c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl);
-      var img = new fabric.Image(c);
-      this.canvas.contextTopDirty = true;
-
-      img.left = this.canvas.vptCoords.tl.x;
-      img.top = this.canvas.vptCoords.tl.y;
-
-      //this.canvas.add(img);
-
-      this.canvas.renderAll();
-
-      this.canvas.contextTop.clearRect(
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
+      this.canvas.contextTop.globalAlpha = this.opacity;
+		this.canvas.contextTop.globalAlpha = 1;
+		this.convertToImg();
     },
   });
 }
