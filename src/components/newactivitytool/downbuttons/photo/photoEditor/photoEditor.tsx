@@ -117,7 +117,6 @@ export default function PhotoEditor() {
       const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
 
       //여기도 보정값을 줘야 한다..
-      console.log(objects[1]);
       const left =
         Math.round((objects[1].oCoords.tl.x + canvas.vptCoords.tl.x) * 10) / 10;
       const top =
@@ -139,6 +138,8 @@ export default function PhotoEditor() {
 
         canvas.remove(photo);
         canvas.add(img);
+        canvas.setActiveObject(img);
+        canvas.renderAll();
       });
     } else {
       const objects = photoCanvas.getObjects();
