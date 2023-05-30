@@ -11,7 +11,7 @@ export default function ZoomButton() {
 
   return (
     <ZoomContainer>
-      <span> {parseInt(zoom.toFixed(2)) * 100}%</span>
+      <span> {Math.round(zoom * 100)}%</span>
       <span
         onClick={() => {
           if (zoom !== 1) {
