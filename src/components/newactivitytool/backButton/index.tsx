@@ -28,8 +28,14 @@ export default function Back({
   };
 
   const flutterBack = () => {
-    //@ts-ignore
-    sendToFlutterString("close_current_view");
+    const ref = window.location.href.toString();
+    // console.log(ref.indexOf("team"), ref);
+
+    if (ref.indexOf("team") === -1) activityEnd();
+    else {
+      //@ts-ignore
+      sendToFlutterString("close_current_view");
+    }
   };
 
   return (
