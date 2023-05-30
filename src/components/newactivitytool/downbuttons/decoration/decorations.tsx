@@ -24,7 +24,7 @@ export default function DecorationMenu() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (tape.state) {
+    if (tape.state && category === DECORATION) {
       unselectable(canvas);
       canvas.tape.state = 1;
     } else {
@@ -34,7 +34,7 @@ export default function DecorationMenu() {
   }, [tape.state]);
 
   useEffect(() => {
-    if (stamp.state) {
+    if (stamp.state && category === DECORATION) {
       unselectable(canvas);
       canvas.stamp.state = 1;
     } else {

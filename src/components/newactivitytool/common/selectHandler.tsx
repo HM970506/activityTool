@@ -1,6 +1,7 @@
 import { canvasType, panObjectType } from "../types";
 
 export const unselectable = (canvas: canvasType) => {
+  //console.log("언셀렉트");
   canvas.selectable = false;
   canvas.forEachObject((object: panObjectType) => {
     if (object.prevSelectable !== undefined) return;
@@ -12,6 +13,7 @@ export const unselectable = (canvas: canvasType) => {
 };
 
 export const selectable = (canvas: canvasType) => {
+  //console.log("셀렉트");
   canvas.selectable = true;
   canvas.forEachObject((object: panObjectType) => {
     object.evented =
