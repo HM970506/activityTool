@@ -20,15 +20,27 @@ export default function Template() {
   const templating = (url: string) => {
     fabric.Image.fromURL(url, (img: ImageType) => {
       if (img.width !== undefined && img.height !== undefined) {
-        const scale = canvas.width / img.width;
+        const canvasRatio =
+          Math.round((canvas.width / canvas.height) * 100) / 100;
+        const imgRatio = Math.round((img.width / img.height) * 100) / 100;
 
+        console.log(canvasRatio, imgRatio);
+
+        const scale =
+          canvasRatio <= imgRatio
+            ? canvas.width / img.width
+            : canvas.height / img.height;
         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
           scaleX: scale,
           scaleY: scale,
           erasable: false,
+          top: canvas.getCenter().top,
+          left: canvas.getCenter().left,
+          originX: "center",
+          originY: "center",
         });
         img.crossOrigin = "Anonymous";
-        canvas.setHeight(img.height * scale);
+
         canvas.renderAll();
       }
     });
