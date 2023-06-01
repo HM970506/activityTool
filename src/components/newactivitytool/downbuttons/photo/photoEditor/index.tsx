@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   DEFAULT_CANVAS,
-  DEFAULT_X,
   ImageType,
   ReducersType,
   canvasType,
@@ -14,9 +13,6 @@ import {
   PhotoEditorOverlay,
   OptionButton,
   PhotoOption1,
-  PhotoOption2,
-  FilterComponent,
-  OptionComponent,
   PhotoEditButtonInner,
 } from "./style";
 import { ReactComponent as Cut } from "./svg/cut.svg";
@@ -24,12 +20,12 @@ import { ReactComponent as Diagram } from "./svg/diagram.svg";
 import { ReactComponent as Filter } from "./svg/filter.svg";
 import { ReactComponent as Frame } from "./svg/frame.svg";
 
-import { DownButtonsContainer } from "../../../style";
+import { DownButtonsContainer, Icon } from "../../../style";
 import cropper from "./cropper";
 import { useSpring } from "react-spring";
 import editControlHandler from "../../../common/editControlHandler";
-
-const test = ["heart", "star", "lightning", "bubble"];
+import Correction from "./correction";
+import { Shapes } from "./shapes";
 
 export default function PhotoEditor() {
   const { isEditing, photo } = useSelector((state: ReducersType) => {
@@ -79,28 +75,11 @@ export default function PhotoEditor() {
 
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
-    photo.left = photo.left - canvas.viewportTransform.tl.x;
-    photo.top = photo.top - canvas.viewportTransform.tl.y;
+    photo.left = photo.left - canvas.viewportTransform[4];
+    photo.top = photo.top - canvas.viewportTransform[5];
     photoCanvas.add(photo);
     photoCanvas.renderAll();
     //}
-  };
-
-  const shapeChange = (shape: string) => {
-    if (photoCanvas === null) return;
-
-    const objects = photoCanvas.getObjects();
-
-    fabric.Image.fromURL(`/diary/frame/${shape}.png`, (frameImg: ImageType) => {
-      frameImg.objectType = "frame";
-      frameImg.crossOrigin = "Anonymous";
-      frameImg.selectable = true;
-      frameImg.globalCompositeOperation = "destination-atop";
-
-      photoCanvas.add(frameImg);
-      photoCanvas.remove(objects[1]);
-      photoCanvas.renderAll();
-    });
   };
 
   const editComplete = () => {
@@ -202,22 +181,28 @@ export default function PhotoEditor() {
         : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
   });
 
+  const optionHandler = (now: string) => {
+    if (category !== now) {
+      setCategory(now);
+      setOption(true);
+    } else {
+      setCategory("");
+      setOption(false);
+    }
+  };
+
   return (
     <>
       <PhotoEditorOverlay view={isEditing ? 1 : 0}>
         <canvas ref={photoEditorCanvasRef}></canvas>
 
-        <CheckButton onClick={editComplete}>체크</CheckButton>
+        <CheckButton onClick={editComplete}>
+          <Icon src={"/diary/photo/confirm_chk.png"} />
+        </CheckButton>
         <DownButtonsContainer>
           <OptionButton
             onClick={() => {
-              if (category !== "비율") {
-                setCategory("비율");
-                setOption(true);
-              } else {
-                setCategory("");
-                setOption(false);
-              }
+              optionHandler("비율");
             }}
           >
             {option && category === "비율" && <PhotoOption1>test</PhotoOption1>}
@@ -228,30 +213,11 @@ export default function PhotoEditor() {
           </OptionButton>
           <OptionButton
             onClick={() => {
-              if (category !== "도형") {
-                setCategory("도형");
-                setOption(true);
-              } else {
-                setCategory("");
-                setOption(false);
-              }
+              optionHandler("도형");
             }}
           >
             {option && category === "도형" && (
-              <PhotoOption1>
-                {test.map((value: string, key: number) => {
-                  return (
-                    <OptionComponent
-                      key={`cutter_${key}`}
-                      onClick={() => {
-                        shapeChange(value);
-                      }}
-                    >
-                      {value}
-                    </OptionComponent>
-                  );
-                })}
-              </PhotoOption1>
+              <Shapes photoCanvas={photoCanvas} />
             )}
             <PhotoEditButtonInner style={prop2}>
               <Diagram />
@@ -260,40 +226,10 @@ export default function PhotoEditor() {
           </OptionButton>
           <OptionButton
             onClick={() => {
-              if (category !== "보정") {
-                setCategory("보정");
-                setOption(true);
-              } else {
-                setCategory("");
-                setOption(false);
-              }
+              optionHandler("보정");
             }}
           >
-            {option && category === "보정" && (
-              <PhotoOption2>
-                <FilterComponent>
-                  <p>원본</p>
-                </FilterComponent>
-                <FilterComponent>
-                  <p>깨끗한</p>
-                </FilterComponent>
-                <FilterComponent>
-                  <p>빛나는</p>
-                </FilterComponent>
-                <FilterComponent>
-                  <p>밝은</p>
-                </FilterComponent>
-                <FilterComponent>
-                  <p>부드러운</p>
-                </FilterComponent>
-                <FilterComponent>
-                  <p>부드러운</p>
-                </FilterComponent>
-                <FilterComponent>
-                  <p>부드러운</p>
-                </FilterComponent>
-              </PhotoOption2>
-            )}
+            {option && category === "보정" && <Correction />}
             <PhotoEditButtonInner style={prop3}>
               <Filter />
               보정
@@ -301,13 +237,7 @@ export default function PhotoEditor() {
           </OptionButton>
           <OptionButton
             onClick={() => {
-              if (category !== "액자") {
-                setCategory("액자");
-                setOption(true);
-              } else {
-                setCategory("");
-                setOption(false);
-              }
+              optionHandler("액자");
             }}
           >
             <PhotoEditButtonInner style={prop4}>

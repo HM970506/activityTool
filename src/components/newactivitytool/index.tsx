@@ -18,7 +18,7 @@ import BackButton from "./backButton";
 import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
 import TopButtons from "./topButtons";
-import PhotoEditor from "./downbuttons/photo/photoEditor/photoEditor";
+import PhotoEditor from "./downbuttons/photo/photoEditor";
 import { categoryActions } from "../../store/common/categorySlice";
 import { zoomActions } from "../../store/common/zoomSlice";
 import { photoEditorActions } from "../../store/common/photoEditorSlice";
