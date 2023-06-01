@@ -12,7 +12,6 @@ import {
   CheckButton,
   PhotoEditorOverlay,
   OptionButton,
-  PhotoOption1,
   PhotoEditButtonInner,
 } from "./style";
 import { ReactComponent as Cut } from "./svg/cut.svg";
@@ -26,6 +25,7 @@ import { useSpring } from "react-spring";
 import editControlHandler from "../../../common/editControlHandler";
 import Correction from "./correction";
 import { Shapes } from "./shapes";
+import Ratio from "./ratio";
 
 export default function PhotoEditor() {
   const { isEditing, photo } = useSelector((state: ReducersType) => {
@@ -95,7 +95,6 @@ export default function PhotoEditor() {
       // canvas.add(group);
       const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
 
-      //여기도 보정값을 줘야 한다..
       const left =
         Math.round(
           (objects[1].oCoords.tl.x + canvas.viewportTransform[4]) * 10
@@ -199,13 +198,16 @@ export default function PhotoEditor() {
         <CheckButton onClick={editComplete}>
           <Icon src={"/diary/photo/confirm_chk.png"} />
         </CheckButton>
+
         <DownButtonsContainer>
           <OptionButton
             onClick={() => {
               optionHandler("비율");
             }}
           >
-            {option && category === "비율" && <PhotoOption1>test</PhotoOption1>}
+            {option && category === "비율" && (
+              <Ratio photoCanvas={photoCanvas} />
+            )}
             <PhotoEditButtonInner style={prop1}>
               <Cut />
               비율
