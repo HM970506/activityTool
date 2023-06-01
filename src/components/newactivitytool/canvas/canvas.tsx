@@ -20,7 +20,7 @@ import {
 } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
-import { zoomActions } from "../../../store/common/zoomSlice";
+import zoomSlice, { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import { drawActions } from "../../../store/common/drawSlice";
@@ -168,6 +168,20 @@ export default function Canvas() {
     });
 
     //옵션 초기세팅 끝
+
+    //마우스 휠 줌 세팅 코드 시작
+    canvas.on("mouse:wheel", (opt: any) => {
+      var delta = opt.e.deltaY;
+      var zoom = canvas.getZoom();
+      zoom *= 0.999 ** delta;
+      if (zoom > 20) zoom = 20;
+      if (zoom < 0.01) zoom = 0.01;
+      canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+      dispatch(zoomActions.setZoom(zoom));
+      opt.e.preventDefault();
+      opt.e.stopPropagation();
+    });
+    //마우스 휠 줌 세팅 코드 끝
   }, []);
 
   return (
