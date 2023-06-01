@@ -154,11 +154,14 @@ export default function Canvas() {
 
     //히스토리 초기세팅 관련 코드 시작
     canvas.on("mouse:up", () => {
-      dispatch(nodeActions.setUndo(canvas.historyUndo.length));
       if (canvas.historyRedo.length > 0) {
         canvas.historyRedo = [];
         dispatch(nodeActions.setRedo(0));
       }
+
+      if (canvas.historyUndo.length > 4) canvas.historyUndo.shift();
+
+      dispatch(nodeActions.setUndo(canvas.historyUndo.length));
     });
     //히스토리 초기세팅 관련코드 끝
 
