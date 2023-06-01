@@ -97,13 +97,7 @@ export default function NewActivityTool() {
 
               <MeatballsMenu />
               <ReactQueryDevtools />
-              {option && (
-                <ModalOverlay
-                  onClick={() => {
-                    dispatch(categoryActions.optionChange(false));
-                  }}
-                />
-              )}
+
               <DownButtons />
             </>
           )}

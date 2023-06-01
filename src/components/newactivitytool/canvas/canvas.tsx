@@ -27,6 +27,7 @@ import { drawActions } from "../../../store/common/drawSlice";
 import CrayonMaker from "./brushes/crayon_brush";
 import HighlighterMaker from "./brushes/marker_brush";
 import InkMaker from "./brushes/ink_brush";
+import { categoryActions } from "../../../store/common/categorySlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -36,8 +37,8 @@ export default function Canvas() {
     (state: ReducersType) => state.categoryReducer.category
   );
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const { undo, redo } = useSelector(
-    (state: ReducersType) => state.nodeReducer.history
+  const option = useSelector(
+    (state: ReducersType) => state.categoryReducer.option
   );
 
   const drawModeDebounce = debounce(() => {
@@ -160,6 +161,13 @@ export default function Canvas() {
       }
     });
     //히스토리 초기세팅 관련코드 끝
+
+    //옵션 초기세팅 시작
+    canvas.on("mouse:down", () => {
+      dispatch(categoryActions.optionChange(false));
+    });
+
+    //옵션 초기세팅 끝
   }, []);
 
   return (

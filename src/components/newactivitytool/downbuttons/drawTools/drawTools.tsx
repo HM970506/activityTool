@@ -41,6 +41,10 @@ export default function DrawToolsMenu() {
       dispatch(categoryActions.optionChange(false));
   };
 
+  useEffect(() => {
+    console.log(option);
+  }, [option]);
+
   const ToolButton = ({ keyName }: { keyName: string }) => {
     return (
       <BottomButton
