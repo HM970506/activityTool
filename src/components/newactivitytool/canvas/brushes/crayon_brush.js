@@ -11,7 +11,7 @@ export default function CrayonMaker(fabric) {
     _sep: 5,
     _size: 0,
     _latest: null,
-	_drawn: false,
+    _drawn: false,
 
     initialize: function (canvas, opt) {
       opt = opt || {};
@@ -28,8 +28,8 @@ export default function CrayonMaker(fabric) {
     },
 
     onMouseDown: function (p) {
-      const pointer = this.canvas.vptCoords
-        ? fabric.util.getPosition(this.canvas.vptCoords, p)
+      const pointer = this.canvas.viewportTransform
+        ? fabric.util.getPosition(this.canvas.viewportTransform, p)
         : p;
 
       this.canvas.clearContext(this.canvas.contextTop);
@@ -39,16 +39,16 @@ export default function CrayonMaker(fabric) {
     },
 
     onMouseMove: function (p) {
-      const pointer = this.canvas.vptCoords
-        ? fabric.util.getPosition(this.canvas.vptCoords, p)
+      const pointer = this.canvas.viewportTransform
+        ? fabric.util.getPosition(this.canvas.viewportTransform, p)
         : p;
-      	this.update(pointer);
-		    this.draw(this.canvas.contextTop);
+      this.update(pointer);
+      this.draw(this.canvas.contextTop);
     },
 
     onMouseUp: function () {
       if (this._drawn) this.convertToImg();
-      
+
       this._latest = null;
       this._latestStrokeLength = 0;
       this.canvas.contextTop.globalAlpha = 1;

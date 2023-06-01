@@ -97,7 +97,6 @@ export default function functionSetting(canvas: canvasType) {
 
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
-      //console.log(canvas.getPointer());
       if (canvas.isDrawingMode) canvas.test = 1;
       if (canvas.tape.state === 1) {
         //  console.log("tape");

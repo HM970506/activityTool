@@ -79,8 +79,8 @@ export default function PhotoEditor() {
 
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
-    photo.left = photo.left - canvas.vptCoords.tl.x;
-    photo.top = photo.top - canvas.vptCoords.tl.y;
+    photo.left = photo.left - canvas.viewportTransform.tl.x;
+    photo.top = photo.top - canvas.viewportTransform.tl.y;
     photoCanvas.add(photo);
     photoCanvas.renderAll();
     //}
@@ -118,9 +118,13 @@ export default function PhotoEditor() {
 
       //여기도 보정값을 줘야 한다..
       const left =
-        Math.round((objects[1].oCoords.tl.x + canvas.vptCoords.tl.x) * 10) / 10;
+        Math.round(
+          (objects[1].oCoords.tl.x + canvas.viewportTransform[4]) * 10
+        ) / 10;
       const top =
-        Math.round((objects[1].oCoords.tl.y + canvas.vptCoords.tl.y) * 10) / 10;
+        Math.round(
+          (objects[1].oCoords.tl.y + canvas.viewportTransform[5]) * 10
+        ) / 10;
 
       const group = new fabric.Group(objects);
       group.cloneAsImage((img: ImageType) => {
