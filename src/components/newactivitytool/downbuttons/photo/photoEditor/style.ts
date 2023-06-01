@@ -100,7 +100,7 @@ export const OptionComponentSelectBox = styled.div<{ select: number }>`
   width: 40px;
   height: 40px;
   border-radius: 16px;
-  bakground-color: ${(props) => (props.select == 1 ? "#859AB4" : "white")};
+  background-color: ${(props) => (props.select == 1 ? "#859AB4" : "white")};
   stroke: ${(props) => (props.select == 1 ? "white" : "#898885")};
 
   display: flex;
