@@ -106,6 +106,9 @@ export interface zoomReducerType {
 export interface photoEditorReducerType {
   isEditing: boolean;
   photo: null | ImageType;
+  photoCanvas: canvasType;
+  cropCanvas: canvasType;
+  isCroping: boolean;
 }
 
 export interface ReducersType {

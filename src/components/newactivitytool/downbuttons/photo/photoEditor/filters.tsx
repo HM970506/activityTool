@@ -1,4 +1,5 @@
-import { canvasType } from "../../../types";
+import { useSelector } from "react-redux";
+import { ReducersType, canvasType } from "../../../types";
 import { FilterComponent, PhotoOption2 } from "./style";
 import { fabric } from "fabric-with-erasing";
 
@@ -23,7 +24,10 @@ const FILTER_MAP = new Map([
   ["Polaroid", new fabric.Image.filters.Polaroid()],
 ]);
 
-export default function Filters({ photoCanvas }: { photoCanvas: canvasType }) {
+export default function Filters() {
+  const photoCanvas = useSelector(
+    (state: ReducersType) => state.photoEditorReducer.photoCanvas
+  );
   const img = photoCanvas.getObjects()[0];
 
   const filtering = (filterName: string) => {

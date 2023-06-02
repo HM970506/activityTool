@@ -1,4 +1,4 @@
-import { ImageType, canvasType } from "../../../types";
+import { ImageType, ReducersType, canvasType } from "../../../types";
 import {
   OptionComponent,
   OptionComponentSelectBox,
@@ -11,6 +11,7 @@ import { ReactComponent as Ratio3 } from "./svg/ratio3.svg";
 import { ReactComponent as Ratio4 } from "./svg/ratio4.svg";
 import { useEffect, useState } from "react";
 import { fabric } from "fabric-with-erasing";
+import { useSelector } from "react-redux";
 
 const RATIO_SVG = [<Ratio1 />, <Ratio2 />, <Ratio3 />, <Ratio4 />];
 const RATIOS = [
@@ -25,12 +26,15 @@ interface ratioType {
   heightR: number;
 }
 
-export default function Ratio({ photoCanvas }: { photoCanvas: canvasType }) {
+export default function Ratio() {
+  const photoCanvas = useSelector(
+    (state: ReducersType) => state.photoEditorReducer.photoCanvas
+  );
   const [select, setSelect] = useState<number>(-1);
 
   const reset = () => {
     setSelect(-1);
-    if (photoCanvas.getObjects().length > 2)
+    if (photoCanvas.getObjects().length >= 2)
       photoCanvas.remove(photoCanvas.getObjects()[1]);
   };
 

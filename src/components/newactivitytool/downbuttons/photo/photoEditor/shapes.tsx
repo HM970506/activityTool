@@ -1,10 +1,15 @@
 import { OptionComponent, PhotoOption1 } from "./style";
 import { fabric } from "fabric-with-erasing";
-import { ImageType, canvasType } from "../../../types";
+import { ImageType, ReducersType, canvasType } from "../../../types";
+import { useSelector } from "react-redux";
 
 const test = ["heart", "star", "lightning", "bubble"];
 
-export function Shapes({ photoCanvas }: { photoCanvas: canvasType }) {
+export function Shapes() {
+  const photoCanvas = useSelector(
+    (state: ReducersType) => state.photoEditorReducer.photoCanvas
+  );
+
   const shapeChange = (shape: string) => {
     if (photoCanvas === null) return;
 

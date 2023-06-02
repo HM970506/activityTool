@@ -66,25 +66,24 @@ export const PhotoOption2 = styled(OptionContainer)`
   width: 488px;
   height: 112px;
   border-radius: 32px;
-
-  overflow-x: scroll;
-
   display: flex;
   justify-content: left;
   align-items: center;
+
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const FilterComponent = styled.div`
+  flex-shrink: 0;
   width: 96px;
   height: 96px;
   border-radius: 24px;
   margin: 4px;
-  margin-right: 20px;
   background-color: black;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: end;
   overflow: hidden;
   position: relative;
 
@@ -95,9 +94,10 @@ export const FilterComponent = styled.div`
   }
 
   img {
-    width: 100px;
-    height: 100px;
+    width: inherit;
+    height: inherit;
     position: absolute;
+    left: 0;
   }
 `;
 
@@ -124,4 +124,18 @@ export const OptionComponentSelectBox = styled.div<{ select: number }>`
 export const PhotoEditButtonInner = styled(ButtonInner)`
   color: #898885;
   flex-direction: column;
+`;
+
+export const FreecropButton = styled.div`
+  margin: 4px;
+`;
+
+export const CropCanvas = styled.div`
+  position: absolute;
+  z-index: 1002;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
 `;

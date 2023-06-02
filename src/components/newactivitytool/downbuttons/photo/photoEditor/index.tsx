@@ -13,6 +13,7 @@ import {
   PhotoEditorOverlay,
   OptionButton,
   PhotoEditButtonInner,
+  CropCanvas,
 } from "./style";
 import { ReactComponent as Cut } from "./svg/cut.svg";
 import { ReactComponent as Diagram } from "./svg/diagram.svg";
@@ -26,16 +27,23 @@ import editControlHandler from "../../../common/editControlHandler";
 import { Shapes } from "./shapes";
 import Ratio from "./ratio";
 import Filters from "./filters";
-import FreeCrop from "./svg/free";
+import FreeCrop from "./free";
 
 export default function PhotoEditor() {
   const { isEditing, photo } = useSelector((state: ReducersType) => {
     return state.photoEditorReducer;
   });
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const photoCanvas = useSelector(
+    (state: ReducersType) => state.photoEditorReducer.photoCanvas
+  );
+  const isCroping = useSelector(
+    (state: ReducersType) => state.photoEditorReducer.isCroping
+  );
   const dispatch = useDispatch();
   const photoEditorCanvasRef = useRef<HTMLCanvasElement>(null);
-  const [photoCanvas, setPhotoCanvas] = useState<canvasType>(null);
+  const cropCanvasRef = useRef<HTMLCanvasElement>(null);
+
   const [option, setOption] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("");
 
@@ -47,7 +55,7 @@ export default function PhotoEditor() {
       backgroundColor: "rgba(0,0,0,0)",
     });
 
-    setPhotoCanvas(photoCanvas);
+    dispatch(photoEditorActions.setPhotoCanvas(photoCanvas));
     canvas.discardActiveObject();
     photoCanvas.discardActiveObject();
     photoCanvas.clear();
@@ -61,7 +69,18 @@ export default function PhotoEditor() {
       },
     });
 
+    //   canvas.historyUndo.shift();
+
     photoReady(photo, photoCanvas);
+
+    //크롭 캔버스
+    const cropCanvas = new fabric.Canvas(cropCanvasRef.current, {
+      height: window.innerHeight,
+      width: window.innerWidth,
+      backgroundColor: "rgba(0,0,0,0.6)",
+    });
+
+    dispatch(photoEditorActions.setCropCanvas(cropCanvas));
   }, []);
 
   const photoReady = (photo: any, photoCanvas: canvasType) => {
@@ -84,7 +103,7 @@ export default function PhotoEditor() {
   };
 
   const editComplete = () => {
-    if (photoCanvas == null) return;
+    if (photoCanvas) return;
     canvas.discardActiveObject();
     const objects = photoCanvas.getObjects();
     if (objects.length >= 2 && photo) {
@@ -172,11 +191,11 @@ export default function PhotoEditor() {
   });
   const prop4 = useSpring({
     from:
-      option && category === "액자"
+      option && category === "자유"
         ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
         : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
     to:
-      option && category === "액자"
+      option && category === "자유"
         ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
         : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
   });
@@ -193,6 +212,9 @@ export default function PhotoEditor() {
 
   return (
     <>
+      <CropCanvas>
+        <canvas ref={cropCanvasRef}></canvas>
+      </CropCanvas>
       <PhotoEditorOverlay view={isEditing ? 1 : 0}>
         <canvas ref={photoEditorCanvasRef}></canvas>
 
@@ -206,9 +228,7 @@ export default function PhotoEditor() {
               optionHandler("비율");
             }}
           >
-            {option && category === "비율" && (
-              <Ratio photoCanvas={photoCanvas} />
-            )}
+            {option && category === "비율" && <Ratio />}
             <PhotoEditButtonInner style={prop1}>
               <Cut />
               비율
@@ -219,9 +239,7 @@ export default function PhotoEditor() {
               optionHandler("도형");
             }}
           >
-            {option && category === "도형" && (
-              <Shapes photoCanvas={photoCanvas} />
-            )}
+            {option && category === "도형" && <Shapes />}
             <PhotoEditButtonInner style={prop2}>
               <Diagram />
               도형
@@ -232,9 +250,7 @@ export default function PhotoEditor() {
               optionHandler("보정");
             }}
           >
-            {option && category === "보정" && (
-              <Filters photoCanvas={photoCanvas} />
-            )}
+            {option && category === "보정" && <Filters />}
             <PhotoEditButtonInner style={prop3}>
               <Filter />
               보정
@@ -242,13 +258,11 @@ export default function PhotoEditor() {
           </OptionButton>
           <OptionButton
             onClick={() => {
-              optionHandler("액자");
+              optionHandler("자유");
             }}
           >
+            {option && category === "자유" && <FreeCrop />}
             <PhotoEditButtonInner style={prop4}>
-              {option && category === "자유" && (
-                <FreeCrop photoCanvas={photoCanvas} />
-              )}
               <Free />
               자유
             </PhotoEditButtonInner>
