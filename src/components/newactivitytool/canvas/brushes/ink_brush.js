@@ -1,7 +1,7 @@
 export default function InkMaker(fabric) {
   fabric.InkBrush = fabric.util.createClass(fabric.BaseBrush, {
     color: "#000",
-    opacity: 1,
+    opacity: 0.5,
     width: 30,
 
     _baseWidth: 20,

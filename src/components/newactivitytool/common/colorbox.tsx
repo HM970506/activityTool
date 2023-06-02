@@ -6,9 +6,9 @@ const ColorContainer = style.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  overflow-x: scroll;
-  gap:6px;
 
+  gap:6px;
+  overflow-x: scroll;
   ::-webkit-scrollbar {
     display: none;
 }

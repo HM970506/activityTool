@@ -66,10 +66,12 @@ export const PhotoOption2 = styled(OptionContainer)`
   width: 488px;
   height: 112px;
   border-radius: 32px;
+
+  overflow-x: scroll;
+
   display: flex;
   justify-content: left;
   align-items: center;
-  overflow-x: scoll;
 `;
 
 export const FilterComponent = styled.div`
@@ -77,14 +79,25 @@ export const FilterComponent = styled.div`
   height: 96px;
   border-radius: 24px;
   margin: 4px;
+  margin-right: 20px;
   background-color: black;
   color: white;
   display: flex;
   justify-content: center;
   align-items: end;
+  overflow: hidden;
+  position: relative;
 
   p {
-    margin-bottom: 6px;
+    position: absolute;
+    bottom: 6px;
+    width: inherit;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
   }
 `;
 

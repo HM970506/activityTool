@@ -17,15 +17,16 @@ import {
 import { ReactComponent as Cut } from "./svg/cut.svg";
 import { ReactComponent as Diagram } from "./svg/diagram.svg";
 import { ReactComponent as Filter } from "./svg/filter.svg";
-import { ReactComponent as Frame } from "./svg/frame.svg";
+import { ReactComponent as Free } from "./svg/free.svg";
 
 import { DownButtonsContainer, Icon } from "../../../style";
 import cropper from "./cropper";
 import { useSpring } from "react-spring";
 import editControlHandler from "../../../common/editControlHandler";
-import Correction from "./correction";
 import { Shapes } from "./shapes";
 import Ratio from "./ratio";
+import Filters from "./filters";
+import FreeCrop from "./svg/free";
 
 export default function PhotoEditor() {
   const { isEditing, photo } = useSelector((state: ReducersType) => {
@@ -231,7 +232,9 @@ export default function PhotoEditor() {
               optionHandler("보정");
             }}
           >
-            {option && category === "보정" && <Correction />}
+            {option && category === "보정" && (
+              <Filters photoCanvas={photoCanvas} />
+            )}
             <PhotoEditButtonInner style={prop3}>
               <Filter />
               보정
@@ -243,8 +246,11 @@ export default function PhotoEditor() {
             }}
           >
             <PhotoEditButtonInner style={prop4}>
-              <Frame />
-              액자
+              {option && category === "자유" && (
+                <FreeCrop photoCanvas={photoCanvas} />
+              )}
+              <Free />
+              자유
             </PhotoEditButtonInner>
           </OptionButton>
         </DownButtonsContainer>
