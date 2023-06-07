@@ -32,7 +32,6 @@ export default function DrawToolsMenu() {
   useEffect(() => {
     if (canvas && select)
       canvas.freeDrawingBrush = (brushes as any)[select].brush;
-    console.log(canvas.freeDrawingBrush);
   }, [select]);
 
   const modalHandler = (name: string) => {

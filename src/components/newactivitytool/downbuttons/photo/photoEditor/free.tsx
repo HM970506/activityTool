@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { ReducersType, canvasType } from "../../../types";
-import { CropCanvas, FreecropButton, PhotoOption2 } from "./style";
-import { fabric } from "fabric-with-erasing";
+import { useEffect } from "react";
+import { ReducersType } from "../../../types";
+import { FreecropButton, PhotoOption2 } from "./style";
+
 import { useDispatch, useSelector } from "react-redux";
 import { photoEditorActions } from "../../../../../store/common/photoEditorSlice";
 
@@ -17,15 +17,16 @@ export default function FreeCrop() {
   //마우스 업시 정보를 저장해뒀다 아래 캔버스에 전달
 
   const reset = () => {
+    if (cropCanvas === null) return;
     const ordinary = photoCanvas.getObjects()[0];
-    photoCanvas.clear();
-    photoCanvas.add(ordinary);
-    photoCanvas.renderAll();
+    cropCanvas.clear();
+    cropCanvas.add(ordinary);
+    cropCanvas.renderAll();
   };
 
   useEffect(() => {
-    console.log(isCroping);
-  }, [isCroping]);
+    if (isCroping && cropCanvas) reset();
+  }, [cropCanvas]);
 
   const rectangleCrop = () => {
     dispatch(photoEditorActions.setIsCroping(true));

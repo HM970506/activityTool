@@ -6,7 +6,7 @@ const DEFAULT = {
   photo: null,
   photoCanvas: null,
   cropCanvas: null,
-  isCroping: false,
+  isCroping: true,
 };
 const photoEditorSlice = createSlice({
   name: "photoEditorReducer",
