@@ -37,12 +37,9 @@ export default function PhotoEditor() {
   const photoCanvas = useSelector(
     (state: ReducersType) => state.photoEditorReducer.photoCanvas
   );
-  const isCroping = useSelector(
-    (state: ReducersType) => state.photoEditorReducer.isCroping
-  );
+  const zoom = useSelector((state: ReducersType) => state.zoomReducer.zoom);
   const dispatch = useDispatch();
   const photoEditorCanvasRef = useRef<HTMLCanvasElement>(null);
-  const cropCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const [option, setOption] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("");
@@ -58,8 +55,16 @@ export default function PhotoEditor() {
       height: window.innerHeight,
       width: window.innerWidth,
       backgroundColor: "rgba(0,0,0,0)",
+      viewportTransform: [...canvas.viewportTransform],
       selection: false,
     });
+
+    photoCanvas.zoomToPoint(
+      { x: canvas.viewportTransform[4], y: canvas.viewportTransform[5] },
+      zoom
+    );
+
+    console.log(canvas, photoCanvas);
 
     dispatch(photoEditorActions.setPhotoCanvas(photoCanvas));
     canvas.discardActiveObject();
@@ -89,8 +94,8 @@ export default function PhotoEditor() {
 
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
-    photo.left = photo.left - canvas.viewportTransform[4];
-    photo.top = photo.top - canvas.viewportTransform[5];
+    photo.left = photo.left;
+    photo.top = photo.top;
     photoCanvas.add(photo);
     photoCanvas.renderAll();
     //}

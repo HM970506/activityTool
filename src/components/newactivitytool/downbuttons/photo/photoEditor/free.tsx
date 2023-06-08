@@ -92,16 +92,16 @@ export default function FreeCrop() {
     photoCanvas.on({
       "path:created": (o: any) => {
         const path = combinePaths(o.path);
+
         const clipPath = new fabric.Path(path, {
-          originX: "left",
-          originY: "top",
-          scaleX: 2,
-          scaleY: 2,
-          top: 0,
-          left: 0,
+          top: ordinary.top,
+          left: ordinary.left,
+          absolutePositioned: true,
         });
 
         clip(clipPath);
+
+        console.log(photoCanvas, photoCanvas.getObjects()[0].clipPath);
 
         photoCanvas.renderAll();
         photoCanvas.off("path:created");
