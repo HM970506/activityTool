@@ -64,8 +64,6 @@ export default function PhotoEditor() {
       zoom
     );
 
-    console.log(canvas, photoCanvas);
-
     dispatch(photoEditorActions.setPhotoCanvas(photoCanvas));
     canvas.discardActiveObject();
     photoCanvas.discardActiveObject();
