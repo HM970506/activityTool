@@ -48,11 +48,17 @@ export default function PhotoEditor() {
   const [category, setCategory] = useState<string>("");
 
   useEffect(() => {
+    fabric.Canvas.prototype.set({
+      selectionColor: "rgba(255,0,0,0.3)",
+      selectionBorderColor: "rgba(0, 255, 0, 0.3)",
+      selectionLineWidth: 10,
+    });
+
     const photoCanvas = new fabric.Canvas(photoEditorCanvasRef.current, {
-      ...DEFAULT_CANVAS,
       height: window.innerHeight,
       width: window.innerWidth,
       backgroundColor: "rgba(0,0,0,0)",
+      selection: false,
     });
 
     dispatch(photoEditorActions.setPhotoCanvas(photoCanvas));
@@ -68,73 +74,8 @@ export default function PhotoEditor() {
         editControlHandler(photoCanvas);
       },
     });
-
-    //   canvas.historyUndo.shift();
-
     photoReady(photo, photoCanvas);
   }, []);
-
-  useEffect(() => {
-    if (isCroping) {
-      //크롭 캔버스
-      const cropCanvas = new fabric.Canvas(cropCanvasRef.current, {
-        height: window.innerHeight,
-        width: window.innerWidth,
-        backgroundColor: "rgba(0,0,0,0)",
-        selection: false,
-      });
-      cropCanvas.on({
-        "mouse:down": (o: any) => {
-          cropCanvas.start = true;
-          const { x, y } = cropCanvas.getPointer(o.e);
-
-          const rect = new fabric.Rect({
-            //  oleft: x,
-            //  otop: y,
-            left: x,
-            top: y,
-            width: 1,
-            height: 1,
-            // globalCompositeOperation: "destination-in",
-          });
-          cropCanvas.add(rect);
-          cropCanvas.renderAll();
-        },
-        "mouse:move": (o: any) => {
-          if (cropCanvas.start) {
-            const pointer = cropCanvas.getPointer(o.e);
-
-            const rect =
-              cropCanvas.getObjects()[cropCanvas.getObjects().length - 1];
-
-            // if (rect.left > pointer.x) rect.left = pointer.x;
-            //else rect.left = rect.oleft;
-            //  if (rect.top > pointer.y) rect.top = pointer.y;
-            // else rect.top = rect.otop;
-
-            rect.width = Math.abs(rect.left - pointer.x);
-            rect.height = Math.abs(rect.top - pointer.y);
-            console.log("시작점:", rect.left, rect.top, "현재:", pointer);
-            console.log(rect.width, rect.height);
-            cropCanvas.renderAll();
-          }
-        },
-        "mouse:up": () => {
-          cropCanvas.start = false;
-
-          const rect =
-            cropCanvas.getObjects()[cropCanvas.getObjects().length - 1];
-          rect.width = Math.round(rect.width * 100) / 100;
-          rect.height = Math.round(rect.height * 100) / 100;
-          rect.left = Math.round(rect.left * 100) / 100;
-          rect.top = Math.round(rect.top * 100) / 100;
-          console.log(cropCanvas.getObjects());
-        },
-      });
-
-      dispatch(photoEditorActions.setCropCanvas(cropCanvas));
-    }
-  }, [isCroping]);
 
   const photoReady = (photo: any, photoCanvas: canvasType) => {
     // if (photo.type == "group") {
@@ -156,8 +97,6 @@ export default function PhotoEditor() {
   };
 
   const editComplete = () => {
-    if (photoCanvas) return;
-    canvas.discardrectect();
     const objects = photoCanvas.getObjects();
     if (objects.length >= 2 && photo) {
       // const group = new fabric.Group(objects, {
@@ -319,11 +258,6 @@ export default function PhotoEditor() {
           </OptionButton>
         </DownButtonsContainer>
       </PhotoEditorOverlay>
-      {isCroping && (
-        <CropCanvas>
-          <canvas ref={cropCanvasRef}></canvas>
-        </CropCanvas>
-      )}
     </>
   );
 }
