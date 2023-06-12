@@ -1,10 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  DEFAULT_CANVAS,
-  ImageType,
-  ReducersType,
-  canvasType,
-} from "../../../types";
+import { ImageType, ReducersType, canvasType } from "../../../types";
 import { photoEditorActions } from "../../../../../store/common/photoEditorSlice";
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric-with-erasing";
@@ -13,7 +8,6 @@ import {
   PhotoEditorOverlay,
   OptionButton,
   PhotoEditButtonInner,
-  CropCanvas,
 } from "./style";
 import { ReactComponent as Cut } from "./svg/cut.svg";
 import { ReactComponent as Diagram } from "./svg/diagram.svg";
@@ -81,34 +75,19 @@ export default function PhotoEditor() {
   }, []);
 
   const photoReady = (photo: any, photoCanvas: canvasType) => {
-    // if (photo.type == "group") {
-    //   photoCanvas.add(photo);
-    //   photoCanvas.setrectect(photo);
-    //   photoCanvas.getrectect().toActiveSelection();
-    //   photoCanvas.requestRenderAll();
-    //   photoCanvas.getrectects()[0].selectable = false;
-    //   photoCanvas.discardrectect();
-    // } else {
-
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
     photo.left = photo.left;
     photo.top = photo.top;
     photoCanvas.add(photo);
     photoCanvas.renderAll();
-    //}
   };
 
   const editComplete = () => {
     const objects = photoCanvas.getObjects();
-    if (objects.length >= 2 && photo) {
-      // const group = new fabric.Group(objects, {
-      //   selectable: true,
-      //   erasable: false,
-      // });
-      // canvas.remove(photo);
-      // canvas.add(group);
-      const editImg = cropper(objects[0], objects[1]); //이건 잘라야 하는 좌표만 줌.
+
+    if (objects.length > 1) {
+      const editImg = cropper(objects[0], objects[1]);
 
       const left =
         Math.round(
@@ -120,8 +99,8 @@ export default function PhotoEditor() {
         ) / 10;
 
       const group = new fabric.Group(objects);
+
       group.cloneAsImage((img: ImageType) => {
-        img.original = photo.original;
         img.left = left;
         img.top = top;
         img.selectable = true;
@@ -132,67 +111,75 @@ export default function PhotoEditor() {
         img.height = editImg?.height;
         img.crossOrigin = "Anonymous";
         img.objectType = "photo";
-
-        canvas.remove(photo);
         canvas.add(img);
-        canvas.setrectect(img);
-        canvas.renderAll();
       });
     } else {
-      const objects = photoCanvas.getObjects();
+      if (objects[0].clipPath) {
+        //절대좌표값 상대좌표로 번환
+        const crop = objects[0].clipPath;
 
-      photoCanvas.remove(objects);
-      photoCanvas.renderAll();
+        const crop_absolute = {
+          top: Math.round(crop.top * 100) / 100,
+          left: Math.round(crop.left * 100) / 100,
+          right: Math.round((crop.left + crop.width) * 100) / 100,
+          bottom: Math.round((crop.top + crop.height) * 100) / 100,
+        };
+        const crop_relative = {
+          top: crop_absolute.top - objects[0].top,
+          left: crop_absolute.left - objects[0].left,
+        };
 
-      if (photo) {
-        photo.selectable = true;
-        canvas.add(photo);
-      }
-      canvas.renderAll();
+        console.log(crop);
+
+        crop.top = crop_relative.top;
+        crop.left = crop_relative.left;
+
+        objects[0].cloneAsImage((img: ImageType) => {
+          img.selectable = true;
+          img.erasable = false;
+          img.top = crop_absolute.top;
+          img.left = crop_absolute.left;
+          img.cropX = crop_absolute.left - objects[0].left;
+          img.cropY = crop_absolute.top - objects[0].top;
+          img.width = crop.width;
+          img.height = crop.height;
+          img.crossOrigin = "Anonymous";
+          img.objectType = "photo";
+
+          console.log(img);
+          canvas.add(img);
+        });
+      } else canvas.add(objects[0]);
     }
+
+    canvas.remove(photo);
+    canvas.renderAll();
 
     dispatch(photoEditorActions.setIsEditing(false));
   };
 
+  const before = {
+    backgroundColor: "white",
+    stroke: "#898885",
+    color: "#898885",
+  };
+  const after = { backgroundColor: "#859AB4", stroke: "white", color: "white" };
+
   const prop1 = useSpring({
-    from:
-      option && category === "비율"
-        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
-        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
-    to:
-      option && category === "비율"
-        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
-        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+    from: option && category === "비율" ? before : after,
+    to: option && category === "비율" ? after : before,
   });
   const prop2 = useSpring({
-    from:
-      option && category === "도형"
-        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
-        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
-    to:
-      option && category === "도형"
-        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
-        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+    from: option && category === "도형" ? before : after,
+    to: option && category === "도형" ? after : before,
   });
   const prop3 = useSpring({
-    from:
-      option && category === "보정"
-        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
-        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
-    to:
-      option && category === "보정"
-        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
-        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+    from: option && category === "보정" ? before : after,
+    to: option && category === "보정" ? after : before,
   });
   const prop4 = useSpring({
-    from:
-      option && category === "자유"
-        ? { backgroundColor: "white", stroke: "#898885", color: "#898885" }
-        : { backgroundColor: "#859AB4", stroke: "white", color: "white" },
-    to:
-      option && category === "자유"
-        ? { backgroundColor: "#859AB4", stroke: "white", color: "white" }
-        : { backgroundColor: "white", stroke: "#898885", color: "#898885" },
+    from: option && category === "자유" ? before : after,
+    to: option && category === "자유" ? after : before,
   });
 
   const optionHandler = (now: string) => {

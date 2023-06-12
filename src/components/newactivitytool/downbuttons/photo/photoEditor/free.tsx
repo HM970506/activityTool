@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ReducersType } from "../../../types";
+import { ImageType, ReducersType } from "../../../types";
 import { FreecropButton, PhotoOption2 } from "./style";
 import { fabric } from "fabric-with-erasing";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,18 +71,6 @@ export default function FreeCrop() {
     return singlePath;
   };
 
-  const clip = (path: any) => {
-    if (!path) return;
-    const object = photoCanvas.getObjects()[0];
-
-    if (photoCanvas.getObjects().length > 1)
-      photoCanvas.remove(photoCanvas.getObjects()[1]);
-
-    //object.globalCompositeOperation = "source-atop";
-    object.clipPath = path;
-    photoCanvas.requestRenderAll();
-  };
-
   const freeCrop = () => {
     dispatch(photoEditorActions.setIsCroping(true));
     photoCanvas.isDrawingMode = true;
@@ -92,17 +80,20 @@ export default function FreeCrop() {
     photoCanvas.on({
       "path:created": (o: any) => {
         const path = combinePaths(o.path);
+        const objects = photoCanvas.getObjects();
 
-        const clipPath = new fabric.Path(path, {
-          top: o.path.top,
-          left: o.path.left,
-          absolutePositioned: true,
+        const group = new fabric.Group(objects, {
+          clipPath: new fabric.Path(path, {
+            top: o.path.top,
+            left: o.path.left,
+            absolutePositioned: true,
+          }),
+          selectable: true,
         });
 
-        clip(clipPath);
-
-        console.log(o.path, photoCanvas.getObjects()[0].clipPath);
-
+        console.log(photoCanvas);
+        photoCanvas.clear();
+        photoCanvas.add(group);
         photoCanvas.renderAll();
         photoCanvas.off("path:created");
         photoCanvas.isDrawingMode = false;
