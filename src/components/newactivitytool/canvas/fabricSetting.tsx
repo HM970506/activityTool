@@ -37,8 +37,8 @@ export default function fabricSetting() {
 
   fabric.util.getPosition = function (viewportTransform: any, p: any) {
     return {
-      x: (p.x - viewportTransform[4]) * viewportTransform[0],
-      y: (p.y - viewportTransform[5]) * viewportTransform[0],
+      x: p.x * viewportTransform[0] + viewportTransform[4],
+      y: p.y * viewportTransform[0] + viewportTransform[5],
     };
   };
 
@@ -114,7 +114,7 @@ export default function fabricSetting() {
 
     w = pix.x[n] - pix.x[0];
     h = pix.y[n] - pix.y[0];
-    var cut = ctx.getImageData(pix.x[0], pix.y[0], w, h);
+    const cut = ctx.getImageData(pix.x[0], pix.y[0], w, h);
 
     canvas.width = w;
     canvas.height = h;
