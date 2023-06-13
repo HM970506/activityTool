@@ -18,14 +18,8 @@ export default function cropper(
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
-      width:
-        frameOrdy.width !== undefined && frameOrdy.scaleX !== undefined
-          ? frameOrdy.width * frameOrdy.scaleX
-          : 0,
-      height:
-        frameOrdy.height !== undefined && frameOrdy.scaleY !== undefined
-          ? frameOrdy.height * frameOrdy.scaleY
-          : 0,
+      width: frameOrdy.width,
+      height: frameOrdy.height,
     };
   } else if (
     //왼쪽위
@@ -169,13 +163,19 @@ export default function cropper(
     };
   }
 
-  if (returning)
+  const viewport = frameOrdy.canvas?.viewportTransform;
+  if (returning && viewport) {
+    console.log(viewport);
     returning = {
-      cropX: Math.abs(Math.round(returning.cropX)),
-      cropY: Math.abs(Math.round(returning.cropY)),
-      width: Math.abs(Math.round(returning.width)),
-      height: Math.abs(Math.round(returning.height)),
+      cropX: Math.abs(Math.round(returning.cropX * 100) / 100) / viewport[0],
+      cropY: Math.abs(Math.round(returning.cropY * 100) / 100) / viewport[0],
+      width: returning.width
+        ? Math.abs(Math.round(returning.width * 100) / 100)
+        : 1,
+      height: returning.height
+        ? Math.abs(Math.round(returning.height * 100) / 100)
+        : 1,
     };
-
+  }
   return returning;
 }

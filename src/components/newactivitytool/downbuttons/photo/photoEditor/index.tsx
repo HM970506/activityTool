@@ -83,21 +83,40 @@ export default function PhotoEditor() {
     photoCanvas.renderAll();
   };
 
+  const coordCorrecting = (object: any) => {
+    return {
+      left:
+        (Math.round((object.oCoords.tl.x * 100) / 100) -
+          canvas.viewportTransform[4]) /
+        canvas.viewportTransform[0],
+      top:
+        (Math.round((object.oCoords.tl.y * 100) / 100) -
+          canvas.viewportTransform[5]) /
+        canvas.viewportTransform[0],
+    };
+  };
+
   const editComplete = () => {
     const objects = photoCanvas.getObjects();
 
     if (objects.length > 1) {
-      const editImg = cropper(objects[0], objects[1]);
+      const crop = objects[1];
 
-      const left =
-        Math.round(
-          (objects[1].oCoords.tl.x + canvas.viewportTransform[4]) * 10
-        ) / 10;
-      const top =
-        Math.round(
-          (objects[1].oCoords.tl.y + canvas.viewportTransform[5]) * 10
-        ) / 10;
+      const crop_absolute = {
+        top: Math.round(crop.top * 100) / 100,
+        left: Math.round(crop.left * 100) / 100,
+        right: Math.round((crop.left + crop.width) * 100) / 100,
+        bottom: Math.round((crop.top + crop.height) * 100) / 100,
+      };
+      const crop_relative = {
+        top: crop_absolute.top - objects[0].top,
+        left: crop_absolute.left - objects[0].left,
+      };
+      //  crop.top = crop_relative.top;
+      // crop.left = crop_relative.left;
 
+      const editImg = cropper(objects[0], crop);
+      const { left, top } = coordCorrecting(crop);
       const group = new fabric.Group(objects);
 
       group.cloneAsImage((img: ImageType) => {
@@ -111,11 +130,11 @@ export default function PhotoEditor() {
         img.height = editImg?.height;
         img.crossOrigin = "Anonymous";
         img.objectType = "photo";
+        console.log(img);
         canvas.add(img);
       });
     } else {
-      if (objects[0].clipPath) {
-        //절대좌표값 상대좌표로 번환
+      if (objects[0].clipPath !== undefined) {
         const crop = objects[0].clipPath;
 
         const crop_absolute = {
@@ -128,8 +147,6 @@ export default function PhotoEditor() {
           top: crop_absolute.top - objects[0].top,
           left: crop_absolute.left - objects[0].left,
         };
-
-        console.log(crop);
 
         crop.top = crop_relative.top;
         crop.left = crop_relative.left;
@@ -145,14 +162,16 @@ export default function PhotoEditor() {
           img.height = crop.height;
           img.crossOrigin = "Anonymous";
           img.objectType = "photo";
-
-          console.log(img);
           canvas.add(img);
         });
-      } else canvas.add(objects[0]);
+      } else {
+        objects[0].selectable = true;
+        objects[0].objectType = "photo";
+        canvas.add(objects[0]);
+        // console.log(canvas.getObjects());
+      }
     }
 
-    canvas.remove(photo);
     canvas.renderAll();
 
     dispatch(photoEditorActions.setIsEditing(false));

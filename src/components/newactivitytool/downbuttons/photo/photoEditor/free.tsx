@@ -88,10 +88,8 @@ export default function FreeCrop() {
             left: o.path.left,
             absolutePositioned: true,
           }),
-          selectable: true,
+          selectable: false,
         });
-
-        console.log(photoCanvas);
         photoCanvas.clear();
         photoCanvas.add(group);
         photoCanvas.renderAll();
