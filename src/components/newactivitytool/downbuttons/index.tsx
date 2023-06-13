@@ -4,17 +4,22 @@ import PhotoButton from "./photo";
 import RecordButton from "./record";
 import StickerButton from "./sticker";
 import TextButton from "./text";
-import { DownButtonsContainer } from "../style";
+import { DownButtonsContainer_MobilenDesktop } from "../style";
+import { useSelector } from "react-redux";
+import { ReducersType } from "../types";
+import { useEffect } from "react";
 
 export default function DownButtons() {
+  const view = useSelector((state: ReducersType) => state.categoryReducer.view);
+
   return (
-    <DownButtonsContainer>
+    <DownButtonsContainer_MobilenDesktop state={view ? 1 : 0}>
       <DrawToolsButton />
       <DecorationButton />
       <StickerButton />
       <PhotoButton />
       <TextButton />
       <RecordButton />
-    </DownButtonsContainer>
+    </DownButtonsContainer_MobilenDesktop>
   );
 }

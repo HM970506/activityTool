@@ -1,16 +1,18 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fabric } from "fabric-with-erasing";
-import { deleteProps } from "../../common/deleteButton";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { DEFUALT_TEXTBOX, ReducersType, textType } from "../../types";
 import { FontButton, TextOptionContainer } from "./style";
+import { isMobile } from "react-device-detect";
+import { categoryActions } from "../../../../store/common/categorySlice";
 
 export default function TextMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const textAreaContainer = useSelector(
     (state: ReducersType) => state.nodeReducer.textareaContainer
   );
+  const dispatch = useDispatch();
   const [texts, setTexts] = useState<textType[]>([]);
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData("text");
@@ -28,6 +30,16 @@ export default function TextMenu() {
       hiddenTextareaContainer: textAreaContainer,
       fontFamily: font,
     });
+
+    textbox.on({
+      "editing:entered": () => {
+        if (isMobile) dispatch(categoryActions.setView(false));
+      },
+      "editing:exited": () => {
+        if (isMobile) dispatch(categoryActions.setView(true));
+      },
+    });
+
     canvas.add(textbox);
     canvas.setActiveObject(textbox);
     canvas.renderAll();

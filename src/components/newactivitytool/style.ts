@@ -47,6 +47,12 @@ export const DownButtonsContainer = styled(animated.div)`
   align-items: center;
 `;
 
+export const DownButtonsContainer_MobilenDesktop = styled(
+  DownButtonsContainer
+)<{ state: number }>`
+  opacity: ${(props) => (props.state ? "100%" : "0%")};
+`;
+
 export const Icon = styled.img`
   width: 32px;
   height: 32px;

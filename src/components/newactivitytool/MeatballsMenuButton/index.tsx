@@ -51,7 +51,7 @@ export default function MeatballsMenu() {
 
   return (
     <>
-      <TempLink ref={linkRef} />
+      <TempLink ref={linkRef} target="_blank" />
       {view && (
         <Menus>
           <Menu onClick={reset}>
