@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, ButtonInner } from "../../../style";
+import { Button, ButtonInner } from "../../../styles/style";
 import { OptionContainer } from "../../style";
 
 export const PhotoEditorContainer = styled.div<{ view: number }>`

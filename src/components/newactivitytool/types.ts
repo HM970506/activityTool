@@ -6,8 +6,6 @@ export interface BrushOption {
   opacity: number;
 }
 
-export type ContextType = any;
-
 export type fabricObjectType = Object;
 
 export interface panObjectType extends Partial<Object> {

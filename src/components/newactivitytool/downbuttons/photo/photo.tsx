@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CategoryButton, Icon, Uploader } from "../../style";
+import { CategoryButton, Icon, Uploader } from "../../styles/style";
 import { DEFAULT_X, ImageType, ReducersType } from "../../types";
 import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";

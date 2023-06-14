@@ -1,4 +1,4 @@
-import { BrushOption, ContextType, canvasType } from "../../types";
+import { BrushOption, canvasType } from "../../types";
 import { Point } from "fabric/fabric-impl";
 import { fabric } from "fabric-with-erasing";
 
@@ -72,7 +72,7 @@ export default function CrayonMaker() {
         .distanceFrom({ x: 0, y: 0 });
     },
 
-    draw: function (ctx: ContextType) {
+    draw: function (ctx: CanvasRenderingContext2D) {
       console.log(ctx);
       var i, j, p, r, c, x, y, w, h, v, s, stepNum, dotSize, dotNum, range;
 

@@ -1,7 +1,6 @@
 import { fabric } from "fabric-with-erasing";
 import { canvasType, fabricObjectType, stickerOptionType } from "../types";
 import { IEvent } from "fabric/fabric-impl";
-import editControlHandler from "../common/editControlHandler";
 
 export default function functionSetting(canvas: canvasType) {
   const tapeStep_1 = () => {
@@ -57,7 +56,6 @@ export default function functionSetting(canvas: canvasType) {
   };
 
   const panStep_1 = (e: IEvent | any) => {
-    //console.log("팬켜짐:", typeof e.e, e.e);
     const nextPoint = { x: 0, y: 0 };
     if (e.e.type === "touchstart") {
       nextPoint.x = e.e.changedTouches[0].pageX;
@@ -98,16 +96,9 @@ export default function functionSetting(canvas: canvasType) {
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
       if (canvas.isDrawingMode) canvas.test = 1;
-      if (canvas.tape.state === 1) {
-        //  console.log("tape");
-        tapeStep_1();
-      } else if (canvas.stamp.state === 1) {
-        // console.log("stamp");
-        stampStep_1();
-      } else if (!canvas.isDrawingMode && !canvas.getActiveObject()) {
-        // console.log("pan");
-        panStep_1(e);
-      }
+      if (canvas.tape.state === 1) tapeStep_1();
+      else if (canvas.stamp.state === 1) stampStep_1();
+      else if (!canvas.isDrawingMode && !canvas.getActiveObject()) panStep_1(e);
     },
     "mouse:move": (e: IEvent | any) => {
       if (canvas.tape.state === 2) tapeStep_2();

@@ -1,4 +1,4 @@
-import Colorbox from "../../common/colorbox";
+import Colorbox from "../../common/colorbox/colorbox";
 import { SizeContainer, Sizechip, SizechipBox } from "../../common/sizebox";
 import { DrawOptionContainer } from "./style";
 import { ERASER, FELTPEN, ReducersType, SPRAY } from "../../types";

@@ -42,6 +42,21 @@ export default function canvasSetting(canvas: canvasType, dispatch: any) {
     opt.e.stopPropagation();
   };
 
+  const Mathrounding = (now: any) => {
+    return {
+      ...now,
+      width: now.width !== undefined ? Math.round(now.width) : 0,
+      height: now.height !== undefined ? Math.round(now.height) : 0,
+      top: now.top !== undefined ? Math.round(now.top) : 0,
+      left: now.left !== undefined ? Math.round(now.left) : 0,
+      angle: now.angle !== undefined ? Math.round(now.angle) : 0,
+      scaleX:
+        now.scaleX !== undefined ? Math.round(now.scaleX * 1000) / 1000 : 0,
+      scaleY:
+        now.scaleY !== undefined ? Math.round(now.scaleY * 1000) / 1000 : 0,
+    };
+  };
+
   canvas.on({
     "mouse:up": () => {
       HistorySetteing();
@@ -63,18 +78,7 @@ export default function canvasSetting(canvas: canvasType, dispatch: any) {
     },
 
     "object:modified": (e: IEvent) => {
-      const now = e.target;
-      if (now) {
-        now.width = now.width !== undefined ? Math.round(now.width) : 0;
-        now.height = now.height !== undefined ? Math.round(now.height) : 0;
-        now.top = now.top !== undefined ? Math.round(now.top) : 0;
-        now.left = now.left !== undefined ? Math.round(now.left) : 0;
-        now.angle = now.angle !== undefined ? Math.round(now.angle) : 0;
-        now.scaleX =
-          now.scaleX !== undefined ? Math.round(now.scaleX * 1000) / 1000 : 0;
-        now.scaleY =
-          now.scaleY !== undefined ? Math.round(now.scaleY * 1000) / 1000 : 0;
-      }
+      e.target = Mathrounding(e.target);
     },
   });
   return canvas;

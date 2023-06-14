@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DefaultButton } from "../style";
+import { DefaultButton } from "../styles/style";
 
 export const TopButtonContainer = styled.div`
   width: 268px;
@@ -10,13 +10,13 @@ export const TopButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position:relative;
+  position: relative;
 `;
 
 export const TopArea = styled.div`
-width:1px;
-position: absolute;
-top: 12px;
+  width: 1px;
+  position: absolute;
+  top: 12px;
   left: 50%;
   display: flex;
   justify-content: center;

@@ -1,5 +1,5 @@
 import { fabric } from "fabric-with-erasing";
-import { deleteProps } from "../common/deleteButton";
+import { deleteProps } from "../common/deleteButton/deleteButton";
 import { canvasType } from "../types";
 
 export default function fabricSetting() {
@@ -51,7 +51,7 @@ export default function fabricSetting() {
       thickness = 1;
     }
 
-    var length = this.distanceFrom({ x: 0, y: 0 });
+    const length = this.distanceFrom({ x: 0, y: 0 });
 
     if (length > 0) {
       this.x = (this.x / length) * thickness;
@@ -62,7 +62,7 @@ export default function fabricSetting() {
   };
 
   fabric.BaseBrush.prototype.convertToImg = function () {
-    var pixelRatio = this.canvas.getRetinaScaling(),
+    const pixelRatio = this.canvas.getRetinaScaling(),
       c = fabric.util.copyCanvasElement(this.canvas.upperCanvasEl),
       xy = fabric.util.trimCanvas(c),
       img = new fabric.Image(c);
@@ -86,18 +86,18 @@ export default function fabricSetting() {
   fabric.util.trimCanvas = function (canvas: canvasType) {
     const X: number[] = [];
     const Y: number[] = [];
-    var ctx = canvas.getContext("2d", { willReadFrequently: true }),
-      w = canvas.width,
-      h = canvas.height,
-      pix = { x: X, y: Y },
-      n,
-      imageData = ctx.getImageData(0, 0, w, h),
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    let w = canvas.width;
+    let h = canvas.height;
+    const pix = { x: X, y: Y };
+    let n;
+    const imageData = ctx.getImageData(0, 0, w, h),
       fn = function (a: number, b: number) {
         return a - b;
       };
 
-    for (var y = 0; y < h; y++) {
-      for (var x = 0; x < w; x++) {
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
         if (imageData.data[(y * w + x) * 4 + 3] > 0) {
           pix.x.push(x);
           pix.y.push(y);
@@ -107,10 +107,6 @@ export default function fabricSetting() {
     pix.x.sort(fn);
     pix.y.sort(fn);
     n = pix.x.length - 1;
-
-    //if (n == -1) {
-    //	// Nothing to trim... empty canvas?
-    //}
 
     w = pix.x[n] - pix.x[0];
     h = pix.y[n] - pix.y[0];

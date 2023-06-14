@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import { ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import Colorbox from "../../common/colorbox";
-import { ListButton, DecoOptionContainer2, StampsContainer } from "./style";
+import Colorbox from "../../common/colorbox/colorbox";
+import {
+  ListButton,
+  DecoOptionContainer2,
+  StampsContainer,
+} from "../../styles/sizebox";
 import SVG from "react-inlinesvg";
 
 export default function Stamp() {

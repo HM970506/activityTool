@@ -1,4 +1,4 @@
-import { BrushOption, ContextType, canvasType } from "../../types";
+import { BrushOption, canvasType } from "../../types";
 import { Point } from "fabric/fabric-impl";
 import { fabric } from "fabric-with-erasing";
 

@@ -14,7 +14,7 @@ import { ReactComponent as Diagram } from "./svg/diagram.svg";
 import { ReactComponent as Filter } from "./svg/filter.svg";
 import { ReactComponent as Free } from "./svg/free.svg";
 
-import { DownButtonsContainer, Icon } from "../../../style";
+import { DownButtonsContainer, Icon } from "../../../styles/style";
 import cropper from "./cropper";
 import { useSpring } from "react-spring";
 import editControlHandler from "../../../common/editControlHandler";

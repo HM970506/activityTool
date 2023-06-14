@@ -21,7 +21,6 @@ const renderIcon = (
   const img = new Image();
   img.src = deleteIcon;
   ctx.drawImage(img, -size / 2, -size / 2, size, size);
-  //console.log(ctx);
   ctx.restore();
 };
 

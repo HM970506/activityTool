@@ -3,30 +3,16 @@ import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef } from "react";
-import { CanvasBackground } from "../style";
+import { CanvasBackground } from "../styles/style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import {
-  BACKGROUND_BRUSH,
-  CRAYON,
-  DEFAULT_CANVAS,
-  DRAWTOOLS,
-  ERASER,
-  FELTPEN,
-  HIGHLIGHTER,
-  INK,
-  ReducersType,
-  SPRAY,
-} from "../types";
+import { DEFAULT_CANVAS, DRAWTOOLS, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
-import { drawActions } from "../../../store/common/drawSlice";
-import CrayonMaker from "./brushes/crayon_brush";
-import HighlighterMaker from "./brushes/marker_brush";
-import InkMaker from "./brushes/ink_brush";
+import brushSetting from "./brushes";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -36,9 +22,6 @@ export default function Canvas() {
     (state: ReducersType) => state.categoryReducer.category
   );
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
-  const option = useSelector(
-    (state: ReducersType) => state.categoryReducer.option
-  );
 
   const drawModeDebounce = debounce(() => {
     if (category == DRAWTOOLS && canvas) canvas.isDrawingMode = true;
@@ -84,70 +67,10 @@ export default function Canvas() {
     functionSetting(canvas);
     canvasSetting(canvas, dispatch);
     windowSetting(canvas, dispatch);
-
-    CrayonMaker();
-    HighlighterMaker();
-    InkMaker();
-
-    canvas.renderAll();
+    brushSetting(canvas, dispatch);
 
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
     dispatch(nodeActions.setCanvas(canvas));
-
-    //브러쉬 초기세팅 관련 코드 시작
-    dispatch(
-      drawActions.setting({
-        name: FELTPEN,
-        brush: new fabric.PencilBrush(canvas, { color: "black", width: 1 }),
-      })
-    );
-    dispatch(
-      drawActions.setting({
-        name: CRAYON,
-        brush: new fabric.CrayonBrush(canvas, {
-          color: "black",
-          width: 1,
-          opacity: 0.1,
-        }),
-      })
-    );
-    dispatch(
-      drawActions.setting({
-        name: SPRAY,
-        brush: new fabric.SprayBrush(canvas, {
-          density: 2,
-          color: "black",
-          width: 1,
-        }),
-      })
-    );
-    dispatch(
-      drawActions.setting({
-        name: BACKGROUND_BRUSH,
-        brush: new fabric.PatternBrush(canvas, {
-          color: "black",
-          width: 1,
-        }),
-      })
-    );
-    dispatch(
-      drawActions.setting({
-        name: HIGHLIGHTER,
-        brush: new fabric.MarkerBrush(canvas, { color: "black", width: 1 }),
-      })
-    );
-    dispatch(
-      drawActions.setting({
-        name: INK,
-        brush: new fabric.InkBrush(canvas, { color: "black", width: 1 }),
-      })
-    );
-    dispatch(
-      drawActions.setting({
-        name: ERASER,
-        brush: new fabric.EraserBrush(canvas, { color: "black", width: 1 }),
-      })
-    );
   }, []);
 
   return (
