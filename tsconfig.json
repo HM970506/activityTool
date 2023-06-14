@@ -19,6 +19,7 @@
   },
   "include": [
     "src",
-    "src/components/newactivitytool/downbuttons/photo/photoEditor/.tsx"
+    "src/components/newactivitytool/downbuttons/photo/photoEditor/.tsx",
+    "src/components/newactivitytool/types.ts"
   ]
 }
