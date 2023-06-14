@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  BACKGROUND_BRUSH,
   CRAYON,
   DRAWTOOLS,
   ERASER,
   FELTPEN,
   HIGHLIGHTER,
-  INK,
   ReducersType,
   SPRAY,
 } from "../../types";

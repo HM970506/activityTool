@@ -24,10 +24,6 @@ import { zoomActions } from "../../store/common/zoomSlice";
 import { photoEditorActions } from "../../store/common/photoEditorSlice";
 
 export default function NewActivityTool() {
-  const option = useSelector(
-    (state: ReducersType) => state.categoryReducer.option
-  );
-
   const newActivityTool = useRef<HTMLDivElement>(null);
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [subMenu, setSubMenu] = useState<boolean>(false);

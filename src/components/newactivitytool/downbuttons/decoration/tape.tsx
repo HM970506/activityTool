@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ReducersType } from "../../types";
 import { selectable, unselectable } from "../../common/selectHandler";
-import { DecoOptionContainer2, StampsContainer } from "../../styles/sizebox";
+import { DecoOptionContainer2, StampsContainer } from "./sizebox";
 import Colorbox from "../../common/colorbox/colorbox";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { SizeContainer, Sizechip, SizechipBox } from "../../common/sizebox";

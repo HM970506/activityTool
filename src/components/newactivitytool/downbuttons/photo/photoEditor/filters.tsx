@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { ReducersType, canvasType } from "../../../types";
+import { ReducersType } from "../../../types";
 import { FilterComponent, PhotoOption2 } from "./style";
 import { fabric } from "fabric-with-erasing";
 

@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { ImageType, ReducersType } from "../../../types";
+import { ReducersType } from "../../../types";
 import { FreecropButton, PhotoOption2 } from "./style";
 import { fabric } from "fabric-with-erasing";
 import { useDispatch, useSelector } from "react-redux";
 import { photoEditorActions } from "../../../../../store/common/photoEditorSlice";
-import { Path } from "fabric/fabric-impl";
 import { isNumber } from "lodash";
 
 export default function FreeCrop() {
@@ -13,10 +11,6 @@ export default function FreeCrop() {
   );
   const dispatch = useDispatch();
   const ordinary = photoCanvas.getObjects()[0];
-  //전체를 덮는 회색조 캔버스를 깔고
-  //같은 위치에 이미지를 놓고 크로스..어쩌고를 주고
-  //드래그시 사각형을 그리게 하고
-  //마우스 업시 정보를 저장해뒀다 아래 캔버스에 전달
 
   const reset = () => {
     photoCanvas.clear();

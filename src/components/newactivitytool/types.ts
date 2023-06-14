@@ -5,6 +5,10 @@ export interface BrushOption {
   width: number;
   opacity: number;
 }
+export interface ratioType {
+  widthR: number;
+  heightR: number;
+}
 
 export type fabricObjectType = Object;
 

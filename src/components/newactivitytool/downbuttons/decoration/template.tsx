@@ -4,11 +4,7 @@ import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { ImageType, ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import {
-  DecoOptionContainer,
-  Thumbnail,
-  ThumbnailBox,
-} from "../../styles/sizebox";
+import { DecoOptionContainer, Thumbnail, ThumbnailBox } from "./sizebox";
 
 export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

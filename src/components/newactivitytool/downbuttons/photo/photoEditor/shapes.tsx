@@ -1,6 +1,6 @@
 import { OptionComponent, PhotoOption1 } from "./style";
 import { fabric } from "fabric-with-erasing";
-import { ImageType, ReducersType, canvasType } from "../../../types";
+import { ImageType, ReducersType } from "../../../types";
 import { useSelector } from "react-redux";
 
 const test = ["heart", "star", "lightning", "bubble"];

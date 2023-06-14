@@ -40,7 +40,7 @@ export default function PhotoMenu() {
   };
 
   useEffect(() => {
-    const test = async () => {
+    const check = async () => {
       if (canvas && photo !== "") {
         if (await imageCheck(photo)) {
           new fabric.Image.fromURL(photo, (img: ImageType) => {
@@ -77,7 +77,7 @@ export default function PhotoMenu() {
       }
     };
 
-    test();
+    check();
   }, [photo, canvas]);
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {

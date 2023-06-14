@@ -7,8 +7,8 @@ import Template from "./template";
 import Stamp from "./stamp";
 import Tape from "./tape";
 import SVG from "react-inlinesvg";
-import { CategoryButton, CategoryButtonText, Icon } from "../../styles/style";
-import { StampCategoryButton } from "../../styles/sizebox";
+import { CategoryButton, Icon } from "../../styles/style";
+import { StampCategoryButton } from "./sizebox";
 
 export default function DecorationMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

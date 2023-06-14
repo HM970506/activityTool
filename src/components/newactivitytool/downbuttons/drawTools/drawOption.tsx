@@ -12,7 +12,7 @@ export default function DrawOption({ keyName }: { keyName: string }) {
   const dispatch = useDispatch();
   const select = useSelector((state: ReducersType) => state.drawReducer.now);
 
-  const setColor = (keyname: string, color: string) => {
+  const setColor = (color: string) => {
     dispatch(
       drawActions.setBrush({ name: keyName, color: color, width: undefined })
     );
@@ -54,7 +54,7 @@ export default function DrawOption({ keyName }: { keyName: string }) {
       {keyName !== FELTPEN && keyName !== ERASER && (
         <Colorbox
           setColor={(color: string) => {
-            setColor(keyName, color);
+            setColor(keyName);
           }}
           option={option}
           keyName={keyName}

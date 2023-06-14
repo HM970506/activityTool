@@ -64,12 +64,8 @@ export default function PhotoEditor() {
     photoCanvas.clear();
 
     photoCanvas.on({
-      "selection:updated": () => {
-        editControlHandler(photoCanvas);
-      },
-      "selection:created": () => {
-        editControlHandler(photoCanvas);
-      },
+      "selection:updated": () => editControlHandler(photoCanvas),
+      "selection:created": () => editControlHandler(photoCanvas),
     });
     photoReady(photo, photoCanvas);
   }, []);
@@ -102,19 +98,6 @@ export default function PhotoEditor() {
     if (objects.length > 1) {
       const crop = objects[1];
 
-      const crop_absolute = {
-        top: Math.round(crop.top * 100) / 100,
-        left: Math.round(crop.left * 100) / 100,
-        right: Math.round((crop.left + crop.width) * 100) / 100,
-        bottom: Math.round((crop.top + crop.height) * 100) / 100,
-      };
-      const crop_relative = {
-        top: crop_absolute.top - objects[0].top,
-        left: crop_absolute.left - objects[0].left,
-      };
-      //  crop.top = crop_relative.top;
-      // crop.left = crop_relative.left;
-
       const editImg = cropper(objects[0], crop);
       const { left, top } = coordCorrecting(crop);
       const group = new fabric.Group(objects);
@@ -130,7 +113,6 @@ export default function PhotoEditor() {
         img.height = editImg?.height;
         img.crossOrigin = "Anonymous";
         img.objectType = "photo";
-        console.log(img);
         canvas.add(img);
       });
     } else {
@@ -168,7 +150,6 @@ export default function PhotoEditor() {
         objects[0].selectable = true;
         objects[0].objectType = "photo";
         canvas.add(objects[0]);
-        // console.log(canvas.getObjects());
       }
     }
 

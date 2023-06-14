@@ -4,11 +4,7 @@ import { useQueryClient } from "react-query";
 import { ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import Colorbox from "../../common/colorbox/colorbox";
-import {
-  ListButton,
-  DecoOptionContainer2,
-  StampsContainer,
-} from "../../styles/sizebox";
+import { ListButton, DecoOptionContainer2, StampsContainer } from "./sizebox";
 import SVG from "react-inlinesvg";
 
 export default function Stamp() {

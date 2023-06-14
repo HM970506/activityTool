@@ -9,7 +9,7 @@ import {
   STICKER_CATEGORY,
   stickerCategoryType,
 } from "../../types";
-import { Thumbnail } from "../../styles/sizebox";
+import { Thumbnail } from "../decoration/sizebox";
 import {
   StickerBox,
   StickerCategory,

@@ -7,7 +7,7 @@ import {
   getStorageDataAll,
 } from "../../../api/firestore/getData";
 import { useEffect, useState } from "react";
-import { DecoContatiner } from "../../styles/sizebox";
+import { DecoContatiner } from "./sizebox";
 import DecorationMenu from "./decorations";
 import { useSpring } from "react-spring";
 import { ButtonInner, Icon } from "../../styles/style";

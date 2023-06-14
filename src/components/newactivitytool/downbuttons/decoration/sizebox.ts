@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { ButtonsContainer, OptionContainer } from "../downbuttons/style";
-import { CategoryButton, SelectButton } from "./style";
+import { ButtonsContainer, OptionContainer } from "../style";
+import { CategoryButton, SelectButton } from "../../styles/style";
 
 export const DecoContatiner = styled(ButtonsContainer)``;
 

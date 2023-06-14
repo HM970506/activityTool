@@ -1,4 +1,4 @@
-import { ImageType, ReducersType, canvasType } from "../../../types";
+import { ReducersType, ratioType } from "../../../types";
 import {
   OptionComponent,
   OptionComponentSelectBox,
@@ -9,7 +9,7 @@ import { ReactComponent as Ratio1 } from "./svg/ratio1.svg";
 import { ReactComponent as Ratio2 } from "./svg/ratio2.svg";
 import { ReactComponent as Ratio3 } from "./svg/ratio3.svg";
 import { ReactComponent as Ratio4 } from "./svg/ratio4.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { fabric } from "fabric-with-erasing";
 import { useSelector } from "react-redux";
 
@@ -20,11 +20,6 @@ const RATIOS = [
   { widthR: 4, heightR: 3 },
   { widthR: 1, heightR: 1 },
 ];
-
-interface ratioType {
-  widthR: number;
-  heightR: number;
-}
 
 export default function Ratio() {
   const photoCanvas = useSelector(
