@@ -2,18 +2,66 @@
 
 import { IEvent } from "fabric/fabric-impl";
 import { canvasType } from "../types";
+import editControlHandler from "../common/editControlHandler";
+import { categoryActions } from "../../../store/common/categorySlice";
+import { nodeActions } from "../../../store/common/nodeSlice";
+import { zoomActions } from "../../../store/common/zoomSlice";
 
-const DeselctMultipleObjects = (canvas: canvasType) => {
-  if (canvas.getActiveObject().type === "activeSelection") {
-    canvas.discardActiveObject();
-    canvas.requestRenderAll();
-  }
-};
+export default function canvasSetting(canvas: canvasType, dispatch: any) {
+  const DeselctMultipleObjects = () => {
+    if (canvas.getActiveObject().type === "activeSelection") {
+      canvas.discardActiveObject();
+      canvas.requestRenderAll();
+    }
+  };
 
-export default function canvasSetting(canvas: canvasType) {
+  const HistorySetteing = () => {
+    if (canvas.historyRedo.length > 0) {
+      canvas.historyRedo = [];
+      dispatch(nodeActions.setRedo(0));
+    }
+
+    if (canvas.historyUndo.length > 4) canvas.historyUndo.shift();
+
+    dispatch(nodeActions.setUndo(canvas.historyUndo.length));
+  };
+
+  const OptionSetting = () => {
+    dispatch(categoryActions.optionChange(false));
+  };
+
+  const ZoomSetting = (opt: any) => {
+    const delta = opt.e.deltaY;
+    let zoom = canvas.getZoom();
+    zoom *= 0.999 ** delta;
+    if (zoom > 20) zoom = 20;
+    if (zoom < 0.01) zoom = 0.01;
+    canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+    dispatch(zoomActions.setZoom(zoom));
+    opt.e.preventDefault();
+    opt.e.stopPropagation();
+  };
+
   canvas.on({
-    "selection:created": () => DeselctMultipleObjects(canvas),
-    "selection:updated": () => DeselctMultipleObjects(canvas),
+    "mouse:up": () => {
+      HistorySetteing();
+    },
+    "mouse:down": () => {
+      OptionSetting();
+    },
+    "mouse:wheel": (opt: any) => {
+      ZoomSetting(opt);
+    },
+    "selection:created": () => {
+      DeselctMultipleObjects();
+      editControlHandler(canvas);
+      dispatch(nodeActions.setUndo(canvas.historyUndo.length));
+    },
+    "selection:updated": () => {
+      DeselctMultipleObjects();
+      editControlHandler(canvas);
+    },
+
     "object:modified": (e: IEvent) => {
       const now = e.target;
       if (now) {

@@ -83,7 +83,7 @@ export default function Canvas() {
 
     fabricSetting();
     functionSetting(canvas);
-    canvasSetting(canvas);
+    canvasSetting(canvas, dispatch);
     windowSetting(canvas, dispatch);
 
     CrayonMaker(fabric);
@@ -149,42 +149,6 @@ export default function Canvas() {
         brush: new fabric.EraserBrush(canvas, { color: "black", width: 1 }),
       })
     );
-
-    //브러쉬 초기세팅 관련 코드 끝
-
-    //히스토리 초기세팅 관련 코드 시작
-    canvas.on("mouse:up", () => {
-      if (canvas.historyRedo.length > 0) {
-        canvas.historyRedo = [];
-        dispatch(nodeActions.setRedo(0));
-      }
-
-      if (canvas.historyUndo.length > 4) canvas.historyUndo.shift();
-
-      dispatch(nodeActions.setUndo(canvas.historyUndo.length));
-    });
-    //히스토리 초기세팅 관련코드 끝
-
-    //옵션 초기세팅 시작
-    canvas.on("mouse:down", () => {
-      dispatch(categoryActions.optionChange(false));
-    });
-
-    //옵션 초기세팅 끝
-
-    //마우스 휠 줌 세팅 코드 시작
-    canvas.on("mouse:wheel", (opt: any) => {
-      var delta = opt.e.deltaY;
-      var zoom = canvas.getZoom();
-      zoom *= 0.999 ** delta;
-      if (zoom > 20) zoom = 20;
-      if (zoom < 0.01) zoom = 0.01;
-      canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-      dispatch(zoomActions.setZoom(zoom));
-      opt.e.preventDefault();
-      opt.e.stopPropagation();
-    });
-    //마우스 휠 줌 세팅 코드 끝
   }, []);
 
   return (
