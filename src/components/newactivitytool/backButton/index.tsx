@@ -29,8 +29,6 @@ export default function Back({
 
   const flutterBack = () => {
     const ref = window.location.href.toString();
-    // console.log(ref.indexOf("team"), ref);
-
     if (ref.indexOf("team") === -1) activityEnd();
     else {
       //@ts-ignore

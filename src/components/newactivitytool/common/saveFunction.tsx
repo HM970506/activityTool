@@ -1,4 +1,3 @@
-import { setSaveRecoder } from "../../api/nodejs";
 import { setSaveData } from "../../api/firestore/setData";
 import { canvasType } from "../types";
 

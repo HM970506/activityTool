@@ -2,7 +2,7 @@ import { fabric } from "fabric-with-erasing";
 import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { CanvasBackground } from "../style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
@@ -20,14 +20,13 @@ import {
 } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
-import zoomSlice, { zoomActions } from "../../../store/common/zoomSlice";
+import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import { drawActions } from "../../../store/common/drawSlice";
 import CrayonMaker from "./brushes/crayon_brush";
 import HighlighterMaker from "./brushes/marker_brush";
 import InkMaker from "./brushes/ink_brush";
-import { categoryActions } from "../../../store/common/categorySlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -86,9 +85,9 @@ export default function Canvas() {
     canvasSetting(canvas, dispatch);
     windowSetting(canvas, dispatch);
 
-    CrayonMaker(fabric);
-    HighlighterMaker(fabric);
-    InkMaker(fabric);
+    CrayonMaker();
+    HighlighterMaker();
+    InkMaker();
 
     canvas.renderAll();
 

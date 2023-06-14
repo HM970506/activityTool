@@ -1,4 +1,8 @@
-export default function CrayonMaker(fabric) {
+import { BrushOption, ContextType, canvasType } from "../../types";
+import { Point } from "fabric/fabric-impl";
+import { fabric } from "fabric-with-erasing";
+
+export default function CrayonMaker() {
   fabric.CrayonBrush = fabric.util.createClass(fabric.BaseBrush, {
     color: "#000000",
     opacity: 0.1,
@@ -13,7 +17,7 @@ export default function CrayonMaker(fabric) {
     _latest: null,
     _drawn: false,
 
-    initialize: function (canvas, opt) {
+    initialize: function (canvas: canvasType, opt: BrushOption) {
       opt = opt || {};
 
       this.canvas = canvas;
@@ -23,11 +27,11 @@ export default function CrayonMaker(fabric) {
       this._point = new fabric.Point(0, 0);
     },
 
-    changeColor: function (color) {
+    changeColor: function (color: string) {
       this.color = color;
     },
 
-    onMouseDown: function (p) {
+    onMouseDown: function (p: Point) {
       const pointer = this.canvas.viewportTransform
         ? fabric.util.getPosition(this.canvas.viewportTransform, p)
         : p;
@@ -38,7 +42,7 @@ export default function CrayonMaker(fabric) {
       this.set(pointer);
     },
 
-    onMouseMove: function (p) {
+    onMouseMove: function (p: Point) {
       const pointer = this.canvas.viewportTransform
         ? fabric.util.getPosition(this.canvas.viewportTransform, p)
         : p;
@@ -54,21 +58,22 @@ export default function CrayonMaker(fabric) {
       this.canvas.contextTop.globalAlpha = 1;
     },
 
-    set: function (p) {
+    set: function (p: Point) {
       if (this._latest) this._latest.setFromPoint(this._point);
       else this._latest = new fabric.Point(p.x, p.y);
 
       fabric.Point.prototype.setFromPoint.call(this._point, p);
     },
 
-    update: function (p) {
+    update: function (p: Point) {
       this.set(p);
       this._latestStrokeLength = this._point
         .subtract(this._latest)
         .distanceFrom({ x: 0, y: 0 });
     },
 
-    draw: function (ctx) {
+    draw: function (ctx: ContextType) {
+      console.log(ctx);
       var i, j, p, r, c, x, y, w, h, v, s, stepNum, dotSize, dotNum, range;
 
       v = this._point.subtract(this._latest);

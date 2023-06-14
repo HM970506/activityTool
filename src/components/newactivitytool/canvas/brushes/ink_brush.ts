@@ -1,4 +1,8 @@
-export default function InkMaker(fabric) {
+import { BrushOption, ContextType, canvasType } from "../../types";
+import { Point } from "fabric/fabric-impl";
+import { fabric } from "fabric-with-erasing";
+
+export default function InkMaker() {
   fabric.InkBrush = fabric.util.createClass(fabric.BaseBrush, {
     color: "#000",
     opacity: 0.5,
@@ -11,7 +15,7 @@ export default function InkMaker(fabric) {
     _range: 10,
     _strokes: null,
 
-    initialize: function (canvas, opt) {
+    initialize: function (canvas: canvasType, opt: BrushOption) {
       opt = opt || {};
 
       this.canvas = canvas;
@@ -22,7 +26,7 @@ export default function InkMaker(fabric) {
       this._point = new fabric.Point();
     },
 
-    _render: function (pointer) {
+    _render: function (pointer: Point) {
       var len,
         i,
         point = this.setPointer(pointer),
@@ -41,14 +45,14 @@ export default function InkMaker(fabric) {
       }
     },
 
-    onMouseDown: function (p) {
+    onMouseDown: function (p: Point) {
       const pointer = fabric.util.getPosition(this.canvas.viewportTransform, p);
 
       this.canvas.contextTop.globalAlpha = this.opacity;
       this._resetTip(pointer);
     },
 
-    onMouseMove: function (p) {
+    onMouseMove: function (p: Point) {
       const pointer = fabric.util.getPosition(this.canvas.viewportTransform, p);
       if (this.canvas._isCurrentlyDrawing) {
         this._render(pointer);
@@ -60,7 +64,7 @@ export default function InkMaker(fabric) {
       this.canvas.contextTop.globalAlpha = 1;
     },
 
-    drawSplash: function (pointer, maxSize) {
+    drawSplash: function (pointer: Point, maxSize: number) {
       var c,
         r,
         i,
@@ -94,7 +98,7 @@ export default function InkMaker(fabric) {
       ctx.restore();
     },
 
-    setPointer: function (pointer) {
+    setPointer: function (pointer: Point) {
       var point = new fabric.Point(pointer.x, pointer.y);
 
       this._lastPoint = fabric.util.object.clone(this._point);
@@ -103,7 +107,7 @@ export default function InkMaker(fabric) {
       return point;
     },
 
-    _resetTip: function (pointer) {
+    _resetTip: function (pointer: Point) {
       var len,
         i,
         point = this.setPointer(pointer);

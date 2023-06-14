@@ -1,12 +1,12 @@
-import {
-  Image,
-  Object,
-  IEvent,
-  PencilBrush,
-  SprayBrush,
-  PatternBrush,
-  BaseBrush,
-} from "fabric/fabric-impl";
+import { Image, Object, IEvent } from "fabric/fabric-impl";
+
+export interface BrushOption {
+  color: string;
+  width: number;
+  opacity: number;
+}
+
+export type ContextType = any;
 
 export type fabricObjectType = Object;
 

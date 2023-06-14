@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export default async function greenEye(url: string) {
+  const testUrl = `https://cors-anywhere.herokuapp.com/${process.env.REACT_APP_GREENEYE_URL}`;
+  const distributeUrl = `${process.env.REACT_APP_GREENEYE_URL}`;
+
   const data = {
     version: "V1",
     requestId: "requestId",
@@ -13,17 +16,12 @@ export default async function greenEye(url: string) {
     ],
   };
   return await axios
-    .post(
-      `https://cors-anywhere.herokuapp.com/${process.env.REACT_APP_GREENEYE_URL}`,
-      data,
-
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "X-GREEN-EYE-SECRET": `${process.env.REACT_APP_GREENEYE_KEY}`,
-        },
-      }
-    )
+    .post(distributeUrl, data, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-GREEN-EYE-SECRET": `${process.env.REACT_APP_GREENEYE_KEY}`,
+      },
+    })
     .catch((err) => {
       console.log(err);
       return null;

@@ -1,4 +1,8 @@
-export default function HighlighterMaker(fabric) {
+import { BrushOption, ContextType, canvasType } from "../../types";
+import { Point } from "fabric/fabric-impl";
+import { fabric } from "fabric-with-erasing";
+
+export default function HighlighterMaker() {
   fabric.MarkerBrush = fabric.util.createClass(fabric.BaseBrush, {
     color: "#000000",
     opacity: 1,
@@ -10,7 +14,7 @@ export default function HighlighterMaker(fabric) {
     _point: null,
     _size: 0,
 
-    initialize: function (canvas, opt) {
+    initialize: function (canvas: canvasType, opt: BrushOption) {
       opt = opt || {};
 
       this.canvas = canvas;
@@ -23,15 +27,15 @@ export default function HighlighterMaker(fabric) {
       this.canvas.contextTop.lineCap = "round";
     },
 
-    changeColor: function (color) {
+    changeColor: function (color: string) {
       this.color = color;
     },
 
-    changeOpacity: function (value) {
+    changeOpacity: function (value: number) {
       this.opacity = value;
     },
 
-    _render: function (pointer) {
+    _render: function (pointer: Point) {
       var ctx, lineWidthDiff, i;
       var len = this._size / this._lineWidth / 2;
 
@@ -55,7 +59,7 @@ export default function HighlighterMaker(fabric) {
       this._lastPoint = new fabric.Point(pointer.x, pointer.y);
     },
 
-    onMouseDown: function (p) {
+    onMouseDown: function (p: Point) {
       const pointer = fabric.util.getPosition(this.canvas.viewportTransform, p);
 
       this._lastPoint = pointer;
@@ -64,7 +68,7 @@ export default function HighlighterMaker(fabric) {
       this._size = this.width + this._baseWidth;
     },
 
-    onMouseMove: function (p) {
+    onMouseMove: function (p: Point) {
       const pointer = fabric.util.getPosition(this.canvas.viewportTransform, p);
       if (this.canvas._isCurrentlyDrawing) this._render(pointer);
     },
