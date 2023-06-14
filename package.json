@@ -56,7 +56,6 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
     "rollup-plugin-uglify": "^6.0.4",
-    "rolluptest_mimi": "^0.3.0",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.5",
     "typescript": "^4.9.5",
