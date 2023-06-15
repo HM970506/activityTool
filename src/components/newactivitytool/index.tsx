@@ -112,7 +112,7 @@ export default function NewActivityTool() {
               setSubMenu((x) => !x);
             }}
           >
-            <Icon src={"/diary/index/document.png"} />
+            <Icon src={"/index/document.png"} />
           </MainButton>
         </>
       )}

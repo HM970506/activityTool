@@ -63,7 +63,7 @@ export default function StickerButton() {
       <Button onClick={stickerButtonClick}>
         {category === STICKER && option && <StickerMenu />}
         <ButtonInner style={props}>
-          <Icon src="/diary/sticker/sticker.png" />
+          <Icon src="/sticker/sticker.png" />
         </ButtonInner>
       </Button>
     </>

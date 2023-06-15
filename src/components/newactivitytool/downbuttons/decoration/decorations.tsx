@@ -52,7 +52,7 @@ export default function DecorationMenu() {
         }}
       >
         {category === DECORATION && template.state && <Template />}
-        <Icon src={"/diary/decoration/template.png"} />
+        <Icon src={"/decoration/template.png"} />
         <span>템플릿</span>
       </CategoryButton>
       <StampCategoryButton
@@ -69,7 +69,7 @@ export default function DecorationMenu() {
         {canvas.stamp.shape !== "" ? (
           <SVG src={canvas.stamp.shape} />
         ) : (
-          <Icon src={"/diary/decoration/stamp.png"} />
+          <Icon src={"/decoration/stamp.png"} />
         )}
         <span>스탬프</span>
       </StampCategoryButton>
@@ -82,7 +82,7 @@ export default function DecorationMenu() {
         }}
       >
         {category === DECORATION && tape.state && option && <Tape />}
-        <Icon src={"/diary/decoration/tape.png"} />
+        <Icon src={"/decoration/tape.png"} />
         <span>테이프</span>
       </CategoryButton>
     </>

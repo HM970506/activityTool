@@ -45,9 +45,9 @@ export default function RecordButton() {
     <RecordContatiner style={outterBox}>
       <ButtonInner style={props} onClick={recordButtonClick}>
         {state === "start" || state == "goon" ? (
-          <Icon2 src={"/diary/recorder/voiceon.png"} />
+          <Icon2 src={"/recorder/voiceon.png"} />
         ) : (
-          <Icon src={"/diary/recorder/voiceoff.png"} />
+          <Icon src={"/recorder/voiceoff.png"} />
         )}
       </ButtonInner>
       {isOpen == 1 ? <Record state={state} setState={setState} /> : null}

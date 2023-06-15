@@ -15,7 +15,7 @@ export function Shapes() {
 
     const objects = photoCanvas.getObjects();
 
-    fabric.Image.fromURL(`/diary/frame/${shape}.png`, (frameImg: ImageType) => {
+    fabric.Image.fromURL(`/frame/${shape}.png`, (frameImg: ImageType) => {
       frameImg.objectType = "frame";
       frameImg.crossOrigin = "Anonymous";
       frameImg.selectable = true;

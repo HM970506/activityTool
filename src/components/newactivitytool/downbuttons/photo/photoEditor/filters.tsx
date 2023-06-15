@@ -52,7 +52,7 @@ export default function Filters() {
               filtering(value);
             }}
           >
-            <img src={`/diary/filter/${value}.PNG`} />
+            <img src={`/filter/${value}.PNG`} />
             <p>{value}</p>
           </FilterComponent>
         );

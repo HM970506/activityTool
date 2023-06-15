@@ -105,11 +105,11 @@ export default function Record({
       {oldRecord !== "" ? (
         <>
           <CategoryButton onClick={playButton}>
-            <Icon src={"/diary/recorder/record.png"} />
+            <Icon src={"/recorder/record.png"} />
             <span>재생</span>
           </CategoryButton>
           <CategoryButton onClick={reRecord}>
-            <Icon src={"/diary/recorder/player.png"} />
+            <Icon src={"/recorder/player.png"} />
             <span>다시녹음</span>
           </CategoryButton>
         </>
@@ -123,16 +123,16 @@ export default function Record({
 
             {state === "start" || state == "goon" ? (
               <RecorderButton onClick={pauseHandler}>
-                <Icon src={"/diary/recorder/pause.png"} />
+                <Icon src={"/recorder/pause.png"} />
               </RecorderButton>
             ) : (
               <RecorderButton onClick={startHandler}>
-                <Icon src={"/diary/recorder/play.png"} />
+                <Icon src={"/recorder/play.png"} />
               </RecorderButton>
             )}
 
             <RecorderButton onClick={endHandler}>
-              <Icon src={"/diary/recorder/stop.png"} />
+              <Icon src={"/recorder/stop.png"} />
             </RecorderButton>
           </>
         )
