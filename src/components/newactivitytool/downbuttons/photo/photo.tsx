@@ -6,6 +6,7 @@ import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
+import { isMobile } from "react-device-detect";
 import editIcon from "./editButton.png";
 const renderIcon = (
   ctx: CanvasRenderingContext2D,
@@ -81,6 +82,7 @@ export default function PhotoMenu() {
   }, [photo, canvas]);
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("이미지업로더 실행");
     if (e.target.files) {
       try {
         const file = e.target.files[0];
@@ -93,13 +95,20 @@ export default function PhotoMenu() {
 
         e.target.value = "";
       } catch (err) {
-        console.log("이미지 가져오기 에러:", err);
+        console.log("이미지 가져오기 에러:", JSON.stringify(err));
       }
     }
   };
 
   const photoUpload = () => {
-    if (inputRef.current !== null) inputRef.current?.click();
+    console.log("포토업로더 실행");
+    if (inputRef.current !== null) {
+      inputRef.current?.click();
+      if (isMobile) {
+        //@ts-ignore
+        ForJH.postMessage("give_me_gallery");
+      }
+    }
   };
   const isEditing = useSelector((state: ReducersType) => {
     return state.photoEditorReducer.isEditing;
@@ -111,6 +120,17 @@ export default function PhotoMenu() {
 
   const getCamera = () => {
     console.log("카메라를 주세요!");
+    if (isMobile) {
+      //@ts-ignore
+      ForJH.postMessage("give_me_camera");
+    }
+  };
+
+  //@ts-ignore
+  window.fromFlutterURL = (data: string) => {
+    if (data) console.log("플러터에서 찍은 사진 받기 성공");
+    const url = "data:image/jpeg;base64," + data;
+    setPhoto(url);
   };
 
   return (
