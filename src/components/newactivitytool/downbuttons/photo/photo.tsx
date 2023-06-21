@@ -82,15 +82,19 @@ export default function PhotoMenu() {
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async (e: ProgressEvent<FileReader>) => {
-        if (e.target !== null && typeof e.target.result === "string")
-          setPhoto(e.target.result);
-      };
+      try {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = async (e: ProgressEvent<FileReader>) => {
+          if (e.target !== null && typeof e.target.result === "string")
+            setPhoto(e.target.result);
+        };
 
-      e.target.value = "";
+        e.target.value = "";
+      } catch (err) {
+        console.log("이미지 가져오기 에러:", err);
+      }
     }
   };
 
@@ -105,6 +109,10 @@ export default function PhotoMenu() {
     canvas.isDrawingMode = false;
   }, [isEditing]);
 
+  const getCamera = () => {
+    console.log("카메라를 주세요!");
+  };
+
   return (
     <>
       <Uploader
@@ -117,7 +125,7 @@ export default function PhotoMenu() {
         <Icon src={"/diary/photo/gallery.png"} />
         <span>앨범</span>
       </CategoryButton>
-      <CategoryButton>
+      <CategoryButton onClick={getCamera}>
         <Icon src={"/diary/photo/camera.png"} />
         <span>사진 찍기</span>
       </CategoryButton>

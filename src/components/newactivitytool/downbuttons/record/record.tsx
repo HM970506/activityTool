@@ -31,17 +31,21 @@ export default function Record({
   });
 
   const setting = async () => {
-    const getstream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-    });
+    try {
+      const getstream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
 
-    setStream(stream);
-    const recorder = new RecordRTCPromisesHandler(getstream, {
-      type: "audio",
-      mimeType: "audio/webm",
-    });
-    setRecorder(recorder);
-    await recorder.startRecording();
+      setStream(stream);
+      const recorder = new RecordRTCPromisesHandler(getstream, {
+        type: "audio",
+        mimeType: "audio/webm",
+      });
+      setRecorder(recorder);
+      await recorder.startRecording();
+    } catch (err) {
+      console.log("녹음 에러:", err);
+    }
   };
 
   useEffect(() => {
