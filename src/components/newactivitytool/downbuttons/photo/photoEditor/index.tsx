@@ -77,19 +77,6 @@ export default function PhotoEditor() {
     photoCanvas.renderAll();
   };
 
-  const coordCorrecting = (object: any) => {
-    return {
-      left:
-        (Math.round((object.oCoords.tl.x * 100) / 100) -
-          canvas.viewportTransform[4]) /
-        canvas.viewportTransform[0],
-      top:
-        (Math.round((object.oCoords.tl.y * 100) / 100) -
-          canvas.viewportTransform[5]) /
-        canvas.viewportTransform[0],
-    };
-  };
-
   const editComplete = () => {
     const objects = photoCanvas.getObjects();
 
@@ -97,15 +84,13 @@ export default function PhotoEditor() {
       const crop = objects[1];
 
       const editImg = cropper(objects[0], crop);
+      const group = new fabric.Group(objects);
 
       console.log(editImg);
 
-      const { left, top } = coordCorrecting(crop);
-      const group = new fabric.Group(objects);
-
       group.cloneAsImage((img: ImageType) => {
-        img.left = left;
-        img.top = top;
+        img.left = editImg?.left;
+        img.top = editImg?.top;
         img.selectable = true;
         img.erasable = false;
         img.cropX = editImg?.cropX;

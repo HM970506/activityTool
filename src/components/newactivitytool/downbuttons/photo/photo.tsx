@@ -61,15 +61,16 @@ export default function PhotoMenu() {
                 cornerSize: 30,
               });
             }
-
-            if (img.width !== undefined) {
+            if (img.width !== undefined && img.height !== undefined) {
               const scale = DEFAULT_X / img.width;
               img.scaleX = scale;
               img.scaleY = scale;
+
+              img.left = window.innerWidth / 2 - img.width / 2;
+              img.top = window.innerHeight / 2 - img.height / 2;
             }
 
             canvas.add(img);
-            canvas.setActiveObject(img);
           });
           setPhoto("");
         } else {
