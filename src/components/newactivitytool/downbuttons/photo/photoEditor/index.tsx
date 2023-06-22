@@ -73,8 +73,6 @@ export default function PhotoEditor() {
   const photoReady = (photo: any, photoCanvas: canvasType) => {
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
-    photo.left = photo.left;
-    photo.top = photo.top;
     photoCanvas.add(photo);
     photoCanvas.renderAll();
   };
@@ -99,6 +97,9 @@ export default function PhotoEditor() {
       const crop = objects[1];
 
       const editImg = cropper(objects[0], crop);
+
+      console.log(editImg);
+
       const { left, top } = coordCorrecting(crop);
       const group = new fabric.Group(objects);
 

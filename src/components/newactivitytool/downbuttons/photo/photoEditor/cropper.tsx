@@ -140,7 +140,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    //console.log("상하");
+    console.log("상하");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: image[0].y - frame[0].y,
@@ -161,11 +161,19 @@ export default function cropper(
       width: image[0].x - image[2].x,
       height: frame[0].y - frame[2].y,
     };
+  } else {
+    //console.log("전체");
+    returning = {
+      cropX: 0,
+      cropY: 0,
+      width: frame[2].x - frame[0].x,
+      height: frame[2].y - frame[0].y,
+    };
   }
 
   const viewport = frameOrdy.canvas?.viewportTransform;
   if (returning && viewport) {
-    console.log(viewport);
+    //console.log(viewport);
     returning = {
       cropX: Math.abs(Math.round(returning.cropX * 100) / 100) / viewport[0],
       cropY: Math.abs(Math.round(returning.cropY * 100) / 100) / viewport[0],

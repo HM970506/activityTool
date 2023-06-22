@@ -115,7 +115,7 @@ export default function PhotoMenu() {
   });
 
   useEffect(() => {
-    canvas.isDrawingMode = false;
+    if (canvas) canvas.isDrawingMode = false;
   }, [isEditing]);
 
   const getCamera = () => {
