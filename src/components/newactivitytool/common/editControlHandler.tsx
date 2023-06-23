@@ -5,12 +5,11 @@ import { canvasType } from "../types";
 
 export default function editControlHandler(canvas: canvasType) {
   const now = canvas.getActiveObject();
+  console.log(now);
   if (now.controls.editControl) {
-    if (now.src.s(";")[0] === "data:image/jpeg" || now.objectType === "photo") {
-      console.log("포토에요");
-      //  console.log(now.controls.editControl);
+    if (now.getSrc().split(";")[0] === "data:image/jpeg")
       now.controls.editControl.visible = true;
-    } else now.controls.editControl.visible = false;
+    else now.controls.editControl.visible = false;
     canvas.renderAll();
   }
 }

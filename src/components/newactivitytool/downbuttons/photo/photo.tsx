@@ -67,8 +67,8 @@ export default function PhotoMenu() {
               img.scaleX = scale;
               img.scaleY = scale;
 
-              img.left = window.innerWidth / 2 - img.width / 2;
-              img.top = window.innerHeight / 2 - img.height / 2;
+              img.left = window.innerWidth / 2 - (img.width * scale) / 2;
+              img.top = window.innerHeight / 2 - (img.height * scale) / 2;
             }
 
             canvas.add(img);
