@@ -36,6 +36,7 @@ export default function DrawToolsButton() {
   }, [category]);
 
   useEffect(() => {
+    console.log((brushes as any)[select]);
     if (select !== "" && canvas) canvas.isDrawingMode = true;
   }, [select]);
 

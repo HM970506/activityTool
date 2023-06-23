@@ -81,12 +81,11 @@ export default function PhotoEditor() {
     const objects = photoCanvas.getObjects();
 
     if (objects.length > 1) {
+      console.log(objects);
       const crop = objects[1];
 
       const editImg = cropper(objects[0], crop);
       const group = new fabric.Group(objects);
-
-      console.log(editImg);
 
       group.cloneAsImage((img: ImageType) => {
         img.left = editImg?.left;
@@ -99,6 +98,7 @@ export default function PhotoEditor() {
         img.height = editImg?.height;
         img.crossOrigin = "Anonymous";
         img.objectType = "photo";
+
         canvas.add(img);
       });
     } else {

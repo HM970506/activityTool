@@ -1,11 +1,11 @@
 import { canvasType } from "../types";
 
+//내일은 fabric을 뜯어서 image에서 확장된 photo타입을 따로 만듭시다~
+//히스토리를 뜯어보는게 더 낫지 않으려나? 히스토리를 먼저 뜯어봅시다
+
 export default function editControlHandler(canvas: canvasType) {
-  console.log("선택했어요");
   const now = canvas.getActiveObject();
   if (now.controls.editControl) {
-    console.log("에딧컨트롤이 있어요");
-    console.log(now);
     if (now.objectType === "photo") {
       console.log("포토에요");
       //  console.log(now.controls.editControl);
