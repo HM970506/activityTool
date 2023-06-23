@@ -6,7 +6,7 @@ import { canvasType } from "../types";
 export default function editControlHandler(canvas: canvasType) {
   const now = canvas.getActiveObject();
   if (now.controls.editControl) {
-    if (now.objectType === "photo") {
+    if (now.src.s(";")[0] === "data:image/jpeg" || now.objectType === "photo") {
       console.log("포토에요");
       //  console.log(now.controls.editControl);
       now.controls.editControl.visible = true;

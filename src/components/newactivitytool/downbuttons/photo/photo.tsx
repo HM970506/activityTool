@@ -61,6 +61,7 @@ export default function PhotoMenu() {
                 cornerSize: 30,
               });
             }
+
             if (img.width !== undefined && img.height !== undefined) {
               const scale = DEFAULT_X / img.width;
               img.scaleX = scale;
