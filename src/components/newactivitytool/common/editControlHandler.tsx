@@ -5,9 +5,14 @@ import { canvasType } from "../types";
 
 export default function editControlHandler(canvas: canvasType) {
   const now = canvas.getActiveObject();
-  console.log(now);
+  // console.log(now.getSrc());
   if (now.controls.editControl) {
-    if (now.getSrc().split(";")[0] === "data:image/jpeg")
+    if (
+      now.objectType === "photo" ||
+      now.getSrc().split(";")[0] === "data:image/jpeg" ||
+      now.getSrc().split(";")[0] === "data:image/png" ||
+      now.getSrc().split(";")[0] === "data:image/jpg"
+    )
       now.controls.editControl.visible = true;
     else now.controls.editControl.visible = false;
     canvas.renderAll();

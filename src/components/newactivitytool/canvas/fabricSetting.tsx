@@ -118,18 +118,4 @@ export default function fabricSetting() {
 
     return { x: pix.x[0], y: pix.y[0] };
   };
-
-  fabric.Canvas.prototype.undo = function (callback: any) {
-    console.log(fabric.Canvas.prototype._historyNext);
-    this.historyProcessing = true;
-    const history = this.historyUndo.pop();
-    console.log(JSON.parse(history));
-    if (history) {
-      this.historyRedo.push(this._historyNext());
-      this.historyNextState = history;
-      this._loadHistory(history, "history:undo", callback);
-    } else {
-      this.historyProcessing = false;
-    }
-  };
 }
