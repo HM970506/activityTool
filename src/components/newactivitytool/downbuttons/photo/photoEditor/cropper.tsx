@@ -14,7 +14,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("중앙");
+    //console.log("중앙");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
@@ -30,7 +30,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("왼쪽위");
+    //console.log("왼쪽위");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: image[0].y - frame[0].y,
@@ -46,7 +46,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("위");
+    //console.log("위");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: frame[0].y - image[0].y,
@@ -62,7 +62,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("오른쪽위");
+    //console.log("오른쪽위");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: image[0].y - frame[0].y,
@@ -78,7 +78,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("오른쪽");
+    //console.log("오른쪽");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
@@ -94,7 +94,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("오른쪽아래");
+    //console.log("오른쪽아래");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
@@ -110,7 +110,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("아래");
+    //console.log("아래");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
@@ -126,7 +126,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("왼쪽아래");
+    //console.log("왼쪽아래");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
@@ -142,7 +142,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("왼쪽");
+    //console.log("왼쪽");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: frame[0].y - image[0].y,
@@ -158,7 +158,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("상하");
+    //console.log("상하");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: image[0].y - frame[0].y,
@@ -174,7 +174,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("좌우");
+    //console.log("좌우");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: frame[0].y - image[0].y,
@@ -190,7 +190,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("아래3면");
+    //console.log("아래3면");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: image[0].y - frame[0].y,
@@ -206,7 +206,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("우3면");
+    //console.log("우3면");
     returning = {
       cropX: frame[0].x - image[0].x,
       cropY: image[0].y - frame[0].y,
@@ -222,7 +222,7 @@ export default function cropper(
     frame[2].x >= image[2].x &&
     frame[2].y < image[2].y
   ) {
-    console.log("위3면");
+    //console.log("위3면");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: image[0].y - frame[0].y,
@@ -238,7 +238,7 @@ export default function cropper(
     frame[2].x < image[2].x &&
     frame[2].y >= image[2].y
   ) {
-    console.log("좌3면");
+    //console.log("좌3면");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: image[0].y - frame[0].y,
@@ -248,7 +248,7 @@ export default function cropper(
       top: image[0].y,
     };
   } else {
-    console.log("전체");
+    //console.log("전체");
     returning = {
       cropX: image[0].x - frame[0].x,
       cropY: image[0].y - frame[0].y,

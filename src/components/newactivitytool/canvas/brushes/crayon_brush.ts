@@ -73,7 +73,6 @@ export default function CrayonMaker() {
     },
 
     draw: function (ctx: CanvasRenderingContext2D) {
-      console.log(ctx);
       var i, j, p, r, c, x, y, w, h, v, s, stepNum, dotSize, dotNum, range;
 
       v = this._point.subtract(this._latest);

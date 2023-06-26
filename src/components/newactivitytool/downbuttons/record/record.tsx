@@ -34,8 +34,7 @@ export default function Record({
     const getstream = await navigator.mediaDevices.getUserMedia({
       audio: true,
     });
-    if (getstream) console.log("녹음 권한 받음");
-    else console.log("녹음 권한 실패");
+    if (!getstream) console.log("녹음 권한 실패");
 
     setStream(stream);
     try {
@@ -44,8 +43,7 @@ export default function Record({
         mimeType: "audio/webm",
       });
 
-      if (recorder) console.log("레코더 형성 완료");
-      else console.log("레코더 형성 실패");
+      if (!recorder) console.log("레코더 형성 실패");
 
       setRecorder(recorder);
       await recorder.startRecording();
@@ -67,7 +65,7 @@ export default function Record({
   };
 
   const startHandler = async () => {
-    if (state == "") {
+    if (state === "") {
       await setting();
       setState("start");
     } else {

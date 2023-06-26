@@ -23,9 +23,6 @@ export default function Template() {
         const canvasRatio =
           Math.round((canvas.width / canvas.height) * 100) / 100;
         const imgRatio = Math.round((img.width / img.height) * 100) / 100;
-
-        console.log(canvasRatio, imgRatio);
-
         const scale =
           canvasRatio <= imgRatio
             ? canvas.width / img.width

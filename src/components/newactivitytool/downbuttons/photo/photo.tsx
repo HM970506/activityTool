@@ -84,7 +84,6 @@ export default function PhotoMenu() {
   }, [photo, canvas]);
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("이미지업로더 실행");
     if (e.target.files) {
       try {
         const file = e.target.files[0];
@@ -103,7 +102,6 @@ export default function PhotoMenu() {
   };
 
   const photoUpload = () => {
-    console.log("포토업로더 실행");
     if (inputRef.current !== null) {
       inputRef.current?.click();
       if (isMobile) {
@@ -121,7 +119,6 @@ export default function PhotoMenu() {
   }, [isEditing]);
 
   const getCamera = () => {
-    console.log("카메라를 주세요!");
     if (isMobile) {
       //@ts-ignore
       ForJH.postMessage("give_me_camera");
@@ -130,9 +127,10 @@ export default function PhotoMenu() {
 
   //@ts-ignore
   window.fromFlutterURL = (data: string) => {
-    if (data) console.log("플러터에서 찍은 사진 받기 성공");
-    const url = "data:image/jpeg;base64," + data;
-    setPhoto(url);
+    if (data) {
+      const url = "data:image/jpeg;base64," + data;
+      setPhoto(url);
+    } else console.log("사진 데이터를 받아오지 못했습니다");
   };
 
   return (
