@@ -7,7 +7,7 @@ import url from "@rollup/plugin-url";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import babel from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
-import jsx from "acorn-jsx";
+import esbuild from "rollup-plugin-esbuild";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
@@ -15,13 +15,18 @@ export default [
     input: "src/index.ts",
     output: [
       {
-        file: "dist/index.js", // Output file
+        file: "dist/index.js",
         format: "es",
       },
+      {
+        file: "dist/index.js",
+        format: "umd",
+      },
     ],
-    external: ["react", "react-dom", "styled-components"],
+    external: ["react", "react-dom", "styled-components", "canvas"],
+    browser: true,
     plugins: [
-      resolve(),
+      resolve({ extensions: [".js", ".jsx", ".ts", ".tsx", ".node"] }),
       commonjs({ include: "node_modules/**" }), //node_modules에서 모듈을 불러올수 있도록 해줌, ts/tsx 파일도 불러올수 있음
       url(), //미디어 파일을 dataURI 형태로 불러와서 사용 할 수 있게 해줌
       svgr(), //svg를 컴포넌트로 사용 할 수 있게 해줌
@@ -36,6 +41,7 @@ export default [
         exclude: "node_modules/**",
         include: ["src/**/*"],
       }),
+      esbuild(),
     ],
   },
 ];

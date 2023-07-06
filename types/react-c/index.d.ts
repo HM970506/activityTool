@@ -3,3 +3,4 @@ declare module "fabric-history";
 declare module "fabric-brush";
 declare module "fabric-with-erasing";
 declare module "*.js";
+declare module "*.svg";

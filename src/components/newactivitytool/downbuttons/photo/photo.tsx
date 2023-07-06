@@ -7,7 +7,7 @@ import { imageCheck } from "./photoChecker";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
 import { isMobile } from "react-device-detect";
-import editIcon from "./editButton.png";
+
 const renderIcon = (
   ctx: CanvasRenderingContext2D,
   left: number,
@@ -17,7 +17,7 @@ const renderIcon = (
   ctx.save();
   ctx.translate(left, top);
   const img = new Image();
-  img.src = editIcon;
+  img.src = "/button/editButton.png";
   ctx.drawImage(img, -size / 2, -size / 2, size, size);
   ctx.restore();
 };
