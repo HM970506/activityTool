@@ -6,6 +6,7 @@ import { DEFUALT_TEXTBOX, ReducersType, textType } from "../../types";
 import { FontButton, TextOptionContainer } from "./style";
 import { isMobile } from "react-device-detect";
 import { categoryActions } from "../../../../store/common/categorySlice";
+import React from "react";
 
 export default function TextMenu() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

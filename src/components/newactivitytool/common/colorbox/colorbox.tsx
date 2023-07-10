@@ -1,3 +1,4 @@
+import React from "react";
 import { SelectButton } from "../../styles/style";
 import { COLORS } from "../../types";
 import { ColorContainer, Colorchip } from "./styled";

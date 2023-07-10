@@ -12,6 +12,7 @@ import { ReactComponent as Ratio4 } from "./svg/ratio4.svg";
 import { useState } from "react";
 import { fabric } from "fabric-with-erasing";
 import { useSelector } from "react-redux";
+import React from "react";
 
 const RATIO_SVG = [<Ratio1 />, <Ratio2 />, <Ratio3 />, <Ratio4 />];
 const RATIOS = [

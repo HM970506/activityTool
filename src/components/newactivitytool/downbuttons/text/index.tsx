@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import TextMenu from "./text";
 import { useSpring } from "react-spring";
+import React from "react";
 
 export default function TextButton() {
   const dispatch = useDispatch();

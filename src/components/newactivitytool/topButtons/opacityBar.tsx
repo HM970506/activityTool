@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { ReducersType } from "../types";
+import React from "react";
 
 export default function CanvasOpacity() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

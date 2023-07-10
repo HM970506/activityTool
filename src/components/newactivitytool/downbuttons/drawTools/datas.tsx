@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactComponent as Line1 } from "./svg/line/line1.svg";
 import { ReactComponent as Line2 } from "./svg/line/line2.svg";
 import { ReactComponent as Line3 } from "./svg/line/line3.svg";

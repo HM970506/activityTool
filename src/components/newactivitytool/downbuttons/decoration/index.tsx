@@ -11,6 +11,7 @@ import { DecoContatiner } from "./sizebox";
 import DecorationMenu from "./decorations";
 import { useSpring } from "react-spring";
 import { ButtonInner, Icon } from "../../styles/style";
+import React from "react";
 
 export default function DecorationButton() {
   const dispatch = useDispatch();

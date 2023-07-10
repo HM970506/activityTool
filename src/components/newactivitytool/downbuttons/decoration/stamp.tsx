@@ -6,6 +6,7 @@ import { categoryActions } from "../../../../store/common/categorySlice";
 import Colorbox from "../../common/colorbox/colorbox";
 import { ListButton, DecoOptionContainer2, StampsContainer } from "./sizebox";
 import SVG from "react-inlinesvg";
+import React from "react";
 
 export default function Stamp() {
   const dispatch = useDispatch();

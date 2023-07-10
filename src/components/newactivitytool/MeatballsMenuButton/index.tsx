@@ -12,6 +12,7 @@ import { ReactComponent as Download } from "./svg/download.svg";
 import { ReactComponent as Refrash } from "./svg/refrash.svg";
 import { ReactComponent as Information } from "./svg/information.svg";
 import { useSpring } from "react-spring";
+import React from "react";
 
 export default function MeatballsMenu() {
   const [view, setView] = useState<boolean>(false);

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Background,
@@ -6,7 +6,6 @@ import {
   MainButton,
   SubButtonContainer,
   SubButton,
-  ModalOverlay,
   Icon,
 } from "./styles/style";
 import Canvas from "./canvas/canvas";

@@ -14,6 +14,7 @@ import { categoryActions } from "../../../../store/common/categorySlice";
 import { BottomButton, Tool, ToolBackground, ToolBox } from "./style";
 import { getPath } from "./datas";
 import { drawActions } from "../../../../store/common/drawSlice";
+import React from "react";
 
 export default function DrawToolsMenu() {
   const dispatch = useDispatch();

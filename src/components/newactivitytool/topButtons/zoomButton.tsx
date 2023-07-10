@@ -3,6 +3,7 @@ import { ReducersType } from "../types";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { SvgBox, ZoomContainer } from "./style";
 import { ReactComponent as Rotato } from "./svg/rotato.svg";
+import React from "react";
 
 export default function ZoomButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

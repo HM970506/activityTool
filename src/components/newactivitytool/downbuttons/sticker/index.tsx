@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getStorageDataAll } from "../../../api/firestore/getData";
 import StickerMenu from "./sticker";
 import { useSpring } from "react-spring";
+import React from "react";
 
 export default function StickerButton() {
   const category = useSelector(

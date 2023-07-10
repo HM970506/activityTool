@@ -13,6 +13,7 @@ import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import brushSetting from "./brushes";
+import React from "react";
 
 export default function Canvas() {
   const dispatch = useDispatch();

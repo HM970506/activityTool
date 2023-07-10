@@ -5,6 +5,7 @@ import { ReactComponent as Next } from "./svg/next.svg";
 import { ReactComponent as Prev } from "./svg/prev.svg";
 import { HistoryContainer, HistoryButton } from "./style";
 import { nodeActions } from "../../../store/common/nodeSlice";
+import React from "react";
 
 export default function CanvasHistory() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

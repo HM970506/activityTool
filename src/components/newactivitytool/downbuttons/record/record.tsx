@@ -6,6 +6,7 @@ import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
 import { useStopwatch } from "react-timer-hook";
 import { CategoryButton, Icon } from "../../styles/style";
+import React from "react";
 
 export default function Record({
   state,

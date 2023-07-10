@@ -4,6 +4,7 @@ import { saveJson } from "../common/saveFunction";
 import { ReducersType } from "../types";
 import { Dispatch, SetStateAction } from "react";
 import { ReactComponent as X } from "./svg/close.svg";
+import React from "react";
 
 export default function Back({
   setActivitytools,

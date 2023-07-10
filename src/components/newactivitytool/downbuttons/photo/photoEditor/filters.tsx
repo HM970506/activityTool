@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { ReducersType } from "../../../types";
 import { FilterComponent, PhotoOption2 } from "./style";
 import { fabric } from "fabric-with-erasing";
+import React from "react";
 
 const FILTER_NAME = [
   "Ordinary",

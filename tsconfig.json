@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "typeRoots": ["./node_modules/@types", "./types"],
     "allowJs": true,
@@ -10,17 +10,12 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "react",
+    "declaration": true,
+    "declarationDir": "dist/types"
   },
-  "include": [
-    "src",
-    "src/components/newactivitytool/downbuttons/photo/photoEditor/.tsx",
-    "src/components/newactivitytool/types.ts",
-    "types/react-c/index.d.ts"
-  ]
+  "include": ["src/**/*", "types/react-c/index.d.ts"]
 }

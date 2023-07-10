@@ -4,6 +4,7 @@ import { fabric } from "fabric-with-erasing";
 import { useDispatch, useSelector } from "react-redux";
 import { photoEditorActions } from "../../../../../store/common/photoEditorSlice";
 import { isNumber } from "lodash";
+import React from "react";
 
 export default function FreeCrop() {
   const { photoCanvas } = useSelector(

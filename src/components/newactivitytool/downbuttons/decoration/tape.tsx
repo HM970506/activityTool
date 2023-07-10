@@ -11,6 +11,7 @@ import { ReactComponent as Tape2 } from "./svg/tape/tape2.svg";
 import { ReactComponent as Tape3 } from "./svg/tape/tape3.svg";
 import { ReactComponent as Tape4 } from "./svg/tape/tape4.svg";
 import { ReactComponent as Tape5 } from "./svg/tape/tape5.svg";
+import React from "react";
 
 export default function Tape() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);

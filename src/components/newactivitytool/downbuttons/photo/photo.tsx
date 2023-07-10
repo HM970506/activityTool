@@ -7,6 +7,7 @@ import { imageCheck } from "./photoChecker";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
 import { isMobile } from "react-device-detect";
+import React from "react";
 
 const renderIcon = (
   ctx: CanvasRenderingContext2D,

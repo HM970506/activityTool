@@ -6,6 +6,7 @@ import PhotoMenu from "./photo";
 import { PhotoContatiner } from "./style";
 import { useSpring } from "react-spring";
 import { ButtonInner, Icon } from "../../styles/style";
+import React from "react";
 
 export default function PhotoButton() {
   const dispatch = useDispatch();

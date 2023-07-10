@@ -5,6 +5,7 @@ import { ERASER, FELTPEN, ReducersType, SPRAY } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { drawActions } from "../../../../store/common/drawSlice";
 import { LineSize, SIZES, SpraySize } from "./datas";
+import React from "react";
 
 export default function DrawOption({ keyName }: { keyName: string }) {
   const brushes = useSelector((state: ReducersType) => state.drawReducer);

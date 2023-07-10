@@ -17,6 +17,7 @@ import {
   StickerListConatiner,
   StickerOptionContainer,
 } from "./style";
+import React from "react";
 
 export default function StickerMenu() {
   const [stickerCategory, setStickerCategory] = useState<string>("fluffy");

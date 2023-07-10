@@ -1,3 +1,4 @@
+import React from "react";
 import CanvasHistory from "./historyButton";
 
 import { TopArea, TopButtonContainer } from "./style";
