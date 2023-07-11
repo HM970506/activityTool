@@ -1,4 +1,4 @@
-import NewActivityTool from "./components/newactivitytool";
+import NewActivityTool from "./components/newactivitytool/newactivitytool";
 declare const _default: {
     NewActivityTool: typeof NewActivityTool;
 };

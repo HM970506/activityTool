@@ -1,3 +1,3 @@
-import NewActivityTool from "./components/newactivitytool";
+import NewActivityTool from "./components/newactivitytool/newactivitytool";
 
 export default { NewActivityTool };
