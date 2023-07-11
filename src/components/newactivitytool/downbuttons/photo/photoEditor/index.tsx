@@ -22,6 +22,7 @@ import { Shapes } from "./shapes";
 import Ratio from "./ratio";
 import Filters from "./filters";
 import FreeCrop from "./free";
+import React from "react";
 
 export default function PhotoEditor() {
   const { isEditing, photo } = useSelector((state: ReducersType) => {

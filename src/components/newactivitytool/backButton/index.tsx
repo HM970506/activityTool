@@ -10,16 +10,8 @@ export default function Back({
 }: {
   setActivitytools: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { canvas, record } = useSelector(
-    (state: ReducersType) => state.nodeReducer
-  );
   const activityEnd = () => {
     setActivitytools(false);
-    saveToJson();
-  };
-
-  const saveToJson = async () => {
-    await saveJson(canvas, record);
   };
 
   const sendToFlutterString = (message: string) => {

@@ -12,13 +12,15 @@ import { ReactComponent as Download } from "./svg/download.svg";
 import { ReactComponent as Refrash } from "./svg/refrash.svg";
 import { ReactComponent as Information } from "./svg/information.svg";
 import { useSpring } from "react-spring";
+import { saveJson } from "../common/saveFunction";
 
 export default function MeatballsMenu() {
   const [view, setView] = useState<boolean>(false);
-  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const dispatch = useDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
-
+  const { canvas, record } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
   const reset = () => {
     canvas.clear();
     canvas.clearHistory();
@@ -49,6 +51,10 @@ export default function MeatballsMenu() {
       : { backgroundColor: "white", fill: "#292825" },
   });
 
+  const saveToJson = async () => {
+    await saveJson(canvas, record);
+  };
+
   return (
     <>
       <TempLink ref={linkRef} target="_blank" />
@@ -61,13 +67,13 @@ export default function MeatballsMenu() {
             </p>
           </Menu>
           <Menu onClick={saveToPng}>
-            <p>화면 저장하기</p>
+            <p>이미지로 저장하기</p>
             <p>
               <Download />
             </p>
           </Menu>
-          <Menu>
-            <p>도움말 보기</p>
+          <Menu onClick={saveToJson}>
+            <p>중간 저장하기</p>
             <p>
               <Information />
             </p>
