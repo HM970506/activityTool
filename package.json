@@ -108,7 +108,7 @@
     ]
   },
   "proxy": "http://localhost:3000",
-  "devDependencies": {
+  "peerDependencies": {
     "firebase": "^9.19.1",
     "react": "^18.2.0"
   }
