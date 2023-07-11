@@ -25,7 +25,7 @@ import { photoEditorActions } from "../../store/common/photoEditorSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDivElement>(null);
-  const [activitytools, setActivitytools] = useState<boolean>(false);
+  const [activitytools, setActivitytools] = useState<boolean>(true);
   const [subMenu, setSubMenu] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isEditing = useSelector(

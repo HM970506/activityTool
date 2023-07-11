@@ -12,10 +12,5 @@ const TestImage = styled.img`
 `;
 
 export default function Team() {
-  return (
-    <>
-      <TestImage src={Background} />
-      <NewActivityTool />
-    </>
-  );
+  return <NewActivityTool />;
 }

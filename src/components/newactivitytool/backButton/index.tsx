@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { BackButton } from "./style";
+import { BackButton, Loading } from "./style";
 import { saveJson } from "../common/saveFunction";
 import { ReducersType } from "../types";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ReactComponent as X } from "./svg/close.svg";
 
 export default function Back({
@@ -10,6 +10,10 @@ export default function Back({
 }: {
   setActivitytools: Dispatch<SetStateAction<boolean>>;
 }) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { canvas, record } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
   const activityEnd = () => {
     setActivitytools(false);
   };
@@ -19,7 +23,11 @@ export default function Back({
     ForJH.postMessage(message);
   };
 
-  const flutterBack = () => {
+  const flutterBack = async () => {
+    setLoading(true);
+    await saveJson(canvas, record);
+    setLoading(false);
+
     const ref = window.location.href.toString();
     if (ref.indexOf("team") === -1) activityEnd();
     else {
@@ -29,8 +37,11 @@ export default function Back({
   };
 
   return (
-    <BackButton onClick={flutterBack}>
-      <X />
-    </BackButton>
+    <>
+      <BackButton onClick={flutterBack}>
+        <X />
+      </BackButton>
+      {loading && <Loading>저장중입니다..</Loading>}
+    </>
   );
 }
