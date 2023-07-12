@@ -90,8 +90,7 @@ export type canvasType = any;
 
 export interface nodeReducerType {
   canvas: canvasType;
-  isEditing: boolean;
-  isPanning: boolean;
+  background: string | null;
   opacity: number;
   record: any;
   textareaContainer: HTMLDivElement;

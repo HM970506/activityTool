@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { CanvasBackground } from "../styles/style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import { DEFAULT_CANVAS, DRAWTOOLS, ReducersType } from "../types";
+import { DEFAULT_CANVAS, DRAWTOOLS, ImageType, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
@@ -21,7 +21,9 @@ export default function Canvas() {
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
-  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const { canvas, background } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
 
   const drawModeDebounce = debounce(() => {
     if (category == DRAWTOOLS && canvas) canvas.isDrawingMode = true;
@@ -72,6 +74,40 @@ export default function Canvas() {
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
     dispatch(nodeActions.setCanvas(canvas));
   }, []);
+
+  //@ts-ignore
+  window.backgroundFlutterURL = (data: string) => {
+    dispatch(nodeActions.setBackground(data));
+  };
+
+  useEffect(() => {
+    if (canvas && background) {
+      console.log("캔버스도 있고 백그라운드 이미지도 있어요");
+      fabric.Image.fromURL(background, (img: ImageType) => {
+        if (img.width !== undefined && img.height !== undefined) {
+          const canvasRatio =
+            Math.round((canvas.width / canvas.height) * 100) / 100;
+          const imgRatio = Math.round((img.width / img.height) * 100) / 100;
+          const scale =
+            canvasRatio <= imgRatio
+              ? canvas.width / img.width
+              : canvas.height / img.height;
+          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+            scaleX: scale,
+            scaleY: scale,
+            erasable: false,
+            top: canvas.getCenter().top,
+            left: canvas.getCenter().left,
+            originX: "center",
+            originY: "center",
+          });
+          img.crossOrigin = "Anonymous";
+
+          canvas.renderAll();
+        }
+      });
+    }
+  }, [canvas, background]);
 
   return (
     <CanvasBackground ref={containerRef} {...bind()}>
