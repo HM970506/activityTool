@@ -82,7 +82,6 @@ export default function Canvas() {
 
   useEffect(() => {
     if (canvas && background) {
-      console.log("캔버스도 있고 백그라운드 이미지도 있어요");
       fabric.Image.fromURL(background, (img: ImageType) => {
         if (img.width !== undefined && img.height !== undefined) {
           const canvasRatio =
