@@ -9,7 +9,6 @@ import {
   Icon,
 } from "./styles/style";
 import Canvas from "./canvas/canvas";
-import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
@@ -17,7 +16,6 @@ import BackButton from "./backButton";
 import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
 import TopButtons from "./topButtons";
-import PhotoEditor from "./downbuttons/photo/photoEditor";
 import { categoryActions } from "../../store/common/categorySlice";
 import { zoomActions } from "../../store/common/zoomSlice";
 import { photoEditorActions } from "../../store/common/photoEditorSlice";
@@ -27,9 +25,6 @@ export default function NewActivityTool() {
   const [activitytools, setActivitytools] = useState<boolean>(false);
   const [subMenu, setSubMenu] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isEditing = useSelector(
-    (state: ReducersType) => state.photoEditorReducer.isEditing
-  );
   const { canvas } = useSelector((state: ReducersType) => state.nodeReducer);
 
   useEffect(() => {
@@ -53,14 +48,6 @@ export default function NewActivityTool() {
   const getCanvas = async () => {
     canvas.clearHistory();
 
-    const href = window.location.href.replaceAll("/", "_");
-    const data = await getFirestoreData("saveData", href);
-    const record = await getStorageData("test");
-
-    if (data) {
-      if (record) dispatch(nodeActions.setRecord(record));
-      canvas.loadFromJSON(data?.data, () => canvas.renderAll());
-    }
     setActivitytools(true);
     setSubMenu(false);
   };
@@ -83,19 +70,14 @@ export default function NewActivityTool() {
       >
         <Overlay>
           <Canvas />
-          {isEditing ? (
-            <PhotoEditor />
-          ) : (
-            <>
-              <TopButtons />
-              <BackButton setActivitytools={setActivitytools} />
 
-              <MeatballsMenu />
-              <ReactQueryDevtools />
+          <TopButtons />
+          <BackButton setActivitytools={setActivitytools} />
 
-              <DownButtons />
-            </>
-          )}
+          <MeatballsMenu />
+          <ReactQueryDevtools />
+
+          <DownButtons />
         </Overlay>
       </Background>
       {!activitytools && (
