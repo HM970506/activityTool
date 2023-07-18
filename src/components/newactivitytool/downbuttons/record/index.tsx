@@ -5,7 +5,7 @@ import { Icon2, RecordContatiner } from "./style";
 import { useEffect, useState } from "react";
 import Record from "./record";
 import { useSpring } from "react-spring";
-import { ButtonInner, Icon } from "../../styles/style";
+import { ButtonInner, Icon } from "../../style";
 
 export default function RecordButton() {
   const dispatch = useDispatch();

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const DEFAULT = {
+  meatball: false,
   category: "",
   view: true,
   option: false,
@@ -69,6 +70,9 @@ const categorySlice = createSlice({
 
     setView: (state, action: PayloadAction<boolean>) => {
       state.view = action.payload;
+    },
+    setMeatball: (state, action: PayloadAction<boolean>) => {
+      state.meatball = action.payload;
     },
   },
 });

@@ -7,7 +7,8 @@ import {
   SubButtonContainer,
   SubButton,
   Icon,
-} from "./styles/style";
+  Loading,
+} from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -33,7 +34,9 @@ export default function NewActivityTool() {
   const memberCode = useSelector(
     (state: ReducersType) => state.firestoreReducer.memberCode
   );
-  const { canvas } = useSelector((state: ReducersType) => state.nodeReducer);
+  const { canvas, loading } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
 
   useEffect(() => {
     if (newActivityTool.current)
@@ -79,6 +82,7 @@ export default function NewActivityTool() {
 
   return (
     <>
+      {loading && <Loading>저장중입니다..</Loading>}
       <Background
         ref={newActivityTool}
         z={getMaxZIndex() + 1}

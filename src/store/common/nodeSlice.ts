@@ -3,6 +3,7 @@ import { canvasType } from "../../components/newactivitytool/types";
 
 const DEFAULT = {
   canvas: null,
+  loading: false,
   background: null,
   textareaContainer: null,
   dialogContainer: null,
@@ -43,6 +44,9 @@ const nodeSlice = createSlice({
 
     setRecord: (state, action: PayloadAction<any>) => {
       state.record = action.payload;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
 });

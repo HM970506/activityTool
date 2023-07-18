@@ -79,6 +79,7 @@ export interface categoryReducerType {
   subcategory: subcategoryType;
   view: boolean;
   option: boolean;
+  meatball: boolean;
 }
 
 export interface tapeStateType {
@@ -96,6 +97,7 @@ export interface nodeReducerType {
   textareaContainer: HTMLDivElement;
   dialogContainer: HTMLDialogElement;
   history: { undo: number; redo: number };
+  loading: boolean;
 }
 
 export interface zoomReducerType {

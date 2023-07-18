@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
 import { useStopwatch } from "react-timer-hook";
-import { CategoryButton, Icon } from "../../styles/style";
+import { CategoryButton, Icon } from "../../style";
 
 export default function Record({
   state,

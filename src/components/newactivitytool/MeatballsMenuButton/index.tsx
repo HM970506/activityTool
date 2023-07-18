@@ -6,7 +6,7 @@ import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import { photoEditorActions } from "../../../store/common/photoEditorSlice";
-import { ButtonInner, TempLink } from "../styles/style";
+import { ButtonInner, TempLink } from "../style";
 import { ReactComponent as More } from "./svg/more.svg";
 import { ReactComponent as Download } from "./svg/download.svg";
 import { ReactComponent as Refrash } from "./svg/refrash.svg";
@@ -15,7 +15,6 @@ import { useSpring } from "react-spring";
 import { saveJson } from "../common/saveFunction";
 
 export default function MeatballsMenu() {
-  const [view, setView] = useState<boolean>(false);
   const dispatch = useDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
   const { canvas, record } = useSelector(
@@ -23,6 +22,9 @@ export default function MeatballsMenu() {
   );
   const memberCode = useSelector(
     (state: ReducersType) => state.firestoreReducer.memberCode
+  );
+  const meatball = useSelector(
+    (state: ReducersType) => state.categoryReducer.meatball
   );
 
   const reset = () => {
@@ -34,7 +36,7 @@ export default function MeatballsMenu() {
     dispatch(zoomActions.reset());
     dispatch(photoEditorActions.reset());
 
-    setView(false);
+    dispatch(categoryActions.setMeatball(false));
   };
 
   const saveToPng = () => {
@@ -47,22 +49,24 @@ export default function MeatballsMenu() {
   };
 
   const props = useSpring({
-    from: view
+    from: meatball
       ? { backgroundColor: "white", fill: "#292825" }
       : { backgroundColor: "#292825", fill: "white" },
-    to: view
+    to: meatball
       ? { backgroundColor: "#292825", fill: "white" }
       : { backgroundColor: "white", fill: "#292825" },
   });
 
   const saveToJson = async () => {
+    dispatch(nodeActions.setLoading(true));
     await saveJson(canvas, record, memberCode);
+    dispatch(nodeActions.setLoading(false));
   };
 
   return (
     <>
       <TempLink ref={linkRef} target="_blank" />
-      {view && (
+      {meatball && (
         <Menus>
           <Menu onClick={reset}>
             <p>처음부터 다시하기</p>
@@ -86,9 +90,7 @@ export default function MeatballsMenu() {
       )}
       <MeatballsMenuButton
         onClick={() => {
-          setView((x) => {
-            return !x;
-          });
+          dispatch(categoryActions.setMeatball(!meatball));
         }}
       >
         <ButtonInner style={props}>

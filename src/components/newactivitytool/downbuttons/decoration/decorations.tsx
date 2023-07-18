@@ -7,7 +7,7 @@ import Template from "./template";
 import Stamp from "./stamp";
 import Tape from "./tape";
 import SVG from "react-inlinesvg";
-import { CategoryButton, Icon } from "../../styles/style";
+import { CategoryButton, Icon } from "../../style";
 import { StampCategoryButton } from "./sizebox";
 
 export default function DecorationMenu() {

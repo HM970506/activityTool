@@ -4,7 +4,7 @@ import PhotoButton from "./photo";
 import RecordButton from "./record";
 import StickerButton from "./sticker";
 import TextButton from "./text";
-import { DownButtonsContainer_MobilenDesktop } from "../styles/style";
+import { DownButtonsContainer_MobilenDesktop } from "../style";
 import { useSelector } from "react-redux";
 import { ReducersType } from "../types";
 

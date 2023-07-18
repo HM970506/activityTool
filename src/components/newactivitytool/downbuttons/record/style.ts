@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonsContainer } from "../style";
-import { CategoryButton, Icon } from "../../styles/style";
+import { CategoryButton, Icon } from "../../style";
 
 export const RecordContatiner = styled(ButtonsContainer)``;
 

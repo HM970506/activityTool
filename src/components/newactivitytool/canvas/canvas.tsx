@@ -3,7 +3,7 @@ import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef } from "react";
-import { CanvasBackground } from "../styles/style";
+import { CanvasBackground } from "../style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
 import { DEFAULT_CANVAS, DRAWTOOLS, ImageType, ReducersType } from "../types";
@@ -81,16 +81,11 @@ export default function Canvas() {
     const json = JSON.parse(data);
 
     //@ts-ignore
-    console.log("멤버코드:", json.memberCode);
-
-    //@ts-ignore
     dispatch(nodeActions.setBackground(json.backgroundImg));
 
     //@ts-ignore
     dispatch(firestoreActions.setMemberCode(json.memberCode));
   };
-
-  console.log("빌드 정상작동");
 
   useEffect(() => {
     if (canvas && background) {
