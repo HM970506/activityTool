@@ -118,6 +118,7 @@ export interface ReducersType {
   zoomReducer: zoomReducerType;
   photoEditorReducer: photoEditorReducerType;
   drawReducer: any;
+  firestoreReducer: { memberCode: string };
 }
 
 export const DEFAULT_X = 500;

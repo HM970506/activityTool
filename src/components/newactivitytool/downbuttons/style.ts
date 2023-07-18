@@ -11,21 +11,11 @@ export const ButtonsContainer = styled(animated.div)`
   height: 72px;
 `;
 
-export const ButtonInnerBox = styled(animated.div)`
-  margin: 4px;
-  width: 64px;
-  height: 64px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 28px;
-`;
-
 export const ButtonInnerIcon = styled.div<{ state: number }>`
-  width: ${(props) => (props.state == 1 ? "64px" : "32px")};
-  height: ${(props) => (props.state == 1 ? "64px" : "32px")};
+  width: ${(props) => (props.state === 1 ? "64px" : "32px")};
+  height: ${(props) => (props.state === 1 ? "64px" : "32px")};
   background-color: #4ab859;
-  border-radius: ${(props) => (props.state == 1 ? "28px" : "16px")};
+  border-radius: ${(props) => (props.state === 1 ? "28px" : "16px")};
   display: flex;
   justify-content: center;
   align-items: center;

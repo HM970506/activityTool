@@ -21,6 +21,10 @@ export default function MeatballsMenu() {
   const { canvas, record } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
+  const memberCode = useSelector(
+    (state: ReducersType) => state.firestoreReducer.memberCode
+  );
+
   const reset = () => {
     canvas.clear();
     canvas.clearHistory();
@@ -52,7 +56,7 @@ export default function MeatballsMenu() {
   });
 
   const saveToJson = async () => {
-    await saveJson(canvas, record);
+    await saveJson(canvas, record, memberCode);
   };
 
   return (

@@ -30,12 +30,9 @@ export default function Filters() {
     (state: ReducersType) => state.photoEditorReducer.photoCanvas
   );
 
-  console.log(photoCanvas.getObjects()[0].clipPath);
   const img = photoCanvas.getObjects()[0].clipPath
     ? photoCanvas.getObjects()[0]._objects[0]
     : photoCanvas.getObjects()[0];
-
-  console.log(img);
 
   const filtering = (filterName: string) => {
     if (img.filters.length > 0) img.filters.pop();

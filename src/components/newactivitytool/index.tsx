@@ -6,7 +6,6 @@ import {
   MainButton,
   SubButtonContainer,
   SubButton,
-  ModalOverlay,
   Icon,
 } from "./styles/style";
 import Canvas from "./canvas/canvas";
@@ -30,6 +29,9 @@ export default function NewActivityTool() {
   const dispatch = useDispatch();
   const isEditing = useSelector(
     (state: ReducersType) => state.photoEditorReducer.isEditing
+  );
+  const memberCode = useSelector(
+    (state: ReducersType) => state.firestoreReducer.memberCode
   );
   const { canvas } = useSelector((state: ReducersType) => state.nodeReducer);
 
@@ -56,7 +58,7 @@ export default function NewActivityTool() {
 
     const href = window.location.href.replaceAll("/", "_");
     const data = await getFirestoreData("saveData", href);
-    const record = await getStorageData("test");
+    const record = await getStorageData(memberCode);
 
     if (data) {
       if (record) dispatch(nodeActions.setRecord(record));

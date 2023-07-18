@@ -127,10 +127,8 @@ export default function PhotoMenu() {
 
   //@ts-ignore
   window.fromFlutterURL = (data: string) => {
-    if (data) {
-      const url = "data:image/jpeg;base64," + data;
-      setPhoto(url);
-    } else console.log("사진 데이터를 받아오지 못했습니다");
+    const url = "data:image/jpeg;base64," + data;
+    setPhoto(url);
   };
 
   return (

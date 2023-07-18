@@ -29,7 +29,7 @@ export default function FreeCrop() {
       },
       "mouse:up": (o: any) => {
         const now = photoCanvas.getObjects().length;
-        if (now == 0) photoCanvas.add(photoCanvas.getObjects()[0]);
+        if (now === 0) photoCanvas.add(photoCanvas.getObjects()[0]);
 
         if (photoCanvas.start) {
           const start = photoCanvas.start;

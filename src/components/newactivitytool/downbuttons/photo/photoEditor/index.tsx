@@ -84,20 +84,20 @@ export default function PhotoEditor() {
     if (objects.length > 1) {
       const crop = objects[1];
 
-      // const editImg = cropper(objects[0], crop);
+      const editImg = cropper(objects[0], crop);
       const group = new fabric.Group(objects);
 
       group.cloneAsImage((img: ImageType) => {
-        // img.left = editImg?.left;
-        // img.top = editImg?.top;
-        img.left = group.left;
-        img.top = group.top;
+        img.left = editImg?.left;
+        img.top = editImg?.top;
+        // img.left = group.left;
+        // img.top = group.top;
         img.selectable = true;
         img.erasable = false;
-        // img.cropX = editImg?.cropX;
-        // img.cropY = editImg?.cropY;
-        // img.width = editImg?.width;
-        // img.height = editImg?.height;
+        img.cropX = editImg?.cropX;
+        img.cropY = editImg?.cropY;
+        img.width = editImg?.width;
+        img.height = editImg?.height;
         img.crossOrigin = "Anonymous";
         img.objectType = "photo";
 

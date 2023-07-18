@@ -14,6 +14,10 @@ export default function Back({
   const { canvas, record } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
+  const memberCode = useSelector(
+    (state: ReducersType) => state.firestoreReducer.memberCode
+  );
+
   const activityEnd = () => {
     setActivitytools(false);
   };
@@ -25,7 +29,7 @@ export default function Back({
 
   const flutterBack = async () => {
     setLoading(true);
-    await saveJson(canvas, record);
+    await saveJson(canvas, record, memberCode);
     setLoading(false);
 
     const ref = window.location.href.toString();

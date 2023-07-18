@@ -27,7 +27,7 @@ export const StickerCategory = styled.div<{ state: number }>`
   align-items: center;
   margin: 4px;
   border-radius: 16px;
-  background-color: ${(props) => (props.state == 1 ? "#FFAB44" : "white")};
+  background-color: ${(props) => (props.state === 1 ? "#FFAB44" : "white")};
 `;
 
 export const StickerListConatiner = styled.div`

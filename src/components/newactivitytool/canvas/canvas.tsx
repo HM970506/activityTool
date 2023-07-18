@@ -13,6 +13,7 @@ import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import brushSetting from "./brushes";
+import { firestoreActions } from "../../../store/common/firestoreSlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function Canvas() {
   );
 
   const drawModeDebounce = debounce(() => {
-    if (category == DRAWTOOLS && canvas) canvas.isDrawingMode = true;
+    if (category === DRAWTOOLS && canvas) canvas.isDrawingMode = true;
   }, 100);
 
   const zoomSetting = (zoom: number) => {
@@ -77,8 +78,19 @@ export default function Canvas() {
 
   //@ts-ignore
   window.backgroundFlutterURL = (data: string) => {
-    dispatch(nodeActions.setBackground(data));
+    const json = JSON.parse(data);
+
+    //@ts-ignore
+    console.log("멤버코드:", json.memberCode);
+
+    //@ts-ignore
+    dispatch(nodeActions.setBackground(json.backgroundImg));
+
+    //@ts-ignore
+    dispatch(firestoreActions.setMemberCode(json.memberCode));
   };
+
+  console.log("빌드 정상작동");
 
   useEffect(() => {
     if (canvas && background) {

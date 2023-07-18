@@ -133,7 +133,7 @@ export default function Record({
               <span>{seconds < 10 ? "0" + seconds : seconds}</span>
             </RecorderTime>
 
-            {state === "start" || state == "goon" ? (
+            {state === "start" || state === "goon" ? (
               <RecorderButton onClick={pauseHandler}>
                 <Icon src={"/diary/recorder/pause.png"} />
               </RecorderButton>
