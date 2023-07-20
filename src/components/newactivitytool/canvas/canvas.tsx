@@ -14,6 +14,7 @@ import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import brushSetting from "./brushes";
 import { firestoreActions } from "../../../store/common/firestoreSlice";
+import { getFirestoreData, getStorageData } from "../../api/firestore/getData";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -24,6 +25,9 @@ export default function Canvas() {
   );
   const { canvas, background } = useSelector(
     (state: ReducersType) => state.nodeReducer
+  );
+  const { memberCode, bookCode, page, setting } = useSelector(
+    (state: ReducersType) => state.firestoreReducer
   );
 
   const drawModeDebounce = debounce(() => {
@@ -85,35 +89,64 @@ export default function Canvas() {
 
     //@ts-ignore
     dispatch(firestoreActions.setMemberCode(json.memberCode));
+
+    //@ts-ignore
+    dispatch(firestoreActions.setBookCode(json.title));
+
+    //@ts-ignore
+    dispatch(firestoreActions.setPage(json.pageNumber));
+
+    dispatch(firestoreActions.setSetting(true));
   };
 
   useEffect(() => {
-    if (canvas && background) {
-      fabric.Image.fromURL(background, (img: ImageType) => {
-        if (img.width !== undefined && img.height !== undefined) {
-          const canvasRatio =
-            Math.round((canvas.width / canvas.height) * 100) / 100;
-          const imgRatio = Math.round((img.width / img.height) * 100) / 100;
-          const scale =
-            canvasRatio <= imgRatio
-              ? canvas.width / img.width
-              : canvas.height / img.height;
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-            scaleX: scale,
-            scaleY: scale,
-            erasable: false,
-            top: canvas.getCenter().top,
-            left: canvas.getCenter().left,
-            originX: "center",
-            originY: "center",
-          });
-          img.crossOrigin = "Anonymous";
+    const getCanvas = async () => {
+      const data = await getFirestoreData(
+        "saveData",
+        `${memberCode}/${bookCode}/${page}/`
+      );
+      const record = await getStorageData(
+        `${memberCode}/${bookCode}/${page}/record`
+      );
 
-          canvas.renderAll();
-        }
-      });
+      if (data) {
+        if (record) dispatch(nodeActions.setRecord(record));
+        canvas.loadFromJSON(data?.data, () => canvas.renderAll());
+      }
+    };
+
+    //테스트할때는 !setting으로..
+    if (canvas && setting) {
+      if (background) {
+        fabric.Image.fromURL(background, (img: ImageType) => {
+          if (img.width !== undefined && img.height !== undefined) {
+            const canvasRatio =
+              Math.round((canvas.width / canvas.height) * 100) / 100;
+            const imgRatio = Math.round((img.width / img.height) * 100) / 100;
+            const scale =
+              canvasRatio <= imgRatio
+                ? canvas.width / img.width
+                : canvas.height / img.height;
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+              scaleX: scale,
+              scaleY: scale,
+              erasable: false,
+              top: canvas.getCenter().top,
+              left: canvas.getCenter().left,
+              originX: "center",
+              originY: "center",
+            });
+            img.crossOrigin = "Anonymous";
+
+            canvas.renderAll();
+          }
+        });
+      }
+
+      //캔버스 불러오기
+      getCanvas();
     }
-  }, [canvas, background]);
+  }, [canvas, setting]);
 
   return (
     <CanvasBackground ref={containerRef} {...bind()}>

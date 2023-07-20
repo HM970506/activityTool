@@ -15,8 +15,8 @@ export default function Back({
   const { canvas, record } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
-  const memberCode = useSelector(
-    (state: ReducersType) => state.firestoreReducer.memberCode
+  const { memberCode, bookCode, page } = useSelector(
+    (state: ReducersType) => state.firestoreReducer
   );
 
   const activityEnd = () => {
@@ -30,15 +30,11 @@ export default function Back({
 
   const flutterBack = async () => {
     dispatch(nodeActions.setLoading(true));
-    await saveJson(canvas, record, memberCode);
+    await saveJson(canvas, record, `${memberCode}/${bookCode}/${page}`);
     dispatch(nodeActions.setLoading(false));
 
-    const ref = window.location.href.toString();
-    if (ref.indexOf("team") === -1) activityEnd();
-    else {
-      //@ts-ignore
-      sendToFlutterString("close_current_view");
-    }
+    //@ts-ignore
+    sendToFlutterString("close_current_view");
   };
 
   return (

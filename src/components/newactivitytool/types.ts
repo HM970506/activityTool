@@ -120,7 +120,12 @@ export interface ReducersType {
   zoomReducer: zoomReducerType;
   photoEditorReducer: photoEditorReducerType;
   drawReducer: any;
-  firestoreReducer: { memberCode: string };
+  firestoreReducer: {
+    memberCode: string;
+    bookCode: string;
+    page: string;
+    setting: boolean;
+  };
 }
 
 export const DEFAULT_X = 500;

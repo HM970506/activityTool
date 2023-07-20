@@ -7,16 +7,16 @@ const storage = getStorage(app);
 export const setSaveData = async (
   data: string,
   record: Blob | undefined,
-  path: string,
-  memberCode: string
+  path: string
 ) => {
-  const savePath = doc(firestore, "saveData", memberCode);
+  console.log("저장 경로:", path);
+  const savePath = doc(firestore, "saveData", path);
 
   const timestamp = new Date();
   const storageRef = ref(storage, path);
 
   if (record !== undefined) {
-    const file = new File([record], memberCode);
+    const file = new File([record], "record");
     await uploadBytes(storageRef, file).catch((err) => console.log(err));
   }
 

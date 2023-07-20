@@ -20,8 +20,8 @@ export default function MeatballsMenu() {
   const { canvas, record } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
-  const memberCode = useSelector(
-    (state: ReducersType) => state.firestoreReducer.memberCode
+  const { memberCode, bookCode, page } = useSelector(
+    (state: ReducersType) => state.firestoreReducer
   );
   const meatball = useSelector(
     (state: ReducersType) => state.categoryReducer.meatball
@@ -59,7 +59,7 @@ export default function MeatballsMenu() {
 
   const saveToJson = async () => {
     dispatch(nodeActions.setLoading(true));
-    await saveJson(canvas, record, memberCode);
+    await saveJson(canvas, record, `${memberCode}/${bookCode}/${page}`);
     dispatch(nodeActions.setLoading(false));
   };
 

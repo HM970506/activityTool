@@ -46,6 +46,7 @@ export default function CrayonMaker() {
       const pointer = this.canvas.viewportTransform
         ? fabric.util.getPosition(this.canvas.viewportTransform, p)
         : p;
+
       this.update(pointer);
       this.draw(this.canvas.contextTop);
     },

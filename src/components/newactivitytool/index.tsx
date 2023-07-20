@@ -31,8 +31,8 @@ export default function NewActivityTool() {
   const isEditing = useSelector(
     (state: ReducersType) => state.photoEditorReducer.isEditing
   );
-  const memberCode = useSelector(
-    (state: ReducersType) => state.firestoreReducer.memberCode
+  const { memberCode, bookCode, page } = useSelector(
+    (state: ReducersType) => state.firestoreReducer
   );
   const { canvas, loading } = useSelector(
     (state: ReducersType) => state.nodeReducer
@@ -59,9 +59,13 @@ export default function NewActivityTool() {
   const getCanvas = async () => {
     canvas.clearHistory();
 
-    const href = window.location.href.replaceAll("/", "_");
-    const data = await getFirestoreData("saveData", href);
-    const record = await getStorageData(memberCode);
+    const data = await getFirestoreData(
+      "saveData",
+      `${memberCode}/${bookCode}/${page}/`
+    );
+    const record = await getStorageData(
+      `${memberCode}/${bookCode}/${page}/record`
+    );
 
     if (data) {
       if (record) dispatch(nodeActions.setRecord(record));

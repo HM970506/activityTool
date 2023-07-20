@@ -4,12 +4,11 @@ import { canvasType } from "../types";
 export const saveJson = async (
   canvas: canvasType,
   record: Blob | undefined,
-  memberCode: string
+  path: string
 ) => {
   const json = JSON.stringify(canvas);
 
-  const path = "/test";
-  await setSaveData(json, record, path, memberCode);
+  await setSaveData(json, record, path);
 
   //아이디 같이 보내기
 
