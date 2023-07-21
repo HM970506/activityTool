@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../../store/common/nodeSlice";
 import { ReducersType } from "../../types";
 import { useStopwatch } from "react-timer-hook";
-import { CategoryButton, Icon } from "../../style";
+import { InnerCategoryButton, Icon } from "../../style";
 
 export default function Record({
   state,
@@ -116,14 +116,14 @@ export default function Record({
       <Recorder src={oldRecord} ref={recorderRef} />
       {oldRecord !== "" ? (
         <>
-          <CategoryButton onClick={playButton}>
+          <InnerCategoryButton onClick={playButton}>
             <Icon src={"/diary/recorder/record.png"} />
             <span>재생</span>
-          </CategoryButton>
-          <CategoryButton onClick={reRecord}>
+          </InnerCategoryButton>
+          <InnerCategoryButton onClick={reRecord}>
             <Icon src={"/diary/recorder/player.png"} />
             <span>다시녹음</span>
-          </CategoryButton>
+          </InnerCategoryButton>
         </>
       ) : (
         state !== "end" && (
