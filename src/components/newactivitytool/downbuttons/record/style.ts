@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonsContainer } from "../style";
-import { CategoryButton, Icon } from "../../style";
+import { CategoryButton, Icon, InnerCategoryButton } from "../../style";
 
 export const RecordContatiner = styled(ButtonsContainer)``;
 
@@ -12,7 +12,7 @@ export const Button = styled.div`
   align-items: center;
 `;
 
-export const RecorderButton = styled(CategoryButton)`
+export const RecorderButton = styled(InnerCategoryButton)`
   width: 48px;
   height: 48px;
   display: flex;

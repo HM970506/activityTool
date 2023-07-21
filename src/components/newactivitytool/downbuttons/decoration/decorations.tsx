@@ -7,7 +7,7 @@ import Template from "./template";
 import Stamp from "./stamp";
 import Tape from "./tape";
 import SVG from "react-inlinesvg";
-import { CategoryButton, Icon } from "../../style";
+import { CategoryButton, Icon, InnerCategoryButton } from "../../style";
 import { StampCategoryButton } from "./sizebox";
 
 export default function DecorationMenu() {
@@ -45,7 +45,7 @@ export default function DecorationMenu() {
 
   return (
     <>
-      <CategoryButton
+      <InnerCategoryButton
         onClick={() => {
           if (!template.state) dispatch(categoryActions.templateOn());
           else dispatch(categoryActions.templateOff());
@@ -54,7 +54,7 @@ export default function DecorationMenu() {
         {category === DECORATION && template.state && <Template />}
         <Icon src={"/diary/decoration/template.png"} />
         <span>템플릿</span>
-      </CategoryButton>
+      </InnerCategoryButton>
       <StampCategoryButton
         color={canvas.stamp.color}
         onClick={() => {
@@ -73,7 +73,7 @@ export default function DecorationMenu() {
         )}
         <span>스탬프</span>
       </StampCategoryButton>
-      <CategoryButton
+      <InnerCategoryButton
         onClick={() => {
           if (!tape.state) dispatch(categoryActions.tapeOn());
           else if (!option) dispatch(categoryActions.optionChange(true));
@@ -84,7 +84,7 @@ export default function DecorationMenu() {
         {category === DECORATION && tape.state && option && <Tape />}
         <Icon src={"/diary/decoration/tape.png"} />
         <span>테이프</span>
-      </CategoryButton>
+      </InnerCategoryButton>
     </>
   );
 }

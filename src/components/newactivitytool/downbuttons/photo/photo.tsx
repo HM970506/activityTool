@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CategoryButton, Icon, Uploader } from "../../style";
+import { InnerCategoryButton, Icon, Uploader } from "../../style";
 import { DEFAULT_X, ImageType, ReducersType } from "../../types";
 import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";
@@ -139,14 +139,14 @@ export default function PhotoMenu() {
         accept="image/*"
         onChange={onUploadImage}
       />
-      <CategoryButton onClick={photoUpload}>
+      <InnerCategoryButton onClick={photoUpload}>
         <Icon src={"/diary/photo/gallery.png"} />
         <span>앨범</span>
-      </CategoryButton>
-      <CategoryButton onClick={getCamera}>
+      </InnerCategoryButton>
+      <InnerCategoryButton onClick={getCamera}>
         <Icon src={"/diary/photo/camera.png"} />
         <span>사진 찍기</span>
-      </CategoryButton>
+      </InnerCategoryButton>
     </>
   );
 }

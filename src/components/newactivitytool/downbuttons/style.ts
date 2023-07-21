@@ -9,6 +9,7 @@ export const ButtonsContainer = styled(animated.div)`
   align-items: center;
   overflow: hidden;
   height: 72px;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 `;
 
 export const ButtonInnerIcon = styled.div<{ state: number }>`
@@ -27,4 +28,5 @@ export const OptionContainer = styled.div`
   position: absolute;
   bottom: 100px;
   overflow: hidden;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 `;

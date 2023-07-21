@@ -24,6 +24,7 @@ export const Button = styled(DefaultButton)`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 `;
 
 export const ButtonInner = styled(animated.div)`
@@ -61,6 +62,11 @@ export const Icon = styled.img`
 export const CategoryButton = styled(Button)`
   width: 80px;
   height: 72px;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+`;
+
+export const InnerCategoryButton = styled(CategoryButton)`
+  box-shadow: none;
 `;
 
 export const CategoryButtonText = styled.p`
@@ -126,7 +132,7 @@ export const Overlay = styled.div`
   top: 0;
   left: 0;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
 `;
 
 export const ModalOverlay = styled(Overlay)`
