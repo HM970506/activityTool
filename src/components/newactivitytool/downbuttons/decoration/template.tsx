@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { ImageType, ReducersType } from "../../types";
 import { categoryActions } from "../../../../store/common/categorySlice";
 import { DecoOptionContainer, Thumbnail, ThumbnailBox } from "./sizebox";
+import "fabric-history";
+import { nodeActions } from "../../../../store/common/nodeSlice";
 
 export default function Template() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -12,6 +14,9 @@ export default function Template() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData("decoration_template");
+  const undo = useSelector(
+    (state: ReducersType) => state.nodeReducer.history.undo
+  );
 
   useEffect(() => {
     if (Array.isArray(data)) setTemplates(data);
@@ -39,6 +44,8 @@ export default function Template() {
         img.crossOrigin = "Anonymous";
 
         canvas.renderAll();
+        canvas._historySaveAction();
+        dispatch(nodeActions.setUndo(undo + 1));
       }
     });
   };

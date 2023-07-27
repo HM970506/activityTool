@@ -26,6 +26,9 @@ export default function Canvas() {
   const { canvas, background } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
+  const undo = useSelector(
+    (state: ReducersType) => state.nodeReducer.history.undo
+  );
   const { memberCode, bookCode, page, setting } = useSelector(
     (state: ReducersType) => state.firestoreReducer
   );
@@ -139,6 +142,8 @@ export default function Canvas() {
             img.crossOrigin = "Anonymous";
 
             canvas.renderAll();
+            canvas._historySaveAction();
+            dispatch(nodeActions.setUndo(undo + 1));
           }
         });
       }

@@ -15,6 +15,7 @@ export default function CanvasHistory() {
 
   const undoHandler = () => {
     canvas.undo();
+    console.log(canvas.historyUndo);
     if (undo > 0) {
       dispatch(nodeActions.setRedo(redo + 1));
       dispatch(nodeActions.setUndo(undo - 1));
@@ -23,6 +24,7 @@ export default function CanvasHistory() {
 
   const redoHandler = () => {
     canvas.redo();
+    console.log(canvas.historyRedo);
     if (redo > 0) {
       dispatch(nodeActions.setUndo(undo + 1));
       dispatch(nodeActions.setRedo(redo - 1));
