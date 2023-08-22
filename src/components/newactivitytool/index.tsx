@@ -98,11 +98,11 @@ export default function NewActivityTool() {
             <PhotoEditor />
           ) : (
             <>
-              <TopButtons />
+              {/* <TopButtons /> */}
               <BackButton setActivitytools={setActivitytools} />
 
-              <MeatballsMenu />
-              <ReactQueryDevtools />
+              {/* <MeatballsMenu />
+              <ReactQueryDevtools /> */}
 
               <DownButtons />
             </>

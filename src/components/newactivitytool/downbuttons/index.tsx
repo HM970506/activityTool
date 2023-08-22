@@ -14,11 +14,11 @@ export default function DownButtons() {
   return (
     <DownButtonsContainer_MobilenDesktop state={view ? 1 : 0}>
       <DrawToolsButton />
-      <DecorationButton />
+      {/* <DecorationButton />
       <StickerButton />
       <PhotoButton />
       <TextButton />
-      <RecordButton />
+      <RecordButton /> */}
     </DownButtonsContainer_MobilenDesktop>
   );
 }
