@@ -80,7 +80,7 @@ export default function DecorationButton() {
   return (
     <DecoContatiner style={outterBox}>
       <ButtonInner onClick={openHandler} style={innerBox}>
-        <Icon src={"/diary/decoration/decorate.png"} />
+        <Icon src={"/decoration/decorate.png"} />
       </ButtonInner>
       {canvas && <DecorationMenu />}
     </DecoContatiner>

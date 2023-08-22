@@ -7,7 +7,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/diary/" element={<Personal />} />
+        <Route path="/" element={<Personal />} />
       </Routes>
     </QueryClientProvider>
   );

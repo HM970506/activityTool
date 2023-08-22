@@ -10,7 +10,7 @@ import { ReactComponent as Spray4 } from "./svg/spray/spray4.svg";
 import { ReactComponent as Spray5 } from "./svg/spray/spray5.svg";
 
 export const getPath = (name: string) => {
-  return `/diary/drawtools/${name}.png`;
+  return `/drawtools/${name}.png`;
 };
 
 export const SIZES = [1, 10, 20, 30, 50];

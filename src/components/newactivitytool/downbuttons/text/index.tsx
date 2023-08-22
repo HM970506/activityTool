@@ -79,7 +79,7 @@ export default function TextButton() {
       <Button onClick={textButtonClick}>
         {category === TEXT && option && <TextMenu />}
         <ButtonInner style={props}>
-          <Icon src="/diary/text/bubble.png" />
+          <Icon src="/text/bubble.png" />
         </ButtonInner>
       </Button>
     </>

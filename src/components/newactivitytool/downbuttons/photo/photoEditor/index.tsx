@@ -186,7 +186,7 @@ export default function PhotoEditor() {
         <canvas ref={photoEditorCanvasRef}></canvas>
 
         <CheckButton onClick={editComplete}>
-          <Icon src={"/diary/photo/confirm_chk.png"} />
+          <Icon src={"/photo/confirm_chk.png"} />
         </CheckButton>
 
         <DownButtonsContainer>

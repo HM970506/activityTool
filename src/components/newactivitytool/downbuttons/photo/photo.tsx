@@ -140,11 +140,11 @@ export default function PhotoMenu() {
         onChange={onUploadImage}
       />
       <InnerCategoryButton onClick={photoUpload}>
-        <Icon src={"/diary/photo/gallery.png"} />
+        <Icon src={"/photo/gallery.png"} />
         <span>앨범</span>
       </InnerCategoryButton>
       <InnerCategoryButton onClick={getCamera}>
-        <Icon src={"/diary/photo/camera.png"} />
+        <Icon src={"/photo/camera.png"} />
         <span>사진 찍기</span>
       </InnerCategoryButton>
     </>

@@ -44,7 +44,7 @@ export default function PhotoButton() {
     <>
       <PhotoContatiner style={outterBox}>
         <ButtonInner onClick={photoButtonClick} style={props}>
-          <Icon src={"/diary/photo/photo.png"} />
+          <Icon src={"/photo/photo.png"} />
         </ButtonInner>
         {category === PHOTO && <PhotoMenu />}
       </PhotoContatiner>
