@@ -9,13 +9,11 @@ import { Button } from "../../style";
 
 export default function DrawToolsButton() {
   const dispatch = useDispatch();
-  const brushes = useSelector((state: ReducersType) => state.drawReducer);
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
   const select = useSelector((state: ReducersType) => state.drawReducer.now);
-  const [nowTool, setNowTool] = useState(CRAYON);
 
   useEffect(() => {
     if (select !== "" && canvas) canvas.isDrawingMode = true;
@@ -33,7 +31,7 @@ export default function DrawToolsButton() {
       {canvas && (
         <>
           <DrawToolsMenu />
-          <DrawOption nowTool={nowTool} />
+          <DrawOption />
         </>
       )}
     </ToolsContatiner>

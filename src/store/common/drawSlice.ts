@@ -3,13 +3,10 @@ import { CRAYON } from "../../components/newactivitytool/types";
 
 const DEFAULT = {
   now: CRAYON,
-  feltpen: null,
   crayon: null,
-  backgroundBrush: null,
   highlighter: null,
   spray: null,
   eraser: null,
-  ink: null,
 };
 
 const drawSlice = createSlice({
@@ -21,8 +18,8 @@ const drawSlice = createSlice({
       state = DEFAULT;
     },
     setting: (state, action: PayloadAction<any>) => {
-      const { name, brush } = action.payload;
-      (state as any)[name] = { brush: brush, width: 1, color: "black" };
+      const { name, brush, color } = action.payload;
+      (state as any)[name] = { brush: brush, width: 10, color: color };
     },
     setNow: (state, action: PayloadAction<any>) => {
       state.now = action.payload;
@@ -32,12 +29,12 @@ const drawSlice = createSlice({
       action: PayloadAction<{
         name: string;
         color: string | undefined;
-        width: number | undefined;
+        //     width: number | undefined;
       }>
     ) => {
-      const { name, color, width } = action.payload;
+      const { name, color } = action.payload;
       if (color) (state as any)[name].color = color;
-      if (width) (state as any)[name].width = width;
+      //if (width) (state as any)[name].width = width;
     },
   },
 });

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   CRAYON,
-  DRAWTOOLS,
   ERASER,
   FELTPEN,
   HIGHLIGHTER,
@@ -52,7 +51,7 @@ export default function DrawToolsMenu() {
     return (
       <BottomButton
         onClick={() => {
-          modalHandler(nowTool);
+          dispatch(drawActions.setNow(nowTool));
         }}
       >
         <ToolBox select={select === nowTool ? 1 : 0}>
