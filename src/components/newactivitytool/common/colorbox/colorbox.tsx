@@ -4,12 +4,12 @@ import { ColorContainer, Colorchip } from "./styled";
 
 export default function Colorbox({
   setColor,
-  keyName,
+  nowTool,
   option,
 }: {
   setColor: Function;
   option: { color: string; size: number };
-  keyName: string;
+  nowTool: string;
 }) {
   const { color } = option;
   return (
@@ -18,7 +18,7 @@ export default function Colorbox({
         <SelectButton
           className={"option"}
           select={color === value ? 1 : 0}
-          key={`${keyName}color${key}`}
+          key={`${nowTool}color${key}`}
           color={value}
         >
           <Colorchip

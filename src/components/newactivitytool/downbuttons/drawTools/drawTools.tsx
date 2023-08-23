@@ -9,10 +9,15 @@ import {
   SPRAY,
 } from "../../types";
 import { useEffect } from "react";
-import DrawOption from "./drawOption";
 import { categoryActions } from "../../../../store/common/categorySlice";
-import { BottomButton, Tool, ToolBackground, ToolBox } from "./style";
-import { getPath } from "./datas";
+import {
+  BottomButton,
+  Tool,
+  ToolBackground,
+  ToolBox,
+  ToolButtonContainer,
+} from "./style";
+
 import { drawActions } from "../../../../store/common/drawSlice";
 
 export default function DrawToolsMenu() {
@@ -39,24 +44,24 @@ export default function DrawToolsMenu() {
       dispatch(categoryActions.optionChange(false));
   };
 
-  const ToolButton = ({ keyName }: { keyName: string }) => {
+  const getPath = (name: string) => {
+    return `/drawtools/${name}.png`;
+  };
+
+  const ToolButton = ({ nowTool }: { nowTool: string }) => {
     return (
       <BottomButton
         onClick={() => {
-          modalHandler(keyName);
+          modalHandler(nowTool);
         }}
       >
-        {category === DRAWTOOLS && select === keyName && option && (
-          <DrawOption keyName={keyName} />
-        )}
-
-        <ToolBox select={select === keyName ? 1 : 0}>
-          <Tool src={getPath(keyName)} />
+        <ToolBox select={select === nowTool ? 1 : 0}>
+          <Tool src={getPath(nowTool)} />
           <ToolBackground
             color={
-              keyName === FELTPEN || keyName === ERASER
+              nowTool === FELTPEN || nowTool === ERASER
                 ? "white"
-                : (brushes as any)[keyName].color
+                : (brushes as any)[nowTool].color
             }
           />
         </ToolBox>
@@ -65,12 +70,11 @@ export default function DrawToolsMenu() {
   };
 
   return (
-    <>
-      <ToolButton keyName={FELTPEN} />
-      <ToolButton keyName={CRAYON} />
-      <ToolButton keyName={HIGHLIGHTER} />
-      <ToolButton keyName={SPRAY} />
-      <ToolButton keyName={ERASER} />
-    </>
+    <ToolButtonContainer>
+      <ToolButton nowTool={CRAYON} />
+      <ToolButton nowTool={HIGHLIGHTER} />
+      <ToolButton nowTool={SPRAY} />
+      <ToolButton nowTool={ERASER} />
+    </ToolButtonContainer>
   );
 }

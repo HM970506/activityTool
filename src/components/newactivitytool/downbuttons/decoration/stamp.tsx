@@ -62,7 +62,7 @@ export default function Stamp() {
           color: color,
           size: 0,
         }}
-        keyName={"stamp"}
+        nowTool={"stamp"}
       />
     </DecoOptionContainer2>
   );

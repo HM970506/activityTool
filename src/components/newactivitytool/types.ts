@@ -46,16 +46,27 @@ export const ERASER = "eraser";
 export const INK = "ink";
 
 export const COLORS = [
-  "black",
-  "blue",
-  "red",
-  "pink",
-  "purple",
-  "grey",
-  "green",
-  "yellow",
-  "skyblue",
-  "white",
+  "#6E111A",
+  "#BC1022",
+  "#FF8959",
+  "#FFC222",
+  "#AAE895",
+  "#6ED895",
+  "#22AB22",
+  "#237444",
+  "#13BBAB",
+  "#58C9DD",
+  "#1A95B8",
+  "#095F98",
+  "#442289",
+  "#7F3895",
+  "#FF1895",
+  "#F895AB",
+  "#895F22",
+  "#FFFFFF",
+  "#A8A9A5",
+  "#585955",
+  "#080905",
 ];
 
 export const STICKER_CATEGORY = [

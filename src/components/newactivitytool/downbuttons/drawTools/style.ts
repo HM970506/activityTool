@@ -2,13 +2,17 @@ import styled from "styled-components";
 import { ButtonsContainer, OptionContainer } from "../style";
 import { animated } from "react-spring";
 
-export const ToolsContatiner = styled(ButtonsContainer)``;
+export const ToolsContatiner = styled.div`
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const ToolNowBox = styled.div`
   margin: 4px;
   display: flex;
   justify-content: center;
-
   align-items: center;
 `;
 
@@ -28,7 +32,6 @@ export const ToolNow = styled(animated.div)`
 export const DrawOptionContainer = styled(OptionContainer)`
   width: 264px;
   padding: 20px 0px 30px 24px;
-  position: block;
 `;
 
 export const BottomButton = styled.div`
@@ -78,3 +81,5 @@ export const ThumbnailBox = styled.div<{ color: string }>`
   height: 32px;
   background-color: ${(props) => (props.color !== "" ? props.color : "white")};
 `;
+
+export const ToolButtonContainer = styled(ButtonsContainer)``;

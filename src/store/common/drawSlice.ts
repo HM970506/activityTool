@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CRAYON } from "../../components/newactivitytool/types";
 
 const DEFAULT = {
-  now: null,
+  now: CRAYON,
   feltpen: null,
   crayon: null,
   backgroundBrush: null,

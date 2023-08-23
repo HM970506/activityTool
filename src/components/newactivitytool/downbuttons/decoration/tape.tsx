@@ -103,7 +103,7 @@ export default function Tape() {
           color: tape.color,
           size: 0,
         }}
-        keyName={"tape"}
+        nowTool={"tape"}
       />
     </DecoOptionContainer2>
   );

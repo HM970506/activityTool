@@ -11,14 +11,10 @@ import {
 } from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
 import BackButton from "./backButton";
-import MeatballsMenu from "./MeatballsMenuButton";
 import DownButtons from "./downbuttons";
-import TopButtons from "./topButtons";
-import PhotoEditor from "./downbuttons/photo/photoEditor";
 import { categoryActions } from "../../store/common/categorySlice";
 import { zoomActions } from "../../store/common/zoomSlice";
 import { photoEditorActions } from "../../store/common/photoEditorSlice";
@@ -94,19 +90,10 @@ export default function NewActivityTool() {
       >
         <Overlay>
           <Canvas />
-          {isEditing ? (
-            <PhotoEditor />
-          ) : (
-            <>
-              {/* <TopButtons /> */}
-              <BackButton setActivitytools={setActivitytools} />
 
-              {/* <MeatballsMenu />
-              <ReactQueryDevtools /> */}
+          <BackButton setActivitytools={setActivitytools} />
 
-              <DownButtons />
-            </>
-          )}
+          <DownButtons />
         </Overlay>
       </Background>
       {!activitytools && (

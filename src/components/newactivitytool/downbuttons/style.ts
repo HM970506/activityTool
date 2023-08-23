@@ -25,8 +25,6 @@ export const ButtonInnerIcon = styled.div<{ state: number }>`
 export const OptionContainer = styled.div`
   background-color: white;
   border-radius: 32px;
-  position: absolute;
-  bottom: 100px;
   overflow: hidden;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 `;
