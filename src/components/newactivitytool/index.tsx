@@ -10,7 +10,6 @@ import {
   Loading,
 } from "./style";
 import Canvas from "./canvas/canvas";
-import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReducersType } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
 import BackButton from "./backButton";
@@ -52,21 +51,13 @@ export default function NewActivityTool() {
     setSubMenu(false);
   };
 
-  const getCanvas = async () => {
+  const getSavedCanvas = async () => {
     canvas.clearHistory();
 
-    const data = await getFirestoreData(
-      "saveData",
-      `${memberCode}/${bookCode}/${page}/`
-    );
-    const record = await getStorageData(
-      `${memberCode}/${bookCode}/${page}/record`
-    );
+    const data = "가져온 데이터를 여기에 넣으면 됩니다";
 
-    if (data) {
-      if (record) dispatch(nodeActions.setRecord(record));
-      canvas.loadFromJSON(data?.data, () => canvas.renderAll());
-    }
+    if (data) canvas.loadFromJSON(data, () => canvas.renderAll());
+
     setActivitytools(true);
     setSubMenu(false);
   };
@@ -101,7 +92,7 @@ export default function NewActivityTool() {
           {subMenu && (
             <SubButtonContainer>
               <SubButton onClick={activityStart}>새로하기</SubButton>
-              <SubButton onClick={getCanvas}>불러오기</SubButton>
+              <SubButton onClick={getSavedCanvas}>불러오기</SubButton>
             </SubButtonContainer>
           )}
           <MainButton

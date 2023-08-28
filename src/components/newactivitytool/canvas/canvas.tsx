@@ -6,23 +6,16 @@ import { useEffect, useRef } from "react";
 import { CanvasBackground } from "../style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import { DEFAULT_CANVAS, DRAWTOOLS, ImageType, ReducersType } from "../types";
+import { CRAYON, DEFAULT_CANVAS, ImageType, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
-import { useGesture } from "@use-gesture/react";
-import { zoomActions } from "../../../store/common/zoomSlice";
-import functionSetting from "./functionSetting";
-import { debounce } from "lodash";
 import brushSetting from "./brushes";
 import { firestoreActions } from "../../../store/common/firestoreSlice";
-import { getFirestoreData, getStorageData } from "../../api/firestore/getData";
+import { drawActions } from "../../../store/common/drawSlice";
 
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const category = useSelector(
-    (state: ReducersType) => state.categoryReducer.category
-  );
   const { canvas, background } = useSelector(
     (state: ReducersType) => state.nodeReducer
   );
@@ -32,34 +25,6 @@ export default function Canvas() {
   const { memberCode, bookCode, page, setting } = useSelector(
     (state: ReducersType) => state.firestoreReducer
   );
-
-  const drawModeDebounce = debounce(() => {
-    if (category === DRAWTOOLS && canvas) canvas.isDrawingMode = true;
-  }, 100);
-
-  const zoomSetting = (zoom: number) => {
-    const nowZoom = Math.round(zoom * 10) / 10;
-
-    if (nowZoom > 5) return 5;
-    else if (nowZoom < 0.1) return 0.1;
-    else return nowZoom;
-  };
-
-  //function setting함수를 여기 넣지 않은 이유: canvas.getPointer함수를 사용하지 못하게 됨!
-  const bind = useGesture({
-    onPinch: ({ origin, offset }) => {
-      canvas.isDrawingMode = false;
-
-      const nowZoom = zoomSetting(offset[0]);
-      canvas.zoomToPoint(
-        { x: Math.round(origin[0]), y: Math.round(origin[1]) },
-        nowZoom
-      );
-      dispatch(zoomActions.setZoom(canvas.getZoom()));
-
-      drawModeDebounce();
-    },
-  });
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -72,9 +37,10 @@ export default function Canvas() {
       pinchZoom: { state: 0, coord: { x: 0, y: 0 } },
     });
     canvas.freeDrawingBrush.inverted = true;
+    canvas.isDrawingMode = true;
 
     fabricSetting();
-    functionSetting(canvas);
+    //   functionSetting(canvas);
     canvasSetting(canvas, dispatch);
     windowSetting(canvas, dispatch);
     brushSetting(canvas, dispatch);
@@ -83,39 +49,26 @@ export default function Canvas() {
     dispatch(nodeActions.setCanvas(canvas));
   }, []);
 
+  useEffect(() => {
+    if (canvas) dispatch(drawActions.setNow(CRAYON));
+  }, [canvas]);
+
   //@ts-ignore
   window.backgroundFlutterURL = (data: string) => {
     const json = JSON.parse(data);
 
     //@ts-ignore
     dispatch(nodeActions.setBackground(json.backgroundImg));
-
-    //@ts-ignore
-    dispatch(firestoreActions.setMemberCode(json.memberCode));
-
-    //@ts-ignore
-    dispatch(firestoreActions.setBookCode(json.title));
-
-    //@ts-ignore
-    dispatch(firestoreActions.setPage(json.pageNumber));
+    //여기서 웹뷰로부터 백그라운드 이미지 정보를 받아옵니다
 
     dispatch(firestoreActions.setSetting(true));
   };
 
   useEffect(() => {
     const getCanvas = async () => {
-      const data = await getFirestoreData(
-        "saveData",
-        `${memberCode}/${bookCode}/${page}/`
-      );
-      const record = await getStorageData(
-        `${memberCode}/${bookCode}/${page}/record`
-      );
+      const data = "여기에도 저장 경로를 넣어줍니다";
 
-      if (data) {
-        if (record) dispatch(nodeActions.setRecord(record));
-        canvas.loadFromJSON(data?.data, () => canvas.renderAll());
-      }
+      if (data) canvas.loadFromJSON(data, () => canvas.renderAll());
     };
 
     //테스트할때는 !setting으로..
@@ -154,7 +107,7 @@ export default function Canvas() {
   }, [canvas, setting]);
 
   return (
-    <CanvasBackground ref={containerRef} {...bind()}>
+    <CanvasBackground ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
     </CanvasBackground>
   );

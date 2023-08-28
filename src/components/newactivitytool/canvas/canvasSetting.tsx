@@ -5,7 +5,6 @@ import { canvasType } from "../types";
 import editControlHandler from "../common/editControlHandler";
 import { categoryActions } from "../../../store/common/categorySlice";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { zoomActions } from "../../../store/common/zoomSlice";
 
 export default function canvasSetting(canvas: canvasType, dispatch: any) {
   const DeselctMultipleObjects = () => {
@@ -31,18 +30,6 @@ export default function canvasSetting(canvas: canvasType, dispatch: any) {
     dispatch(categoryActions.setMeatball(false));
   };
 
-  const ZoomSetting = (opt: any) => {
-    const delta = opt.e.deltaY;
-    let zoom = canvas.getZoom();
-    zoom *= 0.999 ** delta;
-    if (zoom > 20) zoom = 20;
-    if (zoom < 0.01) zoom = 0.01;
-    canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-    dispatch(zoomActions.setZoom(zoom));
-    opt.e.preventDefault();
-    opt.e.stopPropagation();
-  };
-
   const Mathrounding = (now: any) => {
     return {
       ...now,
@@ -64,9 +51,6 @@ export default function canvasSetting(canvas: canvasType, dispatch: any) {
     },
     "mouse:down": () => {
       OptionSetting();
-    },
-    "mouse:wheel": (opt: any) => {
-      ZoomSetting(opt);
     },
     "selection:created": () => {
       DeselctMultipleObjects();

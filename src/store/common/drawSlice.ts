@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CRAYON } from "../../components/newactivitytool/types";
+import { CRAYON, ERASER } from "../../components/newactivitytool/types";
 
 const DEFAULT = {
   now: CRAYON,
+  before: CRAYON,
   crayon: null,
   highlighter: null,
   spray: null,
@@ -18,11 +19,17 @@ const drawSlice = createSlice({
       state = DEFAULT;
     },
     setting: (state, action: PayloadAction<any>) => {
-      const { name, brush, color } = action.payload;
-      (state as any)[name] = { brush: brush, width: 10, color: color };
+      const { name, brush, width, color } = action.payload;
+      (state as any)[name] = {
+        name: name,
+        brush: brush,
+        width: width,
+        color: color,
+      };
     },
-    setNow: (state, action: PayloadAction<any>) => {
+    setNow: (state, action: PayloadAction<string>) => {
       state.now = action.payload;
+      if (action.payload !== ERASER) state.before = action.payload;
     },
     setBrush: (
       state,
@@ -33,6 +40,7 @@ const drawSlice = createSlice({
       }>
     ) => {
       const { name, color } = action.payload;
+      console.log(action.payload);
       if (color) (state as any)[name].color = color;
       //if (width) (state as any)[name].width = width;
     },

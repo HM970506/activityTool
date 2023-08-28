@@ -163,12 +163,9 @@ export const CanvasBackground = styled.div`
   align-items: center;
 `;
 
-export const SelectButton = styled.button<{ color: string; select: number }>`
+export const SelectButton = styled.button<{ color: string }>`
   border: none;
   border-radius: 16px;
-  background-color: ${(props) => (props.select === 1 ? props.color : "white")};
-  fill: ${(props) => (props.select === 1 ? "white" : props.color)};
-  color: ${(props) => (props.select === 1 ? "white" : props.color)};
   display: flex;
   justify-content: center;
   align-items: center;

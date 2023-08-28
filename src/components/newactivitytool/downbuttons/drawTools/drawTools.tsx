@@ -8,7 +8,6 @@ import {
   SPRAY,
 } from "../../types";
 import { useEffect } from "react";
-import { categoryActions } from "../../../../store/common/categorySlice";
 import {
   BottomButton,
   Tool,
@@ -23,25 +22,18 @@ export default function DrawToolsMenu() {
   const dispatch = useDispatch();
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
   const brushes = useSelector((state: ReducersType) => state.drawReducer);
-  const option = useSelector(
-    (state: ReducersType) => state.categoryReducer.option
-  );
-  const category = useSelector(
-    (state: ReducersType) => state.categoryReducer.category
-  );
   const select = useSelector((state: ReducersType) => state.drawReducer.now);
 
   useEffect(() => {
     if (canvas && select)
       canvas.freeDrawingBrush = (brushes as any)[select].brush;
+    // console.log("선택한것:", (brushes as any)[select]);
+    // console.log(
+    //   "현재브러쉬:",
+    //   canvas.freeDrawingBrush,
+    //   (brushes as any)[select].brush
+    // );
   }, [select]);
-
-  const modalHandler = (name: string) => {
-    if (select !== name) dispatch(drawActions.setNow(name));
-    else if (!option) dispatch(categoryActions.optionChange(true));
-    else if (select === name && option)
-      dispatch(categoryActions.optionChange(false));
-  };
 
   const getPath = (name: string) => {
     return `/drawtools/${name}.png`;
@@ -56,13 +48,7 @@ export default function DrawToolsMenu() {
       >
         <ToolBox select={select === nowTool ? 1 : 0}>
           <Tool src={getPath(nowTool)} />
-          <ToolBackground
-            color={
-              nowTool === FELTPEN || nowTool === ERASER
-                ? "white"
-                : (brushes as any)[nowTool].color
-            }
-          />
+          <ToolBackground color={(brushes as any)[nowTool].color} />
         </ToolBox>
       </BottomButton>
     );

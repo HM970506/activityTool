@@ -1,32 +1,25 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SelectButton } from "../../style";
 import { COLORS, ReducersType } from "../../types";
 import { ColorContainer, Colorchip } from "./styled";
+import { drawActions } from "../../../../store/common/drawSlice";
 
-export default function Colorbox({
-  setColor,
-  option,
-}: {
-  setColor: Function;
-  option: { color: string; size: number };
-}) {
-  const { color } = option;
-  const select = useSelector((state: ReducersType) => state.drawReducer.now);
+export default function Colorbox({ setColor }: { setColor: Function }) {
+  const dispatch = useDispatch();
+  const drawTools = useSelector((state: ReducersType) => state.drawReducer);
+  const { now: select, before } = drawTools;
+
+  console.log((brushes as any)[select]);
   return (
-    <ColorContainer className={"option"}>
+    <ColorContainer>
       {COLORS.map((value: string, key: number) => (
-        <SelectButton
-          className={"option"}
-          select={color === value ? 1 : 0}
-          key={`${select}color${key}`}
-          color={value}
-        >
+        <SelectButton key={`${select}color${key}`} color={value}>
           <Colorchip
-            className={"option"}
-            select={color === value ? 1 : 0}
             color={value}
+            select={(brushes as any)[select].brush ? 1 : 0}
             onClick={() => {
               setColor(value);
+              dispatch(drawActions.setNow(before));
             }}
           />
         </SelectButton>

@@ -1,4 +1,3 @@
-import { setSaveData } from "../../api/firestore/setData";
 import { canvasType } from "../types";
 
 export const saveJson = async (
@@ -8,9 +7,7 @@ export const saveJson = async (
 ) => {
   const json = JSON.stringify(canvas);
 
-  await setSaveData(json, record, path);
+  //여기서 json을 저장합니다
 
-  //아이디 같이 보내기
-
-  alert("저장되었습니다");
+  alert("저장 호출");
 };
