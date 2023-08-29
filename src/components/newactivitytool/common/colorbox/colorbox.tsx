@@ -1,25 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SelectButton } from "../../style";
-import { COLORS, ReducersType } from "../../types";
+import { COLORS, ERASER, ReducersType } from "../../types";
 import { ColorContainer, Colorchip } from "./styled";
 import { drawActions } from "../../../../store/common/drawSlice";
 
 export default function Colorbox({ setColor }: { setColor: Function }) {
   const dispatch = useDispatch();
-  const drawTools = useSelector((state: ReducersType) => state.drawReducer);
-  const { now: select, before } = drawTools;
+  const brushes = useSelector((state: ReducersType) => state.drawReducer);
+  const { now: select, before } = brushes;
 
-  console.log((brushes as any)[select]);
+  const nowColor =
+    select === ERASER
+      ? (brushes as any)[before].color
+      : (brushes as any)[select].color;
+
+  console.log((brushes as any)[select], nowColor);
   return (
-    <ColorContainer>
+    <ColorContainer id="Colorbox">
       {COLORS.map((value: string, key: number) => (
         <SelectButton key={`${select}color${key}`} color={value}>
           <Colorchip
             color={value}
-            select={(brushes as any)[select].brush ? 1 : 0}
+            select={nowColor === value ? 1 : 0}
             onClick={() => {
               setColor(value);
-              dispatch(drawActions.setNow(before));
+              if (select === ERASER) dispatch(drawActions.setNow(before));
             }}
           />
         </SelectButton>

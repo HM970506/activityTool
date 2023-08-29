@@ -40,7 +40,6 @@ const drawSlice = createSlice({
       }>
     ) => {
       const { name, color } = action.payload;
-      console.log(action.payload);
       if (color) (state as any)[name].color = color;
       //if (width) (state as any)[name].width = width;
     },

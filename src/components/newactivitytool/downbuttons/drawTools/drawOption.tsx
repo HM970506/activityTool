@@ -13,10 +13,12 @@ export default function DrawOption() {
     (state: ReducersType) => state.drawReducer
   );
 
-  const setColor = (color: string) => {
-    dispatch(
+  const setColor = async (color: string) => {
+    const nowTool = select !== ERASER ? select : before;
+    await dispatch(
       drawActions.setBrush({
-        name: select !== ERASER ? select : before,
+        ...(brushes as any)[nowTool],
+        name: nowTool,
         color: color,
       })
     );

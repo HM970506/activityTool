@@ -16,8 +16,8 @@ export default function DrawToolsButton() {
   }, [select]);
 
   return (
-    <ToolsContatiner>
-      <Button>체크</Button>
+    <ToolsContatiner id={"ToolsContatiner"}>
+      <Button id={"Button"}>체크</Button>
       {canvas && (
         <>
           <DrawToolsMenu />

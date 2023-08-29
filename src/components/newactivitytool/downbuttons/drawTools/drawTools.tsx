@@ -48,14 +48,20 @@ export default function DrawToolsMenu() {
       >
         <ToolBox select={select === nowTool ? 1 : 0}>
           <Tool src={getPath(nowTool)} />
-          <ToolBackground color={(brushes as any)[nowTool].color} />
+          <ToolBackground
+            color={
+              nowTool === FELTPEN || nowTool === ERASER
+                ? "white"
+                : (brushes as any)[nowTool].color
+            }
+          />
         </ToolBox>
       </BottomButton>
     );
   };
 
   return (
-    <ToolButtonContainer>
+    <ToolButtonContainer id={"DrawToolsMenu"}>
       <ToolButton nowTool={CRAYON} />
       <ToolButton nowTool={HIGHLIGHTER} />
       <ToolButton nowTool={SPRAY} />
