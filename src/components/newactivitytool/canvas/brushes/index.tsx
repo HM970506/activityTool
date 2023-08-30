@@ -42,21 +42,21 @@ export default function brushSetting(canvas: canvasType, dispatch: any) {
 
   const sprayBrush = new fabric.SprayBrush(canvas, {
     density: 10,
-    color: "#F5C71D",
+    color: "#FFC222",
     width: 30,
     opacity: 0.5,
     dotWidth: 1,
   });
   //속성 종종 안 먹는 경우 이렇게 한번 더 속성 정의해주기
   sprayBrush.density = 10;
-  sprayBrush.color = "#F5C71D";
+  sprayBrush.color = "#FFC222";
   sprayBrush.width = 30;
   sprayBrush.opaciry = 0.5;
   sprayBrush.dotWidth = 1;
   dispatch(
     drawActions.setting({
       name: SPRAY,
-      color: "#F5C71D",
+      color: "#FFC222",
       width: 30,
       brush: sprayBrush,
     })
