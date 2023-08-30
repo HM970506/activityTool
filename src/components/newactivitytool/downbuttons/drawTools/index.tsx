@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { categoryActions } from "../../../../store/common/categorySlice";
-import { CRAYON, DRAWTOOLS, ReducersType } from "../../types";
-import { ToolsContatiner } from "./style";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { ReducersType } from "../../types";
+import { ButtonInner, ToolsContatiner } from "./style";
 import DrawToolsMenu from "./drawTools";
 import DrawOption from "./drawOption";
 import { Button } from "../../style";
+import { ReactComponent as CHECK } from "./svg/check.svg";
 
 export default function DrawToolsButton() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -17,7 +17,11 @@ export default function DrawToolsButton() {
 
   return (
     <ToolsContatiner id={"ToolsContatiner"}>
-      <Button id={"Button"}>체크</Button>
+      <Button id={"Button"}>
+        <ButtonInner>
+          <CHECK />
+        </ButtonInner>
+      </Button>
       {canvas && (
         <>
           <DrawToolsMenu />

@@ -80,7 +80,7 @@ export const MainButton = styled(Button)`
   bottom: 8px;
   right: 8px;
   z-index: 1000;
-  border: 1px solid black;
+
   background-color: white;
   transition-property: top-layer;
 `;
@@ -163,18 +163,20 @@ export const CanvasBackground = styled.div`
   align-items: center;
 `;
 
-export const SelectButton = styled.button<{ color: string }>`
+export const SelectButton = styled.button`
+  background: none;
   border: none;
-  border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
-`;
+  overflow: visible;
 
-export const TempLink = styled.a`
-  display: none;
+  border: 1px solid black;
+
+  width: 50px;
+  height: 70px;
+
+  overflow: hidden;
 `;
 
 export const Loading = styled.div`

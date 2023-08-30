@@ -17,6 +17,7 @@ import {
 } from "./style";
 
 import { drawActions } from "../../../../store/common/drawSlice";
+import { Color, getPath } from "./common";
 
 export default function DrawToolsMenu() {
   const dispatch = useDispatch();
@@ -27,34 +28,29 @@ export default function DrawToolsMenu() {
   useEffect(() => {
     if (canvas && select)
       canvas.freeDrawingBrush = (brushes as any)[select].brush;
-    // console.log("선택한것:", (brushes as any)[select]);
-    // console.log(
-    //   "현재브러쉬:",
-    //   canvas.freeDrawingBrush,
-    //   (brushes as any)[select].brush
-    // );
   }, [select]);
 
-  const getPath = (name: string) => {
-    return `/drawtools/${name}.png`;
-  };
-
   const ToolButton = ({ nowTool }: { nowTool: string }) => {
+    const nowColor = Color(nowTool);
     return (
       <BottomButton
         onClick={() => {
           dispatch(drawActions.setNow(nowTool));
         }}
+        className="BottomButton"
       >
-        <ToolBox select={select === nowTool ? 1 : 0}>
-          <Tool src={getPath(nowTool)} />
+        <ToolBox select={select === nowTool ? 1 : 0} className="ToolBox">
+          <Tool src={getPath(nowTool)} className="Tool" />
           <ToolBackground
+            className="ToolBackground"
             color={
               nowTool === FELTPEN || nowTool === ERASER
                 ? "white"
                 : (brushes as any)[nowTool].color
             }
-          />
+          >
+            {nowColor}
+          </ToolBackground>
         </ToolBox>
       </BottomButton>
     );
