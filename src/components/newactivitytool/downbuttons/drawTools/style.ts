@@ -43,7 +43,7 @@ export const BottomButton = styled.div`
 
 export const ToolBox = styled.div<{ select: number }>`
   height: 72px;
-  bottom: ${(props) => (props.select === 1 ? "0px" : "-20px")};
+  bottom: ${(props) => (props.select === 1 ? "0px" : "-15px")};
   position: relative;
 `;
 
@@ -75,11 +75,21 @@ export const ThumbnailBox = styled.div<{ color: string }>`
   background-color: ${(props) => (props.color !== "" ? props.color : "white")};
 `;
 
-export const ToolButtonContainer = styled(ButtonsContainer)`
+export const ToolButtonContainer = styled.div`
+  background-color: white;
+  border-radius: 25px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  overflow: hidden;
+  height: 72px;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
   width: 31.2vw;
   height: 64px;
   display: flex;
   justify-content: center;
+
+  gap: 16px;
 `;
 
 export const ButtonInner = styled.div`
@@ -97,7 +107,12 @@ export const ButtonInner = styled.div`
 
 // 컬러 관련
 
-export const DrawOptionContainer = styled(OptionContainer)`
+export const DrawOptionContainer = styled.div`
+  background-color: white;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+
   overflow: hidden;
   width: 55vw;
   height: 64px;
@@ -130,7 +145,7 @@ export const ColorchipButton = styled.button`
   justify-content: center;
 
   position: relative;
-  top: 20px;
+  top: 25px;
 `;
 
 export const Colorchip = styled(ToolBackground)<{

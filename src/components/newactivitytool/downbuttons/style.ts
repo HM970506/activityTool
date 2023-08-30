@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 
 export const ButtonsContainer = styled(animated.div)`
   background-color: white;
-  border-radius: 32px;
+  border-radius: 25px;
   display: flex;
   justify-content: left;
   align-items: center;
