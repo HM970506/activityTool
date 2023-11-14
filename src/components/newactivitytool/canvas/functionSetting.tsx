@@ -95,7 +95,6 @@ export default function functionSetting(canvas: canvasType) {
 
   canvas.on({
     "mouse:down": (e: IEvent | any) => {
-      if (canvas.isDrawingMode) canvas.test = 1;
       if (canvas.tape.state === 1) tapeStep_1();
       else if (canvas.stamp.state === 1) stampStep_1();
       else if (!canvas.isDrawingMode && !canvas.getActiveObject()) panStep_1(e);

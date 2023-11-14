@@ -14,7 +14,7 @@ import { ReactComponent as Diagram } from "./svg/diagram.svg";
 import { ReactComponent as Filter } from "./svg/filter.svg";
 import { ReactComponent as Free } from "./svg/free.svg";
 
-import { DownButtonsContainer, Icon } from "../../../styles/style";
+import { DownButtonsContainer, Icon } from "../../../style";
 import cropper from "./cropper";
 import { useSpring } from "react-spring";
 import editControlHandler from "../../../common/editControlHandler";
@@ -22,6 +22,7 @@ import { Shapes } from "./shapes";
 import Ratio from "./ratio";
 import Filters from "./filters";
 import FreeCrop from "./free";
+import React from "react";
 
 export default function PhotoEditor() {
   const { isEditing, photo } = useSelector((state: ReducersType) => {
@@ -73,23 +74,8 @@ export default function PhotoEditor() {
   const photoReady = (photo: any, photoCanvas: canvasType) => {
     photo.selectable = false;
     photo.original = photo.original ? photo.original : photo.getSrc();
-    photo.left = photo.left;
-    photo.top = photo.top;
     photoCanvas.add(photo);
     photoCanvas.renderAll();
-  };
-
-  const coordCorrecting = (object: any) => {
-    return {
-      left:
-        (Math.round((object.oCoords.tl.x * 100) / 100) -
-          canvas.viewportTransform[4]) /
-        canvas.viewportTransform[0],
-      top:
-        (Math.round((object.oCoords.tl.y * 100) / 100) -
-          canvas.viewportTransform[5]) /
-        canvas.viewportTransform[0],
-    };
   };
 
   const editComplete = () => {
@@ -99,12 +85,13 @@ export default function PhotoEditor() {
       const crop = objects[1];
 
       const editImg = cropper(objects[0], crop);
-      const { left, top } = coordCorrecting(crop);
       const group = new fabric.Group(objects);
 
       group.cloneAsImage((img: ImageType) => {
-        img.left = left;
-        img.top = top;
+        img.left = editImg?.left;
+        img.top = editImg?.top;
+        // img.left = group.left;
+        // img.top = group.top;
         img.selectable = true;
         img.erasable = false;
         img.cropX = editImg?.cropX;
@@ -113,6 +100,7 @@ export default function PhotoEditor() {
         img.height = editImg?.height;
         img.crossOrigin = "Anonymous";
         img.objectType = "photo";
+
         canvas.add(img);
       });
     } else {

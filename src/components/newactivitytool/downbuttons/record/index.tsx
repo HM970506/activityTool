@@ -5,7 +5,7 @@ import { Icon2, RecordContatiner } from "./style";
 import { useEffect, useState } from "react";
 import Record from "./record";
 import { useSpring } from "react-spring";
-import { ButtonInner, Icon } from "../../styles/style";
+import { ButtonInner, Icon } from "../../style";
 
 export default function RecordButton() {
   const dispatch = useDispatch();
@@ -44,13 +44,13 @@ export default function RecordButton() {
   return (
     <RecordContatiner style={outterBox}>
       <ButtonInner style={props} onClick={recordButtonClick}>
-        {state === "start" || state == "goon" ? (
+        {state === "start" || state === "goon" ? (
           <Icon2 src={"/recorder/voiceon.png"} />
         ) : (
           <Icon src={"/recorder/voiceoff.png"} />
         )}
       </ButtonInner>
-      {isOpen == 1 ? <Record state={state} setState={setState} /> : null}
+      {isOpen === 1 ? <Record state={state} setState={setState} /> : null}
     </RecordContatiner>
   );
 }

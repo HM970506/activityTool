@@ -1,11 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CategoryButton, Icon, Uploader } from "../../styles/style";
+import { InnerCategoryButton, Icon, Uploader } from "../../style";
 import { DEFAULT_X, ImageType, ReducersType } from "../../types";
 import { photoEditorActions } from "../../../../store/common/photoEditorSlice";
 import { imageCheck } from "./photoChecker";
 import { fabric } from "fabric-with-erasing";
 import { Transform } from "fabric/fabric-impl";
+import { isMobile } from "react-device-detect";
 import editIcon from "./editButton.png";
 const renderIcon = (
   ctx: CanvasRenderingContext2D,
@@ -61,14 +62,16 @@ export default function PhotoMenu() {
               });
             }
 
-            if (img.width !== undefined) {
+            if (img.width !== undefined && img.height !== undefined) {
               const scale = DEFAULT_X / img.width;
               img.scaleX = scale;
               img.scaleY = scale;
+
+              img.left = window.innerWidth / 2 - (img.width * scale) / 2;
+              img.top = window.innerHeight / 2 - (img.height * scale) / 2;
             }
 
             canvas.add(img);
-            canvas.setActiveObject(img);
           });
           setPhoto("");
         } else {
@@ -82,28 +85,51 @@ export default function PhotoMenu() {
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async (e: ProgressEvent<FileReader>) => {
-        if (e.target !== null && typeof e.target.result === "string")
-          setPhoto(e.target.result);
-      };
+      try {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = async (e: ProgressEvent<FileReader>) => {
+          if (e.target !== null && typeof e.target.result === "string")
+            setPhoto(e.target.result);
+        };
 
-      e.target.value = "";
+        e.target.value = "";
+      } catch (err) {
+        console.log("이미지 가져오기 에러:", JSON.stringify(err));
+      }
     }
   };
 
   const photoUpload = () => {
-    if (inputRef.current !== null) inputRef.current?.click();
+    if (inputRef.current !== null) {
+      inputRef.current?.click();
+      if (isMobile) {
+        //@ts-ignore
+        ForJH.postMessage("give_me_gallery");
+      }
+    }
   };
   const isEditing = useSelector((state: ReducersType) => {
     return state.photoEditorReducer.isEditing;
   });
 
   useEffect(() => {
-    canvas.isDrawingMode = false;
+    if (canvas) canvas.isDrawingMode = false;
   }, [isEditing]);
+
+  const getCamera = () => {
+    if (isMobile) {
+      //@ts-ignore
+      ForJH.postMessage("give_me_camera");
+    }
+  };
+
+  //@ts-ignore
+  window.fromFlutterURL = (data: string) => {
+    const url = "data:image/jpeg;base64," + data;
+    setPhoto(url);
+  };
 
   return (
     <>
@@ -113,14 +139,14 @@ export default function PhotoMenu() {
         accept="image/*"
         onChange={onUploadImage}
       />
-      <CategoryButton onClick={photoUpload}>
+      <InnerCategoryButton onClick={photoUpload}>
         <Icon src={"/photo/gallery.png"} />
         <span>앨범</span>
-      </CategoryButton>
-      <CategoryButton>
+      </InnerCategoryButton>
+      <InnerCategoryButton onClick={getCamera}>
         <Icon src={"/photo/camera.png"} />
         <span>사진 찍기</span>
-      </CategoryButton>
+      </InnerCategoryButton>
     </>
   );
 }

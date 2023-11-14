@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../styles/style";
+import { Button } from "../style";
 
 export const BackButton = styled(Button)`
   position: absolute;

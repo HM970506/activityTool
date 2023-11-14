@@ -5,7 +5,6 @@ import { ReactComponent as Next } from "./svg/next.svg";
 import { ReactComponent as Prev } from "./svg/prev.svg";
 import { HistoryContainer, HistoryButton } from "./style";
 import { nodeActions } from "../../../store/common/nodeSlice";
-import { useEffect } from "react";
 
 export default function CanvasHistory() {
   const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
@@ -14,12 +13,9 @@ export default function CanvasHistory() {
     (state: ReducersType) => state.nodeReducer.history
   );
 
-  // useEffect(() => {
-  //   console.log(undo, redo);
-  // }, [undo, redo]);
-
   const undoHandler = () => {
     canvas.undo();
+    console.log(canvas.historyUndo);
     if (undo > 0) {
       dispatch(nodeActions.setRedo(redo + 1));
       dispatch(nodeActions.setUndo(undo - 1));
@@ -28,6 +24,7 @@ export default function CanvasHistory() {
 
   const redoHandler = () => {
     canvas.redo();
+    console.log(canvas.historyRedo);
     if (redo > 0) {
       dispatch(nodeActions.setUndo(undo + 1));
       dispatch(nodeActions.setRedo(redo - 1));

@@ -79,6 +79,7 @@ export interface categoryReducerType {
   subcategory: subcategoryType;
   view: boolean;
   option: boolean;
+  meatball: boolean;
 }
 
 export interface tapeStateType {
@@ -90,13 +91,13 @@ export type canvasType = any;
 
 export interface nodeReducerType {
   canvas: canvasType;
-  isEditing: boolean;
-  isPanning: boolean;
+  background: string | null;
   opacity: number;
   record: any;
   textareaContainer: HTMLDivElement;
   dialogContainer: HTMLDialogElement;
   history: { undo: number; redo: number };
+  loading: boolean;
 }
 
 export interface zoomReducerType {
@@ -119,6 +120,12 @@ export interface ReducersType {
   zoomReducer: zoomReducerType;
   photoEditorReducer: photoEditorReducerType;
   drawReducer: any;
+  firestoreReducer: {
+    memberCode: string;
+    bookCode: string;
+    page: string;
+    setting: boolean;
+  };
 }
 
 export const DEFAULT_X = 500;

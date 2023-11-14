@@ -46,6 +46,7 @@ export default function CrayonMaker() {
       const pointer = this.canvas.viewportTransform
         ? fabric.util.getPosition(this.canvas.viewportTransform, p)
         : p;
+
       this.update(pointer);
       this.draw(this.canvas.contextTop);
     },
@@ -73,7 +74,6 @@ export default function CrayonMaker() {
     },
 
     draw: function (ctx: CanvasRenderingContext2D) {
-      console.log(ctx);
       var i, j, p, r, c, x, y, w, h, v, s, stepNum, dotSize, dotNum, range;
 
       v = this._point.subtract(this._latest);

@@ -37,8 +37,8 @@ export default function fabricSetting() {
 
   fabric.util.getPosition = function (viewportTransform: any, p: any) {
     return {
-      x: p.x * viewportTransform[0] + viewportTransform[4],
-      y: p.y * viewportTransform[0] + viewportTransform[5],
+      x: p.x, //p.x * viewportTransform[0] + viewportTransform[4],
+      y: p.y, //p.y * viewportTransform[0] + viewportTransform[5],
     };
   };
 

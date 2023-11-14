@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default async function greenEye(url: string) {
-  const testUrl = `https://cors-anywhere.herokuapp.com/${process.env.REACT_APP_GREENEYE_URL}`;
   const distributeUrl = `${process.env.REACT_APP_GREENEYE_URL}`;
 
   const data = {

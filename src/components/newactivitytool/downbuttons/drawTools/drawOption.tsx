@@ -37,7 +37,7 @@ export default function DrawOption({ keyName }: { keyName: string }) {
             setSize(size);
           }}
         >
-          {keyName == SPRAY ? SpraySize[index] : LineSize[index]}
+          {keyName === SPRAY ? SpraySize[index] : LineSize[index]}
         </Sizechip>
       </SizechipBox>
     );
@@ -54,7 +54,7 @@ export default function DrawOption({ keyName }: { keyName: string }) {
       {keyName !== FELTPEN && keyName !== ERASER && (
         <Colorbox
           setColor={(color: string) => {
-            setColor(keyName);
+            setColor(color);
           }}
           option={option}
           keyName={keyName}

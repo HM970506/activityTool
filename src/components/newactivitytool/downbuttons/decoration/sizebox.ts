@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ButtonsContainer, OptionContainer } from "../style";
-import { CategoryButton, SelectButton } from "../../styles/style";
+import { CategoryButton, InnerCategoryButton, SelectButton } from "../../style";
 
 export const DecoContatiner = styled(ButtonsContainer)``;
 
@@ -20,7 +20,7 @@ export const ThumbnailBox = styled.div`
   }
 `;
 
-export const StampCategoryButton = styled(CategoryButton)<{
+export const StampCategoryButton = styled(InnerCategoryButton)<{
   color: string;
 }>`
   display: block;

@@ -10,6 +10,7 @@ export const ColorContainer = style.div`
   ::-webkit-scrollbar {
     display: none;
 }
+
 `;
 
 export const Colorchip = style.div<{ color: string; select: number }>`

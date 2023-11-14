@@ -3,7 +3,8 @@ import { canvasType } from "../../components/newactivitytool/types";
 
 const DEFAULT = {
   canvas: null,
-  isPanning: false,
+  loading: false,
+  background: null,
   textareaContainer: null,
   dialogContainer: null,
   record: "",
@@ -33,17 +34,19 @@ const nodeSlice = createSlice({
     setDialogContainer: (state, action: PayloadAction<any>) => {
       state.dialogContainer = action.payload;
     },
+    setBackground: (state, action: PayloadAction<any>) => {
+      state.background = action.payload;
+    },
 
     setOpacity: (state, action: PayloadAction<number>) => {
       state.opacity = action.payload;
     },
 
-    setPan: (state, action: PayloadAction<boolean>) => {
-      state.isPanning = action.payload;
-    },
-
     setRecord: (state, action: PayloadAction<any>) => {
       state.record = action.payload;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
 });

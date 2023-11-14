@@ -28,6 +28,7 @@ export default function canvasSetting(canvas: canvasType, dispatch: any) {
 
   const OptionSetting = () => {
     dispatch(categoryActions.optionChange(false));
+    dispatch(categoryActions.setMeatball(false));
   };
 
   const ZoomSetting = (opt: any) => {

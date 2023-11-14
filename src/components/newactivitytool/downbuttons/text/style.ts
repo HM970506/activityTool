@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonInnerBox, OptionContainer } from "../style";
+import { OptionContainer } from "../style";
 
 export const TextOptionContainer = styled(OptionContainer)`
   width: 488px;
@@ -45,7 +45,7 @@ export const TextCategory = styled.div<{ state: number }>`
   align-items: center;
   margin: 4px;
   border-radius: 16px;
-  background-color: ${(props) => (props.state == 1 ? "#FFAB44" : "white")};
+  background-color: ${(props) => (props.state === 1 ? "#FFAB44" : "white")};
 `;
 
 export const TextListConatiner = styled.div`

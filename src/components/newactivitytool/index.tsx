@@ -6,9 +6,9 @@ import {
   MainButton,
   SubButtonContainer,
   SubButton,
-  ModalOverlay,
   Icon,
-} from "./styles/style";
+  Loading,
+} from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -25,13 +25,18 @@ import { photoEditorActions } from "../../store/common/photoEditorSlice";
 
 export default function NewActivityTool() {
   const newActivityTool = useRef<HTMLDivElement>(null);
-  const [activitytools, setActivitytools] = useState<boolean>(false);
+  const [activitytools, setActivitytools] = useState<boolean>(true);
   const [subMenu, setSubMenu] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isEditing = useSelector(
     (state: ReducersType) => state.photoEditorReducer.isEditing
   );
-  const { canvas } = useSelector((state: ReducersType) => state.nodeReducer);
+  const { memberCode, bookCode, page } = useSelector(
+    (state: ReducersType) => state.firestoreReducer
+  );
+  const { canvas, loading } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
 
   useEffect(() => {
     if (newActivityTool.current)
@@ -54,9 +59,13 @@ export default function NewActivityTool() {
   const getCanvas = async () => {
     canvas.clearHistory();
 
-    const href = window.location.href.replaceAll("/", "_");
-    const data = await getFirestoreData("saveData", href);
-    const record = await getStorageData("test");
+    const data = await getFirestoreData(
+      "saveData",
+      `${memberCode}/${bookCode}/${page}/`
+    );
+    const record = await getStorageData(
+      `${memberCode}/${bookCode}/${page}/record`
+    );
 
     if (data) {
       if (record) dispatch(nodeActions.setRecord(record));
@@ -77,6 +86,7 @@ export default function NewActivityTool() {
 
   return (
     <>
+      {loading && <Loading>저장중입니다..</Loading>}
       <Background
         ref={newActivityTool}
         z={getMaxZIndex() + 1}

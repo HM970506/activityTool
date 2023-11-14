@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DefaultButton } from "../styles/style";
+import { DefaultButton } from "../style";
 
 export const TopButtonContainer = styled.div`
   width: 268px;

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { ReducersType } from "../../../types";
 import { FilterComponent, PhotoOption2 } from "./style";
 import { fabric } from "fabric-with-erasing";
+import React from "react";
 
 const FILTER_NAME = [
   "Ordinary",
@@ -28,7 +29,10 @@ export default function Filters() {
   const photoCanvas = useSelector(
     (state: ReducersType) => state.photoEditorReducer.photoCanvas
   );
-  const img = photoCanvas.getObjects()[0];
+
+  const img = photoCanvas.getObjects()[0].clipPath
+    ? photoCanvas.getObjects()[0]._objects[0]
+    : photoCanvas.getObjects()[0];
 
   const filtering = (filterName: string) => {
     if (img.filters.length > 0) img.filters.pop();

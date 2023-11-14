@@ -3,16 +3,18 @@ import "fabric-history";
 import { useDispatch, useSelector } from "react-redux";
 import { nodeActions } from "../../../store/common/nodeSlice";
 import { useEffect, useRef } from "react";
-import { CanvasBackground } from "../styles/style";
+import { CanvasBackground } from "../style";
 import fabricSetting from "./fabricSetting";
 import windowSetting from "./windowSetting";
-import { DEFAULT_CANVAS, DRAWTOOLS, ReducersType } from "../types";
+import { DEFAULT_CANVAS, DRAWTOOLS, ImageType, ReducersType } from "../types";
 import canvasSetting from "./canvasSetting";
 import { useGesture } from "@use-gesture/react";
 import { zoomActions } from "../../../store/common/zoomSlice";
 import functionSetting from "./functionSetting";
 import { debounce } from "lodash";
 import brushSetting from "./brushes";
+import { firestoreActions } from "../../../store/common/firestoreSlice";
+import { getFirestoreData, getStorageData } from "../../api/firestore/getData";
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -21,10 +23,18 @@ export default function Canvas() {
   const category = useSelector(
     (state: ReducersType) => state.categoryReducer.category
   );
-  const canvas = useSelector((state: ReducersType) => state.nodeReducer.canvas);
+  const { canvas, background } = useSelector(
+    (state: ReducersType) => state.nodeReducer
+  );
+  const undo = useSelector(
+    (state: ReducersType) => state.nodeReducer.history.undo
+  );
+  const { memberCode, bookCode, page, setting } = useSelector(
+    (state: ReducersType) => state.firestoreReducer
+  );
 
   const drawModeDebounce = debounce(() => {
-    if (category == DRAWTOOLS && canvas) canvas.isDrawingMode = true;
+    if (category === DRAWTOOLS && canvas) canvas.isDrawingMode = true;
   }, 100);
 
   const zoomSetting = (zoom: number) => {
@@ -72,6 +82,76 @@ export default function Canvas() {
     dispatch(nodeActions.setTextareaContainer(containerRef.current));
     dispatch(nodeActions.setCanvas(canvas));
   }, []);
+
+  //@ts-ignore
+  window.backgroundFlutterURL = (data: string) => {
+    const json = JSON.parse(data);
+
+    //@ts-ignore
+    dispatch(nodeActions.setBackground(json.backgroundImg));
+
+    //@ts-ignore
+    dispatch(firestoreActions.setMemberCode(json.memberCode));
+
+    //@ts-ignore
+    dispatch(firestoreActions.setBookCode(json.title));
+
+    //@ts-ignore
+    dispatch(firestoreActions.setPage(json.pageNumber));
+
+    dispatch(firestoreActions.setSetting(true));
+  };
+
+  useEffect(() => {
+    const getCanvas = async () => {
+      const data = await getFirestoreData(
+        "saveData",
+        `${memberCode}/${bookCode}/${page}/`
+      );
+      const record = await getStorageData(
+        `${memberCode}/${bookCode}/${page}/record`
+      );
+
+      if (data) {
+        if (record) dispatch(nodeActions.setRecord(record));
+        canvas.loadFromJSON(data?.data, () => canvas.renderAll());
+      }
+    };
+
+    //테스트할때는 !setting으로..
+    if (canvas && setting) {
+      if (background) {
+        fabric.Image.fromURL(background, (img: ImageType) => {
+          if (img.width !== undefined && img.height !== undefined) {
+            const canvasRatio =
+              Math.round((canvas.width / canvas.height) * 100) / 100;
+            const imgRatio = Math.round((img.width / img.height) * 100) / 100;
+            const scale =
+              canvasRatio <= imgRatio
+                ? canvas.width / img.width
+                : canvas.height / img.height;
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+              scaleX: scale,
+              scaleY: scale,
+              erasable: false,
+              top: canvas.getCenter().top,
+              left: canvas.getCenter().left,
+              originX: "center",
+              originY: "center",
+            });
+            img.crossOrigin = "Anonymous";
+
+            canvas.renderAll();
+            canvas._historySaveAction();
+            dispatch(nodeActions.setUndo(undo + 1));
+          }
+        });
+      }
+
+      //캔버스 불러오기
+      getCanvas();
+    }
+  }, [canvas, setting]);
 
   return (
     <CanvasBackground ref={containerRef} {...bind()}>

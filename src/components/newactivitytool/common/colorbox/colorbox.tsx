@@ -1,4 +1,4 @@
-import { SelectButton } from "../../styles/style";
+import { SelectButton } from "../../style";
 import { COLORS } from "../../types";
 import { ColorContainer, Colorchip } from "./styled";
 
