@@ -11,7 +11,6 @@ import {
 } from "./style";
 import Canvas from "./canvas/canvas";
 import { getFirestoreData, getStorageData } from "../api/firestore/getData";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { ReducersType } from "./types";
 import { nodeActions } from "../../store/common/nodeSlice";
 import BackButton from "./backButton";
@@ -102,8 +101,6 @@ export default function NewActivityTool() {
               <BackButton setActivitytools={setActivitytools} />
 
               <MeatballsMenu />
-              <ReactQueryDevtools />
-
               <DownButtons />
             </>
           )}
