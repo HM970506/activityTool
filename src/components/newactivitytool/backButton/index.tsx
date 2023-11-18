@@ -30,11 +30,11 @@ export default function Back({
 
   const flutterBack = async () => {
     dispatch(nodeActions.setLoading(true));
-    await saveJson(canvas, record, `${memberCode}/${bookCode}/${page}`);
+    await saveJson(canvas, record, `common`);
     dispatch(nodeActions.setLoading(false));
 
     //@ts-ignore
-    sendToFlutterString("close_current_view");
+    // sendToFlutterString("close_current_view");
   };
 
   return (

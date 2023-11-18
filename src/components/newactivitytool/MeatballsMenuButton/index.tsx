@@ -13,6 +13,7 @@ import { ReactComponent as Refrash } from "./svg/refrash.svg";
 import { ReactComponent as Information } from "./svg/information.svg";
 import { useSpring } from "react-spring";
 import { saveJson } from "../common/saveFunction";
+import { getFirestoreData, getStorageData } from "../../api/firestore/getData";
 
 export default function MeatballsMenu() {
   const dispatch = useDispatch();
@@ -59,7 +60,21 @@ export default function MeatballsMenu() {
 
   const saveToJson = async () => {
     dispatch(nodeActions.setLoading(true));
-    await saveJson(canvas, record, `${memberCode}/${bookCode}/${page}`);
+    await saveJson(canvas, record, `common`);
+    dispatch(nodeActions.setLoading(false));
+  };
+
+  const getSaveJson = async () => {
+    dispatch(nodeActions.setLoading(true));
+    const data = await getFirestoreData("saveData", `common`);
+    const record = await getStorageData(
+      `${memberCode}/${bookCode}/${page}/record`
+    );
+
+    if (data) {
+      if (record) dispatch(nodeActions.setRecord(record));
+      canvas.loadFromJSON(data?.data, () => canvas.renderAll());
+    }
     dispatch(nodeActions.setLoading(false));
   };
 
@@ -80,8 +95,8 @@ export default function MeatballsMenu() {
               <Download />
             </p>
           </Menu>
-          <Menu onClick={saveToJson}>
-            <p>중간 저장하기</p>
+          <Menu onClick={getSaveJson}>
+            <p>불러오기</p>
             <p>
               <Information />
             </p>

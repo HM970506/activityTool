@@ -85,7 +85,7 @@ export default function NewActivityTool() {
 
   return (
     <>
-      {loading && <Loading>저장중입니다..</Loading>}
+      {loading && <Loading>Loading..</Loading>}
       <Background
         ref={newActivityTool}
         z={getMaxZIndex() + 1}
