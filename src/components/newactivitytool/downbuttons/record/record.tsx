@@ -78,22 +78,22 @@ export default function Record({
 
   const endHandler = async () => {
     if (recorder) {
-      try {
-        await recorder.stopRecording();
-        setState("end");
-        const blob = (await recorder?.getBlob()) as Blob;
-        const url = URL.createObjectURL(blob);
-        setOldRecord(url);
-        dispatch(nodeActions.setRecord(blob));
+      //  try {
+      await recorder.stopRecording();
+      setState("end");
+      const blob = (await recorder?.getBlob()) as Blob;
+      const url = URL.createObjectURL(blob);
+      setOldRecord(url);
+      dispatch(nodeActions.setRecord(blob));
 
-        if (stream) stream.getAudioTracks()[0].enabled = false;
+      if (stream) stream.getAudioTracks()[0].enabled = false;
 
-        setRecorder(null);
-        await navigator.mediaDevices.getUserMedia({ audio: false });
-        reset();
-      } catch (err) {
-        console.log("녹음 저장 에러:", JSON.stringify(err));
-      }
+      setRecorder(null);
+      await navigator.mediaDevices.getUserMedia({ audio: false });
+      reset();
+      // } catch (err) {
+      //   console.log("녹음 저장 에러:", err);
+      // }
     }
   };
 

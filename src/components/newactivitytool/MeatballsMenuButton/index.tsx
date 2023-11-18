@@ -67,9 +67,7 @@ export default function MeatballsMenu() {
   const getSaveJson = async () => {
     dispatch(nodeActions.setLoading(true));
     const data = await getFirestoreData("saveData", `common`);
-    const record = await getStorageData(
-      `${memberCode}/${bookCode}/${page}/record`
-    );
+    const record = await getStorageData(`common/record`);
 
     if (data) {
       if (record) dispatch(nodeActions.setRecord(record));

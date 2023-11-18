@@ -18,7 +18,7 @@ export default function DownButtons() {
       <StickerButton />
       <PhotoButton />
       <TextButton />
-      <RecordButton />
+      {/* <RecordButton /> */}
     </DownButtonsContainer_MobilenDesktop>
   );
 }

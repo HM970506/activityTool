@@ -119,38 +119,38 @@ export default function Canvas() {
     };
 
     //테스트할때는 !setting으로..
-    if (canvas && setting) {
-      if (background) {
-        fabric.Image.fromURL(background, (img: ImageType) => {
-          if (img.width !== undefined && img.height !== undefined) {
-            const canvasRatio =
-              Math.round((canvas.width / canvas.height) * 100) / 100;
-            const imgRatio = Math.round((img.width / img.height) * 100) / 100;
-            const scale =
-              canvasRatio <= imgRatio
-                ? canvas.width / img.width
-                : canvas.height / img.height;
-            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-              scaleX: scale,
-              scaleY: scale,
-              erasable: false,
-              top: canvas.getCenter().top,
-              left: canvas.getCenter().left,
-              originX: "center",
-              originY: "center",
-            });
-            img.crossOrigin = "Anonymous";
+    // if (canvas && setting) {
+    //   if (background) {
+    //     fabric.Image.fromURL(background, (img: ImageType) => {
+    //       if (img.width !== undefined && img.height !== undefined) {
+    //         const canvasRatio =
+    //           Math.round((canvas.width / canvas.height) * 100) / 100;
+    //         const imgRatio = Math.round((img.width / img.height) * 100) / 100;
+    //         const scale =
+    //           canvasRatio <= imgRatio
+    //             ? canvas.width / img.width
+    //             : canvas.height / img.height;
+    //         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+    //           scaleX: scale,
+    //           scaleY: scale,
+    //           erasable: false,
+    //           top: canvas.getCenter().top,
+    //           left: canvas.getCenter().left,
+    //           originX: "center",
+    //           originY: "center",
+    //         });
+    //         img.crossOrigin = "Anonymous";
 
-            canvas.renderAll();
-            canvas._historySaveAction();
-            dispatch(nodeActions.setUndo(undo + 1));
-          }
-        });
-      }
+    //         canvas.renderAll();
+    //         canvas._historySaveAction();
+    //         dispatch(nodeActions.setUndo(undo + 1));
+    //       }
+    //     });
+    //   }
 
-      //캔버스 불러오기
-      getCanvas();
-    }
+    //   //캔버스 불러오기
+    //   getCanvas();
+    // }
   }, [canvas, setting]);
 
   return (

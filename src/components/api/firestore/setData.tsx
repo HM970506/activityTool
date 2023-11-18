@@ -17,6 +17,7 @@ export const setSaveData = async (
 
   if (record !== undefined) {
     const file = new File([record], "record");
+    console.log(file);
     await uploadBytes(storageRef, file).catch((err) => console.log(err));
   }
 
